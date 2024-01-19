@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+    --surface: hsl(203.44 8% 16%);
+    --text: hsl(200 5% 80%);
+
+    background-color: var(--surface);
+    color: var(--text);
+    block-size: 100%;
+    font-size: 16px;
+}
+
+body {
+    min-block-size: 100%;
+    min-inline-size: 100%;
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    display: grid;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}

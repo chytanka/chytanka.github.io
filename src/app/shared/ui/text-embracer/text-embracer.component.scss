@@ -1,0 +1,21 @@
+:host {
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+    gap: 0;
+    line-height: 1;
+    display: flex;
+    gap: .1ch;
+    
+
+    & > span {
+        aspect-ratio: 2/3;
+        display: grid;
+        border: 1px solid;
+        border-radius: .1ch;
+        height: 1.3lh;
+        
+        place-content: center;
+       
+    }
+}

@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
+
+:host {
+    display: grid;
+    padding: 1rem;
+    grid-template-columns: 61.8fr 38.2fr;
+    align-items: center;
+    height: 100%;
+
+    @media (max-aspect-ratio: 1) {
+        grid-template-columns: auto;
+        grid-template-rows: 61.8fr 38.2fr;
+    }
+
+    &>div {
+        display: grid;
+        // align-content: center;
+        place-content: center;
+        gap: 2ch;
+    }
+}
+
+app-text-embracer {
+    font-family: 'Rampart One', sans-serif;
+    font-size: clamp(1rem, 8vw, 5rem);
+    @media (max-aspect-ratio: 1) {
+        font-size: clamp(1rem, 10vw, 8rem);
+    }
+}
+
+input[type=url] {
+    font: inherit;
+    padding: 1ch;
+    background: transparent;
+    /* backdrop-filter: blur(1rem); */
+    font-family: 'Courier New', Courier, monospace;
+    border: 0;
+    outline: 1px solid;
+    color: inherit;
+    width: 100%;
+    margin: auto;
+    transition: all .25s cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-radius: .5ch;
+}
+
+input[type=url]::placeholder {
+    opacity: 0.5;
+}
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+    input[type=url]:focus {
+
+        outline-offset: .5ch;
+
+    }
+}
+
+a {
+    padding: 1ch;
+    font-size: smaller;
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-name {
+    text-transform: uppercase;
+    font-size: smaller;
+    padding: .25ch .5ch;
+    border-radius: .2ch;
+    background-color: rgb(255 255 255 / .2);
+}
+
+.link {
+    outline: 1px solid;
+    border-radius: .5ch;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .25s;
+    &:hover {
+        outline-offset: .5ch;
+    }
+    &:active {
+        outline-offset: -.5ch;
+    }
+}

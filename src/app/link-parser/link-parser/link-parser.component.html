@@ -1,0 +1,25 @@
+<div>
+
+    <app-text-embracer [text]="'Chytanka'"></app-text-embracer>
+    <!-- <app-text-embracer [text]="'Читанка'"></app-text-embracer> -->
+
+    <form (submit)="onSubmit()">
+        <input type="url" autofocus placeholder="Imgur, MD" (input)="inputLink($event)" [value]="link()">
+
+    </form>
+
+    <div style="display: grid; grid-template-columns: 1fr auto; align-items: center;">
+        <small lang="en" style="font-family:  cursive; font-style: italic; opacity: .72;">and read it
+            easily and comfortably!</small>
+
+        <a class="link" *ngIf="linkParams()"
+            [routerLink]="[linkParams()?.site, linkParams()?.id]">
+
+            <span>Let's go </span>
+            <span class="site-name">{{linkParams()?.site}}</span>
+            <span class="site-address" [title]="linkParams()?.id">{{'/'+linkParams()?.id | truncate}}</span>
+
+        </a>
+    </div>
+</div>
+<div></div>

@@ -1,5 +1,4 @@
 import { Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
-import GraphemeSplitter from 'grapheme-splitter';
 
 @Component({
   selector: 'app-text-embracer',
@@ -16,9 +15,7 @@ export class TextEmbracerComponent {
 
 
   split(text: string) {
-    const splitter = new GraphemeSplitter()
-
-    return splitter.splitGraphemes(text);
+    return Array.from(text);
   }
 
 

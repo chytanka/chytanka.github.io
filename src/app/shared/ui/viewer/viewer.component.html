@@ -1,0 +1,46 @@
+<div #viewRef class="view" [class]="viewModeOption.mode" [dir]="viewModeOption.dir" id="pages"
+    (dblclick)="toggleFullScreen()" (click)="onClick()">
+    <div *ngFor="let img of episode?.images">
+        <div class="page">
+            <img [src]="img.src" [alt]="img.alt" loading="lazy">
+        </div>
+    </div>
+
+    <div>
+        <div class="page"><ng-content /></div>
+       
+    </div>
+    <div *ngIf="(episode?.images?.length??0) % 2 == 0"><div class="page"></div></div>
+
+</div>
+<div class="overlay" [ngClass]="{'show': showOverlay}">
+
+
+    <div style="position: relative; aspect-ratio: 1; width: 1rem;">
+        <input style="position: absolute; bottom: 0;" id="warm-range" type="range" orient="vertical" min="0" max="1"
+            step="0.01" [(ngModel)]="warm">
+
+    </div>
+    <label for="warm-range">☀️</label>
+
+    <button style="margin-left: auto;" (click)="toggleFullScreen()">
+        <code>⛶</code>
+    </button>
+</div>
+<div class="overlay top" [ngClass]="{'show': showOverlay}">
+    <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
+
+    <div class="viewModeBar">
+        <div *ngFor="let option of viewModeOptions">
+            <input type="radio" name="radio" id="mode-{{option.mode}}-{{option.dir}}" [(ngModel)]="viewModeOption"
+                [value]="option" />
+
+            <label for="mode-{{option.mode}}-{{option.dir}}">
+                {{option.title}}
+            </label>
+
+        </div>
+    </div>
+</div>
+
+<app-warm-filter class="filter" [value]="warm" />

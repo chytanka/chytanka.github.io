@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&display=swap');
 
 :host {
     display: grid;
     padding: 1rem;
     grid-template-columns: 61.8fr 38.2fr;
     align-items: center;
-    height: 100%;
+    // min-height: 100dvh;
+    height: 100dvh;
+    background: rgb(0,39,65);
+background: radial-gradient(circle, rgba(0,39,65,1) 0%, rgba(0,15,30,1) 100%);
 
-    @media (max-aspect-ratio: 1) {
+    @media (max-aspect-ratio: 1) or (max-width: 640px) {
         grid-template-columns: auto;
         grid-template-rows: 61.8fr 38.2fr;
     }
@@ -21,9 +25,13 @@
 }
 
 app-text-embracer {
+    --border-color: #166496;
+    --border-width: 2px;
+    color: #ffd60a;
+    margin: auto;
     font-family: 'Rampart One', sans-serif;
     font-size: clamp(1rem, 8vw, 5rem);
-    @media (max-aspect-ratio: 1) {
+    @media (max-aspect-ratio: 1) or (max-width: 640px)  {
         font-size: clamp(1rem, 10vw, 8rem);
     }
 }
@@ -81,5 +89,18 @@ a {
     }
     &:active {
         outline-offset: -.5ch;
+    }
+}
+
+
+#Path_602 {
+    transform-origin: 50% 50%;
+    transition: all .25s ease-in-out;
+}
+
+svg:hover {
+    #Path_602 {
+        
+        scale:  1.16;
     }
 }

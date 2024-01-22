@@ -1,1 +1,18 @@
-<p>imgur-shell works!</p>
+<app-viewer *ngIf="(episode$ | async) as episode" [episode]="episode">
+    <div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
+    place-content: center;
+    justify-items: center; min-height: 50vh;">
+        <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
+            <img src="/assets/logos/imgur-logo.svg" alt="Imgur logo">
+        </a>
+        <p>Images via <a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a> API.
+            Thanks!<br>Details on their site. Respect copyrights.</p>
+    </div>
+</app-viewer>
+<div *ngIf="error$ | async as error" class="error-message">
+    {{ error }} <br>
+    <a [routerLink]="'/'">🏠</a>
+</div>
+<div *ngIf="loading$ | async as loading" class="loading">
+    ⏳
+</div>

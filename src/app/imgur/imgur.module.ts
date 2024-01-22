@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ImgurRoutingModule } from './imgur-routing.module';
 import { ImgurShellComponent } from './imgur-shell/imgur-shell.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ImgurShellComponent } from './imgur-shell/imgur-shell.component';
   ],
   imports: [
     CommonModule,
-    ImgurRoutingModule
+    ImgurRoutingModule,
+    SharedModule
   ]
 })
 export class ImgurModule { }

@@ -1,0 +1,302 @@
+:host {
+	--W: 100vw;
+	--H: 100dvh;
+	// --ratio: 3/4;
+	// --ratio: auto;
+	display: block;
+	container-type: size;
+	container-name: view;
+	width: var(--W);
+	height: var(--H);
+
+	&:fullscreen {
+		background-color: var(--surface);
+	}
+
+	.filter {
+		z-index: 0;
+	}
+}
+
+
+.view.pages {
+	--r: 0;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	scroll-snap-type: x mandatory;
+	display: flex;
+	user-select: none;
+	filter: drop-shadow(0 0 1ch black);
+
+	&>div {
+		width: 50%;
+		height: var(--H);
+		flex: 1 0 auto;
+		display: grid;
+
+
+		.page {
+			border-radius: 0 var(--r) var(--r) 0;
+			position: relative;
+
+		}
+
+		img {
+			object-position: left;
+		}
+
+		&:nth-child(odd) {
+			direction: rtl;
+			scroll-snap-align: start;
+
+			.page {
+				border-radius: var(--r) 0 0 var(--r);
+			}
+
+			img {
+				object-position: right;
+			}
+		}
+	}
+
+	.page {
+		overflow: hidden;
+		// background-color: rgb(255 255 255 / 0.1);
+		// aspect-ratio: var(--ratio);
+		max-width: 100%;
+		max-height: var(--H);
+		margin: auto 0;
+
+		display: grid;
+		place-items: center;
+
+		img {
+			// position: absolute;
+			// aspect-ratio: inherit;
+			display: block;
+			width: 100%;
+			height: 100%;
+			max-height: var(--H);
+			object-fit: contain;
+		}
+	}
+}
+
+
+
+
+.view.pages[dir="rtl"] {
+	direction: rtl;
+
+	.page {
+		border-radius: var(--r) 0 0 var(--r);
+	}
+
+	&>div {
+		img {
+			object-position: right;
+		}
+
+		&:nth-child(odd) {
+			direction: ltr;
+
+			.page {
+				border-radius: 0 var(--r) var(--r) 0;
+			}
+
+			img {
+				object-position: left;
+			}
+		}
+	}
+}
+
+@container view (max-aspect-ratio: 1) {
+
+	:host {}
+
+	.view.pages>div {
+		width: 100%;
+		scroll-snap-align: start;
+		// --ratio:auto;
+
+		.page {
+			border-radius: var(--r);
+			direction: inherit;
+			margin: auto;
+			width: 100%;
+
+		}
+
+		img {
+			object-position: center !important;
+		}
+	}
+}
+
+// long
+
+:host:has(.view.long) {
+	--ratio: auto;
+	overflow-y: auto;
+	container-type: unset;
+	container-name: unset;
+}
+
+.view.long {
+
+	// max-width: 1080px;
+	margin: 0 auto;
+
+	&>div {
+		display: block;
+		width: 100%;
+
+		.page {
+			display: block;
+			width: 100%;
+
+			img {
+				display: block;
+				width: auto;
+				margin: 0 auto;
+				max-width: 100%;
+				position: relative;
+			}
+		}
+	}
+}
+
+.overlay {
+	--g: linear-gradient(#0000, #111);
+
+	display: flex;
+	gap: 1ch;
+	align-items: center;
+	opacity: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	padding: 1ch 1rem;
+	pointer-events: none;
+	transition: opacity .1s cubic-bezier(.4, 0, 1, 1);
+
+	font-size: 14px;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		left: 0;
+	}
+
+	&::before {
+		z-index: -2;
+		left: 0;
+		backdrop-filter: blur(1rem);
+		-webkit-mask-box-image: var(--g);
+		mask-border: var(--g);
+	}
+
+	&::after {
+		z-index: -1;
+		// opacity: .8;
+		pointer-events: none;
+		background-image: var(--g);
+	}
+
+	&.show {
+		opacity: 1;
+		pointer-events: unset;
+	}
+
+	&.top {
+		--g: linear-gradient(#111, #0000);
+		top: 0;
+		bottom: unset;
+
+		&::before,
+		&::after {
+			top: 0;
+			bottom: unset;
+		}
+	}
+}
+
+input[type=range][orient=vertical] {
+	appearance: slider-vertical;
+	width: 8px;
+	height: 100%;
+	padding: 0 5px;
+	transition: all .25s ease-in-out;
+
+	&:focus {
+		height: 175px;
+		height: 50vh;
+	}
+}
+
+.viewModeBar {
+	display: flex;
+	margin-left: auto;
+	gap: 1ch;
+
+	--size-3: 1ch;
+	--size-1: 1ch;
+	--radius-2: .5ch;
+	--surface-2: hsl(203.44 8% 16%);
+	--surface-1: #ffd60a;
+	--link: #166496;
+
+	>div {
+		display: grid;
+		align-items: center;
+		grid-auto-flow: column;
+		grid-template-columns: auto 1fr;
+
+		>* {
+			grid-area: 1/1;
+		}
+
+		>label {
+			padding-inline: var(--size-3);
+			padding-block: var(--size-1);
+			border-radius: var(--radius-2);
+			cursor: pointer;
+
+			background: var(--surface-2);
+
+		}
+
+		>input {
+			appearance: none;
+			background: none;
+			border: none;
+			inline-size: 100%;
+			block-size: 100%;
+			margin: 0;
+			padding: 0;
+
+			&:checked~label {
+				background-color: var(--link);
+				color: var(--surface-1);
+			}
+
+			&:not(:checked):is(:focus-within, :hover)~label {
+				color: var(--link);
+			}
+		}
+	}
+}
+
+app-warm-filter {
+	position: fixed;
+}

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ImgurService } from '../data-access/imgur.service';
+import { CompositionEpisode } from '../../shared/utils';
+import { BehaviorSubject, Subject, catchError, finalize, forkJoin, of, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-imgur-shell',
@@ -8,12 +10,27 @@ import { ImgurService } from '../data-access/imgur.service';
   styleUrl: './imgur-shell.component.scss'
 })
 export class ImgurShellComponent {
+  error$ = new BehaviorSubject<string | null>(null);
+  loading$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private route: ActivatedRoute, public imgur: ImgurService) {}
+  episode$ = this.route.paramMap.pipe(
+    switchMap(params => {
+      const id = params?.get('id');
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+      if (!id) return of(null);
 
-    console.log(id);
-  }
+      this.loading$.next(true);
+
+      return (this.imgur.getComposition(id)).pipe(
+        catchError(() => {
+          this.error$.next('Data loading error. Please try again later.');
+
+          return of(null);
+        }),
+        finalize(() => this.loading$.next(false))
+      );
+    })
+  );
+
+  constructor(private route: ActivatedRoute, public imgur: ImgurService) { }
 }

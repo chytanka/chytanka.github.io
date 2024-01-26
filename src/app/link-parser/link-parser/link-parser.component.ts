@@ -6,7 +6,10 @@ import { ActivatedRoute , Router} from '@angular/router';
 @Component({
   selector: 'app-link-parser',
   templateUrl: './link-parser.component.html',
-  styleUrl: './link-parser.component.scss'
+  styleUrls: [
+    './link-parser.component.scss',
+    './link-parser.dual-screen.component.scss'
+  ]
 })
 export class LinkParserComponent {
 

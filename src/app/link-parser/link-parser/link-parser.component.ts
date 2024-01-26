@@ -40,7 +40,7 @@ export class LinkParserComponent {
   }
 
   async initFromclipboard() {
-    const text = await navigator.clipboard.readText()
+    const text = await navigator.clipboard?.readText()
     this.link.set(text ?? '')
 
     if (!this.linkParams()) { this.link.set('') }

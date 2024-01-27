@@ -1,0 +1,62 @@
+:host {
+	--g: linear-gradient(#0000, #111);
+
+	display: flex;
+	gap: 1ch;
+	align-items: center;
+	opacity: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	padding: 1ch 1rem;
+	pointer-events: none;
+	transition: opacity .1s cubic-bezier(.4, 0, 1, 1);
+
+	font-size: 14px;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		pointer-events: none;
+	}
+
+	&::before {
+		z-index: -2;
+		left: 0;
+		backdrop-filter: blur(1rem);
+		-webkit-mask-box-image: var(--g);
+		mask-border: var(--g);
+	}
+
+	&::after {
+		z-index: -1;
+		background-image: var(--g);
+	}
+
+	&.show {
+		opacity: 1;
+		pointer-events: unset;
+	}
+
+	&.top {
+		--g: linear-gradient(#111, #0000);
+		top: 0;
+		bottom: unset;
+
+		&::before,
+		&::after {
+			top: 0;
+			bottom: unset;
+		}
+	}
+}

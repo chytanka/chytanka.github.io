@@ -1,0 +1,51 @@
+:host {
+	display: flex;
+	gap: 1ch;
+
+	--size-3: 1ch;
+	--size-1: 1ch;
+	--radius-2: .5ch;
+	--surface-2: hsl(203.44 8% 16%);
+	--surface-1: #ffd60a;
+	--link: #166496;
+
+	>div {
+		display: grid;
+		align-items: center;
+		grid-auto-flow: column;
+		grid-template-columns: auto 1fr;
+
+		>* {
+			grid-area: 1/1;
+		}
+
+		>label {
+			padding-inline: var(--size-3);
+			padding-block: var(--size-1);
+			border-radius: var(--radius-2);
+			cursor: pointer;
+
+			background: var(--surface-2);
+
+		}
+
+		>input {
+			appearance: none;
+			background: none;
+			border: none;
+			inline-size: 100%;
+			block-size: 100%;
+			margin: 0;
+			padding: 0;
+
+			&:checked~label {
+				background-color: var(--link);
+				color: var(--surface-1);
+			}
+
+			&:not(:checked):is(:focus-within, :hover)~label {
+				color: var(--link);
+			}
+		}
+	}
+}

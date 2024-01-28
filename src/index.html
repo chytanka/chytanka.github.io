@@ -2,12 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Chytanka</title>
+  <title>Chytanka — read it easily and comfortably!</title>
+  <meta name="description" content="Chytanka is a PWA designed for comfortable manga and comic reading. The minimalist design and the night mode feature make reading easy and comfortable.">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#002741">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Chytanka — read it easily and comfortably!">
+  <meta property="og:description" content="Chytanka is a PWA designed for comfortable manga and comic reading. The minimalist design and the night mode feature make reading easy and comfortable.">
+  <meta property="og:image" content="assets/og_image.png">
+
+  <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Chytanka",
+      "operatingSystem": "Cross-platform",
+      "applicationCategory": "Entertainment",
+      "description": "Chytanka is a PWA designed for comfortable manga and comic reading. The minimalist design and the night mode feature make reading easy and comfortable.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "ratingCount": "1"
+      }
+    }
+    </script>
 </head>
 <body>
   <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>

@@ -1,0 +1,31 @@
+:host:has(.view.long) {
+	--ratio: auto;
+	overflow-y: auto;
+	container-type: unset;
+	container-name: unset;
+	touch-action: pan-y;
+}
+
+.view.long {
+	// max-width: 100%;
+	margin: 0 auto;
+
+	&>div {
+		display: block;
+		width: 100%;
+
+		.page {
+			display: block;
+			width: 100%;
+
+			img {
+				display: block;
+				width: auto;
+				margin: 0 auto;
+				max-width: 100%;
+				height: auto;
+				position: relative;
+			}
+		}
+	}
+}

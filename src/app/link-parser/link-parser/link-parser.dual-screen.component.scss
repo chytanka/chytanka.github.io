@@ -1,0 +1,19 @@
+@media (horizontal-viewport-segments: 2) {
+    :host {
+        --segments-gap: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0) + 0rem);
+        grid-template-columns: 1fr 1fr;
+        column-gap: var(--segments-gap);
+    }
+
+    app-text-embracer {
+        font-size: clamp(1rem, 5vw, 4rem);
+    }
+}
+
+@media (vertical-viewport-segments: 2) {
+    :host {
+        --segments-gap: calc(env(viewport-segment-top 1 0) - env(viewport-segment-bottom 0 0) + 0rem);
+        grid-template-rows: 1fr 1fr;
+        row-gap: var(--segments-gap);
+    }
+}

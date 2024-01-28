@@ -46,6 +46,7 @@ export class ImgurService {
     const res: CompositionEpisode = {
       title: data.title,
       episode: 0,
+      nsfw: (data.nsfw) as unknown as boolean,
       images: data.images.map((i): CompositionImage => {
         return {
           src: i.link,

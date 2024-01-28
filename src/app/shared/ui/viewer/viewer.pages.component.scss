@@ -1,0 +1,106 @@
+.view.pages {
+	--r: 0;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	scroll-snap-type: x mandatory;
+	display: flex;
+	user-select: none;
+	touch-action: pan-x;
+	// filter: drop-shadow(0 0 1ch black);
+	
+	&>div {
+		width: 50%;
+		height: var(--H);
+		flex: 1 0 auto;
+		display: grid;
+
+		.page {
+			border-radius: 0 var(--r) var(--r) 0;
+			position: relative;
+		}
+
+		img {
+			object-position: left;
+		}
+
+		&:nth-child(odd) {
+			direction: rtl;
+			scroll-snap-align: start;
+
+			.page {
+				border-radius: var(--r) 0 0 var(--r);
+			}
+
+			img {
+				object-position: right;
+			}
+		}
+
+		&.copyright-content.dual {
+			width: 100%;
+		}
+	}
+
+	.page {
+		overflow: hidden;
+		max-width: 100%;
+		max-height: var(--H);
+		margin: auto 0;
+
+		display: grid;
+		place-items: center;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			max-height: var(--H);
+			object-fit: contain;
+		}
+	}
+}
+
+.view.pages[dir="rtl"] {
+	direction: rtl;
+
+	.page {
+		border-radius: var(--r) 0 0 var(--r);
+	}
+
+	&>div {
+		img {
+			object-position: right;
+		}
+
+		&:nth-child(odd) {
+			direction: ltr;
+
+			.page {
+				border-radius: 0 var(--r) var(--r) 0;
+			}
+
+			img {
+				object-position: left;
+			}
+		}
+	}
+}
+
+@container view (max-aspect-ratio: 1) {
+	.view.pages>div {
+		width: 100%;
+		scroll-snap-align: start;
+
+		.page {
+			border-radius: var(--r);
+			direction: inherit;
+			margin: auto;
+			width: 100%;
+
+		}
+
+		img {
+			object-position: center !important;
+		}
+	}
+}

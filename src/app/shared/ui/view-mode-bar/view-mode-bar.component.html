@@ -1,0 +1,9 @@
+<div *ngFor="let option of options">
+    <input type="radio" name="radio" id="mode-{{option.mode}}-{{option.dir}}" [checked]="value == option"
+        [value]="option" (input)="onChange(option)" />
+
+    <label for="mode-{{option.mode}}-{{option.dir}}">
+        {{option.emoji}}
+    </label>
+
+</div>

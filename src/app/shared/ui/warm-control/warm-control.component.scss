@@ -1,0 +1,46 @@
+:host{
+    --size-3: 1ch;
+	--size-1: 1ch;
+	--radius-2: .5ch;
+	--surface-2: hsl(203.44 8% 16%);
+	--surface-1: #ffd60a;
+	--link: #166496;
+    position: relative;
+}
+
+input[type=range][orient=vertical] {
+    // appearance: slider-vertical;
+    writing-mode: vertical-rl;
+    width: 8px;
+    height: 0;
+    padding: 0 5px;
+    transition: all .25s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+
+    position: absolute; 
+    bottom: calc(100% + 1ch); right: 0%;
+
+    &:focus {
+        height: 175px;
+        height: 50vh;
+        opacity: 1;
+    pointer-events: unset;
+    }
+}
+
+
+label {
+    padding-inline: var(--size-3);
+    padding-block: var(--size-1);
+    border-radius: var(--radius-2);
+    cursor: pointer;
+display: block;
+    background: var(--surface-2);
+
+}
+
+:host:has(input[type=range][orient=vertical]:focus)  label {
+    background-color: var(--link);
+				color: var(--surface-1);
+}

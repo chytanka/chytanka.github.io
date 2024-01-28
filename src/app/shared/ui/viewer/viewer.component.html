@@ -1,46 +1,44 @@
-<div #viewRef class="view" [class]="viewModeOption.mode" [dir]="viewModeOption.dir" id="pages"
-    (dblclick)="toggleFullScreen()" (click)="onClick()">
-    <div *ngFor="let img of episode?.images">
-        <div class="page">
-            <img [src]="img.src" [alt]="img.alt" loading="lazy">
-        </div>
-    </div>
+<div #viewRef class="view" [class]="viewer.viewModeOption.mode" (scroll)="initActiveIndexes()"
+    [dir]="viewer.viewModeOption.dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
     <div>
-        <div class="page"><ng-content /></div>
-       
-    </div>
-    <div *ngIf="(episode?.images?.length??0) % 2 == 0"><div class="page"></div></div>
-
-</div>
-<div class="overlay" [ngClass]="{'show': showOverlay}">
-
-
-    <div style="position: relative; aspect-ratio: 1; width: 1rem;">
-        <input style="position: absolute; bottom: 0;" id="warm-range" type="range" orient="vertical" min="0" max="1"
-            step="0.01" [(ngModel)]="warm">
-
-    </div>
-    <label for="warm-range">☀️</label>
-
-    <button style="margin-left: auto;" (click)="toggleFullScreen()">
-        <code>⛶</code>
-    </button>
-</div>
-<div class="overlay top" [ngClass]="{'show': showOverlay}">
-    <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
-
-    <div class="viewModeBar">
-        <div *ngFor="let option of viewModeOptions">
-            <input type="radio" name="radio" id="mode-{{option.mode}}-{{option.dir}}" [(ngModel)]="viewModeOption"
-                [value]="option" />
-
-            <label for="mode-{{option.mode}}-{{option.dir}}">
-                {{option.title}}
-            </label>
-
+        <div class="page">
+            <app-nsfw-warning style="position: unset;" (agree)="onAgree()" (disagree)="onDisagree()"
+                *ngIf="episode?.nsfw && !showNsfw()" />
+            <h1 style="text-align: center;">{{viewer.viewModeOption.title}}<br />{{viewer.viewModeOption.emoji}}</h1>
         </div>
     </div>
+
+    <div class="images" *ngFor="let img of episode?.images, let i = index">
+        <div class="page">
+            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" *ngIf="episode?.nsfw && !showNsfw()" />
+            <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
+
+                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height"
+                    loading="lazy">
+            </figure>
+        </div>
+    </div>
+
+    <div class="copyright-content" [ngClass]="{'dual': (episode?.images?.length??0) % 2 > 0}">
+        <div class="page"><ng-content /></div>
+    </div>
+
 </div>
 
-<app-warm-filter class="filter" [value]="warm" />
+<app-overlay [ngClass]="{'show': showOverlay}">
+    <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
+    <app-pages-indicator style="margin: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images"
+        [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir" (active)="onActive($event)" />
+    <button (click)="toggleFullScreen()">
+        🖥️
+    </button>
+</app-overlay>
+
+<app-overlay class="top" [ngClass]="{'show': showOverlay}">
+    <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
+    <app-view-mode-bar (valueChange)="viewer.viewModeOption = $event" [options]="viewer.viewModeOptions"
+        [value]="viewer.viewModeOption" />
+</app-overlay>
+
+<app-warm-filter class="filter" [value]="viewer.warm" />

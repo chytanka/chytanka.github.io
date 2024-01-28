@@ -45,7 +45,19 @@ interface MdChapterResp {
   data: MdChapterData
 }
 
-
+interface MdMangaDataAttr {
+  contentRating: "pornographic" | "erotica" | "safe" | "suggestive"
+}
+interface MdMangaData {
+  id: string;
+  type: string;
+  attributes: MdMangaDataAttr;
+}
+interface MdMangaResp {
+  result: string,
+  response: string,
+  data: MdMangaData
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -72,6 +84,7 @@ export class MangadexService {
       .pipe(
         map((data: MdChapterResp) => {
           return {
+            mangaId: data.data.relationships.filter(r => r.type == "manga")[0].id ?? null,
             title: data.data.attributes.title,
             episode: data.data.attributes.chapter,
             volume: data.data.attributes.volume,
@@ -84,8 +97,22 @@ export class MangadexService {
       )
   }
 
-}
 
+  getManga(id: string): Observable<{ nsfw: boolean }> {
+    return this.http.get<MdMangaResp>(environment.mangadexManga + id).pipe(this.nsfwMap())
+  }
+
+  nsfwMap() {
+    return map((data: MdMangaResp) => {
+      const contentRating = data.data.attributes.contentRating;
+      return {
+        nsfw: (contentRating == "pornographic" || contentRating == "erotica")
+      }
+    })
+  }
+
+
+}
 
 
 /*

@@ -6,6 +6,11 @@ import { ViewerComponent } from './ui/viewer/viewer.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { WarmFilterComponent } from './ui/warm-filter/warm-filter.component';
+import { OverlayComponent } from './ui/overlay/overlay.component';
+import { ViewModeBarComponent } from './ui/view-mode-bar/view-mode-bar.component';
+import { WarmControlComponent } from './ui/warm-control/warm-control.component';
+import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.component';
+import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
 
 
 
@@ -14,7 +19,12 @@ import { WarmFilterComponent } from './ui/warm-filter/warm-filter.component';
     TruncatePipe,
     TextEmbracerComponent,
     ViewerComponent,
-    WarmFilterComponent
+    WarmFilterComponent,
+    OverlayComponent,
+    ViewModeBarComponent,
+    WarmControlComponent,
+    PagesIndicatorComponent,
+    NsfwWarningComponent
   ],
   imports: [
     CommonModule,

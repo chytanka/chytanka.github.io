@@ -9,6 +9,7 @@ import { WarmFilterComponent } from './ui/warm-filter/warm-filter.component';
 import { OverlayComponent } from './ui/overlay/overlay.component';
 import { ViewModeBarComponent } from './ui/view-mode-bar/view-mode-bar.component';
 import { WarmControlComponent } from './ui/warm-control/warm-control.component';
+import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.component';
 
 
 
@@ -20,7 +21,8 @@ import { WarmControlComponent } from './ui/warm-control/warm-control.component';
     WarmFilterComponent,
     OverlayComponent,
     ViewModeBarComponent,
-    WarmControlComponent
+    WarmControlComponent,
+    PagesIndicatorComponent
   ],
   imports: [
     CommonModule,

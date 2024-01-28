@@ -1,0 +1,2 @@
+<!-- <a *ngFor="let img of images, let i = index" [fragment]="('page_'+(i+1))" [routerLink]="[]">{{i+1}}</a> -->
+<div *ngFor="let img of images, let i = index" [ngClass]="{active: isActive(i)}" (click)="onActive(i)">{{i+1}}</div>

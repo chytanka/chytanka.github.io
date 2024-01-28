@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, signal } from '@angular/core';
 import { CompositionEpisode } from '../../utils';
 import { ViewerService, DomManipulationService } from '../../data-access';
 
@@ -18,16 +18,59 @@ export class ViewerComponent {
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
-  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService) { }
+  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService) {}
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
 
   showOverlay: boolean = true;
   toggleOverlay = () => this.showOverlay = !this.showOverlay;
 
-  viewElement!: HTMLElement;
+  // viewElement!: HTMLElement;
+  viewElement: WritableSignal<HTMLElement> = signal(document.createElement('div'));
+  imageElements: Signal<NodeListOf<Element>> = computed(() => this.viewElement().querySelectorAll('.page img[id*=page_]'));
+  imgsPos: any[] = []
+
   ngAfterViewInit() {
-    this.viewElement = this.viewRef.nativeElement;
+    this.viewElement.set(this.viewRef.nativeElement);
+    this.initActiveIndexes()
+  }
+
+  activeIndexs: WritableSignal<number[]> = signal([])
+  initActiveIndexes() {
+    const isPageMode = this.viewer.viewModeOption.mode == 'pages';
+
+    const viewRect: DOMRect = isPageMode
+      ? this.viewElement().getBoundingClientRect()
+      : this.el.nativeElement.getBoundingClientRect();
+
+    let activeIndxs: number[] = [];
+
+    for (let i = 0; i < this.imageElements().length; i++) {
+      const img = this.imageElements()[i];
+      const rect = img.getBoundingClientRect();
+
+      const hor = rect.right > viewRect.x && rect.right < viewRect.x + viewRect.width + 1;
+
+      const ver = rect.top < viewRect.height && rect.bottom > viewRect.top
+     
+      if (isPageMode ? hor : ver) {
+        activeIndxs.push(i)
+      }
+
+    }
+
+    this.activeIndexs.set(activeIndxs);
+  }
+
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event) {
+    this.initActiveIndexes()
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.initActiveIndexes()
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -43,10 +86,10 @@ export class ViewerComponent {
         this.toggleFullScreen()
         break;
       case 'KeyA':
-        this.dm.scrollHor(this.viewElement, -horAmount)
+        this.dm.scrollHor(this.viewElement(), -horAmount)
         break;
       case 'KeyD':
-        this.dm.scrollHor(this.viewElement, horAmount)
+        this.dm.scrollHor(this.viewElement(), horAmount)
         break;
       case 'KeyW':
         this.dm.scrollVer(element, -verAmount)
@@ -64,12 +107,19 @@ export class ViewerComponent {
 
     const revers: number = this.viewer.viewModeOption.dir == "ltr" ? 1 : -1
 
-    const scrollAmountX = this.viewElement.clientWidth;
+    const scrollAmountX = this.viewElement().clientWidth;
 
     if (event.deltaY !== 0 && !event.shiftKey) {
-      this.viewElement.scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
+      this.viewElement().scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
 
       event.preventDefault();
     }
+  }
+
+
+  onActive(pageIndex: number) {
+    const foo = this.viewElement().querySelector(`#page_${pageIndex + 1}`)
+    const opt: ScrollIntoViewOptions = { behavior: "smooth", block: "start", inline: "center" }
+    foo?.scrollIntoView(opt)
   }
 }

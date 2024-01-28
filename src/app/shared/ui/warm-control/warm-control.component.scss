@@ -5,6 +5,7 @@
 	--surface-2: hsl(203.44 8% 16%);
 	--surface-1: #ffd60a;
 	--link: #166496;
+    position: relative;
 }
 
 input[type=range][orient=vertical] {
@@ -18,7 +19,7 @@ input[type=range][orient=vertical] {
     pointer-events: none;
 
     position: absolute; 
-    bottom: 0; left: 50%;
+    bottom: calc(100% + 1ch); right: 0%;
 
     &:focus {
         height: 175px;

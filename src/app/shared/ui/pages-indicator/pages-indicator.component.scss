@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+div {
+    background-color: var(--surface);
+    padding: 1ch;
+    font-size: x-small;
+    color: inherit;
+    text-decoration: none;
+    flex: 1 0 auto;
+    user-select: none;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+    transition: all .1s ease-in-out;
+
+    &:hover, &.active {
+        color: #ffd60a;
+        background-color: #166496;
+        transform: translateY(-.25ch)
+    }
+}
+
+:host.pages {
+    div:nth-child(even) {
+        margin-right: 1ch;
+    }
+}
+:host.pages[dir=ltr] {
+    div:nth-child(odd) {
+        margin-right: 1ch;
+    }
+    div:nth-child(even) {
+        margin-right: 0;
+    }
+}

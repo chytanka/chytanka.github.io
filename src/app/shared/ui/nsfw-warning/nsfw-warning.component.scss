@@ -1,0 +1,50 @@
+:host {
+    --surface-2: rgb(0, 39, 65);
+    --surface-1: #ffd60a;
+    --link: #166496;
+
+    display: grid;
+    gap: 4ch;
+    padding: 2ch;
+    direction: ltr;
+}
+
+input {
+    border: 0;
+    white-space: normal;
+    text-wrap: balance;
+    font: inherit;
+    color: inherit;
+    padding-inline: 2ch;
+    padding-block: 2ch;
+    border-radius: 1ch;
+    cursor: pointer;
+
+    background: var(--surface-2);
+
+    &:hover {
+        background-color: var(--link);
+        color: var(--surface-1);
+    }
+
+    &.agree {
+        background-color: transparent;
+        &:hover{
+            color: var(--link);
+        }
+    }
+}
+
+header {
+    font-size: larger;
+}
+
+div {
+    text-wrap: balance;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1ch;
+}

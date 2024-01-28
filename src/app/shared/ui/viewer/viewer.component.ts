@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, signal } from '@angular/core';
 import { CompositionEpisode } from '../../utils';
 import { ViewerService, DomManipulationService } from '../../data-access';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-viewer',
@@ -13,12 +14,13 @@ import { ViewerService, DomManipulationService } from '../../data-access';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewerComponent {
+  showNsfw: WritableSignal<boolean> = signal(false);
 
   @Input() episode: CompositionEpisode | undefined = undefined;
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
-  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService) {}
+  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router) { }
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
 
@@ -52,7 +54,7 @@ export class ViewerComponent {
       const hor = rect.right > viewRect.x && rect.right < viewRect.x + viewRect.width + 1;
 
       const ver = rect.top < viewRect.height && rect.bottom > viewRect.top
-     
+
       if (isPageMode ? hor : ver) {
         activeIndxs.push(i)
       }
@@ -66,7 +68,6 @@ export class ViewerComponent {
   onScroll(event: Event) {
     this.initActiveIndexes()
   }
-
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -116,10 +117,32 @@ export class ViewerComponent {
     }
   }
 
-
   onActive(pageIndex: number) {
     const foo = this.viewElement().querySelector(`#page_${pageIndex + 1}`)
     const opt: ScrollIntoViewOptions = { behavior: "smooth", block: "start", inline: "center" }
     foo?.scrollIntoView(opt)
+  }
+
+  showNsfwToggle() {
+    this.showNsfw.set(!this.showNsfw())
+  }
+
+  onViewClick(event: Event) {
+    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+    
+    this.toggleOverlay();
+  }
+  onViewDblClick(event: Event) {
+    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+    
+    this.toggleFullScreen();
+  }
+
+  onAgree(){
+    this.showNsfw.set(true);
+  }
+
+  onDisagree(){
+    this.router.navigate(['/'])
   }
 }

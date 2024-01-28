@@ -11,7 +11,8 @@ export interface CompositionImage {
 export interface CompositionEpisode {
     title: string;
     episode: number;
-
+    nsfw?: boolean | undefined;
+    mangaId?: string;
     volume?: number;
     chapter?: number;
     part?: number;

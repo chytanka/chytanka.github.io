@@ -1,16 +1,21 @@
-<div #viewRef class="view" [class]="viewer.viewModeOption.mode" (scroll)="initActiveIndexes()" [dir]="viewer.viewModeOption.dir"
-    (dblclick)="toggleFullScreen()" (click)="toggleOverlay()">
+<div #viewRef class="view" [class]="viewer.viewModeOption.mode" (scroll)="initActiveIndexes()"
+    [dir]="viewer.viewModeOption.dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
     <div>
         <div class="page">
+            <app-nsfw-warning style="position: unset;" (agree)="onAgree()" (disagree)="onDisagree()"
+                *ngIf="episode?.nsfw && !showNsfw()" />
             <h1 style="text-align: center;">{{viewer.viewModeOption.title}}<br />{{viewer.viewModeOption.emoji}}</h1>
         </div>
     </div>
 
-    <div  class="images" *ngFor="let img of episode?.images, let i = index">
+    <div class="images" *ngFor="let img of episode?.images, let i = index">
         <div class="page">
-            <figure >
-                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height" loading="lazy">
+            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" *ngIf="episode?.nsfw && !showNsfw()" />
+            <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
+
+                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height"
+                    loading="lazy">
             </figure>
         </div>
     </div>
@@ -23,7 +28,8 @@
 
 <app-overlay [ngClass]="{'show': showOverlay}">
     <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
-    <app-pages-indicator style="margin: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images" [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir" (active)="onActive($event)" />
+    <app-pages-indicator style="margin: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images"
+        [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir" (active)="onActive($event)" />
     <button (click)="toggleFullScreen()">
         🖥️
     </button>
@@ -31,7 +37,8 @@
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
     <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
-    <app-view-mode-bar (valueChange)="viewer.viewModeOption = $event" [options]="viewer.viewModeOptions" [value]="viewer.viewModeOption" />
+    <app-view-mode-bar (valueChange)="viewer.viewModeOption = $event" [options]="viewer.viewModeOptions"
+        [value]="viewer.viewModeOption" />
 </app-overlay>
 
 <app-warm-filter class="filter" [value]="viewer.warm" />

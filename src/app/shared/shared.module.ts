@@ -10,6 +10,7 @@ import { OverlayComponent } from './ui/overlay/overlay.component';
 import { ViewModeBarComponent } from './ui/view-mode-bar/view-mode-bar.component';
 import { WarmControlComponent } from './ui/warm-control/warm-control.component';
 import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.component';
+import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
 
 
 
@@ -22,7 +23,8 @@ import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.co
     OverlayComponent,
     ViewModeBarComponent,
     WarmControlComponent,
-    PagesIndicatorComponent
+    PagesIndicatorComponent,
+    NsfwWarningComponent
   ],
   imports: [
     CommonModule,

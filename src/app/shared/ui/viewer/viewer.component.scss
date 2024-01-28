@@ -24,10 +24,30 @@ app-view-mode-bar{
 	margin-left: auto;
 }
 
+.page {
+	position: relative;
+}
+app-nsfw-warning {
+	position: absolute;
+	z-index: 1;
+	max-width: 400px;
+}
+
 figure {
 	margin: 0;
 	justify-self: baseline;
+	position: relative;
+
+	&.nsfw {
+		filter: blur(4rem) brightness(.1);
+		transition: all .25s ease-in-out;
+	}
+	&.nsfw.show {
+		filter: blur(0) brightness(1);
+	}
 }
+
+
 
 :host {
 	--size-3: 1ch;

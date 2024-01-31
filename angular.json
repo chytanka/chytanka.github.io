@@ -53,6 +53,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/.well-known",
               "src/manifest.webmanifest",
               "src/manifest-uk.webmanifest"
             ],
@@ -127,6 +128,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/.well-known",
               "src/manifest.webmanifest",
               "src/manifest-uk.webmanifest"
             ],

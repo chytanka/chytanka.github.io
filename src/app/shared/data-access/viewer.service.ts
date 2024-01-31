@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 export interface ViewModeOption {
   dir: "rtl" | "ltr";
   mode: "pages" | "long"
-  title: string;
   code: string;
   emoji: string;
+  hintPhraceKey: string;
 }
 
 export const VIEV_MODE_OPTIONS: ViewModeOption[] = [
-  { dir: "rtl", mode: "pages", title: "Scroll left", code: "", emoji: "⬅️" },
-  { dir: "ltr", mode: "pages", title: "Scroll right", code: "", emoji: "➡️" },
-  { dir: "ltr", mode: "long", title: "Scroll down", code: "", emoji: "⬇️" },
+  { dir: "rtl", mode: "pages", hintPhraceKey: "scrollLeft", code: "", emoji: "⬅️" },
+  { dir: "ltr", mode: "pages", hintPhraceKey: "scrollRight", code: "", emoji: "➡️" },
+  { dir: "ltr", mode: "long", hintPhraceKey: "scrollDown", code: "", emoji: "⬇️" },
 ]
 
 @Injectable({

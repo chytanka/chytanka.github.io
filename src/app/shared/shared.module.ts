@@ -31,6 +31,6 @@ import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent]
 })
 export class SharedModule { }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Si
 import { CompositionEpisode } from '../../utils';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { Router } from '@angular/router';
+import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-viewer',
@@ -20,7 +21,7 @@ export class ViewerComponent {
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
-  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router) { }
+  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) { }
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
 

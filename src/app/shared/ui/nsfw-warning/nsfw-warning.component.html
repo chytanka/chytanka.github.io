@@ -2,6 +2,6 @@
 <header>{{title}}</header>
 <div [innerHTML]="text"></div>
 <footer>
-    <input class="agree" type="button" (click)="onAgree()" value="Ready for the wild side!" />
-    <input type="button" (click)="onDisagree()" value="I'll pass, let's keep it safe." />
+    <input class="agree" type="button" (click)="onAgree()" [value]="labelAgree" />
+    <input type="button" (click)="onDisagree()" [value]="labelDisagree" />
 </footer>

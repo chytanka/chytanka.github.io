@@ -4,14 +4,15 @@
     <div>
         <div class="page">
             <app-nsfw-warning style="position: unset;" (agree)="onAgree()" (disagree)="onDisagree()"
-                *ngIf="episode?.nsfw && !showNsfw()" />
-            <h1 style="text-align: center;">{{viewer.viewModeOption.title}}<br />{{viewer.viewModeOption.emoji}}</h1>
+                *ngIf="episode?.nsfw && !showNsfw()" [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+            <h1 style="text-align: center;">
+                {{lang.phrases.getByKey(viewer.viewModeOption.hintPhraceKey)}}<br />{{viewer.viewModeOption.emoji}}</h1>
         </div>
     </div>
 
     <div class="images" *ngFor="let img of episode?.images, let i = index">
         <div class="page">
-            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" *ngIf="episode?.nsfw && !showNsfw()" />
+            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" *ngIf="episode?.nsfw && !showNsfw()" [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree"/>
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
 
                 <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height"
@@ -28,9 +29,9 @@
 
 <app-overlay [ngClass]="{'show': showOverlay}">
     <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
-    <app-pages-indicator style="margin: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images"
+    <app-pages-indicator style="margin: auto; overflow-x: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images"
         [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir" (active)="onActive($event)" />
-    <button (click)="toggleFullScreen()">
+    <button (click)="toggleFullScreen()" [title]="lang.phrases.fullscreen">
         🖥️
     </button>
 </app-overlay>

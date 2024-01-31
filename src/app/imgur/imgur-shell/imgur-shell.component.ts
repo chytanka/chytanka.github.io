@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ImgurService } from '../data-access/imgur.service';
 import { CompositionEpisode } from '../../shared/utils';
 import { BehaviorSubject, Subject, catchError, finalize, forkJoin, of, switchMap, takeUntil } from 'rxjs';
+import { LangService } from '../../shared/data-access/lang.service';
 
 @Component({
   selector: 'app-imgur-shell',
@@ -23,7 +24,7 @@ export class ImgurShellComponent {
 
       return (this.imgur.getComposition(id)).pipe(
         catchError(() => {
-          this.error$.next('Data loading error. Please try again later.');
+          this.error$.next(this.lang.phrases.dataLoadErr);
 
           return of(null);
         }),
@@ -32,5 +33,5 @@ export class ImgurShellComponent {
     })
   );
 
-  constructor(private route: ActivatedRoute, public imgur: ImgurService) { }
+  constructor(private route: ActivatedRoute, public imgur: ImgurService, public lang: LangService) { }
 }

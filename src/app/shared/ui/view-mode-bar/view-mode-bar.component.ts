@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-view-mode-bar',
@@ -13,5 +14,8 @@ export class ViewModeBarComponent {
 
   onChange(value: any) {
     this.valueChange.emit(value)
+  }
+
+  constructor(public lang: LangService) {
   }
 }

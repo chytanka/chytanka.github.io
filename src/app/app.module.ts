@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,6 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SharedModule } from './shared/shared.module';
+
+import { LocaleProvider } from './shared/data-access/locale.provider';
+import { registerLocaleData } from '@angular/common';
+import localeUk from "@angular/common/locales/uk";
+
+registerLocaleData(localeUk)
 
 @NgModule({
   declarations: [

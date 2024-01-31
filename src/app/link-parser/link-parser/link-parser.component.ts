@@ -2,7 +2,13 @@ import { Component, Signal, WritableSignal, computed, signal } from '@angular/co
 import { LinkParserService } from '../data-access/link-parser.service';
 import { ImgurLinkParser, MangadexLinkParser } from '../utils';
 import { ActivatedRoute , Router} from '@angular/router';
+import { LangService } from '../../shared/data-access/lang.service';
+import { ViewModeOption } from '../../shared/data-access';
 
+const LANG_OPTIONS: ViewModeOption[] = [
+  { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
+  { dir: "ltr", mode: "pages", hintPhraceKey: "ukrainian", code: "uk", emoji: "🇺🇦" }
+]
 @Component({
   selector: 'app-link-parser',
   templateUrl: './link-parser.component.html',
@@ -16,9 +22,14 @@ export class LinkParserComponent {
   link: WritableSignal<string> = signal('');
   linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
 
+  langOpt = LANG_OPTIONS
 
-  constructor(private route: ActivatedRoute, private router: Router, public parser: LinkParserService) {
+  optLangValue = () => this.langOpt.filter((opt: any)=>opt.code == this.lang.lang())[0]
+
+  constructor(private route: ActivatedRoute, private router: Router, public parser: LinkParserService, public lang: LangService) {
     this.initParser();
+  //  console.log( this.);
+   
   }
 
   initParser() {
@@ -33,10 +44,10 @@ export class LinkParserComponent {
   }
 
   ngOnInit() {
-    const q: string | null = this.route.snapshot.queryParamMap.get('q');
+    const url: string | null = this.route.snapshot.queryParamMap.get('url');
 
-    if (q) {
-      this.link.set(q ?? '')
+    if (url) {
+      this.link.set(url ?? '')
     } else {
       this.initFromclipboard();
     }

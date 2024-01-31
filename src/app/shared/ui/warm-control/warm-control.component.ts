@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-warm-control',
@@ -15,4 +16,6 @@ export class WarmControlComponent {
     const v = parseFloat((event.target as HTMLInputElement).value)
     this.valueChange.emit(v)
   }
+
+  constructor(public lang: LangService){}
 }

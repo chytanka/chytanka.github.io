@@ -2,7 +2,7 @@
     <input type="radio" name="radio" id="mode-{{option.mode}}-{{option.dir}}" [checked]="value == option"
         [value]="option" (input)="onChange(option)" />
 
-    <label for="mode-{{option.mode}}-{{option.dir}}">
+    <label for="mode-{{option.mode}}-{{option.dir}}" [title]="lang.phrases.getByKey(option.hintPhraceKey)">
         {{option.emoji}}
     </label>
 

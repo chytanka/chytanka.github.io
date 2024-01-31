@@ -1,0 +1,90 @@
+{
+  "name": "Читанка — читай легко і комфортно!",
+  "short_name": "Читанка",
+  "description": "Читанка це прогресивний веб-застосунок для комфортного читання манґи та коміксів. Мінімалістичний дизайн та функція нічного режиму роблять читання легким та комфортним.",
+  "categories": [
+    "entertainment",
+    "books",
+    "books",
+    "photo"
+  ],
+  "theme_color": "#002741",
+  "background_color": "#002741",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots" :[
+    {
+      "src": "assets/screenshots/wide-01.webp",
+      "sizes": "1720x1090",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Homescreen of Chytanka"
+    },
+    {
+      "src": "assets/screenshots/narrow-01.webp",
+      "sizes": "540x720",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Homescreen of Chytanka"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Колекції",
+      "url": "/collections",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    }
+  ]
+}

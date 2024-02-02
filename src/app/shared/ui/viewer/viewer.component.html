@@ -33,7 +33,7 @@
 
 <app-overlay [ngClass]="{'show': showOverlay}">
     <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
-    <app-pages-indicator style="margin: auto; overflow-x: auto;" [activeIndexs]="activeIndexs()"
+    <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir"
         (active)="onActive($event)" />
     <button (click)="toggleFullScreen()" [title]="lang.phrases.fullscreen">

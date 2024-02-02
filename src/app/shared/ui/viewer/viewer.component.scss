@@ -47,7 +47,15 @@ figure {
 	}
 }
 
-
+.loading-image {
+	position: absolute;
+	top: 50%; 
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 0; 
+	width: 100%;
+	padding: 2rem;
+}
 
 :host {
 	--size-3: 1ch;

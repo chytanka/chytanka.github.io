@@ -130,20 +130,26 @@ export class ViewerComponent {
 
   onViewClick(event: Event) {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
-    
+
     this.toggleOverlay();
   }
   onViewDblClick(event: Event) {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
-    
+
     this.toggleFullScreen();
   }
 
-  onAgree(){
+  onAgree() {
     this.showNsfw.set(true);
   }
 
-  onDisagree(){
+  onDisagree() {
     this.router.navigate(['/'])
+  }
+
+  preloadIndexes: Signal<number[]> = computed(() => this.activeIndexs().map(item => item + 1));
+
+  preLoad(i: number): boolean {
+    return (this.preloadIndexes()).includes((i))
   }
 }

@@ -19,7 +19,7 @@
                 [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText"
                 [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
-                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height"
+                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000" [height]="img.height ?? 1000"
                     [loading]="(i==0 || preLoad(i)) ? 'eager' : 'lazy'">
             </figure>
         </div>
@@ -32,7 +32,7 @@
 </div>
 
 <app-overlay [ngClass]="{'show': showOverlay}">
-    <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
+    <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir"
         (active)="onActive($event)" />
@@ -43,8 +43,8 @@
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
     <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
-    <app-view-mode-bar (valueChange)="viewer.viewModeOption = $event" [options]="viewer.viewModeOptions"
+    <app-view-mode-bar (valueChange)="viewer.setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption" />
 </app-overlay>
 
-<app-warm-filter class="filter" [value]="viewer.warm" />
+<app-warm-filter class="filter" [value]="viewer.nightlight()" />

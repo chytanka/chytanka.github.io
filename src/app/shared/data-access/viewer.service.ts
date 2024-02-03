@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 
 export interface ViewModeOption {
   dir: "rtl" | "ltr";
@@ -22,8 +22,31 @@ export class ViewerService {
 
   public viewModeOption = VIEV_MODE_OPTIONS[0];
 
-  public warm: number = 0;
+  nightlight: WritableSignal<number> = signal(0);
 
-  constructor() { }
+  constructor() { 
+    this.initNightlight();
+    this.initViewModeOption();
+  }
 
+  initNightlight() {
+    const n = Number(localStorage.getItem('nightlight')) ?? 0;
+    this.nightlight.set(n);
+  }
+
+  setNightlight(n: number) {
+    this.nightlight.set(n);
+    localStorage.setItem('nightlight', n.toString())
+  }
+
+  initViewModeOption() {
+    const localOpt: ViewModeOption = JSON.parse(localStorage.getItem('viewModeOption')?? '{}');
+    const opt:ViewModeOption = VIEV_MODE_OPTIONS.filter(o=>(o.dir == localOpt?.dir && o.mode == localOpt?.mode))[0] ?? VIEV_MODE_OPTIONS[0]
+    this.viewModeOption = opt;
+  }
+
+  setViewModeOption(opt: ViewModeOption) {
+    this.viewModeOption = opt;
+    localStorage.setItem('viewModeOption', JSON.stringify(opt))
+  }
 }

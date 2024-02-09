@@ -1,1 +1,3 @@
-<span *ngFor="let item of letters()">{{item}}</span>
+@for(item of letters(); track item) {
+<span>{{item}}</span>
+}

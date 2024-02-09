@@ -79,3 +79,35 @@ display: block;
 		color: var(--surface-1);
 	}
 }
+
+.key_button {
+	display: inline-grid;
+	place-content: center;
+	background-color: rgba(0,39,65,1);
+	border: 1px solid #166496;
+	aspect-ratio: 1;
+	height: 3.5ch;
+	padding: 1ch .75ch;
+	font-size: smaller;
+	border-radius: .5ch;
+	margin: 0 .25ch;
+	text-transform: uppercase;
+	font-family: monospace;
+	font-weight: bold;
+	line-height: 1ch;
+	box-shadow: 0 .35ch #166496;
+	color: #ffd60a;
+}
+
+.hotkeys_hint {
+	font-size: 1rem;
+	line-height: 2.5;
+	display: grid;
+	direction: ltr;
+	grid-template-columns: 1fr auto;
+	column-gap: 1ch;
+	& > span {
+		justify-self: end;
+		opacity: .8;
+	}
+}

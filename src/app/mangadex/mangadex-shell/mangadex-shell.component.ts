@@ -1,83 +1,45 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, finalize, forkJoin, map, of, switchMap, tap, throwError } from 'rxjs';
+import { forkJoin, map, of, switchMap } from 'rxjs';
 import { MangadexService } from '../data-access/mangadex.service';
-import { Title } from '@angular/platform-browser';
+import { Base64, ReadBaseComponent } from '../../shared/utils';
 
 @Component({
   selector: 'app-mangadex-shell',
   templateUrl: './mangadex-shell.component.html',
   styleUrl: './mangadex-shell.component.scss'
 })
-export class MangadexShellComponent {
-  error$ = new BehaviorSubject<string | null>(null);
-  loading$ = new BehaviorSubject<boolean>(false);
+export class MangadexShellComponent extends ReadBaseComponent {
 
-  // episode$ = this.route.paramMap.pipe(
-  //   switchMap(params => {
-  //     const id = params?.get('id');
+  override episode$ = this.combineParamMapAndRefresh()
+    .pipe(this.tapStartLoading(),
+      switchMap(([params]) => {
+        const idParam = params?.get('id');
 
-  //     if (!id) return of(null);
+        if (!idParam) return of(null);
 
-  //     this.loading$.next(true);
+        const id = (Base64.isBase64(idParam)) ? Base64.fromBase64(idParam) : idParam;
+        const ch$ = this.mangadex.getChapter(id);
 
-  //     const ch$ = this.mangadex.getChapter(id);
-  //     const imgs$ = this.mangadex.getChapterImages(id);
+        return ch$.pipe(
+          switchMap(ch => {
+            const imgs$ = this.mangadex.getChapterImages(id);
+            const manga$ = (ch.mangaId) ? this.mangadex.getManga(ch.mangaId) : of(null);
 
-  //     return forkJoin([ch$, imgs$]).pipe(
-  //       map(([ch, imgs]) => {
-  //         ch.images = imgs;
-  //         return ch
-  //       }),
-  //       tap(episode=>{
-  //         this.title.setTitle(`${episode.title} | Chytanka`)
-  //       }),
-  //       catchError(() => {
-  //         this.error$.next('Data loading error. Please try again later.');
+            return forkJoin([imgs$, manga$]).pipe(
+              map(([imgs, manga]) => {
+                ch.images = imgs;
+                ch.nsfw = manga?.nsfw ?? undefined;
+                return ch;
+              }),
+              this.catchError()
+            );
+          }),
+          this.catchError(),
+          this.tapSetTitle(),
+          this.finalizeLoading()
+        );
+      })
+    );
 
-  //         return of(null);
-  //       }),
-  //       finalize(() => this.loading$.next(false))
-  //     );
-  //   })
-  // );
-
-  episode$ = this.route.paramMap.pipe(
-    switchMap(params => {
-      const id = params?.get('id');
-  
-      if (!id) return of(null);
-  
-      this.loading$.next(true);
-  
-      const ch$ = this.mangadex.getChapter(id);
-  
-      return ch$.pipe(
-        switchMap(ch => {
-          const imgs$ = this.mangadex.getChapterImages(id);
-          const manga$ = (ch.mangaId)? this.mangadex.getManga(ch.mangaId): of(null);
-  
-          return forkJoin([imgs$, manga$]).pipe(
-            map(([imgs, manga]) => {
-              ch.images = imgs;
-              ch.nsfw = manga?.nsfw ?? undefined;
-              return ch;
-            }),
-            catchError(() => {
-              this.error$.next('Data loading error. Please try again later.');
-              return of(null);
-            })
-          );
-        }),
-        tap(episode => {
-          if (episode) {
-            this.title.setTitle(`${episode.title} | Chytanka`);
-          }
-        }),
-        finalize(() => this.loading$.next(false))
-      );
-    })
-  );
-
-  constructor(private route: ActivatedRoute, public mangadex: MangadexService, private title: Title) { }
+  constructor(public mangadex: MangadexService) { super() }
 }

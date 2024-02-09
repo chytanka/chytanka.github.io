@@ -1,37 +1,27 @@
-import { Component, OnDestroy, WritableSignal, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { ImgurService } from '../data-access/imgur.service';
-import { CompositionEpisode } from '../../shared/utils';
-import { BehaviorSubject, Subject, catchError, finalize, forkJoin, of, switchMap, takeUntil } from 'rxjs';
-import { LangService } from '../../shared/data-access/lang.service';
+import { Base64, ReadBaseComponent } from '../../shared/utils';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-imgur-shell',
   templateUrl: './imgur-shell.component.html',
   styleUrl: './imgur-shell.component.scss'
 })
-export class ImgurShellComponent {
-  error$ = new BehaviorSubject<string | null>(null);
-  loading$ = new BehaviorSubject<boolean>(false);
+export class ImgurShellComponent extends ReadBaseComponent {
 
-  episode$ = this.route.paramMap.pipe(
-    switchMap(params => {
-      const id = params?.get('id');
+  override episode$ = this.combineParamMapAndRefresh()
+    .pipe(this.tapStartLoading(),
+      switchMap(([params]) => {
+        const idParam = params?.get('id');
 
-      if (!id) return of(null);
+        if (!idParam) return of(null);
 
-      this.loading$.next(true);
+        const id = (Base64.isBase64(idParam)) ? Base64.fromBase64(idParam) : idParam;
 
-      return (this.imgur.getComposition(id)).pipe(
-        catchError(() => {
-          this.error$.next(this.lang.phrases.dataLoadErr);
+        return (this.imgur.getComposition(id)).pipe(this.catchError(), this.tapSetTitle(), this.finalizeLoading());
+      })
+    );
 
-          return of(null);
-        }),
-        finalize(() => this.loading$.next(false))
-      );
-    })
-  );
-
-  constructor(private route: ActivatedRoute, public imgur: ImgurService, public lang: LangService) { }
+  constructor(public imgur: ImgurService) { super() }
 }

@@ -24,6 +24,8 @@ export class ViewerService {
 
   nightlight: WritableSignal<number> = signal(0);
 
+  keyboard: boolean = (navigator as any).keyboard;
+
   constructor() { 
     this.initNightlight();
     this.initViewModeOption();

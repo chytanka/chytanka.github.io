@@ -3,24 +3,46 @@
 
     <div>
         <div class="page">
+            @if(episode?.nsfw && !showNsfw()){
             <app-nsfw-warning style="position: unset;" (agree)="onAgree()" (disagree)="onDisagree()"
-                *ngIf="episode?.nsfw && !showNsfw()" [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+                [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText"
+                [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+            }
+            @else {
             <h1 style="text-align: center;">
                 {{lang.phrases.getByKey(viewer.viewModeOption.hintPhraceKey)}}<br />{{viewer.viewModeOption.emoji}}</h1>
+            {{viewer.keyboard | json}}
+            @if (viewer.viewModeOption.mode == "pages" && viewer.keyboard) {
+            <div class="hotkeys_hint">
+                <span> Navigate Between Pages</span>
+                <div><span class="key_button">a</span><span class="key_button">d</span> or <span
+                        class="key_button">⬅</span><span class="key_button">➡</span></div>
+                <span>Toggle Full Screen</span>
+                <div><span class="key_button">f</span></div>
+            </div>
+            }
+            }
         </div>
     </div>
 
-    <div class="images" *ngFor="let img of episode?.images, let i = index">
+    @for(img of episode?.images; track img.src; let i = $index) {
+    <div class="images" style="position: relative;">
+        <div class="loading-image">🖼️⏳</div>
         <div class="page">
-            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" *ngIf="episode?.nsfw && !showNsfw()" [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree"/>
+            @if(episode?.nsfw && !showNsfw()){
+            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" [title]="lang.phrases.nsfwWarnTitle"
+                [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree"
+                [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+            }
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
-
-                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width" [height]="img.height"
-                    loading="lazy">
+                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000"
+                    [height]="img.height ?? 1000" [loading]="(i==0 || preLoad(i)) ? 'eager' : 'lazy'">
             </figure>
         </div>
     </div>
-
+    } @empty {
+    👀
+    }
     <div class="copyright-content" [ngClass]="{'dual': (episode?.images?.length??0) % 2 > 0}">
         <div class="page"><ng-content /></div>
     </div>
@@ -28,9 +50,10 @@
 </div>
 
 <app-overlay [ngClass]="{'show': showOverlay}">
-    <app-warm-control (valueChange)="viewer.warm=$event" [value]="viewer.warm" />
-    <app-pages-indicator style="margin: auto; overflow-x: auto;" [activeIndexs]="activeIndexs()" [images]="episode?.images"
-        [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir" (active)="onActive($event)" />
+    <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
+    <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
+        [images]="episode?.images" [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir"
+        (active)="onActive($event)" />
     <button (click)="toggleFullScreen()" [title]="lang.phrases.fullscreen">
         🖥️
     </button>
@@ -38,8 +61,8 @@
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
     <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
-    <app-view-mode-bar (valueChange)="viewer.viewModeOption = $event" [options]="viewer.viewModeOptions"
+    <app-view-mode-bar (valueChange)="viewer.setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption" />
 </app-overlay>
 
-<app-warm-filter class="filter" [value]="viewer.warm" />
+<app-warm-filter class="filter" [value]="viewer.nightlight()" />

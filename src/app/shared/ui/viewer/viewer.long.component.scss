@@ -28,4 +28,12 @@
 			}
 		}
 	}
+
+	& > .images {
+		min-height: 400px;
+	}
+
+	.loading-image {
+		text-align: center;
+	}
 }

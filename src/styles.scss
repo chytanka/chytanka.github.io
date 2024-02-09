@@ -22,4 +22,6 @@ body {
 *::after,
 *::before {
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text) var(--surface);
 }

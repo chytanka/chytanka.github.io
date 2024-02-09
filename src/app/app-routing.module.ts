@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./mangadex/mangadex.module').then(m => m.MangadexModule)
   },
   {
+    path: 'read',
+    loadChildren: () => import('./read/read.module').then(m => m.ReadModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

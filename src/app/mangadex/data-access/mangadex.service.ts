@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { CompositionEpisode, CompositionImage } from '../../shared/utils';
 
 interface MdChapterImages {
@@ -91,9 +91,8 @@ export class MangadexService {
             chapter: data.data.attributes.chapter,
             images: []
           } as unknown as CompositionEpisode
-        }
-
-        )
+        }),
+        catchError(error => throwError(() => error))
       )
   }
 

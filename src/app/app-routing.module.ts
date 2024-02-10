@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./read/read.module').then(m => m.ReadModule)
   },
   {
+    path: 'telegr',
+    loadChildren: () => import('./telegraph/telegraph.module').then(m => m.TelegraphModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

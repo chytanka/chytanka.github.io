@@ -1,6 +1,6 @@
 import { Component, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
-import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser } from '../utils';
+import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute , Router} from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
 import { ViewModeOption } from '../../shared/data-access';
@@ -43,6 +43,7 @@ export class LinkParserComponent {
   initParser() {
     this.parser.parsers.push(new ImgurLinkParser)
     this.parser.parsers.push(new MangadexLinkParser)
+    this.parser.parsers.push(new TelegraphLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 

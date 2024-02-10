@@ -11,7 +11,7 @@
             @else {
             <h1 style="text-align: center;">
                 {{lang.phrases.getByKey(viewer.viewModeOption.hintPhraceKey)}}<br />{{viewer.viewModeOption.emoji}}</h1>
-            {{viewer.keyboard | json}}
+            
             @if (viewer.viewModeOption.mode == "pages" && viewer.keyboard) {
             <div class="hotkeys_hint">
                 <span> Navigate Between Pages</span>

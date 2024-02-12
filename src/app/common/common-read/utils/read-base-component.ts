@@ -1,9 +1,9 @@
 import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction, catchError, combineLatest, finalize, of, tap } from "rxjs";
 import { CompositionEpisode } from "./composition";
-import { LangService } from "../data-access/lang.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { inject } from "@angular/core";
+import { LangService } from "../../../shared/data-access/lang.service";
 
 export abstract class ReadBaseComponent {
     protected refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null);

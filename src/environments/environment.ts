@@ -5,5 +5,6 @@ export const environment = {
     mangadexHost: `${PROXY}https://api.mangadex.org/at-home/server/`,
     mangadexChapter: `${PROXY}https://api.mangadex.org/chapter/`,
     mangadexManga: `${PROXY}https://api.mangadex.org/manga/`,
-    telegraphHost: `https://api.telegra.ph/getPage/`
+    telegraphHost: `https://api.telegra.ph/getPage/`,
+    redditHost: `https://www.reddit.com/r/all/comments/`
 };

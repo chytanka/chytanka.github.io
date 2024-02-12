@@ -1,7 +1,7 @@
 export class Phrases {
     title: string = "Chytanka — read it easily and comfortably!";
     shortTitle: string = "Chytanka";
-    enterLink: string = "Enter link to episode on Imgur or MangaDex";
+    enterLink: string = "Enter link to episode on Imgur, Telegra.ph, Reddit, MD";
     slogan: string = "and read it easily and comfortably!";
     letsgo: string = "Let's go"
     dataLoadErr: string = "Data loading error. Please try again later."
@@ -19,6 +19,7 @@ export class Phrases {
     nsfwLabelDisagree: string = "I'll pass, let's keep it safe."
     ukrainian: string = "Українська"
     english: string = "English"
+    tryAgain: string = "Try again"
 
     getByKey(key: string) {
         const keys = Object.keys(this);

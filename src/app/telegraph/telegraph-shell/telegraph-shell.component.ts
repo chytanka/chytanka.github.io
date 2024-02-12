@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Base64, ReadBaseComponent } from '../../shared/utils';
+import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
 import { TelegraphService } from '../data-access/telegraph.service';
+import { ReadBaseComponent } from '../../common/common-read';
 
 @Component({
   selector: 'app-telegraph-shell',

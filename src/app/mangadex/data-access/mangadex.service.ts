@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { CompositionEpisode, CompositionImage } from '../../shared/utils';
+import { CompositionEpisode, CompositionImage } from '../../common/common-read';
 
 interface MdChapterImages {
   hash: string;

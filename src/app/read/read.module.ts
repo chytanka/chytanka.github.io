@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReadShellComponent } from './read-shell/read-shell.component';
 import { ReadRoutingModule } from './read-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { CommonReadModule } from '../common/common-read';
 
 
 
@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     ReadRoutingModule,
-    SharedModule
+    CommonReadModule
   ]
 })
 export class ReadModule { }

@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./telegraph/telegraph.module').then(m => m.TelegraphModule)
   },
   {
+    path: 'reddit',
+    loadChildren: () => import('./reddit/reddit.module').then(m => m.RedditModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

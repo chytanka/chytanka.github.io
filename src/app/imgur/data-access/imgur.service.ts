@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { CompositionEpisode, CompositionImage } from '../../shared/utils';
 import { Observable, map } from 'rxjs';
+import { CompositionEpisode, CompositionImage } from '../../common/common-read';
 interface ImgurRespCompImage {
   link: string;
   width: number;

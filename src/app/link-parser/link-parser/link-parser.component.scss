@@ -5,8 +5,8 @@
     align-items: center;
     // min-height: 100dvh;
     height: 100dvh;
-    background: rgb(0,39,65);
-background: radial-gradient(circle, rgba(0,39,65,1) 0%, rgba(0,15,30,1) 100%);
+    background: rgb(0, 39, 65);
+    background: radial-gradient(circle, rgba(0, 39, 65, 1) 0%, rgba(0, 15, 30, 1) 100%);
 
     @media (max-aspect-ratio: 1) or (max-width: 640px) {
         grid-template-columns: auto;
@@ -15,7 +15,6 @@ background: radial-gradient(circle, rgba(0,39,65,1) 0%, rgba(0,15,30,1) 100%);
 
     &>div {
         display: grid;
-        // align-content: center;
         place-content: center;
         gap: 2ch;
     }
@@ -28,7 +27,8 @@ app-text-embracer {
     margin: auto;
     font-family: 'Rampart One', sans-serif;
     font-size: clamp(1rem, 8vw, 5rem);
-    @media (max-aspect-ratio: 1) or (max-width: 640px)  {
+
+    @media (max-aspect-ratio: 1) or (max-width: 640px) {
         font-size: clamp(1rem, 10vw, 8rem);
     }
 }
@@ -37,7 +37,6 @@ input[type=url] {
     font: inherit;
     padding: 1ch;
     background: transparent;
-    /* backdrop-filter: blur(1rem); */
     font-family: 'Courier New', Courier, monospace;
     border: 0;
     outline: 1px solid;
@@ -81,27 +80,33 @@ a {
     outline: 1px solid;
     border-radius: .5ch;
     transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .25s;
+
     &:hover {
         outline-offset: .5ch;
     }
+
     &:active {
         outline-offset: -.5ch;
     }
 }
 
-
-#Path_602 {
-    transform-origin: 50% 50%;
-    transition: all .25s ease-in-out;
-}
-
-svg:hover {
-    #Path_602 {
-        
-        scale:  1.16;
-    }
-}
-
 app-overlay {
     position: absolute;
+}
+
+.logo {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 0;
+    height: auto;
+    margin: auto;
+}
+
+:host ::ng-deep app-overlay {
+
+    &::after,
+    &::before {
+        content: unset;
+    }
 }

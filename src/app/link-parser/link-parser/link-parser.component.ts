@@ -1,6 +1,6 @@
 import { Component, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
-import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, TelegraphLinkParser } from '../utils';
+import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute , Router} from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
 import { ViewModeOption } from '../../shared/data-access';
@@ -44,6 +44,7 @@ export class LinkParserComponent {
     this.parser.parsers.push(new ImgurLinkParser)
     this.parser.parsers.push(new MangadexLinkParser)
     this.parser.parsers.push(new TelegraphLinkParser)
+    this.parser.parsers.push(new RedditLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 
@@ -64,8 +65,12 @@ export class LinkParserComponent {
   }
 
   async initFromclipboard() {
-    const text = await navigator.clipboard?.readText()
-    this.link.set(text ?? '')
+    try {
+      const text = await navigator.clipboard?.readText()
+      this.link.set(text ?? '')
+    } catch (error) {
+      
+    }
 
     if (!this.linkParams()) { this.link.set('') }
   }

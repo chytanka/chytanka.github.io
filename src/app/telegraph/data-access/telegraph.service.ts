@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode } from '../../shared/utils';
+import { CompositionEpisode } from '../../common/common-read';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

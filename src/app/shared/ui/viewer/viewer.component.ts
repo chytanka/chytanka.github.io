@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, signal } from '@angular/core';
-import { CompositionEpisode } from '../../utils';
+import { CompositionEpisode } from '../../../common/common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';

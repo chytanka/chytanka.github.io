@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { of, switchMap } from 'rxjs';
 import { ReadService } from '../data-access/read.service';
 import { Base64 } from '../../shared/utils';
-import { ReadBaseComponent } from '../../shared/utils/read-base-component';
+import { ReadBaseComponent } from '../../common/common-read';
 
 @Component({
   selector: 'app-read-shell',
-  templateUrl: './read-shell.component.html',
-  styleUrl: './read-shell.component.scss'
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" />`
 })
 export class ReadShellComponent extends ReadBaseComponent {
 

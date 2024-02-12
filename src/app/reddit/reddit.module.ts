@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ImgurRoutingModule } from './imgur-routing.module';
-import { ImgurShellComponent } from './imgur-shell/imgur-shell.component';
+import { RedditRoutingModule } from './reddit-routing.module';
+import { RedditShellComponent } from './reddit-shell/reddit-shell.component';
 import { CommonReadModule } from '../common/common-read';
 
 
 @NgModule({
   declarations: [
-    ImgurShellComponent
+    RedditShellComponent
   ],
   imports: [
     CommonModule,
-    ImgurRoutingModule,
+    RedditRoutingModule,
     CommonReadModule
   ]
 })
-export class ImgurModule { }
+export class RedditModule { }

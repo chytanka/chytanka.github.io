@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { MangadexService } from '../data-access/mangadex.service';
-import { Base64, ReadBaseComponent } from '../../shared/utils';
+import { Base64 } from '../../shared/utils';
+import { ReadBaseComponent } from '../../common/common-read';
 
 @Component({
   selector: 'app-mangadex-shell',
-  templateUrl: './mangadex-shell.component.html',
-  styleUrl: './mangadex-shell.component.scss'
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" >
+<div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
+    place-content: center;
+    justify-items: center; min-height: 50vh;">
+        <a href="http://mangadex.org" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
+            <img src="/assets/logos/mangadex-logo.svg" alt="MangaDex logo">
+            <img src="/assets/logos/mangadex-wordmark.svg" alt="MangaDex wordmark">
+        </a>
+        <p>Images via <a href="http://mangadex.org" target="_blank" rel="noopener noreferrer">Mangadex</a> API.
+            Thanks!<br>Details on their site. Respect copyrights.</p>
+    </div>
+</app-common-read>`
 })
 export class MangadexShellComponent extends ReadBaseComponent {
 

@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
 import { ImgurService } from '../data-access/imgur.service';
-import { Base64, ReadBaseComponent } from '../../shared/utils';
+import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
+import { ReadBaseComponent } from '../../common/common-read';
 
 @Component({
   selector: 'app-imgur-shell',
-  templateUrl: './imgur-shell.component.html',
-  styleUrl: './imgur-shell.component.scss'
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"><div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
+  place-content: center;
+  justify-items: center; min-height: 50vh;">
+      <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
+          <img src="/assets/logos/imgur-logo.svg" alt="Imgur logo">
+      </a>
+      <p>{{lang.phrases.imagesVia}}<a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a>
+          API.
+          {{lang.phrases.thanks}}<br>{{lang.phrases.detalisCopy}}</p>
+  </div></app-common-read>`
 })
 export class ImgurShellComponent extends ReadBaseComponent {
 

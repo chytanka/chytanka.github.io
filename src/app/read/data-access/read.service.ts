@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
-import { CompositionEpisode, isCompositionEpisode } from '../../shared/utils';
+import { CompositionEpisode, isCompositionEpisode } from '../../common/common-read';
 
 @Injectable({
   providedIn: 'root'

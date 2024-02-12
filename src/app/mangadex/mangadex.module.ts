@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MangadexRoutingModule } from './mangadex-routing.module';
 import { MangadexShellComponent } from './mangadex-shell/mangadex-shell.component';
-import { SharedModule } from "../shared/shared.module";
+import { CommonReadModule } from '../common/common-read';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SharedModule } from "../shared/shared.module";
     imports: [
         CommonModule,
         MangadexRoutingModule,
-        SharedModule
+        CommonReadModule
     ]
 })
 export class MangadexModule { }

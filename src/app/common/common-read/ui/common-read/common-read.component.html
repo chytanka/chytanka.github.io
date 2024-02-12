@@ -1,0 +1,21 @@
+@if(episode$ | async; as episode){
+<app-viewer [episode]="episode"><ng-content/></app-viewer>
+}
+
+@if(error$ | async; as error){
+<div style="padding: 1rem; margin: auto;">
+    <div class="error-message">
+        <h1>🤨</h1>
+        <p>{{ error }}</p>
+        <footer>
+            <a class="button mediun" [routerLink]="'/'">🏠</a>
+            <button autofocus class="button large primary" (click)="onRefreshData()">{{lang.phrases.tryAgain}}</button>
+        </footer>
+    </div>
+</div>
+}
+
+@if(loading$ | async; as loading){
+<div style="display: grid; place-items: center; width: min(50vw, 50vh); margin: auto; aspect-ratio: 1;">⏳ loading...
+</div>
+}

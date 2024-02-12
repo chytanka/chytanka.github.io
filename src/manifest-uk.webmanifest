@@ -10,6 +10,7 @@
   ],
   "theme_color": "#002741",
   "background_color": "#002741",
+  "display_override": ["standalone", "minimal-ui"],
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
@@ -86,5 +87,19 @@
         }
       ]
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "url": "url"
+    }
+  },
+  "id": "/?homescreen=1",
+  "dir": "auto",
+  "lang": "uk",
+  "orientation": "any",
+  "launch_handler": { "client_mode": "auto" },
+  "handle_links": "preferred",
+  "edge_side_panel": { "preferred_width": 480 }
 }

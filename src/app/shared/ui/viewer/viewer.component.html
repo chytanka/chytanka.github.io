@@ -60,7 +60,7 @@
 </app-overlay>
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
-    <a [routerLink]="['/']">🏠</a> <span>|</span><span>{{episode?.title}}</span>
+    <a [routerLink]="['/']">🏠</a> <span class="separator">{{separator}}</span><span class="title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="viewer.setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption" />
 </app-overlay>

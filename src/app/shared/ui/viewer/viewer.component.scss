@@ -111,3 +111,14 @@ display: block;
 		opacity: .8;
 	}
 }
+
+span.title {
+	text-shadow: 0 0 0.25ch black;
+    font-weight: bold;
+    color: white;
+}
+
+span.separator {
+	user-select: none;
+	opacity: .5;
+}

@@ -15,6 +15,7 @@ import { LangService } from '../../data-access/lang.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewerComponent {
+  readonly separator: string = '│'
   showNsfw: WritableSignal<boolean> = signal(false);
 
   @Input() episode: CompositionEpisode | undefined = undefined;

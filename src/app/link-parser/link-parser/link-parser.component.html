@@ -8,7 +8,7 @@
   <div style="display: grid; grid-template-columns: 1fr auto; align-items: center;">
     <span style="font-family: 'EB Garamond', serif; font-style: italic; opacity: .72;">{{lang.phrases.slogan}}</span>
     @if (linkParams()) {
-    <a class="link" [routerLink]="[linkParams()?.site, linkParams64()?.id]">
+    <a class="button primary small" [routerLink]="[linkParams()?.site, linkParams64()?.id]">
       <span>{{lang.phrases.letsgo}} </span>
       <span class="site-name">{{linkParams()?.site}}</span>
       <span class="site-address" [title]="linkParams()?.id">{{'/'+linkParams()?.id | truncate}}</span>
@@ -21,6 +21,7 @@
 </div>
 @defer{
 <app-overlay class="show top">
+  <button title="F1" class="button tshadow" (click)="showHelp()">❔</button>
   <app-view-mode-bar style="margin-left: auto;" (valueChange)="lang.setLang($event.code); lang.updateManifest()"
     [options]="langOpt" [value]="optLangValue()" />
 </app-overlay>
@@ -28,14 +29,31 @@
 @defer{
 <app-overlay class="show">
   <small>{{lang.phrases.shortTitle}}, &copy; 2024</small>
-  <a href="https://github.com/chytanka" target="_blank" rel="noopener noreferrer">
-    <img style="width: 2ch;" src="/assets/logos/github-logo.svg" alt="Github">
-  </a>
-  <a href="https://www.reddit.com/r/chytanka/" target="_blank" rel="noopener noreferrer">
-    <img style="width: 2ch;" src="/assets/logos/reddit-logo.svg" alt="Reddit">
-  </a>
-  <a href="https://bsky.app/profile/chytanka.github.io" target="_blank" rel="noopener noreferrer">
-    <img style="width: 2ch;" src="/assets/logos/bsky-logo.svg" alt="Blue Sky">
-  </a>
+
+  @for (item of social; track $index) {
+    <a [href]="item.link" target="_blank" rel="noopener noreferrer">
+      <img style="width: 2ch;" [src]="item.logoSrc" [alt]="item.alt">
+    </a>
+  }
+
+  <made-in-ukraine />
 </app-overlay>
 }
+
+<dialog #dialog (click)="closeDialog($event)">
+  <div class="dialog-wrapper">
+    <header>
+      <h2>🙋‍♂️ {{lang.ph().faq}}</h2>
+    </header>
+    <section>
+      @defer{ <app-faq /> }
+    </section>
+    <footer>
+      <form method="dialog">
+        <button class="button empty full">
+          {{lang.ph().ok}}
+        </button>
+      </form>
+    </footer>
+  </div>
+</dialog>

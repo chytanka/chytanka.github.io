@@ -23,6 +23,10 @@ export class LangService {
 
   phrases: Phrases = new Phrases();
 
+  ph: WritableSignal<Phrases> = signal(new Phrases());
+
+  getTemplate: (phrase: string, value: string) => string = Phrases.getTemplate;
+
   constructor(private http: HttpClient) { }
 
   setLang(lang: string) {
@@ -37,10 +41,15 @@ export class LangService {
   }
 
   updateTranslate() {
-    if (this.lang() == 'en') { this.phrases = new Phrases(); return; }
+    if (this.lang() == 'en') { 
+      this.phrases = new Phrases(); 
+      this.ph.set(new Phrases()); 
+      return; 
+    }
 
     this.getTranslate(this.lang()).subscribe(data =>{
       this.phrases = data
+      this.ph.set(data)
     })
   }
 

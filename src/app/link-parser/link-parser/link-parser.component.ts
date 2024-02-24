@@ -1,10 +1,11 @@
-import { Component, Signal, WritableSignal, computed, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
-import { ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
-import { ViewModeOption } from '../../shared/data-access';
+import { DomManipulationService, ViewModeOption } from '../../shared/data-access';
 import { Base64 } from '../../shared/utils';
+import { Title } from '@angular/platform-browser';
 
 const LANG_OPTIONS: ViewModeOption[] = [
   { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
@@ -19,6 +20,10 @@ const LANG_OPTIONS: ViewModeOption[] = [
   ]
 })
 export class LinkParserComponent {
+  private title: Title = inject(Title);
+  private router: Router = inject(Router);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private dm: DomManipulationService = inject(DomManipulationService)
 
   link: WritableSignal<string> = signal('');
   linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
@@ -32,12 +37,14 @@ export class LinkParserComponent {
 
   langOpt = LANG_OPTIONS
 
-  optLangValue = () => this.langOpt.filter((opt: any)=>opt.code == this.lang.lang())[0]
+  optLangValue = () => this.langOpt.filter((opt: any) => opt.code == this.lang.lang())[0]
 
-  constructor(private route: ActivatedRoute, private router: Router, public parser: LinkParserService, public lang: LangService) {
+  constructor(public parser: LinkParserService, public lang: LangService) {
     this.initParser();
-  //  console.log( this.);
-   
+
+    effect(() => {
+      this.initTitle()
+    })
   }
 
   initParser() {
@@ -55,6 +62,25 @@ export class LinkParserComponent {
   }
 
   ngOnInit() {
+    this.initUrl()
+  }
+
+  async initFromclipboard() {
+    try {
+      const text = await navigator.clipboard?.readText()
+      this.link.set(text ?? '')
+    } catch (error) {
+
+    }
+
+    if (!this.linkParams()) { this.link.set('') }
+  }
+
+  initTitle() {
+    this.title.setTitle(this.lang.ph().title)
+  }
+
+  initUrl() {
     const url: string | null = this.route.snapshot.queryParamMap.get('url');
 
     if (url) {
@@ -64,24 +90,64 @@ export class LinkParserComponent {
     }
   }
 
-  async initFromclipboard() {
-    try {
-      const text = await navigator.clipboard?.readText()
-      this.link.set(text ?? '')
-    } catch (error) {
-      
-    }
-
-    if (!this.linkParams()) { this.link.set('') }
-  }
-
-
   onSubmit() {
-    if(!this.linkParams) return;
+    if (!this.linkParams) return;
 
     const link = `/${this.linkParams().site}/${this.linkParams64().id}`
 
     this.router.navigateByUrl(link);
   }
+
+  @ViewChild('dialog', { static: true }) dialogRef!: ElementRef;
+  dialogElement: WritableSignal<HTMLDialogElement> = signal(document.createElement('dialog'));
+
+
+  ngAfterViewInit() {
+    this.dialogElement.set(this.dialogRef.nativeElement);
+  }
+
+  async showHelp() {
+    this.dialogElement().showModal()
+    // const mutate = () => {
+    //   this.dialogElement().showModal()
+    // }
+
+    // this.dm.startViewTransition(mutate)
+  }
+
+  async closeDialog(event: Event) {
+    if (event.target instanceof HTMLDialogElement) {
+      const mutate = () => (event.target as HTMLDialogElement).close();
+
+      this.dm.startViewTransition(mutate)
+    }
+
+  }
+
+  @HostListener('window:keydown', ["$event"])
+  helpHotKey(event: KeyboardEvent) {
+    if (event.key === 'F1') {
+      event.preventDefault()
+      this.showHelp()
+    }
+  }
+
+  social: any[] = [
+    {
+      alt: "Github",
+      link: "//github.com/chytanka",
+      logoSrc: "/assets/logos/github-logo.svg"
+    },
+    {
+      alt: "Reddit",
+      link: "//www.reddit.com/r/chytanka",
+      logoSrc: "/assets/logos/reddit-logo.svg"
+    },
+    {
+      alt: "Blue Sky",
+      link: "//bsky.app/profile/chytanka.github.io",
+      logoSrc: "/assets/logos/bsky-logo.svg"
+    }
+  ]
 
 }

@@ -61,12 +61,12 @@ input[type=url]::placeholder {
     }
 }
 
-a {
-    padding: 1ch;
-    font-size: smaller;
-    color: inherit;
-    text-decoration: none;
-}
+// a {
+//     padding: 1ch;
+//     font-size: smaller;
+//     color: inherit;
+//     text-decoration: none;
+// }
 
 .site-name {
     text-transform: uppercase;
@@ -108,5 +108,101 @@ app-overlay {
     &::after,
     &::before {
         content: unset;
+    }
+}
+
+made-in-ukraine {
+    margin-left: auto;
+
+}
+
+
+dialog {
+    --r: 1ch;
+    --b: 2px;
+    padding: 0;
+    max-width: min(calc(100vw - 4ch), 60ch);
+    max-height: calc(100dvh - 4ch);
+    border-radius: var(--r);
+    border: var(--b) solid #166496;
+    background-color: rgb(0, 15, 30);
+    color: inherit;
+
+    &::before {
+        content: 'esc';
+        position: fixed;
+        left: 2ch;
+        top: 2ch;
+        display: inline-grid;
+        place-content: center;
+        background-color: rgba(0, 39, 65, 1);
+        border: 1px solid #166496;
+        height: 3.5ch;
+        padding: 1ch .75ch;
+        font-size: smaller;
+        border-radius: .5ch;
+        margin: 0 .25ch;
+        font-family: monospace;
+        font-weight: bold;
+        line-height: 1ch;
+        box-shadow: 0 .35ch #166496;
+        color: #ffd60a;
+        opacity: .5;
+    }
+
+    &::backdrop {
+        backdrop-filter: blur(.5ch) brightness(.32);
+    }
+
+    .dialog-wrapper {
+        display: grid;
+        max-height: 100%;
+        grid-template: auto 1fr auto / 1fr;
+    }
+
+    header,
+    footer {
+        background-color: rgb(0, 39, 65);
+        padding: 1ch 2ch;
+    }
+
+    header {
+        border-top-left-radius: calc(var(--r) - var(--b));
+        border-top-right-radius: calc(var(--r) - var(--b));
+
+        h2,
+        h4 {
+            margin: 0;
+        }
+    }
+
+    footer {
+        border-bottom-left-radius: calc(var(--r) - var(--b));
+        border-bottom-right-radius: calc(var(--r) - var(--b));
+    }
+
+    section {
+        padding: 2ch;
+        overflow: auto;
+    }
+
+    &[open] {
+        display: flex;
+    }
+}
+
+
+:host {
+    transition: scale .1s ease-in-out;
+}
+
+:host:has(dialog[open]) {
+    scale: .99;
+    overflow: hidden;
+}
+
+:host:has(input[type=url]:focus) {
+    app-overlay {
+        opacity: 0;
     }
 }

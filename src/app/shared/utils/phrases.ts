@@ -20,12 +20,22 @@ export class Phrases {
     ukrainian: string = "Українська"
     english: string = "English"
     tryAgain: string = "Try again"
+    description: string = "Chytanka is a PWA designed for comfortable manga and comic reading. The minimalist design and the night mode feature make reading easy and comfortable."
+    ok: string = "OK"
+    help = "Help"
+    faq = "F.A.Q"
+    whatIsChytanka = "What is Chytanka?"
+    howToUseChytanka = "How to use Chytanka?"
+    whatLinks = "What links does Chytanka support?"
+    canIPasteJsonLink = "Can I paste a link to a JSON file?"
+    whatJsonModel = "What should the JSON file model be?"
+    yesYouCanPasteJsonLink = "Yes, you can, for example, to {value} or to your website."
+    howToUseChytankaAnswer = "🔗 Just paste the link to the episode into the input field.<br>🔳 If the link is supported, a button will appear,<br>🖱️ click it,<br>📖 and read easily and comfortably! 🛋️"
+    whereIdIs = ", where {id} is the unique identifier of the post."
 
-    getByKey(key: string) {
-        const keys = Object.keys(this);
-        
-        if (keys.includes(key)) return this[key as keyof Phrases]
+    getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
-        return null;
+    static getTemplate(phrase: string, value: string) {
+        return phrase.replace("{value}", value)
     }
 }

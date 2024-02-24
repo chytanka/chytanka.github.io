@@ -1,0 +1,77 @@
+<details>
+    <summary>🤔 {{lang.ph().whatIsChytanka}}</summary>
+    <p>{{lang.ph().description}}</p>
+  </details>
+
+  <details open>
+    <summary>📖 {{lang.ph().howToUseChytanka}}</summary>
+    <p [innerHTML]="lang.ph().howToUseChytankaAnswer"></p>
+  </details>
+
+  <details open>
+    <summary>🌐 {{lang.ph().whatLinks}}</summary>
+    <dl>
+      <dt><img src="//imgur.com/favicon.ico" alt="MangaDex"><a href="//imgur.com" target="_blank"
+          rel="noopener noreferrer">Imgur</a></dt>
+      <dd>
+        <ul>
+          <li><code>imgur.com/a/&#123;id&#125;</code></li>
+          <li><code>imgur.com/gallery/&#123;id&#125;</code></li>
+          <li><code>imgur.com/t/manga/&#123;id&#125;</code></li>
+          <li><code>imgur.com/t/webtoon/&#123;id&#125;</code></li>
+          <li><code>imgur.com/t/comics/&#123;id&#125;</code></li>
+        </ul>
+      </dd>
+      <dt><img src="//telegra.ph/favicon.ico" alt="MangaDex"><a href="//telegra.ph" target="_blank"
+          rel="noopener noreferrer">Telegra.ph</a></dt>
+      <dd>
+        <ul>
+          <li><code>telegra.ph/&#123;id&#125;</code></li>
+        </ul>
+      </dd>
+
+      <dt><img src="//reddit.com/favicon.ico" alt="MangaDex"><a href="//reddit.com" target="_blank"
+          rel="noopener noreferrer">Reddit</a></dt>
+      <dd>
+        <ul>
+          <li><code>reddit.com/r/&#123;id&#125;/whatever</code></li>
+          <li><code>reddit.com/u/&#123;id&#125;/whatever</code></li>
+        </ul>
+      </dd>
+
+      <dt><img src="//mangadex.org/favicon.ico" alt="MangaDex"><a href="//mangadex.org" target="_blank"
+          rel="noopener noreferrer">MangaDex</a></dt>
+      <dd>
+        <ul>
+          <li><code>mangadex.org/&#123;id&#125;</code></li>
+        </ul>
+      </dd>
+    </dl>
+    <p style="font-style: italic;">{{lang.ph().whereIdIs}}</p>
+    
+  </details>
+
+
+  <details>
+    <summary>📄 {{lang.ph().canIPasteJsonLink}}</summary>
+    <p [innerHTML]="lang.getTemplate(lang.ph().yesYouCanPasteJsonLink, gistLinkHref)"></p>
+  </details>
+
+  <details>
+    <summary>📝 {{lang.ph().whatJsonModel}}</summary>
+    <pre style="font-size: small;"><code>&#123;
+"title": "Title of the episode",
+"nsfw": false,
+"images": [
+  &#123;
+    "src": "full-link-to-image-1"
+  &#125;,
+  &#123;
+    "src": "full-link-to-image-2"
+  &#125;,
+  &#123;
+    "src": "full-link-to-image-n"
+  &#125;
+]
+&#125;</code></pre>
+  </details>

@@ -34,4 +34,10 @@ export class DomManipulationService {
       behavior: "smooth",
     });
   }
+
+  async startViewTransition(fn: Function) {
+    ((document as any).startViewTransition)
+      ? await (document as any).startViewTransition(fn)
+      : fn();
+  }
 }

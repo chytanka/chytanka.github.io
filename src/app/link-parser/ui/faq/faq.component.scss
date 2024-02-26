@@ -1,0 +1,62 @@
+details {
+    padding: 1.5ch 2ch;
+    border-radius: .5ch;
+    border: 1px solid rgb(0, 40, 64);
+    margin-bottom: 2ch;
+    transition: all .25s ease-in-out;
+
+    summary {
+        cursor: pointer;
+        font-weight: bold;
+        transition: color .25s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+
+    &[open] {
+        border-color: #166496;
+
+        summary {
+            color: #ffd60a;
+            border-bottom: 1px solid #fff2;
+            padding-bottom: 1ch;
+        }
+    }
+
+}
+
+dl {
+    margin: 1rem 0;
+    padding: 0;
+
+    dt {
+        align-items: center;
+        display: flex;
+        gap: 1ch;
+
+        img {
+            max-width: 2ch;
+            height: auto;
+            max-height: 2ch;
+        }
+    }
+
+    dd {
+        margin: 0 0 1rem;
+    }
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: square;
+        list-style-position: inside;
+        padding-left: 1ch;
+
+        &::marker {
+            text-combine-upright: all;
+            content: '\2228 \a0';
+            color: #fff5;
+        }
+    }
+}

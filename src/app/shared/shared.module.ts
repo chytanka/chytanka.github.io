@@ -11,6 +11,7 @@ import { ViewModeBarComponent } from './ui/view-mode-bar/view-mode-bar.component
 import { WarmControlComponent } from './ui/warm-control/warm-control.component';
 import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.component';
 import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
+import { MadeInUkraineComponent } from './ui/made-in-ukraine/made-in-ukraine.component';
 
 
 
@@ -24,13 +25,14 @@ import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
     ViewModeBarComponent,
     WarmControlComponent,
     PagesIndicatorComponent,
-    NsfwWarningComponent
+    NsfwWarningComponent,
+    MadeInUkraineComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent]
 })
 export class SharedModule { }

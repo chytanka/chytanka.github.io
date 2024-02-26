@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Rampart+One&display=swap');
 
-html {
+:root {
     --surface: hsl(203.44 8% 16%);
     --text: hsl(200 5% 80%);
-
+    color-scheme: light dark;
     background-color: var(--surface);
     color: var(--text);
     block-size: 100%;
@@ -24,4 +24,78 @@ body {
     box-sizing: border-box;
     scrollbar-width: thin;
     scrollbar-color: var(--text) var(--surface);
+}
+
+.button {
+    --q: 1;
+
+    user-select: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    padding-inline: calc(var(--q) * 1ch);
+    padding-block: calc(var(--q) * 1ch);
+    border-radius: .5ch;
+    cursor: pointer;
+    background: hsl(203.44 8% 16%);
+    transition: all .25s;
+    text-wrap: balance;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 .1ch .2ch #0004;
+
+    &.small {
+        --q: 0.5
+    }
+
+    &.mediun {
+        --q: 1.5
+    }
+
+    &.large {
+        --q: 2
+    }
+
+    &.tshadow {
+        text-shadow: 0 0 0.25ch #000a;
+    }
+
+    &.empty {
+        background: transparent;
+    }
+
+    &.primary {
+        background: #166496;
+        color: white;
+    }
+
+
+    &:hover {
+        background-color: #166496;
+        color: #ffd60a;
+    }
+
+    &:active {
+        background-color: rgba(0, 15, 30, 1);
+    }
+
+    &.full {
+        width: 100%;
+    }
+}
+
+a {
+    color: #4081b1;
+    text-decoration: none;
+    transition: all .25s ease-in-out;
+
+    &:hover {
+        color: #ffd60a;
+    }
+}
+
+a[target="_blank"]:after {
+    content: " \2197";
+    font-size: 0.8em;
+    opacity: .8;
+    vertical-align: super;
 }

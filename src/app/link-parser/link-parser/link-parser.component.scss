@@ -1,4 +1,6 @@
 :host {
+
+    --t: .25s; 
     display: grid;
     padding: 1rem;
     grid-template-columns: 61.8fr 38.2fr;
@@ -43,7 +45,7 @@ input[type=url] {
     color: inherit;
     width: 100%;
     margin: auto;
-    transition: all .25s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all var(--t) cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: .5ch;
 }
 
@@ -79,7 +81,7 @@ input[type=url]::placeholder {
 .link {
     outline: 1px solid;
     border-radius: .5ch;
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .25s;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) var(--t);
 
     &:hover {
         outline-offset: .5ch;
@@ -191,9 +193,38 @@ dialog {
     }
 }
 
+[popover], dialog, ::backdrop {
+    transition: 
+      display var(--t) allow-discrete, 
+      overlay var(--t) allow-discrete, 
+      opacity var(--t),
+      scale var(--t);
+    opacity: 0;
+    // scale: 1.1;
+  }
+
+  /* IN */
+  :popover-open,
+  :popover-open::backdrop,
+  [open],
+  [open]::backdrop {
+    opacity: 1;
+    // scale: 1;
+  }
+
+  /* OUT */
+  @starting-style {
+    :popover-open,
+    :popover-open::backdrop,
+    [open],
+    [open]::backdrop {
+      opacity: 0;
+    //   scale: 1.1
+    }
+  }
 
 :host {
-    transition: scale .1s ease-in-out;
+    transition: scale var(--t) ease-in-out;
 }
 
 :host:has(dialog[open]) {

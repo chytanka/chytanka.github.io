@@ -1,0 +1,26 @@
+<dialog #dialog (click)="closeDialog($event)">
+    <div class="dialog-wrapper">
+        <header>
+            <h4>{{title}}</h4>
+            @if (closeHeaderButton) {
+                <form method="dialog">
+                    <button class="button empty ">
+                        🇽
+                    </button>
+                </form>
+            }
+        </header>
+        <section>
+            <ng-content />
+        </section>
+        @if(footer){
+        <footer>
+            <form method="dialog">
+                <button class="button primary full">
+                    {{lang.ph().ok}}
+                </button>
+            </form>
+        </footer>
+        }
+    </div>
+</dialog>

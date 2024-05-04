@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Rampart+One&display=swap');
 
 :root {
+    --blur: 1ch;
+    --t: 266.666667ms; //calc(1s / 60 * 16);
     --surface: hsl(203.44 8% 16%);
     --text: hsl(200 5% 80%);
     color-scheme: light dark;
@@ -38,10 +40,11 @@ body {
     border-radius: .5ch;
     cursor: pointer;
     background: hsl(203.44 8% 16%);
-    transition: all .25s;
+    transition: all var(--t);
     text-wrap: balance;
     -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 .1ch .2ch #0004;
+    // box-shadow: 0 .1ch .2ch #0004;
+    box-shadow: var(--shadow-elevation-low);
 
     &.small {
         --q: 0.5
@@ -72,21 +75,31 @@ body {
     &:hover {
         background-color: #166496;
         color: #ffd60a;
+        box-shadow: var(--shadow-elevation-medium);
     }
 
     &:active {
         background-color: rgba(0, 15, 30, 1);
+        box-shadow: unset;
     }
 
     &.full {
         width: 100%;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        // pointer-events: none;
+        filter: grayscale(.64);
+        box-shadow: unset;
+        background-color: rgba(0, 15, 30, .5);
     }
 }
 
 a {
     color: #4081b1;
     text-decoration: none;
-    transition: all .25s ease-in-out;
+    transition: all var(--t) ease-in-out;
 
     &:hover {
         color: #ffd60a;
@@ -98,4 +111,58 @@ a[target="_blank"]:after {
     font-size: 0.8em;
     opacity: .8;
     vertical-align: super;
+}
+
+:root {
+    // https://www.joshwcomeau.com/shadow-palette/
+    --shadow-color: 200deg 12% 5%;
+    --shadow-elevation-low:
+      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.72),
+      0px 0.6px 0.5px -2px hsl(var(--shadow-color) / 0.54),
+      0px 1.8px 1.6px -4px hsl(var(--shadow-color) / 0.36);
+    --shadow-elevation-medium:
+      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.76),
+      0px 1px 0.9px -1.3px hsl(var(--shadow-color) / 0.61),
+      -0.1px 3.2px 2.9px -2.7px hsl(var(--shadow-color) / 0.47),
+      -0.2px 9px 8.1px -4px hsl(var(--shadow-color) / 0.33);
+    --shadow-elevation-high:
+      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.62),
+      0px 1.3px 1.2px -0.5px hsl(var(--shadow-color) / 0.57),
+      -0.1px 2.6px 2.3px -1px hsl(var(--shadow-color) / 0.52),
+      -0.1px 4.8px 4.3px -1.5px hsl(var(--shadow-color) / 0.47),
+      -0.2px 8.6px 7.7px -2px hsl(var(--shadow-color) / 0.42),
+      -0.4px 14.5px 13.1px -2.5px hsl(var(--shadow-color) / 0.36),
+      -0.6px 23.2px 20.9px -3px hsl(var(--shadow-color) / 0.31),
+      -0.9px 35.1px 31.6px -3.5px hsl(var(--shadow-color) / 0.26),
+      -1.4px 51px 45.9px -4px hsl(var(--shadow-color) / 0.21);
+  }
+
+@supports (transition-behavior: allow-discrete) {
+
+    dialog,
+    dialog::backdrop {
+        transition-property: opacity, transform, overlay, display, filter;
+        transition-duration: var(--t);
+        transition-behavior: allow-discrete;
+        opacity: 0;
+        transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
+        filter: blur(var(--blur));
+    }
+
+    dialog[open],
+    dialog[open]::backdrop {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+
+    @starting-style {
+
+        dialog[open],
+        dialog[open]::backdrop {
+            opacity: 0;
+            transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
+            filter: blur(var(--blur));
+        }
+    }
 }

@@ -9,7 +9,6 @@
     line-height: 1;
     display: flex;
     gap: .1ch;
-    
 
     & > span {
         aspect-ratio: 2/3;
@@ -17,8 +16,6 @@
         border: var(--border-width) var(--border-style) var(--border-color);
         border-radius: .1ch;
         height: 1.3lh;
-        
         place-content: center;
-       
     }
 }

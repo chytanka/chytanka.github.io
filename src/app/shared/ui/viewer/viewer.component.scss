@@ -40,7 +40,7 @@ figure {
 
 	&.nsfw {
 		filter: blur(4rem) brightness(.1);
-		transition: all .25s ease-in-out;
+		transition: all var(--t) ease-in-out;
 	}
 	&.nsfw.show {
 		filter: blur(0) brightness(1);

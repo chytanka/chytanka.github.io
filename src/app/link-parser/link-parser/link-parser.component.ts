@@ -1,16 +1,14 @@
-import { Component, ElementRef, HostListener, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { Component, HostListener, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
-import { DomManipulationService, ViewModeOption } from '../../shared/data-access';
 import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
+import { DialogComponent } from '../../shared/ui/dialog/dialog.component';
+import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
 
-const LANG_OPTIONS: ViewModeOption[] = [
-  { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
-  { dir: "ltr", mode: "pages", hintPhraceKey: "ukrainian", code: "uk", emoji: "🇺🇦" }
-]
+
 @Component({
   selector: 'app-link-parser',
   templateUrl: './link-parser.component.html',
@@ -23,7 +21,7 @@ export class LinkParserComponent {
   private title: Title = inject(Title);
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private dm: DomManipulationService = inject(DomManipulationService)
+  setts = inject(LinkParserSettingsService)
 
   link: WritableSignal<string> = signal('');
   linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
@@ -34,10 +32,6 @@ export class LinkParserComponent {
       id: Base64.toBase64(foo.id)
     };
   });
-
-  langOpt = LANG_OPTIONS
-
-  optLangValue = () => this.langOpt.filter((opt: any) => opt.code == this.lang.lang())[0]
 
   constructor(public parser: LinkParserService, public lang: LangService) {
     this.initParser();
@@ -63,6 +57,7 @@ export class LinkParserComponent {
 
   ngOnInit() {
     this.initUrl()
+    this.initHotKeys()
   }
 
   async initFromclipboard() {
@@ -86,7 +81,7 @@ export class LinkParserComponent {
     if (url) {
       this.link.set(url ?? '')
     } else {
-      this.initFromclipboard();
+      if(this.setts.autoPasteLink()) this.initFromclipboard();
     }
   }
 
@@ -98,37 +93,26 @@ export class LinkParserComponent {
     this.router.navigateByUrl(link);
   }
 
-  @ViewChild('dialog', { static: true }) dialogRef!: ElementRef;
-  dialogElement: WritableSignal<HTMLDialogElement> = signal(document.createElement('dialog'));
+  @ViewChild('faqDialog') faqDialogComponent!: DialogComponent;
+  showHelp = () => this.faqDialogComponent.showDialog();
 
+  @ViewChild('settingsDialog') settingsDialogComponent!: DialogComponent;
+  showSettings = () => this.settingsDialogComponent.showDialog();
 
-  ngAfterViewInit() {
-    this.dialogElement.set(this.dialogRef.nativeElement);
-  }
+  hotKeys = new Map<string, Function>()
 
-  async showHelp() {
-    this.dialogElement().showModal()
-    // const mutate = () => {
-    //   this.dialogElement().showModal()
-    // }
-
-    // this.dm.startViewTransition(mutate)
-  }
-
-  async closeDialog(event: Event) {
-    if (event.target instanceof HTMLDialogElement) {
-      const mutate = () => (event.target as HTMLDialogElement).close();
-
-      this.dm.startViewTransition(mutate)
-    }
-
+  initHotKeys() {
+    this.hotKeys.set('F1', this.showHelp)
+    this.hotKeys.set('F2', this.showSettings)
   }
 
   @HostListener('window:keydown', ["$event"])
   helpHotKey(event: KeyboardEvent) {
-    if (event.key === 'F1') {
+    
+    if (this.hotKeys.has(event.key)) {
       event.preventDefault()
-      this.showHelp()
+      const f: Function = this.hotKeys.get(event.key) as Function;
+      f();
     }
   }
 

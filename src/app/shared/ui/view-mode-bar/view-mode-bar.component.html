@@ -1,11 +1,12 @@
 @for(option of options; track option.emoji) {
 <div>
-    <input type="radio" name="radio" id="mode-{{option.mode}}-{{option.dir}}" [checked]="value == option"
-        [value]="option" (input)="onChange(option)" />
+    <input type="radio" name="radio-{{seed}}" id="mode-{{option.mode}}-{{option.dir}}-{{seed}}" [checked]="value == option.code"
+         (input)="onChange(option)" />
 
-    <label for="mode-{{option.mode}}-{{option.dir}}" [title]="lang.phrases.getByKey(option.hintPhraceKey)">
+    <label for="mode-{{option.mode}}-{{option.dir}}-{{seed}}" [title]="lang.phrases.getByKey(option.hintPhraceKey)">
         {{option.emoji}}
     </label>
 
 </div>
 }
+

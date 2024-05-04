@@ -1,9 +1,13 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectorRef, Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { Phrases } from '../utils/phrases';
 import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ViewModeOption } from './viewer.service';
 
-type Langs = { en: string, uk: string }
+const LANG_OPTIONS: ViewModeOption[] = [
+  { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
+  { dir: "ltr", mode: "pages", hintPhraceKey: "ukrainian", code: "uk", emoji: "🇺🇦" }
+]
 
 const DEFAULT_LANG = 'en'
 const LANG_STORAGE_NAME = 'lang'
@@ -17,6 +21,8 @@ export class LangService {
     ['en', "manifest.webmanifest"],
     ['uk', "manifest-uk.webmanifest"]
   ]);
+
+  langOpt = LANG_OPTIONS
 
   lang: WritableSignal<string> = signal(localStorage.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG);
   linkManifestElement: WritableSignal<HTMLElement | null> = signal(document.querySelector('link[rel="manifest"]'))
@@ -33,7 +39,7 @@ export class LangService {
     this.lang.set(lang)
     document.documentElement.lang = lang
     localStorage.setItem(LANG_STORAGE_NAME, lang)
-    this.updateTranslate()
+    this.updateTranslate();
   }
 
   updateManifest() {

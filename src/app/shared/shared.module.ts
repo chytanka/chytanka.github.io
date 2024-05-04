@@ -12,6 +12,8 @@ import { WarmControlComponent } from './ui/warm-control/warm-control.component';
 import { PagesIndicatorComponent } from './ui/pages-indicator/pages-indicator.component';
 import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
 import { MadeInUkraineComponent } from './ui/made-in-ukraine/made-in-ukraine.component';
+import { DialogComponent } from './ui/dialog/dialog.component';
+import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
 
 
 
@@ -26,13 +28,15 @@ import { MadeInUkraineComponent } from './ui/made-in-ukraine/made-in-ukraine.com
     WarmControlComponent,
     PagesIndicatorComponent,
     NsfwWarningComponent,
-    MadeInUkraineComponent
+    MadeInUkraineComponent,
+    DialogComponent,
+    LangToggleComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent]
 })
 export class SharedModule { }

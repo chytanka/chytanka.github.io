@@ -12,7 +12,7 @@
 	z-index: 1;
 	padding: 1ch 1rem;
 	pointer-events: none;
-	transition: opacity .1s cubic-bezier(.4, 0, 1, 1);
+	transition: opacity var(--t) cubic-bezier(.4, 0, 1, 1);
 
 	font-size: 14px;
 	line-height: 1;

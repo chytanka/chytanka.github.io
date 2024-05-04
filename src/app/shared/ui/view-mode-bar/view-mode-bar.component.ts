@@ -9,6 +9,7 @@ import { LangService } from '../../data-access/lang.service';
 export class ViewModeBarComponent {
   @Input() options: any;
   @Input() value: any;
+  @Input() seed: string = 'seed';
 
   @Output() valueChange = new EventEmitter<any>();
 

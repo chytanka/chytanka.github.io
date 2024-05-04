@@ -1,0 +1,28 @@
+<section>
+    <div>
+        
+        <p style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="label">🈚 {{lang.ph().language}}</span>
+            <small>{{lang.ph().getByKey(getLangValue(lang.lang()).hintPhraceKey)}}</small>
+        </p>
+        <p><small>{{lang.ph().settingLangDesc}}</small></p>
+    </div>
+    <div><app-lang-toggle /></div>
+</section>
+
+<section [class]="!setts.autoPasteLink()? 'inactive': ''">
+    <div>
+        <p style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="label" for="autoPasteLink">📋 {{lang.ph().autoPasteLink}}</label>
+            @if(setts.autoPasteLink()) {
+                <small class="on">ON</small>
+            } @else {
+                <small class="off">OFF</small>
+            }
+        </p>
+        <p>
+            <small>{{lang.ph().settingAutoPasteLinkDesc}}</small>
+        </p>
+    </div>
+    <input type="checkbox" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)" id="autoPasteLink">
+</section>

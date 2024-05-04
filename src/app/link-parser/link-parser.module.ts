@@ -6,12 +6,14 @@ import { LinkParserComponent } from './link-parser/link-parser.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { FaqComponent } from './ui/faq/faq.component';
+import { SettingsComponent } from './ui/settings/settings.component';
 
 
 @NgModule({
   declarations: [
     LinkParserComponent,
-    FaqComponent
+    FaqComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,

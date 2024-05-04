@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'made-in-ukraine',
-  template: `<span style="color: #4c95fb;">Made in</span>
+  template: `<span style="color: #4c95fb;">Made©in</span>
   <span style="color: #FFDD00;">Ukraine</span>`,
   styles: [`
     :host {
@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
       display: grid;
       text-transform: uppercase;
       opacity: .4;
-      transition: opacity .25s ease-in-out;
+      transition: opacity var(--t) ease-in-out;
 
       &:hover {
           opacity: 1;
@@ -24,3 +24,4 @@ import { Component } from '@angular/core';
 export class MadeInUkraineComponent {
 
 }
+// ♆

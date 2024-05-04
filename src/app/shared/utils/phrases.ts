@@ -32,6 +32,11 @@ export class Phrases {
     yesYouCanPasteJsonLink = "Yes, you can, for example, to {value} or to your website."
     howToUseChytankaAnswer = "🔗 Just paste the link to the episode into the input field.<br>🔳 If the link is supported, a button will appear,<br>🖱️ click it,<br>📖 and read easily and comfortably! 🛋️"
     whereIdIs = ", where {id} is the unique identifier of the post."
+    language = "Language"
+    settingLangDesc = "Change the user interface language."
+    settings = "Settings"
+    autoPasteLink = "Auto Paste Link"
+    settingAutoPasteLinkDesc = "Automatically inserts a link from the clipboard into the input field."
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

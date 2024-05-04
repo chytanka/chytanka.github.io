@@ -15,7 +15,7 @@ div {
     cursor: pointer;
     font-weight: bold;
     line-height: 1;
-    transition: all .1s ease-in-out;
+    transition: all var(--t) ease-in-out;
 
     &:hover, &.active {
         color: #ffd60a;

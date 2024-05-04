@@ -9,9 +9,9 @@ export interface ViewModeOption {
 }
 
 export const VIEV_MODE_OPTIONS: ViewModeOption[] = [
-  { dir: "rtl", mode: "pages", hintPhraceKey: "scrollLeft", code: "", emoji: "⬅️" },
-  { dir: "ltr", mode: "pages", hintPhraceKey: "scrollRight", code: "", emoji: "➡️" },
-  { dir: "ltr", mode: "long", hintPhraceKey: "scrollDown", code: "", emoji: "⬇️" },
+  { dir: "rtl", mode: "pages", hintPhraceKey: "scrollLeft", code: "1", emoji: "⬅️" },
+  { dir: "ltr", mode: "pages", hintPhraceKey: "scrollRight", code: "2", emoji: "➡️" },
+  { dir: "ltr", mode: "long", hintPhraceKey: "scrollDown", code: "3", emoji: "⬇️" },
 ]
 
 @Injectable({

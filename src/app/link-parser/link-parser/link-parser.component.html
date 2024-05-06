@@ -1,6 +1,6 @@
-<div class="form-wrapper">
-  <div style="grid-column: 2; display: grid; gap: 2ch; overflow: hidden; padding: 0px;">
-    @defer{ <app-text-embracer [text]="lang.phrases.shortTitle" /> }
+<main>
+  <div class="form-wrapper">
+    <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.phrases.shortTitle" /> }</h1>
     <form (submit)="onSubmit()">
       <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.phrases.enterLink"
         (input)="inputLink($event)" [value]="link()">
@@ -8,9 +8,8 @@
     </form>
   </div>
 
-  <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; grid-column: 2;">
-    <span
-      style="font-family: 'EB Garamond', serif; font-style: italic; opacity: .72; text-wrap: balance;">{{lang.phrases.slogan}}</span>
+  <div class="slogan-wrapper">
+    <h2 class="slogan-header">{{lang.phrases.slogan}}</h2>
     @if (linkParams()) {
     <a class="button primary" [routerLink]="[linkParams()?.site, linkParams64()?.id]">
       <span>{{lang.phrases.letsgo}} </span>
@@ -19,36 +18,11 @@
     </a>
     }
   </div>
-</div>
-<div style="max-height: 100%;min-height: 0; padding: 4ch;">
+</main>
+
+<aside>
   @defer{ <img class="logo" src="/assets/icons/icon-512x512.svg" alt="Chytanka Logo"> }
-</div>
-@defer{
-<app-overlay class="show top">
-  <button title="F1" class="button tshadow" (click)="showHelp()">❔</button>
-  <button title="F2" class="button tshadow" (click)="showSettings()">⚙️</button>
-  <button title="F2" disabled class="button tshadow">📥</button>
-  <button title="F2" disabled class="button tshadow">📚</button>
-  <app-lang-toggle />
-</app-overlay>
-}
-@defer{
-<app-overlay class="show">
-  <small>{{lang.phrases.shortTitle}}, &copy; 2024</small>
+</aside>
 
-  @for (item of social; track $index) {
-  <a [href]="item.link" target="_blank" rel="noopener noreferrer">
-    <img style="width: 2ch;" [src]="item.logoSrc" [alt]="item.alt">
-  </a>
-  }
-
-  <made-in-ukraine />
-</app-overlay>
-}
-<app-dialog #faqDialog [title]="'🙋‍♂️ ' + lang.ph().faq">
-  @defer{ <app-faq /> }
-</app-dialog>
-
-<app-dialog #settingsDialog [title]="'⚙️ ' + lang.ph().settings">
-  @defer{ <app-settings /> }
-</app-dialog>
+@defer{ <lp-header /> }
+@defer{ <lp-footer /> }

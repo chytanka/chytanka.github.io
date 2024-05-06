@@ -1,13 +1,11 @@
-import { Component, HostListener, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { Component, Signal, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
-import { DialogComponent } from '../../shared/ui/dialog/dialog.component';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
-
 
 @Component({
   selector: 'app-link-parser',
@@ -57,7 +55,6 @@ export class LinkParserComponent {
 
   ngOnInit() {
     this.initUrl()
-    this.initHotKeys()
   }
 
   async initFromclipboard() {
@@ -81,7 +78,7 @@ export class LinkParserComponent {
     if (url) {
       this.link.set(url ?? '')
     } else {
-      if(this.setts.autoPasteLink()) this.initFromclipboard();
+      if (this.setts.autoPasteLink()) this.initFromclipboard();
     }
   }
 
@@ -92,46 +89,5 @@ export class LinkParserComponent {
 
     this.router.navigateByUrl(link);
   }
-
-  @ViewChild('faqDialog') faqDialogComponent!: DialogComponent;
-  showHelp = () => this.faqDialogComponent.showDialog();
-
-  @ViewChild('settingsDialog') settingsDialogComponent!: DialogComponent;
-  showSettings = () => this.settingsDialogComponent.showDialog();
-
-  hotKeys = new Map<string, Function>()
-
-  initHotKeys() {
-    this.hotKeys.set('F1', this.showHelp)
-    this.hotKeys.set('F2', this.showSettings)
-  }
-
-  @HostListener('window:keydown', ["$event"])
-  helpHotKey(event: KeyboardEvent) {
-    
-    if (this.hotKeys.has(event.key)) {
-      event.preventDefault()
-      const f: Function = this.hotKeys.get(event.key) as Function;
-      f();
-    }
-  }
-
-  social: any[] = [
-    {
-      alt: "Github",
-      link: "//github.com/chytanka",
-      logoSrc: "/assets/logos/github-logo.svg"
-    },
-    {
-      alt: "Reddit",
-      link: "//www.reddit.com/r/chytanka",
-      logoSrc: "/assets/logos/reddit-logo.svg"
-    },
-    {
-      alt: "Blue Sky",
-      link: "//bsky.app/profile/chytanka.github.io",
-      logoSrc: "/assets/logos/bsky-logo.svg"
-    }
-  ]
 
 }

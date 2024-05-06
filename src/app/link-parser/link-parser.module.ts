@@ -7,13 +7,17 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { FaqComponent } from './ui/faq/faq.component';
 import { SettingsComponent } from './ui/settings/settings.component';
+import { FooterComponent } from './ui/footer/footer.component';
+import { HeaderComponent } from './ui/header/header.component';
 
 
 @NgModule({
   declarations: [
     LinkParserComponent,
     FaqComponent,
-    SettingsComponent
+    SettingsComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,15 @@
+<app-overlay class="show top">
+    <button title="F1" class="button tshadow" (click)="showHelp()">❔</button>
+    <button title="F2" class="button tshadow" (click)="showSettings()">⚙️</button>
+    <button title="F2" disabled class="button tshadow">📥</button>
+    <button title="F2" disabled class="button tshadow">📚</button>
+    <app-lang-toggle />
+</app-overlay>
+
+<app-dialog #faqDialog [title]="'🙋‍♂️ ' + lang.ph().faq">
+    @defer{ <app-faq /> }
+</app-dialog>
+
+<app-dialog #settingsDialog [title]="'⚙️ ' + lang.ph().settings">
+    @defer{ <app-settings /> }
+</app-dialog>

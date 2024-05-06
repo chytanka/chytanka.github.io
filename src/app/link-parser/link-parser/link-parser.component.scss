@@ -12,37 +12,54 @@
         grid-template-columns: auto;
         grid-template-rows: 61.8fr 38.2fr;
     }
+}
 
-    &>div {
-        display: grid;
-        gap: 2ch;
-    }
+.logo-text {
+    all: unset;
 }
 
 app-text-embracer {
     --border-color: #166496;
     --border-width: 2px;
     color: #ffd60a;
-    margin: auto;
+    justify-content: center;
     font-family: 'Rampart One', sans-serif;
     font-size: clamp(1rem, 8vw, 5rem);
 
     -webkit-box-reflect: below 1.3rem linear-gradient(transparent 0%, #fff);
+
     @media (max-width: 1080px) {
         font-size: clamp(1rem, 7vw, 8rem);
     }
-    
+
     @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
         font-size: clamp(1rem, 10vw, 8rem);
     }
 
-    
+
 
     // grid-column: 2;
 }
 
-.form-wrapper {
+main {
+    display: grid;
+    row-gap: 1ch;
     grid-template-columns: auto minmax(auto, 80ch) auto;
+}
+
+aside {
+    max-height: 100%;
+    min-height: 0;
+    padding: 4ch;
+    display: grid;
+}
+
+.form-wrapper {
+    grid-column: 2;
+    display: grid;
+    gap: 2ch;
+    overflow: hidden;
+    padding: 0px;
 }
 
 form {
@@ -104,6 +121,21 @@ input[type=url]::placeholder {
     background-color: rgb(255 255 255 / .2);
 }
 
+.slogan-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-column: 2;
+}
+
+.slogan-header {
+    all: unset;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    opacity: .72;
+    text-wrap: balance;
+}
+
 .link {
     outline: 1px solid;
     border-radius: .5ch;
@@ -118,8 +150,18 @@ input[type=url]::placeholder {
     }
 }
 
-app-overlay {
+lp-footer,
+lp-header {
     position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transition: all .2s linear;
+}
+
+lp-header {
+    top: 0;
+    bottom: unset;
 }
 
 .logo {
@@ -139,9 +181,7 @@ app-overlay {
     }
 }
 
-made-in-ukraine, app-lang-toggle {
-    margin-left: auto;
-}
+
 
 :host {
     transition: all var(--t) ease-in-out;
@@ -153,7 +193,9 @@ made-in-ukraine, app-lang-toggle {
 }
 
 :host:has(input[type=url]:focus) {
-    app-overlay {
+
+    lp-footer,
+    lp-header {
         opacity: 0;
     }
 }

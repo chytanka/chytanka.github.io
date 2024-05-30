@@ -6,11 +6,18 @@
     // min-height: 100dvh;
     height: 100dvh;
     background: rgb(0, 39, 65);
+    // #002741
+    // #000f1e
     background: radial-gradient(circle, rgba(0, 39, 65, 1) 0%, rgba(0, 15, 30, 1) 100%);
 
     @media (max-aspect-ratio: 1) or (max-width: 640px) {
         grid-template-columns: auto;
         grid-template-rows: 61.8fr 38.2fr;
+    }
+
+    @media (prefers-color-scheme: light) {
+        background: #eceff2;
+        background: radial-gradient(circle, #eceff2 0%, #d4e4f2 100%);
     }
 }
 
@@ -22,8 +29,17 @@ app-text-embracer {
     --border-color: #166496;
     --border-width: 2px;
     color: #ffd60a;
+
+    @media (prefers-color-scheme: light) {
+        // --border-color: #caa902;
+        --back-color: #ffd60a;
+
+        color: #166496;
+    }
+
     justify-content: center;
-    font-family: 'Rampart One', sans-serif;
+    font-family: 'Rampart One',
+    sans-serif;
     font-size: clamp(1rem, 8vw, 5rem);
 
     -webkit-box-reflect: below 1.3rem linear-gradient(transparent 0%, #fff);
@@ -35,13 +51,17 @@ app-text-embracer {
     @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
         font-size: clamp(1rem, 10vw, 8rem);
     }
-
-
-
-    // grid-column: 2;
 }
 
 main {
+    display: grid;
+    row-gap: 2ch;
+    overflow: auto;
+    max-height: 100%;
+    padding: 4ch 0; 
+}
+
+.wrapper {
     display: grid;
     row-gap: 1ch;
     grid-template-columns: auto minmax(auto, 80ch) auto;
@@ -85,8 +105,11 @@ input[type=url] {
     border: 2px solid #166496;
     box-shadow: var(--shadow-elevation-medium);
     background-color: #00274190;
+    @media (prefers-color-scheme: light) {
+        background-color: #eceff2a0;
+        color: #166496;
+    }
     color: #ffd60a;
-    // padding-right: 8ch;
 
     &:focus {
         border-color: #166496;
@@ -97,6 +120,9 @@ input[type=url] {
 input[type=url]::placeholder {
     color: #ffd60a;
     opacity: 0.6;
+    @media (prefers-color-scheme: light) {
+        color: #166496;
+    }
 }
 
 // input[type=reset] {

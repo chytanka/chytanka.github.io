@@ -10,6 +10,11 @@
     color: var(--text);
     block-size: 100%;
     font-size: 16px;
+
+    @media (prefers-color-scheme: light) {
+        --surface: #f7fcff;
+        --text: #010102;
+    }
 }
 
 body {
@@ -40,6 +45,11 @@ body {
     border-radius: .5ch;
     cursor: pointer;
     background: hsl(203.44 8% 16%);
+
+    @media (prefers-color-scheme: light) {
+        background: hsl(203.44 8% 96%);
+    }
+
     transition: all var(--t);
     text-wrap: balance;
     -webkit-tap-highlight-color: transparent;
@@ -76,6 +86,10 @@ body {
         background-color: #166496;
         color: #ffd60a;
         box-shadow: var(--shadow-elevation-medium);
+
+        @media (prefers-color-scheme: light) {
+            background-color: #88a8c8;
+        }
     }
 
     &:active {
@@ -93,6 +107,11 @@ body {
         filter: grayscale(.64);
         box-shadow: unset;
         background-color: rgba(0, 15, 30, .5);
+
+        @media (prefers-color-scheme: light) {
+            background-color: rgba(0, 15, 30, .25);
+            opacity: .64;
+        }
     }
 }
 
@@ -103,6 +122,11 @@ a {
 
     &:hover {
         color: #ffd60a;
+
+        @media (prefers-color-scheme: light) {
+            color: #caa902
+        }
+
     }
 }
 
@@ -117,25 +141,30 @@ a[target="_blank"]:after {
     // https://www.joshwcomeau.com/shadow-palette/
     --shadow-color: 200deg 12% 5%;
     --shadow-elevation-low:
-      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.72),
-      0px 0.6px 0.5px -2px hsl(var(--shadow-color) / 0.54),
-      0px 1.8px 1.6px -4px hsl(var(--shadow-color) / 0.36);
+        0px 0.4px 0.4px hsl(var(--shadow-color) / 0.72),
+        0px 0.6px 0.5px -2px hsl(var(--shadow-color) / 0.54),
+        0px 1.8px 1.6px -4px hsl(var(--shadow-color) / 0.36);
     --shadow-elevation-medium:
-      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.76),
-      0px 1px 0.9px -1.3px hsl(var(--shadow-color) / 0.61),
-      -0.1px 3.2px 2.9px -2.7px hsl(var(--shadow-color) / 0.47),
-      -0.2px 9px 8.1px -4px hsl(var(--shadow-color) / 0.33);
+        0px 0.4px 0.4px hsl(var(--shadow-color) / 0.76),
+        0px 1px 0.9px -1.3px hsl(var(--shadow-color) / 0.61),
+        -0.1px 3.2px 2.9px -2.7px hsl(var(--shadow-color) / 0.47),
+        -0.2px 9px 8.1px -4px hsl(var(--shadow-color) / 0.33);
     --shadow-elevation-high:
-      0px 0.4px 0.4px hsl(var(--shadow-color) / 0.62),
-      0px 1.3px 1.2px -0.5px hsl(var(--shadow-color) / 0.57),
-      -0.1px 2.6px 2.3px -1px hsl(var(--shadow-color) / 0.52),
-      -0.1px 4.8px 4.3px -1.5px hsl(var(--shadow-color) / 0.47),
-      -0.2px 8.6px 7.7px -2px hsl(var(--shadow-color) / 0.42),
-      -0.4px 14.5px 13.1px -2.5px hsl(var(--shadow-color) / 0.36),
-      -0.6px 23.2px 20.9px -3px hsl(var(--shadow-color) / 0.31),
-      -0.9px 35.1px 31.6px -3.5px hsl(var(--shadow-color) / 0.26),
-      -1.4px 51px 45.9px -4px hsl(var(--shadow-color) / 0.21);
-  }
+        0px 0.4px 0.4px hsl(var(--shadow-color) / 0.62),
+        0px 1.3px 1.2px -0.5px hsl(var(--shadow-color) / 0.57),
+        -0.1px 2.6px 2.3px -1px hsl(var(--shadow-color) / 0.52),
+        -0.1px 4.8px 4.3px -1.5px hsl(var(--shadow-color) / 0.47),
+        -0.2px 8.6px 7.7px -2px hsl(var(--shadow-color) / 0.42),
+        -0.4px 14.5px 13.1px -2.5px hsl(var(--shadow-color) / 0.36),
+        -0.6px 23.2px 20.9px -3px hsl(var(--shadow-color) / 0.31),
+        -0.9px 35.1px 31.6px -3.5px hsl(var(--shadow-color) / 0.26),
+        -1.4px 51px 45.9px -4px hsl(var(--shadow-color) / 0.21);
+
+    @media (prefers-color-scheme: light) {
+        --shadow-color: 200deg 12% 55%;
+
+    }
+}
 
 @supports (transition-behavior: allow-discrete) {
 
@@ -164,5 +193,21 @@ a[target="_blank"]:after {
             transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
             filter: blur(var(--blur));
         }
+    }
+}
+
+
+@supports (height: calc-size(auto)) {
+    details::details-content {
+        display: block;
+        height: 0;
+        overflow: hidden;
+        transition: height var(--t), content-visibility var(--t);
+        transition-behavior: allow-discrete;
+    }
+
+    details[open]::details-content {
+        height: calc-size(auto);
+        transition: height var(--t), content-visibility var(--t);
     }
 }

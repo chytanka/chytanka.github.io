@@ -1,0 +1,7 @@
+@for (item of historyItems() | async; track $index) {
+<app-title-card [value]="item" (delete)="delById($event)" />
+}
+
+@if (historyItems() | async; as items) { @if (items.length > 0) {
+<button [title]="lang.phrases.clearHistory" class="button small" (click)="clearHistory()">🧹✨󠁝🗑️</button>
+}}

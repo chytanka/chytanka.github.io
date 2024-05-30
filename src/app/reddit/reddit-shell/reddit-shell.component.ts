@@ -18,8 +18,13 @@ export class RedditShellComponent extends ReadBaseComponent {
         if (!idParam) return of(null);
 
         const id = (Base64.isBase64(idParam)) ? Base64.fromBase64(idParam) : idParam;
+        const id64 = Base64.toBase64(id);
 
-        return (this.reddit.getComposition(id)).pipe(this.catchError(), this.tapSetTitle(), this.finalizeLoading());
+        return (this.reddit.getComposition(id)).pipe(
+          this.catchError(),
+          this.tapSetTitle(),
+          this.tapSaveToHistory(`reddit`, id64), 
+          this.finalizeLoading());
       })
     );
 

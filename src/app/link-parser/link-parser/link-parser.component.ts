@@ -6,6 +6,7 @@ import { LangService } from '../../shared/data-access/lang.service';
 import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
+import { HistoryService } from '../../history/data-access/history.service';
 
 @Component({
   selector: 'app-link-parser',
@@ -73,7 +74,9 @@ export class LinkParserComponent {
   }
 
   initUrl() {
-    const url: string | null = this.route.snapshot.queryParamMap.get('url');
+    const url: string | null =
+      this.route.snapshot.queryParamMap.get('url')
+      ?? this.route.snapshot.paramMap.get('url');
 
     if (url) {
       this.link.set(url ?? '')
@@ -88,6 +91,11 @@ export class LinkParserComponent {
     const link = `/${this.linkParams().site}/${this.linkParams64().id}`
 
     this.router.navigateByUrl(link);
+  }
+
+  isShowHistory = signal(false);
+  toggleShowHistory() {
+    this.isShowHistory.set(!this.isShowHistory())
   }
 
 }

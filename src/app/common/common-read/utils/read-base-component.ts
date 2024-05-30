@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { inject } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
+import { HistoryService } from "../../../history/data-access/history.service";
 
 export abstract class ReadBaseComponent {
     protected refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null);
@@ -11,12 +12,12 @@ export abstract class ReadBaseComponent {
     loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     episode$: Observable<CompositionEpisode | null> = of(null);
 
-    constructor( ) { }
+    constructor() { }
 
     private title: Title = inject(Title)
     protected route: ActivatedRoute = inject(ActivatedRoute)
     public lang: LangService = inject(LangService)
-    
+
     public refreshData() {
         this.refresh$.next(null);
     }
@@ -54,10 +55,24 @@ export abstract class ReadBaseComponent {
     }
 
     protected tapSetTitle(): MonoTypeOperatorFunction<CompositionEpisode> {
-        return tap((episode: CompositionEpisode) => {
+        return tap(async (episode: CompositionEpisode) => {
             if (episode) {
                 this.title.setTitle(`${episode.title} | Chytanka`);
             }
         })
+    }
+
+    protected tapSaveToHistory(site:string, post_id:string): MonoTypeOperatorFunction<CompositionEpisode> {
+        return tap(async (episode: CompositionEpisode) => {
+            if (episode) {
+                await this.saveToHistory(site,post_id,episode.title,episode.images[0]?.src);
+            }
+        })
+    }
+
+    public history: HistoryService = inject(HistoryService);
+
+    async saveToHistory(site: string, post_id: string, title: string, cover: string) {
+        await this.history.addHistory(site, post_id, title, cover);
     }
 }

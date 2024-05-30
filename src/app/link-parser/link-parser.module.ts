@@ -9,6 +9,7 @@ import { FaqComponent } from './ui/faq/faq.component';
 import { SettingsComponent } from './ui/settings/settings.component';
 import { FooterComponent } from './ui/footer/footer.component';
 import { HeaderComponent } from './ui/header/header.component';
+import { HistoryModule } from '../history/history.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HeaderComponent } from './ui/header/header.component';
     CommonModule,
     LinkParserRoutingModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    HistoryModule
   ]
 })
 export class LinkParserModule { }

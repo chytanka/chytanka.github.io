@@ -15,8 +15,17 @@ dialog {
     color: inherit;
     margin-top: 4ch;
 
+    @media (prefers-color-scheme: light) {
+        background-color: var(--surface);
+        border-color: #4081b1;
+    }
+
     &::backdrop {
-        backdrop-filter: brightness(.8);
+        --brightness: .8;
+        backdrop-filter: brightness(var(--brightness));
+        @media (prefers-color-scheme: light) {
+            --brightness: 1.2;
+        }
     }
 
     .dialog-wrapper {
@@ -25,11 +34,25 @@ dialog {
         grid-template: auto 1fr auto / 1fr;
     }
 
+    header {
+        --rH: calc(var(var(--r) - var(--b)));
+        border-top-left-radius: var(--rH);
+        border-top-right-radius: var(--rH);
+        @media (prefers-color-scheme: light) {
+            text-shadow: 0 0 .25ch #0003;
+        }
+    }
+
     header,
     footer {
         background-color: rgb(0, 39, 65);
         padding: 2ch;
         border: 0 solid #166496;
+
+        @media (prefers-color-scheme: light) {
+            background-color: #c3d3e3;
+            
+        }
     }
 
     header {

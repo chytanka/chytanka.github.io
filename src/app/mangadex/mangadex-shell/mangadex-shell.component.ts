@@ -29,6 +29,7 @@ export class MangadexShellComponent extends ReadBaseComponent {
         if (!idParam) return of(null);
 
         const id = (Base64.isBase64(idParam)) ? Base64.fromBase64(idParam) : idParam;
+        const id64 = Base64.toBase64(id);
         const ch$ = this.mangadex.getChapter(id);
 
         return ch$.pipe(
@@ -47,6 +48,7 @@ export class MangadexShellComponent extends ReadBaseComponent {
           }),
           this.catchError(),
           this.tapSetTitle(),
+          this.tapSaveToHistory(`imgur`, id64),
           this.finalizeLoading()
         );
       })

@@ -1,0 +1,11 @@
+<app-overlay class="show">
+    <small>{{lang.phrases.shortTitle}}, &copy; 2024</small>
+  
+    @for (item of social; track $index) {
+    <a [href]="item.link" target="_blank" rel="noopener noreferrer">
+      <img style="width: 2ch;" [src]="item.logoSrc" [alt]="item.alt">
+    </a>
+    }
+  
+    <made-in-ukraine />
+  </app-overlay>

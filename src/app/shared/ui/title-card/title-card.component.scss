@@ -1,0 +1,46 @@
+:host {
+    --border-color: hsl(0, 0%, 50%, .5);
+    --border-width: 1px;
+    --border-style: solid;
+    --border-radius: .5ch;
+    --back-color: transparent;
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 1ch;
+    overflow: hidden;
+    align-items: center;
+    border: var(--border-width) var(--border-style) var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.cover-wrapper {
+    position: relative;
+
+    .site-logo {
+        position: absolute;
+        top: 50%;
+        left: -1ch;
+        width: 40%;
+        transform: translate(0%, -50%);
+        display: block;
+        aspect-ratio: 1;
+        z-index: 1;
+        object-fit: contain;
+    }
+}
+
+.cover {
+    border-radius: 4px;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+}
+
+.title {
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}

@@ -1,6 +1,21 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Route, RouterModule, Routes, UrlSegment, UrlSegmentGroup } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
+
+export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route: Route) {
+
+  if (segments.length > 1) {
+    const url = segments.map(segment => segment.path).join('/');
+
+    console.log(url);
+    
+    return {
+      consumed: segments,
+      posParams: { url: new UrlSegment(url, {}) }
+    };
+  }
+  return null;
+}
 
 const routes: Routes = [
   {
@@ -26,6 +41,10 @@ const routes: Routes = [
   {
     path: 'reddit',
     loadChildren: () => import('./reddit/reddit.module').then(m => m.RedditModule)
+  },
+  {
+    matcher: urlMatcher,
+    loadChildren: () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
   },
   {
     path: '**',

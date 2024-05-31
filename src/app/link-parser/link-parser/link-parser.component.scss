@@ -6,6 +6,8 @@
     // min-height: 100dvh;
     height: 100dvh;
     background: rgb(0, 39, 65);
+    // #002741
+    // #000f1e
     background: radial-gradient(circle, rgba(0, 39, 65, 1) 0%, rgba(0, 15, 30, 1) 100%);
 
     @media (max-aspect-ratio: 1) or (max-width: 640px) {
@@ -13,36 +15,71 @@
         grid-template-rows: 61.8fr 38.2fr;
     }
 
-    &>div {
-        display: grid;
-        gap: 2ch;
+    @media (prefers-color-scheme: light) {
+        background: #eceff2;
+        background: radial-gradient(circle, #eceff2 0%, #d4e4f2 100%);
     }
+}
+
+.logo-text {
+    all: unset;
 }
 
 app-text-embracer {
     --border-color: #166496;
     --border-width: 2px;
     color: #ffd60a;
-    margin: auto;
-    font-family: 'Rampart One', sans-serif;
+
+    @media (prefers-color-scheme: light) {
+        // --border-color: #caa902;
+        --back-color: #ffd60a;
+
+        color: #166496;
+    }
+
+    justify-content: center;
+    font-family: 'Rampart One',
+    sans-serif;
     font-size: clamp(1rem, 8vw, 5rem);
 
     -webkit-box-reflect: below 1.3rem linear-gradient(transparent 0%, #fff);
+
     @media (max-width: 1080px) {
         font-size: clamp(1rem, 7vw, 8rem);
     }
-    
+
     @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
         font-size: clamp(1rem, 10vw, 8rem);
     }
+}
 
-    
+main {
+    display: grid;
+    row-gap: 2ch;
+    overflow: auto;
+    max-height: 100%;
+    padding: 4ch 0; 
+}
 
-    // grid-column: 2;
+.wrapper {
+    display: grid;
+    row-gap: 1ch;
+    grid-template-columns: auto minmax(auto, 80ch) auto;
+}
+
+aside {
+    max-height: 100%;
+    min-height: 0;
+    padding: 4ch;
+    display: grid;
 }
 
 .form-wrapper {
-    grid-template-columns: auto minmax(auto, 80ch) auto;
+    grid-column: 2;
+    display: grid;
+    gap: 2ch;
+    overflow: hidden;
+    padding: 0px;
 }
 
 form {
@@ -68,8 +105,11 @@ input[type=url] {
     border: 2px solid #166496;
     box-shadow: var(--shadow-elevation-medium);
     background-color: #00274190;
+    @media (prefers-color-scheme: light) {
+        background-color: #eceff2a0;
+        color: #166496;
+    }
     color: #ffd60a;
-    // padding-right: 8ch;
 
     &:focus {
         border-color: #166496;
@@ -80,6 +120,9 @@ input[type=url] {
 input[type=url]::placeholder {
     color: #ffd60a;
     opacity: 0.6;
+    @media (prefers-color-scheme: light) {
+        color: #166496;
+    }
 }
 
 // input[type=reset] {
@@ -104,6 +147,21 @@ input[type=url]::placeholder {
     background-color: rgb(255 255 255 / .2);
 }
 
+.slogan-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-column: 2;
+}
+
+.slogan-header {
+    all: unset;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    opacity: .72;
+    text-wrap: balance;
+}
+
 .link {
     outline: 1px solid;
     border-radius: .5ch;
@@ -118,8 +176,18 @@ input[type=url]::placeholder {
     }
 }
 
-app-overlay {
+lp-footer,
+lp-header {
     position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transition: all .2s linear;
+}
+
+lp-header {
+    top: 0;
+    bottom: unset;
 }
 
 .logo {
@@ -139,9 +207,7 @@ app-overlay {
     }
 }
 
-made-in-ukraine, app-lang-toggle {
-    margin-left: auto;
-}
+
 
 :host {
     transition: all var(--t) ease-in-out;
@@ -153,7 +219,9 @@ made-in-ukraine, app-lang-toggle {
 }
 
 :host:has(input[type=url]:focus) {
-    app-overlay {
+
+    lp-footer,
+    lp-header {
         opacity: 0;
     }
 }

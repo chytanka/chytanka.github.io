@@ -22,6 +22,10 @@ details {
             color: #ffd60a;
             border-bottom: 1px solid #fff2;
             padding-bottom: 1ch;
+
+            @media (prefers-color-scheme: light) {
+                color: #166496;
+            }
         }
     }
 

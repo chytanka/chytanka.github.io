@@ -9,6 +9,11 @@
 	--surface-1: #ffd60a;
 	--link: #166496;
 
+	@media (prefers-color-scheme: light) {
+		--surface-2: hsl(203.44 8% 96%);
+		--link: #88a8c8
+	}
+
 	>div {
 		display: grid;
 		align-items: center;
@@ -26,7 +31,6 @@
 			cursor: pointer;
 			text-shadow: 0 0 0.25ch #0008;
 			background: var(--surface-2);
-
 		}
 
 		>input {

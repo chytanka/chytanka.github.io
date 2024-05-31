@@ -14,6 +14,7 @@ import { NsfwWarningComponent } from './ui/nsfw-warning/nsfw-warning.component';
 import { MadeInUkraineComponent } from './ui/made-in-ukraine/made-in-ukraine.component';
 import { DialogComponent } from './ui/dialog/dialog.component';
 import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
+import { TitleCardComponent } from './ui/title-card/title-card.component';
 
 
 
@@ -30,13 +31,14 @@ import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
     NsfwWarningComponent,
     MadeInUkraineComponent,
     DialogComponent,
-    LangToggleComponent
+    LangToggleComponent,
+    TitleCardComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent]
 })
 export class SharedModule { }

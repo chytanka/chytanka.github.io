@@ -27,8 +27,12 @@ export class ImgurShellComponent extends ReadBaseComponent {
         if (!idParam) return of(null);
 
         const id = (Base64.isBase64(idParam)) ? Base64.fromBase64(idParam) : idParam;
+        const id64 = Base64.toBase64(id);
 
-        return (this.imgur.getComposition(id)).pipe(this.catchError(), this.tapSetTitle(), this.finalizeLoading());
+        return (this.imgur.getComposition(id)).pipe(this.catchError(), this.tapSetTitle(), 
+        this.tapSaveToHistory(`imgur`, id64), 
+        
+        this.finalizeLoading());
       })
     );
 

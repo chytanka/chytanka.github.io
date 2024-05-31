@@ -38,6 +38,9 @@ export class Phrases {
     autoPasteLink = "Auto Paste Link"
     settingAutoPasteLinkDesc = "Automatically inserts a link from the clipboard into the input field."
 
+    history = "History"
+    clearHistory = "Clear history";
+
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

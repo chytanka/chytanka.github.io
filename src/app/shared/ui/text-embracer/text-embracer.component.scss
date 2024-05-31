@@ -2,6 +2,7 @@
     --border-color: currentColor;
     --border-width: 1px;
     --border-style: solid;
+    --back-color: transparent;
     margin: 0;
     text-transform: uppercase;
     text-align: center;
@@ -17,5 +18,6 @@
         border-radius: .1ch;
         height: 1.3lh;
         place-content: center;
+        background-color: var(--back-color);
     }
 }

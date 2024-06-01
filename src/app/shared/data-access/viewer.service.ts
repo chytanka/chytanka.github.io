@@ -14,6 +14,8 @@ export const VIEV_MODE_OPTIONS: ViewModeOption[] = [
   { dir: "ltr", mode: "long", hintPhraceKey: "scrollDown", code: "3", emoji: "⬇️" },
 ]
 
+const VIEW_MODE_OPT_NAME = `viewModeOption`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +28,7 @@ export class ViewerService {
 
   keyboard: boolean = (navigator as any).keyboard;
 
-  constructor() { 
+  constructor() {
     this.initNightlight();
     this.initViewModeOption();
   }
@@ -42,13 +44,28 @@ export class ViewerService {
   }
 
   initViewModeOption() {
-    const localOpt: ViewModeOption = JSON.parse(localStorage.getItem('viewModeOption')?? '{}');
-    const opt:ViewModeOption = VIEV_MODE_OPTIONS.filter(o=>(o.dir == localOpt?.dir && o.mode == localOpt?.mode))[0] ?? VIEV_MODE_OPTIONS[0]
+    const localOpt: ViewModeOption = JSON.parse(localStorage.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
+    const opt: ViewModeOption = this.getViewModeOptionByCode(localOpt?.code) ?? VIEV_MODE_OPTIONS[0]
     this.viewModeOption = opt;
   }
 
   setViewModeOption(opt: ViewModeOption) {
     this.viewModeOption = opt;
-    localStorage.setItem('viewModeOption', JSON.stringify(opt))
+  }
+
+  saveViewModeOption() {
+    localStorage.setItem(VIEW_MODE_OPT_NAME, JSON.stringify(this.viewModeOption))
+  }
+
+  getViewModeOptionByCode(code: string) {
+    return VIEV_MODE_OPTIONS.filter(o => o.code == code)[0]
+  }
+
+  setViewModeOptionByCode(code: string) {
+    const opt: ViewModeOption = this.getViewModeOptionByCode(code);
+
+    if (!opt) return;
+
+    this.setViewModeOption(opt);
   }
 }

@@ -153,4 +153,9 @@ export class ViewerComponent {
   preLoad(i: number): boolean {
     return (this.preloadIndexes()).includes((i))
   }
+
+  setViewModeOption(e: any) {
+    this.viewer.setViewModeOption(e);
+    this.viewer.saveViewModeOption();
+  }
 }

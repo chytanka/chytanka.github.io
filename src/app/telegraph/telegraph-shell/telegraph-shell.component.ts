@@ -21,7 +21,7 @@ export class TelegraphShellComponent extends ReadBaseComponent {
         const path = (Base64.isBase64(pathParam)) ? Base64.fromBase64(pathParam) : pathParam;
 
         return (this.telegraph.getComposition(path)).pipe(this.catchError(), this.tapSetTitle(), 
-        this.tapSaveToHistory(`telegraph`, path), 
+        this.tapSaveToHistory(`telegr`, path), 
         this.finalizeLoading());
       })
     );

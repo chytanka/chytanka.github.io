@@ -3,34 +3,6 @@
     gap: 2ch;
 }
 
-details {
-    padding: 1.5ch 2ch;
-    border-radius: .5ch;
-    border: 1px solid rgb(0, 40, 64);
-    transition: all var(--t) ease-in-out;
-
-    summary {
-        cursor: pointer;
-        font-weight: bold;
-        transition: color var(--t) cubic-bezier(0.45, 0.05, 0.55, 0.95);
-    }
-
-    &[open] {
-        border-color: #166496;
-
-        summary {
-            color: #ffd60a;
-            border-bottom: 1px solid #fff2;
-            padding-bottom: 1ch;
-
-            @media (prefers-color-scheme: light) {
-                color: #166496;
-            }
-        }
-    }
-
-}
-
 dl {
     margin: 1rem 0;
     padding: 0;

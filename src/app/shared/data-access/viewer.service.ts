@@ -22,7 +22,7 @@ const VIEW_MODE_OPT_NAME = `viewModeOption`;
 export class ViewerService {
   public viewModeOptions = VIEV_MODE_OPTIONS;
 
-  public viewModeOption = VIEV_MODE_OPTIONS[0];
+  public viewModeOption: WritableSignal<ViewModeOption> = signal(VIEV_MODE_OPTIONS[0]);
 
   nightlight: WritableSignal<number> = signal(0);
 
@@ -46,15 +46,15 @@ export class ViewerService {
   initViewModeOption() {
     const localOpt: ViewModeOption = JSON.parse(localStorage.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
     const opt: ViewModeOption = this.getViewModeOptionByCode(localOpt?.code) ?? VIEV_MODE_OPTIONS[0]
-    this.viewModeOption = opt;
+    this.setViewModeOption(opt);
   }
 
   setViewModeOption(opt: ViewModeOption) {
-    this.viewModeOption = opt;
+    this.viewModeOption.set(opt);
   }
 
   saveViewModeOption() {
-    localStorage.setItem(VIEW_MODE_OPT_NAME, JSON.stringify(this.viewModeOption))
+    localStorage.setItem(VIEW_MODE_OPT_NAME, JSON.stringify(this.viewModeOption()))
   }
 
   getViewModeOptionByCode(code: string) {

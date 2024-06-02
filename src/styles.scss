@@ -196,18 +196,3 @@ a[target="_blank"]:after {
     }
 }
 
-
-@supports (height: calc-size(auto)) {
-    details::details-content {
-        display: block;
-        height: 0;
-        overflow: hidden;
-        transition: height var(--t), content-visibility var(--t);
-        transition-behavior: allow-discrete;
-    }
-
-    details[open]::details-content {
-        height: calc-size(auto);
-        transition: height var(--t), content-visibility var(--t);
-    }
-}

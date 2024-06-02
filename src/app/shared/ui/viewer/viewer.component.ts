@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../common/common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
+
+const L = window.location;
 
 @Component({
   selector: 'app-viewer',
@@ -10,7 +14,8 @@ import { LangService } from '../../data-access/lang.service';
   styleUrls: [
     './viewer.component.scss',
     './viewer.pages.component.scss',
-    './viewer.long.component.scss'
+    './viewer.long.component.scss',
+    '/src/app/shared/ui/@styles/details.scss'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -22,7 +27,9 @@ export class ViewerComponent {
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
-  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) { }
+  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) {
+    this.initHotKeys()
+  }
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
 
@@ -41,7 +48,7 @@ export class ViewerComponent {
 
   activeIndexs: WritableSignal<number[]> = signal([])
   initActiveIndexes() {
-    const isPageMode = this.viewer.viewModeOption.mode == 'pages';
+    const isPageMode = this.viewer.viewModeOption().mode == 'pages';
 
     const viewRect: DOMRect = isPageMode
       ? this.viewElement().getBoundingClientRect()
@@ -76,18 +83,34 @@ export class ViewerComponent {
     this.initActiveIndexes()
   }
 
+  hotKeys = new Map<string, Function>()
+
+  initHotKeys() {
+    this.hotKeys.set('KeyF', this.toggleFullScreen)
+    this.hotKeys.set('Ctrl+KeyS', this.showShare)
+  }
+
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+
+    const code = event.ctrlKey ? `Ctrl+${event.code}` : event.code
+
+    if (this.hotKeys.has(code)) {
+      event.preventDefault()
+      const f: Function = this.hotKeys.get(code) as Function;
+      f();
+      return;
+    }
 
     const element: HTMLElement = this.el.nativeElement;
     const horAmount = element.clientWidth;
     const verAmount = 100;
 
     switch (event.code) {
-      case 'KeyF':
-        this.toggleFullScreen()
-        break;
+      // case 'KeyF':
+      //   this.toggleFullScreen()
+      //   break;
       case 'KeyA':
         this.dm.scrollHor(this.viewElement(), -horAmount)
         break;
@@ -106,9 +129,9 @@ export class ViewerComponent {
   @HostListener('wheel', ['$event'])
   handleWheelEvent(event: WheelEvent): void {
 
-    if (this.viewer.viewModeOption.mode != "pages") return;
+    if (this.viewer.viewModeOption().mode != "pages") return;
 
-    const revers: number = this.viewer.viewModeOption.dir == "ltr" ? 1 : -1
+    const revers: number = this.viewer.viewModeOption().dir == "ltr" ? 1 : -1
 
     const scrollAmountX = this.viewElement().clientWidth;
 
@@ -158,4 +181,14 @@ export class ViewerComponent {
     this.viewer.setViewModeOption(e);
     this.viewer.saveViewModeOption();
   }
+
+  @ViewChild('shareDialog') shareDialogComponent!: DialogComponent;
+  showShare = () => this.shareDialogComponent.showDialog();
+
+  route = inject(ActivatedRoute)
+  domMan = inject(DomManipulationService)
+  link: Signal<string> =
+    computed(() => decodeURIComponent(`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}`));
+  sanitizer: DomSanitizer = inject(DomSanitizer)
+  embed = computed(() => this.sanitizer.bypassSecurityTrustUrl(this.link()));
 }

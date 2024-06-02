@@ -40,4 +40,13 @@ export class DomManipulationService {
       ? await (document as any).startViewTransition(fn)
       : fn();
   }
+
+  copyToClipboard = (text: string) => {
+    try {
+      navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 }

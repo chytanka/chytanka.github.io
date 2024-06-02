@@ -6,13 +6,23 @@
 	container-name: view;
 	width: var(--W);
 	height: var(--H);
+    transition: all var(--t) ease-in-out;
 
 	&:fullscreen {
 		background-color: var(--surface);
+		
+		app-overlay.top {
+			top: min(0vmin, env(safe-area-inset-top));
+		}
 	}
 
 	.filter {
 		z-index: 0;
+	}
+
+	&:has(dialog[open]) {
+		transform: scale(calc(1 - var(--scale-diff-x, .1)), calc(1 - var(--scale-diff-y, .1)));
+		filter: blur(var(--blur));
 	}
 }
 
@@ -121,4 +131,13 @@ span.title {
 span.separator {
 	user-select: none;
 	opacity: .5;
+}
+
+code {
+	word-break: break-all;
+	border: 1px solid #8885;
+	display: block;
+    padding: 1ch;
+	border-radius: 1ch;
+    font-size: smaller;
 }

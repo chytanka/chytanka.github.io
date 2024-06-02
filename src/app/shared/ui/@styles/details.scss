@@ -1,0 +1,42 @@
+details {
+    padding: 1.5ch 2ch;
+    border-radius: .5ch;
+    border: 1px solid rgb(0, 40, 64);
+    transition: all var(--t) ease-in-out;
+
+    summary {
+        cursor: pointer;
+        font-weight: bold;
+        transition: color var(--t) cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+
+    &[open] {
+        border-color: #166496;
+
+        summary {
+            color: #ffd60a;
+            border-bottom: 1px solid #fff2;
+            padding-bottom: 1ch;
+
+            @media (prefers-color-scheme: light) {
+                color: #166496;
+            }
+        }
+    }
+
+}
+
+@supports (height: calc-size(auto)) {
+    details::details-content {
+        display: block;
+        height: 0;
+        overflow: hidden;
+        transition: height var(--t), content-visibility var(--t);
+        transition-behavior: allow-discrete;
+    }
+
+    details[open]::details-content {
+        height: calc-size(auto);
+        transition: height var(--t), content-visibility var(--t);
+    }
+}

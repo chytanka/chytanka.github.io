@@ -1,5 +1,5 @@
-<div #viewRef class="view" [class]="viewer.viewModeOption.mode" (scroll)="initActiveIndexes()"
-    [dir]="viewer.viewModeOption.dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
+<div #viewRef class="view" [class]="viewer.viewModeOption().mode" (scroll)="initActiveIndexes()"
+    [dir]="viewer.viewModeOption().dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
     <div>
         <div class="page">
@@ -10,9 +10,9 @@
             }
             @else {
             <h1 style="text-align: center;">
-                {{lang.phrases.getByKey(viewer.viewModeOption.hintPhraceKey)}}<br />{{viewer.viewModeOption.emoji}}</h1>
-            
-            @if (viewer.viewModeOption.mode == "pages" && viewer.keyboard) {
+                {{lang.phrases.getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}</h1>
+
+            @if (viewer.viewModeOption().mode == "pages" && viewer.keyboard) {
             <div class="hotkeys_hint">
                 <span> Navigate Between Pages</span>
                 <div><span class="key_button">a</span><span class="key_button">d</span> or <span
@@ -52,7 +52,7 @@
 <app-overlay [ngClass]="{'show': showOverlay}">
     <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
-        [images]="episode?.images" [class]="viewer.viewModeOption.mode" [dir]="viewer.viewModeOption.dir"
+        [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
     <button (click)="toggleFullScreen()" [title]="lang.phrases.fullscreen">
         🖥️
@@ -60,9 +60,34 @@
 </app-overlay>
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
-    <a [routerLink]="['/']">🏠</a> <span class="separator">{{separator}}</span><span class="title">{{episode?.title}}</span>
+    <a class="button empty" [routerLink]="['/']">🏠</a>
+    <span class="separator">{{separator}}</span>
+    <button class="button small empty" [title]="lang.ph().share" (click)="showShare()">📢</button>
+    <span class="title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
-        [value]="viewer.viewModeOption.code" />
+        [value]="viewer.viewModeOption().code" />
 </app-overlay>
 
 <app-warm-filter class="filter" [value]="viewer.nightlight()" />
+
+<app-dialog class="dialog" #shareDialog [title]="'📢 ' + lang.ph().share">
+    <!-- @defer{ } -->
+    <div style="display: flex; flex-direction: column; gap: 2ch;">
+        <details open>
+            <summary>🔗 Share link</summary>
+            <code>{{link()}}</code>
+            <!-- <button class="button small" disabled (click)="domMan.copyToClipboard(link())">Copy</button> -->
+        </details>
+    
+        <details>
+            <summary>🔌 Embed</summary>
+            <code>{{'\<iframe src="'+link()+'" frameborder="0" allowfullscreen>\</iframe>'}}</code>
+            <!-- <button class="button small" disabled (click)="domMan.copyToClipboard(link())">Copy</button> -->
+
+            <!-- <iframe [src]="embed()" frameborder="0" allowfullscreen>\</iframe> -->
+        </details>
+    </div>
+    
+
+    <!-- <iframe [src]="link()" frameborder="0" allowfullscreen>\</iframe> -->
+</app-dialog>

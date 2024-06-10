@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, WritableSignal, inject, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
@@ -8,6 +8,8 @@ import { LangService } from '../../data-access/lang.service';
 })
 export class DialogComponent {
   lang = inject(LangService)
+
+  @Output() onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() title: string = 'Dialog Title'
   @Input() footer: boolean = false
@@ -19,6 +21,10 @@ export class DialogComponent {
 
   ngAfterViewInit() {
     this.dialogElement.set(this.dialogRef.nativeElement);
+
+    this.dialogElement().onclose = () =>{
+      this.onToggle.emit(false)
+    }
   }
 
   closeDialog(event: Event) {
@@ -29,5 +35,6 @@ export class DialogComponent {
 
   showDialog() {
     this.dialogElement().showModal()
+    this.onToggle.emit(true)
   }
 }

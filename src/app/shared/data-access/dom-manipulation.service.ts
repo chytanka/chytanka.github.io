@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { copyText } from '../utils/clipboard';
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +41,9 @@ export class DomManipulationService {
       ? await (document as any).startViewTransition(fn)
       : fn();
   }
+
+  copyToClipboard = async (text: string) => {
+    await copyText(text);
+    
+  };
 }

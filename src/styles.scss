@@ -33,6 +33,18 @@ body {
     scrollbar-color: var(--text) var(--surface);
 }
 
+input {
+    --q: 1;
+
+    user-select: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    padding-inline: calc(var(--q) * 1ch);
+    padding-block: calc(var(--q) * 1ch);
+    border-radius: .5ch;
+}
+
 .button {
     --q: 1;
 
@@ -196,18 +208,3 @@ a[target="_blank"]:after {
     }
 }
 
-
-@supports (height: calc-size(auto)) {
-    details::details-content {
-        display: block;
-        height: 0;
-        overflow: hidden;
-        transition: height var(--t), content-visibility var(--t);
-        transition-behavior: allow-discrete;
-    }
-
-    details[open]::details-content {
-        height: calc-size(auto);
-        transition: height var(--t), content-visibility var(--t);
-    }
-}

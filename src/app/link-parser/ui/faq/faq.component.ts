@@ -4,7 +4,7 @@ import { LangService } from '../../../shared/data-access/lang.service';
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
-  styleUrl: './faq.component.scss'
+  styleUrls: ['./faq.component.scss', '/src/app/shared/ui/@styles/details.scss']
 })
 export class FaqComponent {
   public lang = inject(LangService)

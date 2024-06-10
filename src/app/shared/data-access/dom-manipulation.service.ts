@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { copyText } from '../utils/clipboard';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,8 @@ export class DomManipulationService {
       : fn();
   }
 
-  copyToClipboard = (text: string) => {
-    try {
-      navigator.clipboard.writeText(text);
-      return true;
-    } catch (err) {
-      return false;
-    }
+  copyToClipboard = async (text: string) => {
+    await copyText(text);
+    
   };
 }

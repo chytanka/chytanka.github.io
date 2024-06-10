@@ -18,11 +18,12 @@ export class ReadShellComponent extends ReadBaseComponent {
         if (!urlParam) return of(null);
 
         const url = (Base64.isBase64(urlParam)) ? Base64.fromBase64(urlParam) : urlParam;
+        const id64 = Base64.toBase64(url);
 
         return this.read.getComposition(url).pipe(
           this.catchError(), 
           this.tapSetTitle(), 
-          this.tapSaveToHistory(`read`, url), 
+          this.tapSaveToHistory(`read`, id64), 
           this.finalizeLoading()
         );
       })

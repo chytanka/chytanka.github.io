@@ -126,8 +126,12 @@ export class ViewerComponent {
     }
   }
 
+  isDialogOpen = signal(false);
+
   @HostListener('wheel', ['$event'])
   handleWheelEvent(event: WheelEvent): void {
+
+    if(this.isDialogOpen()) return;
 
     if (this.viewer.viewModeOption().mode != "pages") return;
 
@@ -189,6 +193,10 @@ export class ViewerComponent {
   domMan = inject(DomManipulationService)
   link: Signal<string> =
     computed(() => decodeURIComponent(`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}`));
+
+  iframe = computed(() => 
+    `<iframe src="${this.link()}" frameborder="0" allowfullscreen>\</iframe>`
+  )
   sanitizer: DomSanitizer = inject(DomSanitizer)
   embed = computed(() => this.sanitizer.bypassSecurityTrustUrl(this.link()));
 }

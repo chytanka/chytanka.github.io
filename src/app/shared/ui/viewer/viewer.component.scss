@@ -6,11 +6,11 @@
 	container-name: view;
 	width: var(--W);
 	height: var(--H);
-    transition: all var(--t) ease-in-out;
+	transition: all var(--t) ease-in-out;
 
 	&:fullscreen {
 		background-color: var(--surface);
-		
+
 		app-overlay.top {
 			top: min(0vmin, env(safe-area-inset-top));
 		}
@@ -30,13 +30,14 @@ app-warm-filter {
 	position: fixed;
 }
 
-app-view-mode-bar{
+app-view-mode-bar {
 	margin-left: auto;
 }
 
 .page {
 	position: relative;
 }
+
 app-nsfw-warning {
 	position: absolute;
 	z-index: 1;
@@ -52,6 +53,7 @@ figure {
 		filter: blur(4rem) brightness(.1);
 		transition: all var(--t) ease-in-out;
 	}
+
 	&.nsfw.show {
 		filter: blur(0) brightness(1);
 	}
@@ -59,10 +61,10 @@ figure {
 
 .loading-image {
 	position: absolute;
-	top: 50%; 
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	z-index: 0; 
+	z-index: 0;
 	width: 100%;
 	padding: 2rem;
 }
@@ -79,11 +81,12 @@ figure {
 button {
 	border: 0;
 	padding-inline: var(--size-3);
-    padding-block: var(--size-1);
-    border-radius: var(--radius-2);
-    cursor: pointer;
-display: block;
-    background: var(--surface-2);
+	padding-block: var(--size-1);
+	border-radius: var(--radius-2);
+	cursor: pointer;
+	display: block;
+	background: var(--surface-2);
+
 	&:hover {
 		background-color: var(--link);
 		color: var(--surface-1);
@@ -93,7 +96,7 @@ display: block;
 .key_button {
 	display: inline-grid;
 	place-content: center;
-	background-color: rgba(0,39,65,1);
+	background-color: rgba(0, 39, 65, 1);
 	border: 1px solid #166496;
 	aspect-ratio: 1;
 	height: 3.5ch;
@@ -116,7 +119,8 @@ display: block;
 	direction: ltr;
 	grid-template-columns: 1fr auto;
 	column-gap: 1ch;
-	& > span {
+
+	&>span {
 		justify-self: end;
 		opacity: .8;
 	}
@@ -124,8 +128,8 @@ display: block;
 
 span.title {
 	text-shadow: 0 0 0.25ch black;
-    font-weight: bold;
-    color: white;
+	font-weight: bold;
+	color: white;
 }
 
 span.separator {
@@ -133,11 +137,30 @@ span.separator {
 	opacity: .5;
 }
 
-code {
-	word-break: break-all;
-	border: 1px solid #8885;
-	display: block;
-    padding: 1ch;
-	border-radius: 1ch;
-    font-size: smaller;
+.input-group {
+	display: flex;
+
+	input,
+	textarea {
+		font-family: monospace;
+		border-top-right-radius: unset;
+		border-bottom-right-radius: unset;
+		border: 1px solid #8885;
+		border-right: unset;
+		font-size: smaller;
+		width: 100%;
+	}
+
+	button {
+		border-top-left-radius: unset;
+		border-bottom-left-radius: unset;
+	}
+}
+
+:host:has(dialog[open]) {
+	overflow: hidden;
+
+	.view {
+		overflow: hidden;
+	}
 }

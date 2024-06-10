@@ -10,7 +10,8 @@
             }
             @else {
             <h1 style="text-align: center;">
-                {{lang.phrases.getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}</h1>
+                {{lang.phrases.getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}
+            </h1>
 
             @if (viewer.viewModeOption().mode == "pages" && viewer.keyboard) {
             <div class="hotkeys_hint">
@@ -70,24 +71,29 @@
 
 <app-warm-filter class="filter" [value]="viewer.nightlight()" />
 
-<app-dialog class="dialog" #shareDialog [title]="'📢 ' + lang.ph().share">
+<app-dialog class="dialog" #shareDialog (onToggle)="isDialogOpen.set($event)" [title]="'📢 ' + lang.ph().share">
     <!-- @defer{ } -->
     <div style="display: flex; flex-direction: column; gap: 2ch;">
         <details open>
             <summary>🔗 Share link</summary>
-            <code>{{link()}}</code>
-            <!-- <button class="button small" disabled (click)="domMan.copyToClipboard(link())">Copy</button> -->
+
+            <div class="input-group">
+                <input type="text" [value]="link()" aria-label="Copy link" readonly="">
+                <button class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
+            </div>
         </details>
-    
+
         <details>
             <summary>🔌 Embed</summary>
-            <code>{{'\<iframe src="'+link()+'" frameborder="0" allowfullscreen>\</iframe>'}}</code>
-            <!-- <button class="button small" disabled (click)="domMan.copyToClipboard(link())">Copy</button> -->
+            <div class="input-group">
+                <textarea rows="6" readonly>{{iframe()}}</textarea>
+                <button class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
 
+            </div>
             <!-- <iframe [src]="embed()" frameborder="0" allowfullscreen>\</iframe> -->
         </details>
     </div>
-    
+
 
     <!-- <iframe [src]="link()" frameborder="0" allowfullscreen>\</iframe> -->
 </app-dialog>

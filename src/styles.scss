@@ -33,6 +33,18 @@ body {
     scrollbar-color: var(--text) var(--surface);
 }
 
+input {
+    --q: 1;
+
+    user-select: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    padding-inline: calc(var(--q) * 1ch);
+    padding-block: calc(var(--q) * 1ch);
+    border-radius: .5ch;
+}
+
 .button {
     --q: 1;
 

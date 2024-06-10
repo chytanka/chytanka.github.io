@@ -55,7 +55,8 @@
               "src/assets",
               "src/.well-known",
               "src/manifest.webmanifest",
-              "src/manifest-uk.webmanifest"
+              "src/manifest-uk.webmanifest",
+              "src/CNAME"
             ],
             "styles": [
               "src/styles.scss"
@@ -130,7 +131,8 @@
               "src/assets",
               "src/.well-known",
               "src/manifest.webmanifest",
-              "src/manifest-uk.webmanifest"
+              "src/manifest-uk.webmanifest",
+              "src/CNAME"
             ],
             "styles": [
               "src/styles.scss"

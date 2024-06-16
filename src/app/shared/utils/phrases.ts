@@ -7,7 +7,7 @@ export class Phrases {
     dataLoadErr: string = "Data loading error. Please try again later."
     imagesVia: string = "Images via "
     thanks: string = "Thanks!"
-    detalisCopy: string = "Details on their site. Поважай авторські права."
+    detalisCopy: string = "Details on their site. Respect copyright."
     fullscreen: string = "Fullscreen";
     scrollLeft: string = "Scroll left";
     scrollRight: string = "Scroll right";
@@ -41,6 +41,7 @@ export class Phrases {
     history = "History"
     clearHistory = "Clear history";
     share = 'Share'
+    untitled = 'Untitled'
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

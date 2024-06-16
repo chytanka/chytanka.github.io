@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-title-card',
@@ -13,4 +14,6 @@ export class TitleCardComponent {
   onDelete(id: number) {
     this.delete.emit(id);
   }
+
+  lang = inject(LangService);
 }

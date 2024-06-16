@@ -17,11 +17,11 @@ export class HistoryService {
   private createDatabase() {
     this.db = new Dexie(HISTORY_DB_NAME);
     this.db.version(1).stores({
-      history: '++id,site,post_id,title,cover,created,updated'
+      history: '++id,site,post_id,title,cover,episode,created,updated'
     });
   }
 
-  async addHistory(site: string, post_id: string, title: string, cover: string) {
+  async addHistory(site: string, post_id: string, title: string, cover: string, episode: any) {
     // await this.db.table(HISTORY_TABLE_NAME).add({ site, post_id, title, cover });
     const existingEntry = await this.db.table(HISTORY_TABLE_NAME).where({ site, post_id: post_id }).first();
 
@@ -32,7 +32,7 @@ export class HistoryService {
     } else {
       // Entry doesn't exist, add a new one
       const now = new Date().toISOString();
-      await this.db.table(HISTORY_TABLE_NAME).add({ site, title, cover, post_id: post_id, created: now, updated: now });
+      await this.db.table(HISTORY_TABLE_NAME).add({ site, title, cover, episode, post_id: post_id, created: now, updated: now });
     }
   }
 

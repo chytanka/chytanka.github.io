@@ -73,14 +73,16 @@ export abstract class ReadBaseComponent {
     protected tapSaveToHistory(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
         return tap(async (episode: CompositionEpisode) => {
             if (episode) {
-                await this.saveToHistory(site, post_id, episode.title, episode.images[0]?.src);
+                let e = structuredClone(episode); 
+                e.images = [];
+                await this.saveToHistory(site, post_id, episode.title, episode.images[0]?.src, e);
             }
         })
     }
 
     public history: HistoryService = inject(HistoryService);
 
-    async saveToHistory(site: string, post_id: string, title: string, cover: string) {
-        await this.history.addHistory(site, post_id, title, cover);
+    async saveToHistory(site: string, post_id: string, title: string, cover: string, episode: any) {
+        await this.history.addHistory(site, post_id, title, cover, episode);
     }
 }

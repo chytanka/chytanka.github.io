@@ -74,12 +74,26 @@ export class LinkParserComponent {
   }
 
   initUrl() {
-    const url: string | null =
-      this.route.snapshot.queryParamMap.get('url')
-      ?? this.route.snapshot.paramMap.get('url');
 
-    if (url) {
-      this.link.set(url ?? '')
+    const routeParamUrl: string | null = this.route.snapshot.paramMap.get('url');
+
+    if(routeParamUrl) {
+      
+      this.link.set(routeParamUrl); 
+
+      this.onSubmit();
+
+      return;
+    }
+
+    const queryParamUrl: string | null = this.route.snapshot.queryParamMap.get('url');
+
+    // const url: string | null =
+    //   this.route.snapshot.queryParamMap.get('url')
+    //   ?? this.route.snapshot.paramMap.get('url');
+
+    if (queryParamUrl) {
+      this.link.set(queryParamUrl ?? '')
     } else {
       if (this.setts.autoPasteLink()) this.initFromclipboard();
     }

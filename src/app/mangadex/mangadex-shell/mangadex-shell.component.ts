@@ -48,7 +48,7 @@ export class MangadexShellComponent extends ReadBaseComponent {
           }),
           this.catchError(),
           this.tapSetTitle(),
-          this.tapSaveToHistory(`imgur`, id64),
+          this.tapSaveToHistory(`md`, id64),
           this.finalizeLoading()
         );
       })

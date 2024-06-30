@@ -1,5 +1,10 @@
 @if(episode$ | async; as episode){
-<app-viewer [episode]="episode"><ng-content/></app-viewer>
+
+@if (!(loading$ | async)) {
+<app-viewer [playlist]="playlist" [playlistLink]="playlistLink" [currentPlaylistItem]="currentPlaylistItem"
+    [episode]="episode"><ng-content /></app-viewer>
+}
+
 }
 
 @if(error$ | async; as error){
@@ -16,6 +21,7 @@
 }
 
 @if(loading$ | async; as loading){
-<div style="display: grid; place-items: center; width: min(50vw, 50vh); margin: auto; aspect-ratio: 1;">⏳ loading...
-</div>
+<loading />
+} @else {
+
 }

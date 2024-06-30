@@ -41,6 +41,7 @@ export class LinkParserComponent {
   }
 
   initParser() {
+    this.parser.parsers = [];
     this.parser.parsers.push(new ImgurLinkParser)
     this.parser.parsers.push(new MangadexLinkParser)
     this.parser.parsers.push(new TelegraphLinkParser)

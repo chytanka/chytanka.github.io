@@ -15,6 +15,7 @@ import { MadeInUkraineComponent } from './ui/made-in-ukraine/made-in-ukraine.com
 import { DialogComponent } from './ui/dialog/dialog.component';
 import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
 import { TitleCardComponent } from './ui/title-card/title-card.component';
+import { LoadingComponent } from './ui/loading/loading.component';
 
 
 
@@ -32,13 +33,14 @@ import { TitleCardComponent } from './ui/title-card/title-card.component';
     MadeInUkraineComponent,
     DialogComponent,
     LangToggleComponent,
-    TitleCardComponent
+    TitleCardComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent]
 })
 export class SharedModule { }

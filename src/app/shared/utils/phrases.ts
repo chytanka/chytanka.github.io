@@ -42,6 +42,7 @@ export class Phrases {
     clearHistory = "Clear history";
     share = 'Share'
     untitled = 'Untitled'
+    loading = 'loading'
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

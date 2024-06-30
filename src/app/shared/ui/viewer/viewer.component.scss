@@ -126,6 +126,12 @@ button {
 	}
 }
 
+@media (hover: none) {
+	.hotkeys_hint, .hotkeys_details {
+		display: none;
+	}
+}
+
 span.title {
 	text-shadow: 0 0 0.25ch black;
 	font-weight: bold;
@@ -149,6 +155,7 @@ span.separator {
 		border-right: unset;
 		font-size: smaller;
 		width: 100%;
+		min-width: 10ch;
 	}
 
 	button {

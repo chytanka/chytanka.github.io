@@ -1,11 +1,12 @@
-import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction, catchError, combineLatest, finalize, of, tap } from "rxjs";
+import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction, Subscription, catchError, combineLatest, finalize, of, tap } from "rxjs";
 import { CompositionEpisode } from "./composition";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { inject } from "@angular/core";
+import { OnDestroy, WritableSignal, inject, signal } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
 import { HistoryService } from "../../../history/data-access/history.service";
 import { ViewerService } from "../../../shared/data-access";
+import { PlaylistItem, PlaylistService, isPlaylist } from "../../../playlist/data-access/playlist.service";
 
 export abstract class ReadBaseComponent {
     protected refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null);
@@ -13,10 +14,27 @@ export abstract class ReadBaseComponent {
     loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     episode$: Observable<CompositionEpisode | null> = of(null);
 
+    plObserv: Subscription | undefined;
+    playlistLink = signal('')
+    currentPlItem: WritableSignal<PlaylistItem | undefined> = signal(undefined)
+
     constructor() {
         this.route.pathFromRoot[0].queryParams.subscribe(q => {
             const vm = q['vm'] // view mode param
             this.viewerService.setViewModeOptionByCode(vm)
+
+            const pl = q['list'] // playlist
+
+            if (!pl) return;
+
+            this.playlistLink.set(pl);
+            this.playlistService.resetPlaylist();
+
+            this.plObserv = this.playlistService.getPlaylist(pl).subscribe(data => {
+                if (!isPlaylist) return;
+
+                this.playlistService.setPlaylist(data)
+            })
         })
     }
 
@@ -25,6 +43,7 @@ export abstract class ReadBaseComponent {
     public lang: LangService = inject(LangService)
 
     private viewerService: ViewerService = inject(ViewerService);
+    public playlistService: PlaylistService = inject(PlaylistService);
 
     public refreshData() {
         this.refresh$.next(null);
@@ -46,6 +65,7 @@ export abstract class ReadBaseComponent {
      */
     protected tapStartLoading(): MonoTypeOperatorFunction<[ParamMap, null]> {
         return tap(() => {
+            // this.episode$ = of(null);
             this.loading$.next(true);   // Sets the loading flag to `true`
             this.error$.next(null);     // Resets any previous errors to `null`
         })
@@ -73,7 +93,7 @@ export abstract class ReadBaseComponent {
     protected tapSaveToHistory(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
         return tap(async (episode: CompositionEpisode) => {
             if (episode) {
-                let e = structuredClone(episode); 
+                let e = structuredClone(episode);
                 e.images = [];
                 await this.saveToHistory(site, post_id, episode.title, episode.images[0]?.src, e);
             }
@@ -84,5 +104,17 @@ export abstract class ReadBaseComponent {
 
     async saveToHistory(site: string, post_id: string, title: string, cover: string, episode: any) {
         await this.history.addHistory(site, post_id, title, cover, episode);
+    }
+
+
+    protected tapSaveToCurrentPlaylistItem(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
+        return tap(async (episode: CompositionEpisode) => {
+            if (episode) {
+                this.currentPlItem.set({
+                    id: post_id,
+                    site: site
+                })
+            }
+        })
     }
 }

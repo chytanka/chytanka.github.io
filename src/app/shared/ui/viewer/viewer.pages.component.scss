@@ -6,7 +6,10 @@
 	display: flex;
 	user-select: none;
 	touch-action: pan-x;
-	// filter: drop-shadow(0 0 1ch black);
+	
+	&:focus {
+		outline: 0;
+	}
 	
 	&>div {
 		width: 50%;

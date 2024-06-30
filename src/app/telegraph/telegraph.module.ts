@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TelegraphRoutingModule } from './telegraph-routing.module';
 import { TelegraphShellComponent } from './telegraph-shell/telegraph-shell.component';
-import { SharedModule } from '../shared/shared.module';
+import { CommonReadModule } from '../common/common-read';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     TelegraphRoutingModule,
-    SharedModule
+    CommonReadModule
   ]
 })
 export class TelegraphModule { }

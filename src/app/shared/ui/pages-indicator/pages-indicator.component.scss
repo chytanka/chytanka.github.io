@@ -2,11 +2,12 @@
     display: flex;
     align-items: center;
     height: 100%;
+    padding: .5ch;
 }
 
 div {
     background-color: var(--surface);
-    padding: 1ch;
+    padding: 1.5ch;
     font-size: x-small;
     color: inherit;
     text-decoration: none;
@@ -17,7 +18,8 @@ div {
     line-height: 1;
     transition: all var(--t) ease-in-out;
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
         color: #ffd60a;
         background-color: #166496;
         transform: translateY(-.25ch)
@@ -25,15 +27,36 @@ div {
 }
 
 :host.pages {
+    div {
+        border-radius: .5ch;
+    }
     div:nth-child(even) {
         margin-right: 1ch;
+
+        border-top-left-radius: unset;
+        border-bottom-left-radius: unset;
+    }
+
+    div:nth-child(odd) {
+        border-top-right-radius: unset;
+        border-bottom-right-radius: unset;
+
     }
 }
+
 :host.pages[dir=ltr] {
+    div {
+        border-radius: .5ch;
+    }
     div:nth-child(odd) {
         margin-right: 1ch;
+        border-top-left-radius: unset;
+        border-bottom-left-radius: unset;
     }
+
     div:nth-child(even) {
         margin-right: 0;
+        border-top-right-radius: unset;
+        border-bottom-right-radius: unset;
     }
 }

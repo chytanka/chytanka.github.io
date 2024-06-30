@@ -9,5 +9,5 @@ import { LangService } from '../../../shared/data-access/lang.service';
 export class FaqComponent {
   public lang = inject(LangService)
 
-  gistLinkHref: string = `<a href="//gist.github.com" target="_blank" rel="noopener noreferrer">Github Gist</a>`
+  gistLinkHref: string = `<a href="//gist.github.com" target="_blank" rel="noopener noreferrer">Github Gist</a>, <a href="//rentry.co/" target="_blank" rel="noopener noreferrer">Rentry</a>`
 }

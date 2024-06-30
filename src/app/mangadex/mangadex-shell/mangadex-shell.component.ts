@@ -3,10 +3,11 @@ import { forkJoin, map, of, switchMap } from 'rxjs';
 import { MangadexService } from '../data-access/mangadex.service';
 import { Base64 } from '../../shared/utils';
 import { ReadBaseComponent } from '../../common/common-read';
+import { MANGADEX_PATH } from '../../app-routing.module';
 
 @Component({
   selector: 'app-mangadex-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" >
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
 <div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
     place-content: center;
     justify-items: center; min-height: 50vh;">
@@ -48,7 +49,7 @@ export class MangadexShellComponent extends ReadBaseComponent {
           }),
           this.catchError(),
           this.tapSetTitle(),
-          this.tapSaveToHistory(`md`, id64),
+          this.tapSaveToHistory(MANGADEX_PATH, id64),
           this.finalizeLoading()
         );
       })

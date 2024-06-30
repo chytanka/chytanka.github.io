@@ -9,19 +9,41 @@
                 [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
             }
             @else {
+
+
+
+            <details class="hotkeys_details" dir="ltr">
+                <summary>⌨️ Hotkeys</summary>
+                <!-- @if (viewer.viewModeOption().mode == "pages" && viewer.keyboard) { -->
+                <div class="hotkeys_hint">
+                    <span> Navigate Between Pages</span>
+                    <div><span class="key_button">a</span><span class="key_button">d</span> or <span
+                            class="key_button">⬅</span><span class="key_button">➡</span></div>
+                    <span>Toggle Full Screen</span>
+                    <div><span class="key_button">f</span></div>
+
+                    <span>Share link</span>
+                    <div><span class="key_button">Ctrl</span>+<span class="key_button">S</span></div>
+
+                    @if (playlist.length >0) {<span>Show episode list</span>
+                    <div><span class="key_button">Ctrl</span>+<span class="key_button">P</span></div>}
+                </div>
+
+                <!-- } -->
+            </details>
+
             <h1 style="text-align: center;">
                 {{lang.phrases.getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}
             </h1>
 
-            @if (viewer.viewModeOption().mode == "pages" && viewer.keyboard) {
-            <div class="hotkeys_hint">
-                <span> Navigate Between Pages</span>
-                <div><span class="key_button">a</span><span class="key_button">d</span> or <span
-                        class="key_button">⬅</span><span class="key_button">➡</span></div>
-                <span>Toggle Full Screen</span>
-                <div><span class="key_button">f</span></div>
-            </div>
+
+            @if (getPrevIndex() >=0 && playlist[getPrevIndex()]; as prev) {
+            <a dir="ltr" [routerLink]="['/', prev.site, prev.id]"
+                [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">⏪
+                {{prev.title??
+                lang.ph().untitled + ' ' + (getPrevIndex() + 1)}}</a>
             }
+
             }
         </div>
     </div>
@@ -45,13 +67,26 @@
     👀
     }
     <div class="copyright-content" [ngClass]="{'dual': (episode?.images?.length??0) % 2 > 0}">
-        <div class="page"><ng-content /></div>
+        <div class="page"><ng-content />
+            @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
+
+            <a dir="ltr" [routerLink]="['/', next.site, next.id]"
+                [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">
+                {{next.title??
+                lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
+            }
+        </div>
     </div>
 
 </div>
 
 <app-overlay [ngClass]="{'show': showOverlay}">
     <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
+
+    @if (playlist.length >0) {
+    <button class="button small empty" (click)="showPlayList()">📜</button>
+    }
+
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
@@ -78,7 +113,7 @@
             <summary>🔗 Share link</summary>
 
             <div class="input-group">
-                <input type="text" [value]="link()" aria-label="Copy link" readonly="">
+                <textarea rows="4" readonly>{{link()}}</textarea>
                 <button class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
             </div>
         </details>
@@ -88,12 +123,21 @@
             <div class="input-group">
                 <textarea rows="6" readonly>{{iframe()}}</textarea>
                 <button class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
-
             </div>
-            <!-- <iframe [src]="embed()" frameborder="0" allowfullscreen>\</iframe> -->
         </details>
     </div>
+</app-dialog>
 
-
-    <!-- <iframe [src]="link()" frameborder="0" allowfullscreen>\</iframe> -->
+<app-dialog class="dialog" #playlistDialog (onToggle)="isDialogOpen.set($event)" [title]="'📜 '">
+    <div style="display: grid; gap: .5ch;padding: 1ch;">
+        @for (item of playlist; track $index) {
+        @if(currentPlaylistItem?.id == item.id && currentPlaylistItem?.site == item.site) {
+        <span>{{item.title?? lang.ph().untitled + ' ' + ($index*1+1)}}</span>
+        } @else {
+        <a [routerLink]="['/', item.site, item.id]"
+            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">{{item.title??
+            lang.ph().untitled + ' ' + ($index*1+1)}}</a>
+        }
+        }
+    </div>
 </app-dialog>

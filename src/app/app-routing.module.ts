@@ -17,29 +17,35 @@ export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route
   return null;
 }
 
+export const MANGADEX_PATH = `mangadex`;
+export const TELEGRAPH_PATH = `telegraph`;
+export const IMGUR_PATH = `imgur`;
+export const REDDIT_PATH = `reddit`;
+export const READ_PATH = `read`;
+
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
   },
   {
-    path: 'imgur',
+    path: IMGUR_PATH,
     loadChildren: () => import('./imgur/imgur.module').then(m => m.ImgurModule)
   },
   {
-    path: 'md',
+    path: MANGADEX_PATH,
     loadChildren: () => import('./mangadex/mangadex.module').then(m => m.MangadexModule)
   },
   {
-    path: 'read',
+    path: READ_PATH,
     loadChildren: () => import('./read/read.module').then(m => m.ReadModule)
   },
   {
-    path: 'telegr',
+    path: TELEGRAPH_PATH,
     loadChildren: () => import('./telegraph/telegraph.module').then(m => m.TelegraphModule)
   },
   {
-    path: 'reddit',
+    path: REDDIT_PATH,
     loadChildren: () => import('./reddit/reddit.module').then(m => m.RedditModule)
   },
   {

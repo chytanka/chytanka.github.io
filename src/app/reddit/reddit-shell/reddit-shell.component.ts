@@ -6,7 +6,7 @@ import { ReadBaseComponent } from '../../common/common-read';
 
 @Component({
   selector: 'app-reddit-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" />`
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" />`
 })
 export class RedditShellComponent extends ReadBaseComponent {
 

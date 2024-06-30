@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 
 const L = window.location;
 
@@ -24,6 +25,35 @@ export class ViewerComponent {
   showNsfw: WritableSignal<boolean> = signal(false);
 
   @Input() episode: CompositionEpisode | undefined = undefined;
+
+  @Input() playlist: Playlist = [];
+  @Input() playlistLink: string = "";
+  @Input() currentPlaylistItem: PlaylistItem | undefined;
+
+
+  getCyrrentIndex() {
+    for (let i = 0; i < this.playlist.length; i++) {
+      const item = this.playlist[i];
+      if (this.currentPlaylistItem?.id == item.id && this.currentPlaylistItem?.site == item.site)
+        return i;
+    }
+
+    return -1;
+  }
+
+  getNextIndex() {
+    const index = this.getCyrrentIndex();
+    if (index < 0) return -1;
+
+    return ((index + 1) < this.playlist.length) ? index + 1 : -1;
+  }
+
+  getPrevIndex() {
+    const index = this.getCyrrentIndex();
+    if (index < 0) return -1;
+
+    return ((index - 1) >= 0) ? (index - 1) : -1;
+  }
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
@@ -70,12 +100,14 @@ export class ViewerComponent {
 
     }
 
+    this.showOverlay = false;
     this.activeIndexs.set(activeIndxs);
   }
 
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
     this.initActiveIndexes()
+    this.showOverlay = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -88,6 +120,7 @@ export class ViewerComponent {
   initHotKeys() {
     this.hotKeys.set('KeyF', this.toggleFullScreen)
     this.hotKeys.set('Ctrl+KeyS', this.showShare)
+    this.hotKeys.set('Ctrl+KeyP', this.showPlayList)
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -131,7 +164,7 @@ export class ViewerComponent {
   @HostListener('wheel', ['$event'])
   handleWheelEvent(event: WheelEvent): void {
 
-    if(this.isDialogOpen()) return;
+    if (this.isDialogOpen()) return;
 
     if (this.viewer.viewModeOption().mode != "pages") return;
 
@@ -142,6 +175,7 @@ export class ViewerComponent {
     if (event.deltaY !== 0 && !event.shiftKey) {
       this.viewElement().scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
 
+      this.showOverlay = false;
       event.preventDefault();
     }
   }
@@ -189,12 +223,15 @@ export class ViewerComponent {
   @ViewChild('shareDialog') shareDialogComponent!: DialogComponent;
   showShare = () => this.shareDialogComponent.showDialog();
 
+  @ViewChild('playlistDialog') playlistDialogComponent!: DialogComponent;
+  showPlayList = () => this.playlistDialogComponent.showDialog();
+
   route = inject(ActivatedRoute)
   domMan = inject(DomManipulationService)
   link: Signal<string> =
-    computed(() => decodeURIComponent(`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}`));
+    computed(() => decodeURIComponent(`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`));
 
-  iframe = computed(() => 
+  iframe = computed(() =>
     `<iframe src="${this.link()}" frameborder="0" allowfullscreen>\</iframe>`
   )
   sanitizer: DomSanitizer = inject(DomSanitizer)

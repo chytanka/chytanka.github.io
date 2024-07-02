@@ -6,6 +6,7 @@ import { LangService } from '../../data-access/lang.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
+import { EmbedHalperService } from '../../data-access/embed-halper.service';
 
 const L = window.location;
 
@@ -102,7 +103,15 @@ export class ViewerComponent {
 
     this.showOverlay = false;
     this.activeIndexs.set(activeIndxs);
+
+    this.embedHelper.postMessage({
+      total: this.episode?.images.length,
+      current: activeIndxs.map(i => i + 1)
+    }, 'changepage');
+
   }
+
+  embedHelper = inject(EmbedHalperService)
 
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
@@ -229,10 +238,11 @@ export class ViewerComponent {
   route = inject(ActivatedRoute)
   domMan = inject(DomManipulationService)
   link: Signal<string> =
-    computed(() => decodeURIComponent(`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`));
+    //decodeURIComponent
+    computed(() => (`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`));
 
   iframe = computed(() =>
-    `<iframe src="${this.link()}" frameborder="0" allowfullscreen>\</iframe>`
+    `<iframe style="width: 100%; aspect-ratio: 3/2; overflow: auto; resize: vertical; max-height: 90dvh; padding-bottom: 1ch;" src="${this.link()}" frameborder="0" allowfullscreen title="Chytanka">\</iframe>`
   )
   sanitizer: DomSanitizer = inject(DomSanitizer)
   embed = computed(() => this.sanitizer.bypassSecurityTrustUrl(this.link()));

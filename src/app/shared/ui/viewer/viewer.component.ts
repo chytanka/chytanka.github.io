@@ -17,7 +17,8 @@ const L = window.location;
     './viewer.component.scss',
     './viewer.pages.component.scss',
     './viewer.long.component.scss',
-    '/src/app/shared/ui/@styles/details.scss'
+    '/src/app/shared/ui/@styles/details.scss',
+    '/src/app/shared/ui/@styles/input-group.scss'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

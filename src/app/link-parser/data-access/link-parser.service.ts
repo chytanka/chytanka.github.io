@@ -16,7 +16,7 @@ export class LinkParserService {
       const p = this.parsers[i];
 
       const res = p.parse(link);
-      
+
       if (res != null) { return res; }
     }
 

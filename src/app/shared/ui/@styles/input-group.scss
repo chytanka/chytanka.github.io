@@ -1,0 +1,20 @@
+.input-group {
+	display: flex;
+
+	input,
+	textarea {
+		font-family: monospace;
+		border-top-right-radius: unset;
+		border-bottom-right-radius: unset;
+		border: 1px solid #8885;
+		border-right: unset;
+		font-size: smaller;
+		width: 100%;
+		min-width: 10ch;
+	}
+
+	button {
+		border-top-left-radius: unset;
+		border-bottom-left-radius: unset;
+	}
+}

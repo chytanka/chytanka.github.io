@@ -22,11 +22,16 @@ export const TELEGRAPH_PATH = `telegraph`;
 export const IMGUR_PATH = `imgur`;
 export const REDDIT_PATH = `reddit`;
 export const READ_PATH = `read`;
+export const LIST_PATH = `list`;
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
+  },
+  {
+    path: LIST_PATH,
+    loadChildren: () => import('./list/list.module').then(m => m.ListModule)
   },
   {
     path: IMGUR_PATH,

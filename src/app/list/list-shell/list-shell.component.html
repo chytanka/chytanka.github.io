@@ -1,0 +1,54 @@
+<main>
+    <section>
+        <h4>Вставте підтримувані посилання у поле нижче 🔗⬇️</h4>
+        <textarea class="input" style="width: 100%; height: 8lh; box-shadow: var(--shadow-elevation-medium);"
+            placeholder="Вставте сюди підтримувані посилання на епізод через кому пробіл, чи кожне посилання з нового рядка: 
+
+https://telegra.ph/YAk-kozaki-kulіsh-varili-06-28
+https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
+            (ngModelChange)="inputValue.set($event);"></textarea>
+    </section>
+    @if(listValue() && listValue().length > 0){
+    <section>
+        <h4>Відредагуйте назви (за бажанням) ✏️🔢📝</h4>
+        <div style="display: grid; gap: 1ch">
+            @for (item of outputValue(); track $index) {
+            <article
+                style="box-shadow: var(--shadow-elevation-low); border: 1px solid #8884; padding: .5ch; border-radius: .5ch;">
+                <div class="input-group">
+                    <input style="width: 100%;" placeholder="Введіть назву епізоду (не обов'язково)" type="text"
+                        [(ngModel)]="item.title"> <button class="button"
+                        (click)=" (setAutoTitle(item.link, item))">🤖🏷️</button>
+                </div> <br>
+
+                <label [for]="'nsfw-'+$index">🔞</label>
+                <input type="checkbox" [id]="'nsfw-'+$index" [(ngModel)]="item.nsfw">
+                <small><b>{{item.link}}</b></small>
+            </article>
+            }
+        </div>
+
+    </section>
+
+    <section>
+        <h4>Скопіюйте JSON код, та опублікуйте його на <a href="//rentry.co" target="_blank"
+                rel="noopener noreferrer">Rentry</a> чи <a href="//gist.github.com/" target="_blank"
+                rel="noopener noreferrer">Gist</a> 📋💻🌐</h4>
+        <div class="input-group">
+            <textarea style="width: 100%; height: 8lh; resize: unset;" readonly>{{outputValue() | json}}</textarea>
+            <button class="button small" (click)="copy()">Copy</button>
+        </div>
+    </section>
+
+    <section>
+        <h4>Вставте посилання на RAW JSON-файл 🔗📄</h4>
+        <div class="input-group" style="gap: 1ch">
+            <input type="text" [ngModel]="rawJsonLink()" (ngModelChange)="rawJsonLink.set($event);">
+            @if(rawJsonLink()){<a style="text-align: center;" class="button large primary" target="__blank"
+                [routerLink]="['/', parsedFirstLink()?.site, parsedFirstLink()?.id]"
+                [queryParams]="{lang: lang.lang(), list: rawJsonLink()}">
+                {{getItem(firstLink())?.title != ''? getItem(firstLink())?.title :
+                lang.ph().untitled }}</a>}
+        </div>
+    </section>}
+</main>

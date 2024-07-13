@@ -98,7 +98,7 @@
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
     @if(!embedHelper.isEmbedded()){
     <a class="button empty" [routerLink]="['/']">🏠</a>
-    <span class="separator">{{separator}}</span>
+    <separator />
     }
     <button class="button small empty" [title]="lang.ph().share" (click)="showShare()">📢</button>
     <span class="title">{{episode?.title}}</span>

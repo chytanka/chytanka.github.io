@@ -1,4 +1,4 @@
-import { Component, Signal, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { Component, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
 import { HistoryService } from '../../history/data-access/history.service';
+import { DialogComponent } from '../../shared/ui/dialog/dialog.component';
 
 @Component({
   selector: 'app-link-parser',
@@ -108,9 +109,8 @@ export class LinkParserComponent {
     this.router.navigateByUrl(link);
   }
 
-  isShowHistory = signal(false);
-  toggleShowHistory() {
-    this.isShowHistory.set(!this.isShowHistory())
-  }
+  @ViewChild('historyDialog') historyDialogComponent!: DialogComponent;
+  showHistory = () => this.historyDialogComponent.showDialog();
+
 
 }

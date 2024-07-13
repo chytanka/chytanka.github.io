@@ -4,9 +4,23 @@
       <stop offset="0" stop-color="#ffd60a"/>
       <stop offset="1" stop-color="#ebb316"/>
     </radialGradient>
+
+<radialGradient xmlns="http://www.w3.org/2000/svg" id="radial-gradient-light" cx="0.5" cy="0.5" r="0.604" gradientTransform="matrix(0.707, -0.707, 0.828, 0.828, -0.268, 0.44)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff62a"/>
+      <stop offset="1" stop-color="#ffd60a"/>
+    </radialGradient>
+
     <clipPath id="clip-icon-512x512">
       <rect width="512" height="512"/>
     </clipPath>
+
+    <style>
+    #super {fill: url(#radial-gradient)}
+    @media (prefers-color-scheme: light) {
+        #super {fill: url(#radial-gradient-light)}
+    }
+      
+    </style>
   </defs>
   <g id="icon-512x512" clip-path="url(#clip-icon-512x512)">
     <g id="Component_2_2" data-name="Component 2 – 2" transform="translate(0 0)">

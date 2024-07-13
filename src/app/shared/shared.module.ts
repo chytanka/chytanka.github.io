@@ -16,6 +16,7 @@ import { DialogComponent } from './ui/dialog/dialog.component';
 import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
 import { TitleCardComponent } from './ui/title-card/title-card.component';
 import { LoadingComponent } from './ui/loading/loading.component';
+import { SeparatorComponent } from './ui/separator/separator.component';
 
 
 
@@ -34,13 +35,14 @@ import { LoadingComponent } from './ui/loading/loading.component';
     DialogComponent,
     LangToggleComponent,
     TitleCardComponent,
-    LoadingComponent
+    LoadingComponent,
+    SeparatorComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent]
 })
 export class SharedModule { }

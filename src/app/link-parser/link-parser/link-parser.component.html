@@ -2,14 +2,16 @@
   <div class="wrapper">
     <div class="form-wrapper">
       <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.phrases.shortTitle" /> }</h1>
-      @if(!isShowHistory()){<form (submit)="onSubmit()">
-        <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.phrases.enterLink"
-          (input)="inputLink($event)" [value]="link()">
-        <!-- <input class="button empty" type="reset" value="🧹"> -->
-      </form>}
+      <form (submit)="onSubmit()">
+        <div style="display: flex; gap: 1ch;">
+          <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.phrases.enterLink"
+            (input)="inputLink($event)" [value]="link()">
+          <button [title]="lang.phrases.history" (click)="showHistory()" class="button empty" style="">📜</button>
+        </div>
+      </form>
     </div>
 
-    @if(!isShowHistory()){<div class="slogan-wrapper">
+    <div class="slogan-wrapper">
       <h2 class="slogan-header">{{lang.phrases.slogan}}</h2>
       @if (linkParams()) {
       <a class="button primary" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
@@ -18,14 +20,8 @@
         <span class="site-address" [title]="linkParams()?.id">{{'/'+linkParams()?.id | truncate}}</span>
       </a>
       }
-    </div>}
+    </div>
   </div>
-
-  <!-- Add animate to tootle .wrapper and app-history-list ! ! ! -->
-  <button [title]="lang.phrases.history" (click)="toggleShowHistory()" class="button medium empty"
-    style="aspect-ratio: 1; height: 4rem; border-radius: 50%; margin: auto;">📜</button>
-
-  @defer{ @if(isShowHistory()){ <app-history-list /> }}
 </main>
 
 <aside>
@@ -34,3 +30,8 @@
 
 @defer{ <lp-header /> }
 @defer{ <lp-footer /> }
+
+
+<app-dialog #historyDialog [title]="'📜 ' + lang.ph().history">
+  @defer{ <app-history-list /> }
+</app-dialog>

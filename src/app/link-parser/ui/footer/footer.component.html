@@ -1,5 +1,5 @@
 <app-overlay class="show">
-  <small>{{lang.phrases.shortTitle}}, &copy; 2024</small>
+  <small>{{lang.ph().shortTitle}} <a href="//github.com/chytanka/chytanka.github.io" target="_blank" rel="noopener noreferrer">{{version}}</a><!--, &copy; 2024--></small>
   <separator />
 
   @for (item of social; track $index) {
@@ -7,8 +7,8 @@
     <img style="width: 2ch;" [src]="item.logoSrc" [alt]="item.alt">
   </a>
   }
-  <separator />
-  <a [routerLink]="'/list'">Create List</a>
+  <!-- <separator /> -->
+  <!-- <a [routerLink]="'/list'">Create List</a> -->
 
   <made-in-ukraine />
 </app-overlay>

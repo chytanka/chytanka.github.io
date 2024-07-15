@@ -21,15 +21,23 @@ div {
     &:hover,
     &.active {
         color: #ffd60a;
-        background-color: #166496;
-        transform: translateY(-.25ch)
+        background-color: #103651;
+        transform: translateY(-.25ch);
+
+        @media (prefers-color-scheme: light) {
+            background-color: #f8d755;
+            color: #166496;
+        }
     }
 }
 
 :host.pages {
     div {
         border-radius: .5ch;
+        box-shadow: var(--flat-shadow-medium);
+
     }
+
     div:nth-child(even) {
         margin-right: 1ch;
 
@@ -48,6 +56,7 @@ div {
     div {
         border-radius: .5ch;
     }
+
     div:nth-child(odd) {
         margin-right: 1ch;
         border-top-left-radius: unset;

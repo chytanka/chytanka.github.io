@@ -12,9 +12,9 @@ import { ReadBaseComponent } from '../../common/common-read';
       <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
           <img src="/assets/logos/imgur-logo.svg" alt="Imgur logo">
       </a>
-      <p>{{lang.phrases.imagesVia}}<a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a>
+      <p>{{lang.ph().imagesVia}}<a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a>
           API.
-          {{lang.phrases.thanks}}<br>{{lang.phrases.detalisCopy}}</p>
+          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
   </div></app-common-read>`
 })
 export class ImgurShellComponent extends ReadBaseComponent {

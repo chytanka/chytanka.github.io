@@ -25,12 +25,12 @@
 		}
 
 		>label {
-			padding-inline: var(--size-3);
-			padding-block: var(--size-1);
-			border-radius: var(--radius-2);
+			// padding-inline: var(--size-3);
+			// padding-block: var(--size-1);
+			// border-radius: var(--radius-2);
 			cursor: pointer;
 			text-shadow: 0 0 0.25ch #0008;
-			background: var(--surface-2);
+			// background: var(--surface-2);
 		}
 
 		>input {
@@ -43,8 +43,10 @@
 			padding: 0;
 
 			&:checked~label {
-				background-color: var(--link);
+				background-color: #103651;
 				color: var(--surface-1);
+				transform: translateY(.25ch);
+				// box-shadow: unset;
 			}
 
 			&:not(:checked):is(:focus-within, :hover)~label {

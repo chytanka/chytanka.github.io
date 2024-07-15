@@ -1,27 +1,37 @@
 <main>
   <div class="wrapper">
     <div class="form-wrapper">
-      <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.phrases.shortTitle" /> }</h1>
-      <form (submit)="onSubmit()">
-        <div style="display: flex; gap: 1ch;">
-          <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.phrases.enterLink"
+      <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.ph().shortTitle" /> }</h1>
+      <div style="display: flex; gap: 1ch;">
+        <form (submit)="onSubmit()">
+
+          <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink"
             (input)="inputLink($event)" [value]="link()">
-          <button [title]="lang.phrases.history" (click)="showHistory()" class="button empty" style="">📜</button>
-        </div>
-      </form>
+          
+
+        </form>
+        
+      </div>
     </div>
 
     <div class="slogan-wrapper">
-      <h2 class="slogan-header">{{lang.phrases.slogan}}</h2>
+      <h2 class="slogan-header">{{lang.ph().slogan}}</h2>
       @if (linkParams()) {
-      <a class="button primary" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
-        <span>{{lang.phrases.letsgo}} </span>
-        <span class="site-name">{{linkParams()?.site}}</span>
+      <a style="display: flex; gap: 1ch;" class="button primary" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
+        <span>{{lang.ph().letsgo}} </span>
+        <img class="favicon" [src]="favicons[linkParams()?.site]" [alt]="linkParams()?.site">
+        <!-- <span class="site-name">{{linkParams()?.site}}</span> -->
         <span class="site-address" [title]="linkParams()?.id">{{'/'+linkParams()?.id | truncate}}</span>
       </a>
       }
     </div>
+    
   </div>
+  
+  <section style="text-align: center;">
+    <a id="createListLink" [routerLink]="'/list'">{{lang.ph().createList}}</a>
+  </section>
+
 </main>
 
 <aside>
@@ -30,8 +40,3 @@
 
 @defer{ <lp-header /> }
 @defer{ <lp-footer /> }
-
-
-<app-dialog #historyDialog [title]="'📜 ' + lang.ph().history">
-  @defer{ <app-history-list /> }
-</app-dialog>

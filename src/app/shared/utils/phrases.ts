@@ -43,6 +43,7 @@ export class Phrases {
     share = 'Share'
     untitled = 'Untitled'
     loading = 'loading'
+    createList = "Create list"
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

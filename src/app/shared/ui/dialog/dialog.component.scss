@@ -1,4 +1,3 @@
-
 :host {
     position: absolute;
 }
@@ -10,21 +9,24 @@ dialog {
     max-width: min(calc(100vw - 4ch), 60ch);
     max-height: calc(100dvh - 8ch);
     border-radius: var(--r);
-    border: var(--b) solid #166496;
+    // border: var(--b) solid #166496;
+    border: 0;
     background-color: rgb(0, 15, 30);
     color: inherit;
     margin-top: 4ch;
 
     @media (prefers-color-scheme: light) {
-        background-color: var(--surface);
+        background-color: #fff;
         border-color: #4081b1;
     }
 
     &::backdrop {
-        --brightness: .8;
-        backdrop-filter: brightness(var(--brightness));
+        --brightness: .4;
+        backdrop-filter: brightness(var(--brightness)) grayscale(.8) sepia(0.5);
+
         @media (prefers-color-scheme: light) {
-            --brightness: 1.2;
+            --brightness: .9;
+            // background-color: #fff1;
         }
     }
 
@@ -39,6 +41,7 @@ dialog {
         --rH: calc(var(var(--r) - var(--b)));
         border-top-left-radius: var(--rH);
         border-top-right-radius: var(--rH);
+
         @media (prefers-color-scheme: light) {
             text-shadow: 0 0 .25ch #0003;
         }
@@ -52,7 +55,6 @@ dialog {
 
         @media (prefers-color-scheme: light) {
             background-color: #c3d3e3;
-            
         }
     }
 
@@ -60,10 +62,11 @@ dialog {
         border-top-left-radius: calc(var(--r) - var(--b));
         border-top-right-radius: calc(var(--r) - var(--b));
         border-bottom-width: 2px;
+        border-color: var(--shc);
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
-        
+
         h2,
         h4 {
             margin: 0;
@@ -88,6 +91,8 @@ dialog {
 
     &[open] {
         display: flex;
-        box-shadow: var(--shadow-elevation-high);
+        // box-shadow: var(--shadow-elevation-high);
+        
+        box-shadow:  var(--flat-shadow-high);
     }
 }

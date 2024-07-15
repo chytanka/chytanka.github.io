@@ -1,8 +1,10 @@
 <app-overlay class="show top">
     <button title="F1" class="button tshadow" (click)="showHelp()">❔</button>
     <button title="F2" class="button tshadow" (click)="showSettings()">⚙️</button>
-    <button title="F2" disabled class="button tshadow">📥</button>
-    <button title="F2" disabled class="button tshadow">📚</button>
+    <separator/>
+    <button [title]="lang.ph().history+ ' (Ctrl+H)'" (click)="showHistory()" class="button tshadow">📜</button>
+    <!-- <button title="Downloads" disabled class="button tshadow">📥</button>
+    <button title="Library" disabled class="button tshadow">📚</button> -->
     <app-lang-toggle />
 </app-overlay>
 
@@ -13,3 +15,7 @@
 <app-dialog #settingsDialog [title]="'⚙️ ' + lang.ph().settings">
     @defer{ <app-settings /> }
 </app-dialog>
+
+<app-dialog #historyDialog [title]="'📜 ' + lang.ph().history">
+    @defer{ <app-history-list /> }
+  </app-dialog>

@@ -133,18 +133,10 @@ export class ViewerComponent {
     this.hotKeys.set('Ctrl+KeyP', this.showPlayList)
   }
 
-  @HostListener('document:keydown', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+    this.domMan.setHotkeys(event, this.hotKeys)
 
-    const code = event.ctrlKey ? `Ctrl+${event.code}` : event.code
-
-    if (this.hotKeys.has(code)) {
-      event.preventDefault()
-      const f: Function = this.hotKeys.get(code) as Function;
-      f();
-      return;
-    }
 
     const element: HTMLElement = this.el.nativeElement;
     const horAmount = element.clientWidth;
@@ -202,6 +194,10 @@ export class ViewerComponent {
 
   onViewClick(event: Event) {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+    if ((event.target as HTMLElement).nodeName === 'SUMMARY') return;
+
+    console.log((event.target as HTMLElement).nodeName);
+    
 
     this.toggleOverlay();
   }

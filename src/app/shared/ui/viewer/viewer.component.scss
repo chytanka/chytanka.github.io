@@ -78,21 +78,6 @@ figure {
 	--link: #166496;
 }
 
-button {
-	border: 0;
-	padding-inline: var(--size-3);
-	padding-block: var(--size-1);
-	border-radius: var(--radius-2);
-	cursor: pointer;
-	display: block;
-	background: var(--surface-2);
-
-	&:hover {
-		background-color: var(--link);
-		color: var(--surface-1);
-	}
-}
-
 .key_button {
 	display: inline-grid;
 	place-content: center;
@@ -126,8 +111,17 @@ button {
 	}
 }
 
+textarea {
+	padding: 1ch;
+	border-top-left-radius: var(--radius-2);
+	border-bottom-left-radius: var(--radius-2);
+	box-shadow: var(--flat-shadow-medium);
+}
+
 @media (hover: none) {
-	.hotkeys_hint, .hotkeys_details {
+
+	.hotkeys_hint,
+	.hotkeys_details {
 		display: none;
 	}
 }

@@ -1,16 +1,11 @@
 :host {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 2ch;
-    grid-template-columns: repeat(2, 1fr);
 
-    @media (max-width: 768px) {
-    grid-template-columns: unset;
-        
+    .wrap {
+        display: grid;
+        gap: 2ch;
     }
 
-    // transition: opacity var(--t) ease-in-out;
-
-    // @starting-style {
-    //     opacity: 0
-    // }
 }

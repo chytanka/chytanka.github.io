@@ -3,6 +3,7 @@ import { ImgurService } from '../data-access/imgur.service';
 import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
 import { ReadBaseComponent } from '../../common/common-read';
+import { IMGUR_PATH } from '../../app-routing.module';
 
 @Component({
   selector: 'app-imgur-shell',
@@ -30,7 +31,9 @@ export class ImgurShellComponent extends ReadBaseComponent {
         const id64 = Base64.toBase64(id);
 
         return (this.imgur.getComposition(id)).pipe(this.catchError(), this.tapSetTitle(), 
-        this.tapSaveToHistory(`imgur`, id64), 
+        this.tapSaveToHistory(IMGUR_PATH, id64), 
+        this.tapSaveToCurrentPlaylistItem(IMGUR_PATH, id),
+
         
         this.finalizeLoading());
       })

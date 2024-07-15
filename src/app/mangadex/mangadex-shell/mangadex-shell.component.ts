@@ -8,6 +8,7 @@ import { MANGADEX_PATH } from '../../app-routing.module';
 @Component({
   selector: 'app-mangadex-shell',
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+
 <div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
     place-content: center;
     justify-items: center; min-height: 50vh;">
@@ -18,6 +19,7 @@ import { MANGADEX_PATH } from '../../app-routing.module';
         <p>Images via <a href="http://mangadex.org" target="_blank" rel="noopener noreferrer">Mangadex</a> API.
             Thanks!<br>Details on their site. Respect copyrights.</p>
     </div>
+
 </app-common-read>`
 })
 export class MangadexShellComponent extends ReadBaseComponent {
@@ -50,6 +52,8 @@ export class MangadexShellComponent extends ReadBaseComponent {
           this.catchError(),
           this.tapSetTitle(),
           this.tapSaveToHistory(MANGADEX_PATH, id64),
+          this.tapSaveToCurrentPlaylistItem(MANGADEX_PATH, id),
+
           this.finalizeLoading()
         );
       })

@@ -27,8 +27,6 @@ export class LangService {
   lang: WritableSignal<string> = signal(localStorage.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG);
   linkManifestElement: WritableSignal<HTMLElement | null> = signal(document.querySelector('link[rel="manifest"]'))
 
-  phrases: Phrases = new Phrases();
-
   ph: WritableSignal<Phrases> = signal(new Phrases());
 
   getTemplate: (phrase: string, value: string) => string = Phrases.getTemplate;
@@ -48,13 +46,11 @@ export class LangService {
 
   updateTranslate() {
     if (this.lang() == 'en') { 
-      this.phrases = new Phrases(); 
       this.ph.set(new Phrases()); 
       return; 
     }
 
     this.getTranslate(this.lang()).subscribe(data =>{
-      this.phrases = data
       this.ph.set(data)
     })
   }

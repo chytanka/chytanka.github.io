@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { DialogComponent } from '../../../shared/ui/dialog/dialog.component';
+import { DomManipulationService } from '../../../shared/data-access';
 
 @Component({
   selector: 'lp-header',
@@ -11,8 +12,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.initHotKeys()
   }
-  public lang: LangService = inject(LangService);
 
+  public lang: LangService = inject(LangService);
+  private dom: DomManipulationService = inject(DomManipulationService)
 
   @ViewChild('faqDialog') faqDialogComponent!: DialogComponent;
   showHelp = () => this.faqDialogComponent.showDialog();
@@ -20,20 +22,19 @@ export class HeaderComponent implements OnInit {
   @ViewChild('settingsDialog') settingsDialogComponent!: DialogComponent;
   showSettings = () => this.settingsDialogComponent.showDialog();
 
+  @ViewChild('historyDialog') historyDialogComponent!: DialogComponent;
+  showHistory = () => this.historyDialogComponent.showDialog();
+
   hotKeys = new Map<string, Function>()
 
   initHotKeys() {
     this.hotKeys.set('F1', this.showHelp)
     this.hotKeys.set('F2', this.showSettings)
+    this.hotKeys.set('Ctrl+KeyH', this.showHistory)
   }
 
   @HostListener('window:keydown', ["$event"])
   helpHotKey(event: KeyboardEvent) {
-    
-    if (this.hotKeys.has(event.key)) {
-      event.preventDefault()
-      const f: Function = this.hotKeys.get(event.key) as Function;
-      f();
-    }
+    this.dom.setHotkeys(event, this.hotKeys)
   }
 }

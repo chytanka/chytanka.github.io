@@ -3,10 +3,17 @@ import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
 import { RedditService } from '../data-access/reddit.service';
 import { ReadBaseComponent } from '../../common/common-read';
+import { REDDIT_PATH } from '../../app-routing.module';
 
 @Component({
   selector: 'app-reddit-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" />`
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+
+<p>{{lang.ph().imagesVia}}<a href="https://reddit.com" target="_blank" rel="noopener noreferrer">Reddit</a>
+          API.
+          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
+
+</app-common-read>`
 })
 export class RedditShellComponent extends ReadBaseComponent {
 
@@ -23,7 +30,9 @@ export class RedditShellComponent extends ReadBaseComponent {
         return (this.reddit.getComposition(id)).pipe(
           this.catchError(),
           this.tapSetTitle(),
-          this.tapSaveToHistory(`reddit`, id64), 
+          this.tapSaveToHistory(REDDIT_PATH, id64), 
+          this.tapSaveToCurrentPlaylistItem(REDDIT_PATH, id),
+
           this.finalizeLoading());
       })
     );

@@ -46,4 +46,17 @@ export class DomManipulationService {
     await copyText(text);
     
   };
+
+  setHotkeys(event: KeyboardEvent, hotKeys: Map<string, Function>) {
+    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
+
+    const code = event.ctrlKey ? `Ctrl+${event.code}` : event.code
+
+    if (hotKeys.has(code)) {
+      event.preventDefault()
+      const f: Function = hotKeys.get(code) as Function;
+      f();
+      return;
+    }
+  }
 }

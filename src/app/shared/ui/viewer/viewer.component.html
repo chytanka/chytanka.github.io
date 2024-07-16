@@ -5,8 +5,8 @@
         <div class="page">
             @if(episode?.nsfw && !showNsfw()){
             <app-nsfw-warning style="position: unset;" (agree)="onAgree()" (disagree)="onDisagree()"
-                [title]="lang.phrases.nsfwWarnTitle" [text]="lang.phrases.nsfwWarnText"
-                [labelAgree]="lang.phrases.nsfwLabelAgree" [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+                [title]="lang.ph().nsfwWarnTitle" [text]="lang.ph().nsfwWarnText"
+                [labelAgree]="lang.ph().nsfwLabelAgree" [labelDisagree]="lang.ph().nsfwLabelDisagree" />
             }
             @else {
 
@@ -33,7 +33,7 @@
             </details>
 
             <h1 style="text-align: center;">
-                {{lang.phrases.getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}
+                {{lang.ph().getByKey(viewer.viewModeOption().hintPhraceKey)}}<br />{{viewer.viewModeOption().emoji}}
             </h1>
 
 
@@ -53,9 +53,9 @@
         <div class="loading-image">🖼️⏳</div>
         <div class="page">
             @if(episode?.nsfw && !showNsfw()){
-            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" [title]="lang.phrases.nsfwWarnTitle"
-                [text]="lang.phrases.nsfwWarnText" [labelAgree]="lang.phrases.nsfwLabelAgree"
-                [labelDisagree]="lang.phrases.nsfwLabelDisagree" />
+            <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" [title]="lang.ph().nsfwWarnTitle"
+                [text]="lang.ph().nsfwWarnText" [labelAgree]="lang.ph().nsfwLabelAgree"
+                [labelDisagree]="lang.ph().nsfwLabelDisagree" />
             }
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
                 <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000"
@@ -84,23 +84,23 @@
     <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
 
     @if (playlist.length >0) {
-    <button class="button small empty" (click)="showPlayList()">📜</button>
+    <button class="button " (click)="showPlayList()">📜</button>
     }
 
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
-    <button (click)="toggleFullScreen()" [title]="lang.phrases.fullscreen">
+    <button class="button" (click)="toggleFullScreen()" [title]="lang.ph().fullscreen">
         🖥️
     </button>
 </app-overlay>
 
 <app-overlay class="top" [ngClass]="{'show': showOverlay}">
     @if(!embedHelper.isEmbedded()){
-    <a class="button empty" [routerLink]="['/']">🏠</a>
-    <span class="separator">{{separator}}</span>
+    <a class="button " [routerLink]="['/']">🏠</a>
+    <separator />
     }
-    <button class="button small empty" [title]="lang.ph().share" (click)="showShare()">📢</button>
+    <button class="button  " [title]="lang.ph().share" (click)="showShare()">📢</button>
     <span class="title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />
@@ -114,7 +114,7 @@
         <details open>
             <summary>🔗 Share link</summary>
 
-            <div class="input-group">
+            <div style="margin-top: 1ch;" class="input-group">
                 <textarea rows="4" readonly>{{link()}}</textarea>
                 <button class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
             </div>
@@ -122,7 +122,7 @@
 
         <details>
             <summary>🔌 Embed</summary>
-            <div class="input-group">
+            <div style="margin-top: 1ch;" class="input-group">
                 <textarea rows="6" readonly>{{iframe()}}</textarea>
                 <button class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
             </div>

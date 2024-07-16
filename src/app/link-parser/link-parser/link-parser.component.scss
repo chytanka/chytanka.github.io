@@ -17,7 +17,7 @@
 
     @media (prefers-color-scheme: light) {
         background: #eceff2;
-        background: radial-gradient(circle, #eceff2 0%, #d4e4f2 100%);
+        background: radial-gradient(circle, #fffcf2 0%, #d4e4f2 100%);
     }
 }
 
@@ -32,7 +32,7 @@ app-text-embracer {
 
     @media (prefers-color-scheme: light) {
         // --border-color: #caa902;
-        --back-color: #ffd60a;
+        --back-color: #fff62a;
 
         color: #166496;
     }
@@ -139,6 +139,11 @@ input[type=url]::placeholder {
 //     }
 // }
 
+.favicon {
+    width: 1.25rem;
+    aspect-ratio: 1;
+}
+
 .site-name {
     text-transform: uppercase;
     font-size: smaller;
@@ -215,13 +220,15 @@ lp-header {
 
 :host:has(dialog[open]) {
     transform: scale(calc(1 - var(--scale-diff-x, .1)), calc(1 - var(--scale-diff-y, .1)));
-    filter: blur(var(--blur));
+    // filter: blur(var(--blur));
+    filter: blur(3px);
 }
 
 :host:has(input[type=url]:focus) {
 
     lp-footer,
-    lp-header {
+    lp-header, #createListLink {
         opacity: 0;
+        pointer-events: none;
     }
 }

@@ -77,7 +77,7 @@ export abstract class ReadBaseComponent {
 
     protected catchError(): OperatorFunction<any, any> {
         return catchError(() => {
-            this.error$.next(this.lang.phrases.dataLoadErr);
+            this.error$.next(this.lang.ph().dataLoadErr);
             return of(null);
         })
     }

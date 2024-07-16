@@ -1,7 +1,11 @@
-@for (item of historyItems() | async; track $index) {
-<app-title-card [value]="item" (delete)="delById($event)" />
-}
+<div class="wrap">
+    @for (item of historyItems() | async; track $index) {
+    <app-title-card [value]="item" (delete)="delById($event)" />
+    }
+</div>
 
 @if (historyItems() | async; as items) { @if (items.length > 0) {
-<button [title]="lang.phrases.clearHistory" class="button small" (click)="clearHistory()">🧹✨󠁝🗑️</button>
-}}
+<button [title]="lang.ph().clearHistory" class="button small" (click)="clearHistory()">
+    🧹 {{lang.ph().clearHistory}}
+</button>
+} @else {}}

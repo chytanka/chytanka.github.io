@@ -3,7 +3,7 @@
     <input type="radio" name="radio-{{seed}}" id="mode-{{option.mode}}-{{option.dir}}-{{seed}}" [checked]="value == option.code"
          (input)="onChange(option)" />
 
-    <label for="mode-{{option.mode}}-{{option.dir}}-{{seed}}" [title]="lang.phrases.getByKey(option.hintPhraceKey)">
+    <label class="button" for="mode-{{option.mode}}-{{option.dir}}-{{seed}}" [title]="lang.ph().getByKey(option.hintPhraceKey)">
         {{option.emoji}}
     </label>
 

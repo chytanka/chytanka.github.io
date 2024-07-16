@@ -1,8 +1,9 @@
 details {
     padding: 1.5ch 2ch;
     border-radius: .5ch;
-    border: 1px solid rgb(0, 40, 64);
+    // border: 2px solid rgb(0, 40, 64);
     transition: all var(--t) ease-in-out;
+    box-shadow: var(--flat-shadow-medium);
 
     summary {
         cursor: pointer;
@@ -11,11 +12,16 @@ details {
     }
 
     &[open] {
-        border-color: #166496;
+        // border-color: #166496;
+        background-color: #103651;
+        @media (prefers-color-scheme: light) {
+            background-color: #fff897;
+        }
+        box-shadow: var(--flat-shadow-medium);
 
         summary {
-            color: #ffd60a;
-            border-bottom: 1px solid #fff2;
+            color: #caa902;
+            border-bottom: 2px solid var(--shc);
             padding-bottom: 1ch;
 
             @media (prefers-color-scheme: light) {

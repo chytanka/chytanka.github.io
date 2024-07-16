@@ -8,7 +8,13 @@ import { TELEGRAPH_PATH } from '../../app-routing.module';
 @Component({
   selector: 'app-telegraph-shell',
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
-    [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" />`
+    [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+    
+    <p>{{lang.ph().imagesVia}}<a href="https://telegra.ph" target="_blank" rel="noopener noreferrer">Telegra.ph</a>
+          API.
+          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
+    
+    </app-common-read>`
 })
 export class TelegraphShellComponent extends ReadBaseComponent implements OnDestroy {
 

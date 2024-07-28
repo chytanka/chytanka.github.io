@@ -17,6 +17,11 @@ import { LangToggleComponent } from './ui/lang-toggle/lang-toggle.component';
 import { TitleCardComponent } from './ui/title-card/title-card.component';
 import { LoadingComponent } from './ui/loading/loading.component';
 import { SeparatorComponent } from './ui/separator/separator.component';
+import { MangaPageComponent } from './ui/manga-page/manga-page.component';
+import { HintPageComponent } from './ui/viewer/components/hint-page/hint-page.component';
+import { ViewerFooterComponent } from './ui/viewer/components/viewer-footer/viewer-footer.component';
+import { ViewerHeaderComponent } from './ui/viewer/components/viewer-header/viewer-header.component';
+import { MangaPageEvenComponent } from './ui/manga-page/manga-page-even.component';
 
 
 
@@ -36,7 +41,12 @@ import { SeparatorComponent } from './ui/separator/separator.component';
     LangToggleComponent,
     TitleCardComponent,
     LoadingComponent,
-    SeparatorComponent
+    SeparatorComponent,
+    MangaPageComponent,
+    HintPageComponent,
+    ViewerFooterComponent,
+    ViewerHeaderComponent,
+    MangaPageEvenComponent
   ],
   imports: [
     CommonModule,

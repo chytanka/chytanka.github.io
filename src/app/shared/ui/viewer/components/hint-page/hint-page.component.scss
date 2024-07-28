@@ -1,0 +1,38 @@
+:host {
+    &.long {
+        manga-page {
+            max-height: unset;
+            width: 100%;
+        }
+    }
+}
+
+svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    text {
+        text-anchor: middle;
+        font-family: 'Troubleside', monospace;
+    }
+
+    &.abs {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        display: block;
+        right: 0;
+        bottom: 0;
+        transform: rotate(-15deg);
+        transform-origin: right;
+    }
+
+    .hand-text {
+        text-anchor: middle;
+        font-weight: bold;
+        font-style: italic;
+        opacity: .8;
+        font-family: cursive;
+    }
+}

@@ -7,8 +7,8 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
-
-const L = window.location;
+import { DownloadService } from '../../data-access/download.service';
+import { Base64 } from '../../utils';
 
 @Component({
   selector: 'app-viewer',
@@ -31,6 +31,7 @@ export class ViewerComponent {
   @Input() playlist: Playlist = [];
   @Input() playlistLink: string = "";
   @Input() currentPlaylistItem: PlaylistItem | undefined;
+
 
 
   getCyrrentIndex() {
@@ -112,7 +113,6 @@ export class ViewerComponent {
 
   }
 
-  embedHelper = inject(EmbedHalperService)
 
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
@@ -129,8 +129,6 @@ export class ViewerComponent {
 
   initHotKeys() {
     this.hotKeys.set('KeyF', this.toggleFullScreen)
-    this.hotKeys.set('Ctrl+KeyS', this.showShare)
-    this.hotKeys.set('Ctrl+KeyP', this.showPlayList)
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -143,9 +141,6 @@ export class ViewerComponent {
     const verAmount = 100;
 
     switch (event.code) {
-      // case 'KeyF':
-      //   this.toggleFullScreen()
-      //   break;
       case 'KeyA':
         this.dm.scrollHor(this.viewElement(), -horAmount)
         break;
@@ -197,7 +192,7 @@ export class ViewerComponent {
     if ((event.target as HTMLElement).nodeName === 'SUMMARY') return;
 
     console.log((event.target as HTMLElement).nodeName);
-    
+
 
     this.toggleOverlay();
   }
@@ -221,26 +216,19 @@ export class ViewerComponent {
     return (this.preloadIndexes()).includes((i))
   }
 
-  setViewModeOption(e: any) {
-    this.viewer.setViewModeOption(e);
-    this.viewer.saveViewModeOption();
-  }
+  
 
-  @ViewChild('shareDialog') shareDialogComponent!: DialogComponent;
-  showShare = () => this.shareDialogComponent.showDialog();
+ 
 
-  @ViewChild('playlistDialog') playlistDialogComponent!: DialogComponent;
-  showPlayList = () => this.playlistDialogComponent.showDialog();
+  //#region Inject
 
   route = inject(ActivatedRoute)
   domMan = inject(DomManipulationService)
-  link: Signal<string> =
-    //decodeURIComponent
-    computed(() => (`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`));
+  dl: DownloadService = inject(DownloadService);
+  sanitizer: DomSanitizer = inject(DomSanitizer);
+  embedHelper = inject(EmbedHalperService);
 
-  iframe = computed(() =>
-    `<iframe style="width: 100%; aspect-ratio: 3/2; overflow: auto; resize: vertical; max-height: 90dvh; padding-bottom: 1ch;" src="${this.link()}" frameborder="0" allowfullscreen title="Chytanka">\</iframe>`
-  )
-  sanitizer: DomSanitizer = inject(DomSanitizer)
-  embed = computed(() => this.sanitizer.bypassSecurityTrustUrl(this.link()));
+  //#endregion
+
+  
 }

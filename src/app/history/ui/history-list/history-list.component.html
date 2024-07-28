@@ -5,7 +5,7 @@
 </div>
 
 @if (historyItems() | async; as items) { @if (items.length > 0) {
-<button [title]="lang.ph().clearHistory" class="button small" (click)="clearHistory()">
+<button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearHistory()">
     🧹 {{lang.ph().clearHistory}}
 </button>
 } @else {}}

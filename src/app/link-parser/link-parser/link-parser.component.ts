@@ -111,9 +111,9 @@ export class LinkParserComponent {
 
   favicons: any = {
     reddit: '//reddit.com/favicon.ico',
-    imgur: 'imgur.com/favicon.ico',
-    mangadex: 'mangadex.org/favicon.ico',
-    telegraph: 'telegra.ph/favicon.ico',
+    imgur: '//imgur.com/favicon.ico',
+    mangadex: '//mangadex.org/favicon.ico',
+    telegraph: '//telegra.ph/favicon.ico',
     read: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>'
   }
 

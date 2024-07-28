@@ -9,6 +9,14 @@
 .view.long {
 	// max-width: 100%;
 	margin: 0 auto;
+	max-width: 72ch;
+
+
+	manga-page, app-manga-page-even {
+		max-height: unset;
+		width: 100%;
+	}
+
 
 	&>div {
 		display: block;
@@ -29,7 +37,7 @@
 		}
 	}
 
-	& > .images {
+	&>.images {
 		min-height: 400px;
 	}
 

@@ -1,0 +1,28 @@
+<app-overlay [ngClass]="{'show': show}">
+    <app-warm-control (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
+
+    @if (playlist.length >0) {
+    <button class="button " (click)="showPlayList()">📜</button>
+    }
+
+    <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs"
+        [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
+        (active)="onActive($event)" />
+    <button class="button" (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">
+        🖥️
+    </button>
+</app-overlay>
+
+<app-dialog class="dialog" #playlistDialog (onToggle)="onToggle.emit($event)" [title]="'📜 '">
+    <div style="display: grid; gap: .5ch;padding: 1ch;">
+        @for (item of playlist; track $index) {
+        @if(currentPlaylistItem?.id == item.id && currentPlaylistItem?.site == item.site) {
+        <span>{{item.title?? lang.ph().untitled + ' ' + ($index*1+1)}}</span>
+        } @else {
+        <a [routerLink]="['/', item.site, item.id]"
+            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">{{item.title??
+            lang.ph().untitled + ' ' + ($index*1+1)}}</a>
+        }
+        }
+    </div>
+</app-dialog>

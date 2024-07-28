@@ -1,0 +1,93 @@
+<app-overlay class="top" [ngClass]="{'show': show}">
+    @if(!embedHelper.isEmbedded()){
+    <a class="button " [routerLink]="['/']">🏠</a>
+    <separator />
+    }
+    <button class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
+    <!-- <button class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
+    <span class="title">{{episode?.title}}</span>
+    <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
+        [value]="viewer.viewModeOption().code" />
+</app-overlay>
+
+<app-dialog class="dialog" #shareDialog (onToggle)="onToggle.emit($event)" [title]="'📢 ' + lang.ph().share">
+    <!-- @defer{ } -->
+    <div style="display: flex; flex-direction: column; gap: 2ch;">
+        <details open>
+            <summary>🔗 Share link</summary>
+
+            <div style="margin-top: 1ch;" class="input-group">
+                <textarea rows="4" readonly>{{link()}}</textarea>
+                <button class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
+            </div>
+        </details>
+
+        <details>
+            <summary>🔌 Embed</summary>
+            <div style="margin-top: 1ch;" class="input-group">
+                <textarea rows="6" readonly>{{iframe()}}</textarea>
+                <button class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
+            </div>
+        </details>
+    </div>
+</app-dialog>
+
+
+
+<app-dialog class="dialog" #downloadDialog (onToggle)="onToggle.emit($event)"
+    [title]="'📥 Download '+ episode?.title">
+
+    <div style="display: grid; gap: .5ch;padding: 1ch;">
+        @if(episode) {
+        @if(!dl.getFromQueue(genId())){
+        <article
+            style="display: grid; grid-template-columns: 1fr auto; padding: 1.5ch 2ch; border-radius:.5ch; box-shadow: var(--flat-shadow-medium);  gap: 1ch; align-items: center;">
+            <b style="margin-bottom: unset;">{{episode.title}}</b>
+            <button style="grid-row: span 2; " title="Start dowloading" class="button large tshadow"
+                (click)="dl.addToQueue(episode, genId())">▶️</button>
+            <div style="align-items: center; display: grid; grid-template-columns: auto 1fr; gap: 1ch;">
+                <span>📥 {{episode.images.length}} pages</span>
+            </div>
+        </article>
+
+        }
+        }
+        @if(dl.getFromQueue(genId())){
+
+        <details>
+            <summary style="display: grid; grid-template-columns: 1fr auto;  gap: 1ch;     align-items: center;">
+                <span style="margin-bottom: unset;">{{dl.getFromQueue(genId()).object.title}}</span>
+                @if(dl.getFromQueue(genId()).status != "done"){
+                <button style="grid-row: span 2; " class="button large tshadow">
+                    @if(true) {▶️}
+                    @if(dl.getFromQueue(genId()).status == "downloading") {⏸️}
+                </button>}
+                @if(dl.getFromQueue(genId()).status == "done"){
+                <button class="button delete full" title="Delete from downloads">🗑️</button>
+
+                }
+                <div style="align-items: center; display: grid; grid-template-columns: auto 1fr; gap: 1ch;">
+                    📥 <progress style="width: 100%;" [max]="dl.getFromQueue(genId()).object.images.length"
+                        value="2"></progress>
+                </div>
+            </summary>
+
+            <section style="display: grid; gap: 1ch; grid-template-columns: repeat(3, 1fr); margin: 1lh 0;">
+                @for(img of dl.getFromQueue(genId()).object.images; track img.src; let i = $index)
+                {
+                <div style="display: grid; gap: 1ch; grid-template-columns: auto 1fr;">
+                    <small>🖼️<sub>{{i+1}}</sub></small>
+                    <progress id="progress-bar" [title]="i+1" [max]="100" value="0"></progress>
+                </div>
+                }
+
+            </section>
+            @if(dl.getFromQueue(genId()).status == "downloading") {
+            <loading style="position: relative; aspect-ratio: unset;" />}
+            <small><i><data [value]="dl.getFromQueue(genId()).dateAdded">{{dl.getFromQueue(genId()).dateAdded | date:
+                        "medium"}}</data></i></small>
+        </details>
+        }
+    </div>
+
+</app-dialog>

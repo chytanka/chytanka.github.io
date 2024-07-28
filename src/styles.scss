@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Rampart+One&display=swap');
+@font-face {
+    font-family: 'Troubleside';
+    src: url('/assets/fonts/Troubleside.ttf');
+}
 
 :root {
     --blur: 1ch;
@@ -97,6 +100,7 @@ input {
         color: white;
     }
 
+   
 
     &:hover {
         background-color: #103651;
@@ -105,6 +109,13 @@ input {
 
         @media (prefers-color-scheme: light) {
             background-color: #f8d755;
+            color: #103651;
+        }
+    } 
+    
+    &.delete {
+        &:hover, &:focus {
+            background-color: #541f20;
         }
     }
 

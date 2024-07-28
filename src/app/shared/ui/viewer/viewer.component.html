@@ -41,24 +41,30 @@
         <div class="page">
             <figure>
                 <app-manga-page-even [dir]="viewer.viewModeOption().dir">
-                    <div frame="1" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:50%;  margin: auto;" src="/assets/images/heart-hand-drawn-symbol-outline-svgrepo-com.svg" alt="heart-hand-drawn-symbol-outline">
+                    <div dir="ltr" frame="1" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
+                        <img style="display: block; max-width:50%;  margin: auto;"
+                            src="/assets/images/heart-hand-drawn-symbol-outline-svgrepo-com.svg"
+                            alt="heart-hand-drawn-symbol-outline">
                     </div>
 
-                    <div frame="5" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:60%;  margin: auto;" src="/assets/images/map-hand-drawn-paper-svgrepo-com.svg" alt="map-hand-drawn-paper">
+                    <div dir="ltr" frame="5" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
+                        <img style="display: block; max-width:60%;  margin: auto;"
+                            src="/assets/images/map-hand-drawn-paper-svgrepo-com.svg" alt="map-hand-drawn-paper">
                     </div>
 
-                    <div frame="2" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:50%;  margin: auto;" src="/assets/images/web-comics-svgrepo-com.svg" alt="map-hand-drawn-paper">
+                    <div dir="ltr" frame="2" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
+                        <img style="display: block; max-width:50%;  margin: auto;"
+                            src="/assets/images/web-comics-svgrepo-com.svg" alt="map-hand-drawn-paper">
                     </div>
-                    
+
                     <!-- <img frame="2" style="display: block;  margin: auto;" src="/assets/images/smile-hand-drawn-emoticon-svgrepo-com.svg" >
                     <img frame="2" style="display: block;  margin: auto;" src="/assets/images/web-comics-svgrepo-com.svg" >
                     <img frame="2" style="display: block;  margin: auto;" src="/assets/images/woman-young-head-hand-drawn-outline-svgrepo-com.svg" > -->
 
-                    <div frame="3" style="padding: 1ch; width: 100%; height: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width: 40%; margin: auto;" src="/assets/icons/icon-line.svg" alt="Chytanka logo">
+                    <div dir="ltr" frame="3"
+                        style="padding: 1ch; width: 100%; height: 100%; display: grid; place-items: center;">
+                        <img style="display: block; max-width: 40%; margin: auto;" src="/assets/icons/icon-line.svg"
+                            alt="Chytanka logo">
                         <p style="text-align: center;">Кінець епізоду</p>
 
                         @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
@@ -69,7 +75,8 @@
                             lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
                         }
                     </div>
-                    <div frame="4" style="padding: 1ch; text-align: center; display: grid; place-content: center;">
+                    <div dir="ltr" frame="4"
+                        style="padding: 1ch; text-align: center; display: grid; place-content: center;">
                         <ng-content />
                     </div>
                 </app-manga-page-even>

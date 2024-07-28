@@ -1,5 +1,5 @@
 <manga-page [dir]="viewer.viewModeOption().dir" style="margin: auto;">
-    <svg frame="3" viewBox="0 0 300 200">
+    <svg dir="ltr" frame="3" viewBox="0 0 300 200">
 
         <text x="50%" y="42%" font-size="28">
             {{lang.ph().getByKey(viewer.viewModeOption().hintPhraceKey)}}
@@ -7,7 +7,7 @@
         <text x="50%" y="58%" font-size="24">{{viewer.viewModeOption().emoji}}</text>
     </svg>
 
-    <svg frame="1" viewBox="0 0 280 280">
+    <svg dir="ltr" frame="1" viewBox="0 0 280 280">
         <rect x="20" y="80" width="240" height="120" rx="4" stroke-width="2" fill="white" stroke="black" />
         <text fill="currentColor" font-size="14">
             <tspan x="50%" y="38%">Тицьни 👆</tspan>
@@ -17,7 +17,7 @@
         </text>
     </svg>
 
-    <svg frame="3" class="abs" viewBox="0 0 200 150">
+    <svg dir="ltr" frame="3" class="abs" viewBox="0 0 200 150">
         <text class="hand-text" fill="currentColor" font-size="11">
             <tspan x="50%" y="38%">Вгорі справа можна змінити</tspan>
             <tspan x="50%" y="48%">орієнтацію читання</tspan>
@@ -25,7 +25,7 @@
     </svg>
 
 
-    <svg frame="2" viewBox="0 0 320 320">
+    <svg dir="ltr" frame="2" viewBox="0 0 320 320">
         <rect x="-20" y="85" width="360" height="120" rx="4" stroke-width="2" fill="white" stroke="black"></rect>
         <text fill="currentColor" font-size="14">
             <tspan x="50%" y="34%">для навігації: ⬅➡ або ad</tspan>
@@ -38,7 +38,7 @@
 
     <img frame="4" style="display: block;" src="/assets/icons/icon-line.svg" alt="Chytanka logo">
 
-    <div frame="5">
+    <div dir="ltr" frame="5">
         @if (getPrevIndex() >=0 && playlist[getPrevIndex()]; as prev) {
         <a dir="ltr" [routerLink]="['/', prev.site, prev.id]"
             [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">⏪

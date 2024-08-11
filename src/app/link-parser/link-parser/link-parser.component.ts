@@ -1,13 +1,11 @@
 import { Component, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
-import { ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
+import {ZenkoLinkParser, ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
-import { HistoryService } from '../../history/data-access/history.service';
-import { DialogComponent } from '../../shared/ui/dialog/dialog.component';
 
 @Component({
   selector: 'app-link-parser',
@@ -47,6 +45,7 @@ export class LinkParserComponent {
     this.parser.parsers.push(new MangadexLinkParser)
     this.parser.parsers.push(new TelegraphLinkParser)
     this.parser.parsers.push(new RedditLinkParser)
+    this.parser.parsers.push(new ZenkoLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 
@@ -110,6 +109,7 @@ export class LinkParserComponent {
   }
 
   favicons: any = {
+    zenko: '//zenko.online/favicon.ico',
     reddit: '//reddit.com/favicon.ico',
     imgur: '//imgur.com/favicon.ico',
     mangadex: '//mangadex.org/favicon.ico',

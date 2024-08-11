@@ -1,3 +1,9 @@
+@property --item-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
+
 :host {
     display: flex;
     align-items: center;
@@ -17,12 +23,14 @@ div {
     font-weight: bold;
     line-height: 1;
     transition: all var(--t) ease-in-out;
+    --translate-y: 0;
+    transform: translateY(var(--translate-y)) scale(var(--item-scale));
 
     &:hover,
     &.active {
         color: #ffd60a;
         background-color: #103651;
-        transform: translateY(-.25ch);
+        --translate-y: -.25ch;
 
         @media (prefers-color-scheme: light) {
             background-color: #f8d755;
@@ -69,3 +77,17 @@ div {
         border-bottom-right-radius: unset;
     }
 }
+
+// @supports (animation-timeline: view()) {
+//     div {
+//         animation: scale both steps(6), scale both steps(6) reverse;
+//         animation-timeline: view(inline);
+//         animation-range: entry, exit;
+//     }
+
+//     @keyframes scale {
+//         0% {
+//             --item-scale: 0;
+//         }
+//     }
+// }

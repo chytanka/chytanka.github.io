@@ -8,6 +8,18 @@ export interface CompositionImage {
     nsfw?: string;
 }
 
+export interface CompositionPublisher {
+    id: string;
+    site: string;
+    avatar: CompositionImage;
+    description: string
+    name: string;
+    links: Array<{
+        link: string,
+        title: string
+    }>
+}
+
 export interface CompositionEpisode {
     title: string;
     episode?: number;
@@ -17,7 +29,7 @@ export interface CompositionEpisode {
     chapter?: number;
     part?: number;
     extra?: boolean;
-
+    publisher?: CompositionPublisher, 
     images: CompositionImage[];
 }
 

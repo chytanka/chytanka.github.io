@@ -23,6 +23,7 @@ export const IMGUR_PATH = `imgur`;
 export const REDDIT_PATH = `reddit`;
 export const READ_PATH = `read`;
 export const LIST_PATH = `list`;
+export const ZENKO_PATH = `zenko`;
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: REDDIT_PATH,
     loadChildren: () => import('./reddit/reddit.module').then(m => m.RedditModule)
+  },
+  {
+    path: ZENKO_PATH,
+    loadChildren: () => import('./zenko/zenko.module').then(m => m.ZenkoModule)
   },
   {
     matcher: urlMatcher,

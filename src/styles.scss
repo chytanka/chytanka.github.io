@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Rampart+One&display=swap');
+
 @font-face {
     font-family: 'Troubleside';
     src: url('/assets/fonts/Troubleside.ttf');
@@ -100,7 +102,7 @@ input {
         color: white;
     }
 
-   
+
 
     &:hover {
         background-color: #103651;
@@ -111,10 +113,12 @@ input {
             background-color: #f8d755;
             color: #103651;
         }
-    } 
-    
+    }
+
     &.delete {
-        &:hover, &:focus {
+
+        &:hover,
+        &:focus {
             background-color: #541f20;
         }
     }
@@ -199,8 +203,8 @@ a[target="_blank"]:after {
         --shc: #74b5e8;
     }
 
-    --flat-shadow-high: 1px 1px  var(--shc),
-    2px 2px  var(--shc),
+    --flat-shadow-high: 1px 1px var(--shc),
+    2px 2px var(--shc),
     3px 3px 0 -1px var(--shc),
     4px 4px 0 -1px var(--shc);
 

@@ -7,5 +7,6 @@ export const environment = {
     mangadexChapter: `${PROXY}https://api.mangadex.org/chapter/`,
     mangadexManga: `${PROXY}https://api.mangadex.org/manga/`,
     telegraphHost: `https://api.telegra.ph/getPage/`,
-    redditHost: `https://www.reddit.com/r/all/comments/`
+    redditHost: `https://www.reddit.com/r/all/comments/`,
+    zenkoHost: `https://zenko-api.onrender.com/chapters/`
 };

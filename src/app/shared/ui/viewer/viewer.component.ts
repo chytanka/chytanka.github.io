@@ -201,10 +201,15 @@ export class ViewerComponent {
 
   onAgree() {
     this.showNsfw.set(true);
+    this.embedHelper.postMessage(true, 'nsfwchoice');
   }
 
   onDisagree() {
-    this.router.navigate(['/'])
+    this.showNsfw.set(false);
+    this.embedHelper.postMessage(false, 'nsfwchoice');
+
+    if (!this.embedHelper.isEmbedded())
+      this.router.navigate(['/'])
   }
 
   preloadIndexes: Signal<number[]> = computed(() => this.activeIndexs().map(item => item + 1));
@@ -213,9 +218,9 @@ export class ViewerComponent {
     return (this.preloadIndexes()).includes((i))
   }
 
-  
 
- 
+
+
 
   //#region Inject
 
@@ -227,5 +232,5 @@ export class ViewerComponent {
 
   //#endregion
 
-  
+
 }

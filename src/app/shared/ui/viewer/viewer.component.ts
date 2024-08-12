@@ -103,7 +103,7 @@ export class ViewerComponent {
 
     }
 
-    this.showOverlay = false;
+    // this.showOverlay = false;
     this.activeIndexs.set(activeIndxs);
 
     this.embedHelper.postMessage({
@@ -117,7 +117,6 @@ export class ViewerComponent {
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
     this.initActiveIndexes()
-    this.showOverlay = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -171,8 +170,6 @@ export class ViewerComponent {
 
     if (event.deltaY !== 0 && !event.shiftKey) {
       this.viewElement().scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
-
-      this.showOverlay = false;
       event.preventDefault();
     }
   }

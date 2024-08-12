@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pages-indicator',
   templateUrl: './pages-indicator.component.html',
-  styleUrl: './pages-indicator.component.scss'
+  styleUrl: './pages-indicator.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PagesIndicatorComponent {
   @Input() images: any;

@@ -1,9 +1,10 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-warm-filter',
   templateUrl: './warm-filter.component.html',
-  styleUrl: './warm-filter.component.scss'
+  styleUrl: './warm-filter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WarmFilterComponent {
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
@@ -32,7 +32,8 @@ import { LangService } from '../../data-access/lang.service';
   to { transform:  rotate(360deg); }
 }
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingComponent {
   lang = inject(LangService)

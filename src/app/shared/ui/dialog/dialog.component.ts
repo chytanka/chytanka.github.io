@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+  styleUrl: './dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogComponent {
   lang = inject(LangService)

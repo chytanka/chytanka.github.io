@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-manga-page-even',
   templateUrl: './manga-page-even.component.html',
-  styleUrl: './manga-page-even.component.scss'
+  styleUrl: './manga-page-even.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MangaPageEvenComponent {
 

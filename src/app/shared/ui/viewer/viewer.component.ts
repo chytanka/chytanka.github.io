@@ -103,7 +103,7 @@ export class ViewerComponent {
 
     }
 
-    this.showOverlay = false;
+    // this.showOverlay = false;
     this.activeIndexs.set(activeIndxs);
 
     this.embedHelper.postMessage({
@@ -117,7 +117,6 @@ export class ViewerComponent {
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
     this.initActiveIndexes()
-    this.showOverlay = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -171,8 +170,6 @@ export class ViewerComponent {
 
     if (event.deltaY !== 0 && !event.shiftKey) {
       this.viewElement().scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
-
-      this.showOverlay = false;
       event.preventDefault();
     }
   }
@@ -204,10 +201,15 @@ export class ViewerComponent {
 
   onAgree() {
     this.showNsfw.set(true);
+    this.embedHelper.postMessage(true, 'nsfwchoice');
   }
 
   onDisagree() {
-    this.router.navigate(['/'])
+    this.showNsfw.set(false);
+    this.embedHelper.postMessage(false, 'nsfwchoice');
+
+    if (!this.embedHelper.isEmbedded())
+      this.router.navigate(['/'])
   }
 
   preloadIndexes: Signal<number[]> = computed(() => this.activeIndexs().map(item => item + 1));
@@ -216,9 +218,9 @@ export class ViewerComponent {
     return (this.preloadIndexes()).includes((i))
   }
 
-  
 
- 
+
+
 
   //#region Inject
 
@@ -230,5 +232,5 @@ export class ViewerComponent {
 
   //#endregion
 
-  
+
 }

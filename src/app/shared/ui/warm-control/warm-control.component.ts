@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
   selector: 'app-warm-control',
   templateUrl: './warm-control.component.html',
-  styleUrl: './warm-control.component.scss'
+  styleUrl: './warm-control.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WarmControlComponent {
 

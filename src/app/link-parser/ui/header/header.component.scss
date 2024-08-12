@@ -1,7 +1,7 @@
 
 app-overlay{
     position: absolute;
-    backdrop-filter: blur(1ch);
+    background: unset;
 }
 
 app-lang-toggle {

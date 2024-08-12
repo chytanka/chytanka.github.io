@@ -44,12 +44,32 @@ progress {
 }
 
 app-view-mode-bar {
-	margin-left: auto;
+    margin-left: auto;
 }
 
 textarea {
-	padding: 1ch;
-	border-top-left-radius: var(--radius-2);
-	border-bottom-left-radius: var(--radius-2);
-	box-shadow: var(--flat-shadow-medium);
+    padding: 1ch;
+    border-top-left-radius: var(--radius-2);
+    border-bottom-left-radius: var(--radius-2);
+    box-shadow: var(--flat-shadow-medium);
+}
+
+.open-chtnk-link {
+    aspect-ratio: 1;
+    width: 2rem;
+
+    background-image: url('/assets/icons/icon-72x72.svg');
+    background-size: 150%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &::after {
+        content: unset;
+    }
+
+    img {
+        display: inline-block;
+        width: 1.5rem;
+    }
 }

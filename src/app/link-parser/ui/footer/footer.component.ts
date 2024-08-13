@@ -25,7 +25,7 @@ const SOCIAL_LINKS: any[] = [
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  public readonly version: string = 'v2024.7.14'
+  public readonly version: string = 'v2024.8.13'
   public lang: LangService = inject(LangService);
 
   public social: any[] = SOCIAL_LINKS;

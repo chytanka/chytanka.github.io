@@ -29,7 +29,7 @@
                 [labelDisagree]="lang.ph().nsfwLabelDisagree" />
             }
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
-                <img [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000"
+                <img crossorigin="anonymous" [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000"
                     [height]="img.height ?? 1000" [loading]="(i==0 || preLoad(i)) ? 'eager' : 'lazy'">
             </figure>
         </div>

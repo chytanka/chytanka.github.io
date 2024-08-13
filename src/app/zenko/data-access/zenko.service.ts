@@ -22,11 +22,11 @@ export class ZenkoService {
 
       publisher: {
         id: data.publisher.id as string,
-        site: data.publisher.id as string,
+        site: `https://zenko.online/teams/`+data.publisher.id as string,
         name: data.publisher.name as string,
         avatar: environment.proxy + Base64.toBase64(`https://zenko.b-cdn.net/${data.publisher.avatar}?optimizer=image&width=900&quality=90&height=auto`) as string,
         description: data.publisher.description as string,
-        links: data.publisher.links.map((l: any) => { return { link: l.link, title: l.title }; })
+        links: data.publisher.links?.map((l: any) => { return { link: l.link, title: l.title }; })
       } as unknown as CompositionPublisher,
 
       images: (data.pages.map((item: any) => {

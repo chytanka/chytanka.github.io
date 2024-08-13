@@ -24,6 +24,8 @@ export const REDDIT_PATH = `reddit`;
 export const READ_PATH = `read`;
 export const LIST_PATH = `list`;
 export const ZENKO_PATH = `zenko`;
+export const NHENTAI_PATH = `nhentai`;
+export const COMICK_PATH = `comick`;
 
 const routes: Routes = [
   {
@@ -57,6 +59,14 @@ const routes: Routes = [
   {
     path: ZENKO_PATH,
     loadChildren: () => import('./zenko/zenko.module').then(m => m.ZenkoModule)
+  },
+  {
+    path: NHENTAI_PATH,
+    loadChildren: () => import('./nhentai/nhentai.module').then(m => m.NhentaiModule)
+  },
+  {
+    path: COMICK_PATH,
+    loadChildren: () => import('./comick/comick.module').then(m => m.ComickModule)
   },
   {
     matcher: urlMatcher,

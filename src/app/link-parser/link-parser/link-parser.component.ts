@@ -1,11 +1,12 @@
 import { Component, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../data-access/link-parser.service';
-import {ZenkoLinkParser, ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser } from '../utils';
+import {ZenkoLinkParser, ImgurLinkParser, JsonLinkParser, MangadexLinkParser, RedditLinkParser, TelegraphLinkParser, NhentaiLinkParser } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Base64 } from '../../shared/utils';
 import { Title } from '@angular/platform-browser';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
+import { ComickLinkParser } from '../utils/comick-link-parser';
 
 @Component({
   selector: 'app-link-parser',
@@ -46,6 +47,8 @@ export class LinkParserComponent {
     this.parser.parsers.push(new TelegraphLinkParser)
     this.parser.parsers.push(new RedditLinkParser)
     this.parser.parsers.push(new ZenkoLinkParser)
+    this.parser.parsers.push(new NhentaiLinkParser)
+    this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 
@@ -114,6 +117,8 @@ export class LinkParserComponent {
     imgur: '//imgur.com/favicon.ico',
     mangadex: '//mangadex.org/favicon.ico',
     telegraph: '//telegra.ph/favicon.ico',
+    nhentai: '//nhentai.net/favicon.ico',
+    comick: '//comick.io/favicon.ico',
     read: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>'
   }
 

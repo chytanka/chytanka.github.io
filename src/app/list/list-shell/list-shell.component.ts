@@ -3,6 +3,7 @@ import { LinkParserService } from '../../link-parser/data-access/link-parser.ser
 import { ImgurLinkParser, JsonLinkParser, LinkParser, MangadexLinkParser, NhentaiLinkParser, RedditLinkParser, TelegraphLinkParser, ZenkoLinkParser } from '../../link-parser/utils';
 import { DomManipulationService } from '../../shared/data-access';
 import { LangService } from '../../shared/data-access/lang.service';
+import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
 
 
 @Component({
@@ -87,6 +88,7 @@ export class ListShellComponent {
     this.parser.parsers.push(new RedditLinkParser)
     this.parser.parsers.push(new ZenkoLinkParser)
     this.parser.parsers.push(new NhentaiLinkParser)
+    this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 

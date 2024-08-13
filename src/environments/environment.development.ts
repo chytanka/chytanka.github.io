@@ -9,5 +9,6 @@ export const environment = {
     telegraphHost: `https://api.telegra.ph/getPage/`,
     redditHost: `https://www.reddit.com/r/all/comments/`,
     zenkoHost: `https://zenko-api.onrender.com/chapters/`,
-    nhentaiHost: `https://nhentai.net/api/gallery/`
+    nhentaiHost: `https://nhentai.net/api/gallery/`,
+    comickHost: `https://api.comick.fun/chapter/`
 };

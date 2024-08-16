@@ -26,6 +26,7 @@ export const LIST_PATH = `list`;
 export const ZENKO_PATH = `zenko`;
 export const NHENTAI_PATH = `nhentai`;
 export const COMICK_PATH = `comick`;
+export const YANDERE_PATH = `yandere`;
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
   {
     path: COMICK_PATH,
     loadChildren: () => import('./comick/comick.module').then(m => m.ComickModule)
+  },
+  {
+    path: YANDERE_PATH,
+    loadChildren: () => import('./yandere/yandere.module').then(m => m.YandereModule)
   },
   {
     matcher: urlMatcher,

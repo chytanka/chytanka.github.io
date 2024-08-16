@@ -1,7 +1,7 @@
 export class Phrases {
     title: string = "Chytanka — read it easily and comfortably!";
     shortTitle: string = "Chytanka";
-    enterLink: string = "Enter link to episode on Imgur, Telegra.ph, Reddit, MD";
+    enterLink: string = "Enter link to episode on ";
     slogan: string = "and read it easily and comfortably!";
     letsgo: string = "Let's go"
     dataLoadErr: string = "Data loading error. Please try again later."

@@ -6,3 +6,4 @@ export * from './telegraph-link-parser';
 export * from './reddit-link-parser';
 export * from './zenko-link-parser';
 export * from './nhentai-link-parser'
+export * from './yandere-link-parser'

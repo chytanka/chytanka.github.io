@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../common/common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,23 @@ export class ViewerComponent {
   @Input() playlistLink: string = "";
   @Input() currentPlaylistItem: PlaylistItem | undefined;
 
+  cdr = inject(ChangeDetectorRef)
 
+  initListFromParrentWindow() {
+    if (!this.embedHelper.isEmbedded()) return
+
+    this.embedHelper.postMessage({}, 'listrequest');
+
+    window.addEventListener('message',  ({data}) => {
+      if(data.event != "listresponse") return;
+      
+      this.playlist = data.data as Playlist // !!! 
+
+      this.cdr.detectChanges()
+      
+    }, false);
+
+  }
 
   getCyrrentIndex() {
     for (let i = 0; i < this.playlist.length; i++) {
@@ -62,6 +78,7 @@ export class ViewerComponent {
 
   constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) {
     this.initHotKeys()
+    this.initListFromParrentWindow();
   }
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)

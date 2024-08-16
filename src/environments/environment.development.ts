@@ -10,5 +10,6 @@ export const environment = {
     redditHost: `https://www.reddit.com/r/all/comments/`,
     zenkoHost: `https://zenko-api.onrender.com/chapters/`,
     nhentaiHost: `https://nhentai.net/api/gallery/`,
-    comickHost: `https://api.comick.fun/chapter/`
+    comickHost: `https://api.comick.fun/chapter/`,
+    yanderePoolsHost: `https://yande.re/pool/show.json/`
 };

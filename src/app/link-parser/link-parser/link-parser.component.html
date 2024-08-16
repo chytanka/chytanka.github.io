@@ -4,7 +4,7 @@
       <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.ph().shortTitle" /> }</h1>
       <div style="display: flex; gap: 1ch;">
         <form (submit)="onSubmit()">
-          <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink"
+          <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink+supportSites().join(', ')"
             (input)="inputLink($event)" [value]="link()">
         </form>
       </div>

@@ -2,7 +2,7 @@ import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction
 import { CompositionEpisode } from "./composition";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { OnDestroy, WritableSignal, inject, signal } from "@angular/core";
+import { ChangeDetectorRef, OnDestroy, WritableSignal, inject, signal } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
 import { HistoryService } from "../../../history/data-access/history.service";
 import { ViewerService } from "../../../shared/data-access";
@@ -106,15 +106,23 @@ export abstract class ReadBaseComponent {
         await this.history.addHistory(site, post_id, title, cover, episode);
     }
 
+    cdr = inject(ChangeDetectorRef)
+
 
     protected tapSaveToCurrentPlaylistItem(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
         return tap(async (episode: CompositionEpisode) => {
+            console.log("tapSaveToCurrentPlaylistItem:", post_id, site);
+
             if (episode) {
+                console.log("tapSaveToCurrentPlaylistItem IF");
+                
                 this.currentPlItem.set({
                     id: post_id,
                     site: site
                 })
+                this.cdr.detectChanges()
             }
+            
         })
     }
 }

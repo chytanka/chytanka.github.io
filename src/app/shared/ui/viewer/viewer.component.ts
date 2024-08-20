@@ -1,14 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../common/common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';
-import { DialogComponent } from '../dialog/dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
-import { Base64 } from '../../utils';
+
+const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
+const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
+const CHTNK_NSFW_CHOICE_EVENT_NAME = 'nsfwchoice'
+const CHTNK_LIST_RESPONCE_EVENT_NAME = 'listresponse'
+const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
 
 @Component({
   selector: 'app-viewer',
@@ -22,32 +26,28 @@ import { Base64 } from '../../utils';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewerComponent {
+export class ViewerComponent implements AfterViewInit {
   readonly separator: string = '│'
   showNsfw: WritableSignal<boolean> = signal(false);
 
   @Input() episode: CompositionEpisode | undefined = undefined;
-
   @Input() playlist: Playlist = [];
   @Input() playlistLink: string = "";
   @Input() currentPlaylistItem: PlaylistItem | undefined;
 
-  cdr = inject(ChangeDetectorRef)
-
   initListFromParrentWindow() {
     if (!this.embedHelper.isEmbedded()) return
 
-    this.embedHelper.postMessage({}, 'listrequest');
+    this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LIST_REQUEST_EVENT_NAME);
 
     window.addEventListener('message',  ({data}) => {
-      if(data.event != "listresponse") return;
+      if(data.event != CHTNK_LIST_RESPONCE_EVENT_NAME) return;
       
       this.playlist = data.data as Playlist // !!! 
 
       this.cdr.detectChanges()
       
     }, false);
-
   }
 
   getCyrrentIndex() {
@@ -78,7 +78,6 @@ export class ViewerComponent {
 
   constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) {
     this.initHotKeys()
-    this.initListFromParrentWindow();
   }
 
   toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
@@ -94,6 +93,8 @@ export class ViewerComponent {
   ngAfterViewInit() {
     this.viewElement.set(this.viewRef.nativeElement);
     this.initActiveIndexes()
+    this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LOAD_EVENT_NAME);
+    this.initListFromParrentWindow();
   }
 
   activeIndexs: WritableSignal<number[]> = signal([])
@@ -126,7 +127,7 @@ export class ViewerComponent {
     this.embedHelper.postMessage({
       total: this.episode?.images.length,
       current: activeIndxs.map(i => i + 1)
-    }, 'changepage');
+    }, CHTNK_CHANGE_PAGE_EVENT_NAME);
 
   }
 
@@ -218,12 +219,12 @@ export class ViewerComponent {
 
   onAgree() {
     this.showNsfw.set(true);
-    this.embedHelper.postMessage(true, 'nsfwchoice');
+    this.embedHelper.postMessage(true, CHTNK_NSFW_CHOICE_EVENT_NAME);
   }
 
   onDisagree() {
     this.showNsfw.set(false);
-    this.embedHelper.postMessage(false, 'nsfwchoice');
+    this.embedHelper.postMessage(false, CHTNK_NSFW_CHOICE_EVENT_NAME);
 
     if (!this.embedHelper.isEmbedded())
       this.router.navigate(['/'])
@@ -246,6 +247,7 @@ export class ViewerComponent {
   dl: DownloadService = inject(DownloadService);
   sanitizer: DomSanitizer = inject(DomSanitizer);
   embedHelper = inject(EmbedHalperService);
+  cdr = inject(ChangeDetectorRef)
 
   //#endregion
 

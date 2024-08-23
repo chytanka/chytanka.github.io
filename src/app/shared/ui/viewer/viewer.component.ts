@@ -103,6 +103,8 @@ export class ViewerComponent implements AfterViewInit {
 
   activeIndexs: WritableSignal<number[]> = signal([])
   initActiveIndexes() {
+    if (!isPlatformBrowser(this.platformId)) return
+    
     const isPageMode = this.viewer.viewModeOption().mode == 'pages';
 
     const viewRect: DOMRect = isPageMode

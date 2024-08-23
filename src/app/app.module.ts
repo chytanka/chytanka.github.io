@@ -1,9 +1,9 @@
-import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
+import { LOCALE_ID, NgModule, isDevMode, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SharedModule } from './shared/shared.module';
@@ -14,7 +14,8 @@ import localeUk from "@angular/common/locales/uk";
 
 registerLocaleData(localeUk)
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         PageNotFoundComponent
     ],
@@ -26,5 +27,11 @@ registerLocaleData(localeUk)
             // or after 30 seconds (whichever comes first).
             registrationStrategy: 'registerWhenStable:30000'
         }),
-        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi()), provideClientHydration()] })
+        SharedModule],
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideClientHydration(),
+        provideHttpClient(withFetch())
+    ]
+})
 export class AppModule { }

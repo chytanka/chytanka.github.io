@@ -13,7 +13,7 @@ export class EmbedHalperService {
   constructor() { }
 
   postMessage(message: any, type: string, targetOrigin: string = "*") {
-    if (!window.top || !isPlatformBrowser(this.platformId)) return
+    if (!isPlatformBrowser(this.platformId) || !window.top) return
 
     const msg = { type, message }
 

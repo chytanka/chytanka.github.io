@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-dialog',
@@ -9,6 +10,7 @@ import { LangService } from '../../data-access/lang.service';
 })
 export class DialogComponent {
   lang = inject(LangService)
+  private readonly document = inject(DOCUMENT);
 
   @Output() onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -17,7 +19,7 @@ export class DialogComponent {
   @Input() closeHeaderButton: boolean = true
 
   @ViewChild('dialog', { static: true }) dialogRef!: ElementRef;
-  dialogElement: WritableSignal<HTMLDialogElement> = signal(document.createElement('dialog'));
+  dialogElement: WritableSignal<HTMLDialogElement> = signal(this.document.createElement('dialog'));
 
 
   ngAfterViewInit() {

@@ -1,23 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { copyText } from '../utils/clipboard';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DomManipulationService {
+  private readonly document = inject(DOCUMENT);
 
   scrollInterval: any;
 
   constructor() { }
 
   toggleFullScreen(el: HTMLElement) {
-    if (!document.fullscreenElement) {
+    if (!this.document.fullscreenElement) {
       if (el.requestFullscreen) {
         el.requestFullscreen();
       }
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
+      if (this.document.exitFullscreen) {
+        this.document.exitFullscreen();
       }
     }
   }

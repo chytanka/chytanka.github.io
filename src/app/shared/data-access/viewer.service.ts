@@ -1,4 +1,5 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, WritableSignal, inject, signal } from '@angular/core';
 
 export interface ViewModeOption {
   dir: "rtl" | "ltr";
@@ -21,6 +22,7 @@ const VIEW_MODE_OPT_NAME = `viewModeOption`;
 })
 export class ViewerService {
   public viewModeOptions = VIEV_MODE_OPTIONS;
+  platformId = inject(PLATFORM_ID)
 
   public viewModeOption: WritableSignal<ViewModeOption> = signal(VIEV_MODE_OPTIONS[0]);
 
@@ -34,17 +36,21 @@ export class ViewerService {
   }
 
   initNightlight() {
+    if(!isPlatformBrowser(this.platformId)) return;
+    
     const n = Number(localStorage.getItem('nightlight')) ?? 0;
     this.nightlight.set(n);
   }
 
   setNightlight(n: number) {
+    if(!isPlatformBrowser(this.platformId)) return;
+    
     this.nightlight.set(n);
     localStorage.setItem('nightlight', n.toString())
   }
 
   initViewModeOption() {
-    const localOpt: ViewModeOption = JSON.parse(localStorage.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
+    const localOpt: ViewModeOption = JSON.parse(localStorage?.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
     const opt: ViewModeOption = this.getViewModeOptionByCode(localOpt?.code) ?? VIEV_MODE_OPTIONS[0]
     this.setViewModeOption(opt);
   }

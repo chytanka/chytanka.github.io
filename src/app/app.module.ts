@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,5 +26,5 @@ registerLocaleData(localeUk)
             // or after 30 seconds (whichever comes first).
             registrationStrategy: 'registerWhenStable:30000'
         }),
-        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi()), provideClientHydration()] })
 export class AppModule { }

@@ -27,9 +27,7 @@ export abstract class LinkParser {
         const results: LinkParseResult[] = [];
 
         for (const match of matches) {
-            if (match && match[1]) {
-                console.log(match);
-                
+            if (match && match[1]) {                
                 results.push({ site: this.site, id: match[1] });
             }
         }

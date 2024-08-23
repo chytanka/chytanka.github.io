@@ -206,9 +206,6 @@ export class ViewerComponent implements AfterViewInit {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
     if ((event.target as HTMLElement).nodeName === 'SUMMARY') return;
 
-    console.log((event.target as HTMLElement).nodeName);
-
-
     this.toggleOverlay();
   }
   onViewDblClick(event: Event) {

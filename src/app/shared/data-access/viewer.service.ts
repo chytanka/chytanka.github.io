@@ -28,7 +28,7 @@ export class ViewerService {
 
   nightlight: WritableSignal<number> = signal(0);
 
-  keyboard: boolean = (navigator as any).keyboard;
+  keyboard: boolean = (isPlatformBrowser(this.platformId)) && (navigator as any).keyboard;
 
   constructor() {
     this.initNightlight();
@@ -50,6 +50,8 @@ export class ViewerService {
   }
 
   initViewModeOption() {
+    if(!isPlatformBrowser(this.platformId)) return;
+    
     const localOpt: ViewModeOption = JSON.parse(localStorage?.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
     const opt: ViewModeOption = this.getViewModeOptionByCode(localOpt?.code) ?? VIEV_MODE_OPTIONS[0]
     this.setViewModeOption(opt);

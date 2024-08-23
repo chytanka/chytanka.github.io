@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, HostListener, inject, Input, Output, Signal, signal, ViewChild } from '@angular/core';
+import { Component, computed, EventEmitter, HostListener, inject, Input, Output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
 import { DomManipulationService, ViewerService } from '../../../../data-access';
 import { CompositionEpisode } from '../../../../../common/common-read';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
@@ -8,8 +8,9 @@ import { EmbedHalperService } from '../../../../data-access/embed-halper.service
 import { DownloadService } from '../../../../data-access/download.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Base64 } from '../../../../utils';
+import { isPlatformBrowser } from '@angular/common';
 
-const L = window.location;
+// const L = window.location;
 
 @Component({
   selector: 'app-viewer-header',
@@ -27,7 +28,7 @@ export class ViewerHeaderComponent {
   domMan = inject(DomManipulationService)
   sanitizer: DomSanitizer = inject(DomSanitizer);
 
-
+  platformId = inject(PLATFORM_ID)
 
   isDialogOpen = signal(false);
 
@@ -63,7 +64,10 @@ export class ViewerHeaderComponent {
 
   link: Signal<string> =
     //decodeURIComponent
-    computed(() => (`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`));
+    computed(() => {
+      const L = (isPlatformBrowser(this.platformId)) ? window.location : { origin: '', pathname: '' }
+      return (`${L.origin + L.pathname}?vm=${this.viewer.viewModeOption().code}&lang=${this.lang.lang()}&list=${this.playlistLink}`)
+    });
 
   iframe = computed(() =>
     `<iframe style="width: 100%; aspect-ratio: 3/2; overflow: auto; resize: vertical; max-height: 90dvh; padding-bottom: 1ch;" src="${this.link()}" frameborder="0" allowfullscreen title="Chytanka">\</iframe>`

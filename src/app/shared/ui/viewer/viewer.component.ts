@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../common/common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
 const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
@@ -35,8 +36,11 @@ export class ViewerComponent implements AfterViewInit {
   @Input() playlistLink: string = "";
   @Input() currentPlaylistItem: PlaylistItem | undefined;
 
+  platformId = inject(PLATFORM_ID)
+  private readonly document = inject(DOCUMENT);
+
   initListFromParrentWindow() {
-    if (!this.embedHelper.isEmbedded()) return
+    if (!this.embedHelper.isEmbedded() || !isPlatformBrowser(this.platformId)) return
 
     this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LIST_REQUEST_EVENT_NAME);
 
@@ -86,7 +90,7 @@ export class ViewerComponent implements AfterViewInit {
   toggleOverlay = () => this.showOverlay = !this.showOverlay;
 
   // viewElement!: HTMLElement;
-  viewElement: WritableSignal<HTMLElement> = signal(document.createElement('div'));
+  viewElement: WritableSignal<HTMLElement> = signal(this.document.createElement('div'));
   imageElements: Signal<NodeListOf<Element>> = computed(() => this.viewElement().querySelectorAll('.page img[id*=page_]'));
   imgsPos: any[] = []
 
@@ -205,9 +209,6 @@ export class ViewerComponent implements AfterViewInit {
   onViewClick(event: Event) {
     if ((event.target as HTMLElement).nodeName === 'INPUT') return;
     if ((event.target as HTMLElement).nodeName === 'SUMMARY') return;
-
-    console.log((event.target as HTMLElement).nodeName);
-
 
     this.toggleOverlay();
   }

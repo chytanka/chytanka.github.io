@@ -1,6 +1,7 @@
-import { Component, HostListener, WritableSignal, signal } from '@angular/core';
+import { Component, HostListener, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from './shared/data-access/lang.service';
 import { ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 const SCALE_GAP = 128;
 
@@ -25,15 +26,17 @@ export class AppComponent {
       }
     })
   }
+  
+  private readonly document = inject(DOCUMENT);
 
   @HostListener('window:resize')
   initScaleDifference() {
-    const w = document.documentElement.clientWidth;
-    const h = document.documentElement.clientHeight;
+    const w = this.document.documentElement.clientWidth;
+    const h = this.document.documentElement.clientHeight;
     const scalex = 1 - ((w - SCALE_GAP) / w)
     const scaley = 1 - ((h - SCALE_GAP) / h)
 
-    document.documentElement.style.setProperty('--scale-diff-x', scalex.toString())
-    document.documentElement.style.setProperty('--scale-diff-y', scaley.toString())
+    this.document.documentElement.style.setProperty('--scale-diff-x', scalex.toString())
+    this.document.documentElement.style.setProperty('--scale-diff-y', scaley.toString())
   }
 }

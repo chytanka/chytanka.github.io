@@ -6,8 +6,6 @@ export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route
 
   if (segments.length > 1) {
     const url = segments.map(segment => segment.path).join('/');
-
-    console.log(url);
     
     return {
       consumed: segments,

@@ -1,16 +1,19 @@
-import { Injectable, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmbedHalperService {
 
-  isEmbedded = signal(window.top !== window)
+  platformId = inject(PLATFORM_ID)
+
+  isEmbedded = signal(isPlatformBrowser(this.platformId) && window.top !== window)
 
   constructor() { }
 
   postMessage(message: any, type: string, targetOrigin: string = "*") {
-    if (!window.top) return
+    if (!window.top || !isPlatformBrowser(this.platformId)) return
 
     const msg = { type, message }
 

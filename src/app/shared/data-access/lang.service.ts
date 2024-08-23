@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Injectable, PLATFORM_ID, WritableSignal, inject, signal } from '@angular/core';
 import { Phrases } from '../utils/phrases';
 import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ViewModeOption } from './viewer.service';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 const LANG_OPTIONS: ViewModeOption[] = [
   { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
@@ -23,9 +24,15 @@ export class LangService {
   ]);
 
   langOpt = LANG_OPTIONS
+  platformId = inject(PLATFORM_ID)
+  private readonly document = inject(DOCUMENT);
 
-  lang: WritableSignal<string> = signal(localStorage.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG);
-  linkManifestElement: WritableSignal<HTMLElement | null> = signal(document.querySelector('link[rel="manifest"]'))
+  lang: WritableSignal<string> = signal(
+    (!isPlatformBrowser(this.platformId)) ? DEFAULT_LANG :
+    
+    localStorage?.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG)
+    ;
+  linkManifestElement: WritableSignal<HTMLElement | null> = signal(this.document.querySelector('link[rel="manifest"]'))
 
   ph: WritableSignal<Phrases> = signal(new Phrases());
 
@@ -35,7 +42,10 @@ export class LangService {
 
   setLang(lang: string) {
     this.lang.set(lang)
-    document.documentElement.lang = lang
+    this.document.documentElement.lang = lang
+
+    if(!isPlatformBrowser(this.platformId)) return;
+    
     localStorage.setItem(LANG_STORAGE_NAME, lang)
     this.updateTranslate();
   }

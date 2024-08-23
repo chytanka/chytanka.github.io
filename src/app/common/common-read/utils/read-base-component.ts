@@ -111,10 +111,8 @@ export abstract class ReadBaseComponent {
 
     protected tapSaveToCurrentPlaylistItem(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
         return tap(async (episode: CompositionEpisode) => {
-            console.log("tapSaveToCurrentPlaylistItem:", post_id, site);
 
             if (episode) {
-                console.log("tapSaveToCurrentPlaylistItem IF");
                 
                 this.currentPlItem.set({
                     id: post_id,

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CompositionEpisode } from '../../common/common-read';
 import { environment } from '../../../environments/environment';
+import { Base64 } from '../../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,10 @@ export class TelegraphService {
         return {
           src: item.children.find((child: any) => child.tag === "img")?.attrs.src
         };
-      })).filter((i: any) => i.src).map((img: any)=> {return {src: 'https://telegra.ph'+ img.src}})
+      })).filter((i: any) => i.src).map((img: any)=> {return {src: 
+        environment.proxy + Base64.toBase64('https://telegra.ph'+ img.src)
+      }})
     };
-
-    
-    
 
     return mappedResponse;
   }

@@ -68,7 +68,7 @@
                         <div>
                             <p style="text-align: center;">Кінець епізоду</p>
                             @if(episode?.publisher?.id) {
-                            <p>Переклад від {{episode?.publisher?.name}}</p>
+                            <p>Робота від <a [href]="episode?.publisher?.site" target="_blank" rel="noopener noreferrer">{{episode?.publisher?.name}}</a></p>
                             <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1ch; font-size: x-small;">
                                 @for (l of episode?.publisher?.links; track $index) {
                                 <a [href]="l.link" target="_blank" rel="noopener noreferrer">{{l.title}}</a>

@@ -6,7 +6,7 @@ export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route
 
   if (segments.length > 1) {
     const url = segments.map(segment => segment.path).join('/');
-    
+
     return {
       consumed: segments,
       posParams: { url: new UrlSegment(url, {}) }
@@ -25,6 +25,7 @@ export const ZENKO_PATH = `zenko`;
 export const NHENTAI_PATH = `nhentai`;
 export const COMICK_PATH = `comick`;
 export const YANDERE_PATH = `yandere`;
+export const PIXIV_PATH = 'pixiv';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
   {
     path: YANDERE_PATH,
     loadChildren: () => import('./yandere/yandere.module').then(m => m.YandereModule)
+  },
+  {
+    path: PIXIV_PATH,
+    loadChildren: () => import('./pixiv/pixiv.module').then(m => m.PixivModule)
   },
   {
     matcher: urlMatcher,

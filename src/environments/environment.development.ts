@@ -11,5 +11,6 @@ export const environment = {
     zenkoHost: `https://zenko-api.onrender.com/chapters/`,
     nhentaiHost: `https://nhentai.net/api/gallery/`,
     comickHost: `https://api.comick.fun/chapter/`,
-    yanderePoolsHost: `https://yande.re/pool/show.json/`
+    yanderePoolsHost: `https://yande.re/pool/show.json/`,
+    pixivHost: `https://www.pixiv.net/touch/ajax/illust/details?illust_id=`
 };

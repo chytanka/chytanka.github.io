@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
       --border-width: 2px;
       color: #ffd60a;
       margin: auto;
-      font-family: 'Rampart One', sans-serif;
+      font-family: 'Troubleside', sans-serif;
       font-size: clamp(1rem, 8vw, 5rem);
       @media (max-aspect-ratio: 1) or (max-width: 640px)  {
           font-size: clamp(1rem, 10vw, 8rem);

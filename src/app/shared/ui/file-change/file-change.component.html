@@ -1,0 +1,10 @@
+<!-- <input type="file" (input)="onFileSelected($event)" [accept]="accept.join(', ')" > -->
+
+<button class="button" (click)="openFileDialog()" [title]="lang.ph().openFile">📃</button>
+
+@if(showDragAndDropZone){
+<div class="drop-zone" (click)="showDragAndDropZone = false" (drop)="dropHandler($event)">
+    <span>📃</span>
+    <p>{{lang.ph().dropIt}}</p>
+</div>
+}

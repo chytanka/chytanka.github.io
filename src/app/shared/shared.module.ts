@@ -22,6 +22,7 @@ import { HintPageComponent } from './ui/viewer/components/hint-page/hint-page.co
 import { ViewerFooterComponent } from './ui/viewer/components/viewer-footer/viewer-footer.component';
 import { ViewerHeaderComponent } from './ui/viewer/components/viewer-header/viewer-header.component';
 import { MangaPageEvenComponent } from './ui/manga-page/manga-page-even.component';
+import { FileChangeComponent } from './ui/file-change/file-change.component';
 
 
 
@@ -46,13 +47,14 @@ import { MangaPageEvenComponent } from './ui/manga-page/manga-page-even.componen
     HintPageComponent,
     ViewerFooterComponent,
     ViewerHeaderComponent,
-    MangaPageEvenComponent
+    MangaPageEvenComponent,
+    FileChangeComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent]
 })
 export class SharedModule { }

@@ -91,8 +91,6 @@ dialog {
 
     &[open] {
         display: flex;
-        // box-shadow: var(--shadow-elevation-high);
-        
         box-shadow:  var(--flat-shadow-high);
     }
 }

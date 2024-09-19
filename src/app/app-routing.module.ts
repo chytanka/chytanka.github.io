@@ -26,6 +26,7 @@ export const NHENTAI_PATH = `nhentai`;
 export const COMICK_PATH = `comick`;
 export const YANDERE_PATH = `yandere`;
 export const PIXIV_PATH = 'pixiv';
+export const FILE_PATH = 'file';
 
 const routes: Routes = [
   {
@@ -75,6 +76,10 @@ const routes: Routes = [
   {
     path: PIXIV_PATH,
     loadChildren: () => import('./pixiv/pixiv.module').then(m => m.PixivModule)
+  },
+  {
+    path: FILE_PATH,
+    loadChildren: () => import('./file/file.module').then(m => m.FileModule)
   },
   {
     matcher: urlMatcher,

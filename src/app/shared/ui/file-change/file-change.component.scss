@@ -1,0 +1,22 @@
+.drop-zone {
+    font-size: 3rem;
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    z-index: 100;
+    background-color: var(--surface);
+    text-align: center;
+    
+    color: #166496;
+    font-weight: bold;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 2ch;
+        outline: .25ch dashed #166496;
+        z-index: 1;
+        border-radius: .25ch;
+    }
+}

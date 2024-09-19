@@ -44,6 +44,8 @@ export class Phrases {
     untitled = 'Untitled'
     loading = 'loading'
     createList = "Create list"
+    openFile = "Open file"
+    dropIt = "Drop it!"
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

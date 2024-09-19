@@ -1,0 +1,6 @@
+<!-- <app-viewer [episode]="{title: fs.file()?.name ?? '', images: images}" /> -->
+@if(episode && episode.images && episode.images.length > 0){
+<app-viewer [episode]="episode" />
+} @else {
+<loading />
+}

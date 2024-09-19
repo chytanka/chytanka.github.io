@@ -2,15 +2,16 @@
   <div class="wrapper">
     <div class="form-wrapper">
       <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.ph().shortTitle" /> }</h1>
-      <div style="display: flex; gap: 1ch;">
+      <div style="display: flex; gap: 1ch;  align-items: center;">
         <form (submit)="onSubmit()">
           <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink+supportSites().join(', ')"
             (input)="inputLink($event)" [value]="link()">
         </form>
+        @defer { <app-file-change/> }
       </div>
     </div>
 
-    <div class="slogan-wrapper">
+    <div class="slogan-wrapper">        
       <h2 class="slogan-header">{{lang.ph().slogan}}</h2>
       @if (linkParams()) {
       <a style="display: flex; gap: 1ch; align-items: center;" class="button primary" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">

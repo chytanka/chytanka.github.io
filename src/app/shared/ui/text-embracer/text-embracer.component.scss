@@ -16,8 +16,10 @@
         display: grid;
         border: var(--border-width) var(--border-style) var(--border-color);
         border-radius: .1ch;
-        height: 1.3lh;
+        height: 1.5lh;
         place-content: center;
         background-color: var(--back-color);
+        --shc: var(--border-color);
+        text-shadow: 0.025ch .025ch var(--shc), 0.05ch .05ch var(--shc), 0.075ch .075ch var(--shc), 0.1ch .1ch var(--shc);
     }
 }

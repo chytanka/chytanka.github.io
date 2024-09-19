@@ -1,7 +1,7 @@
 <app-overlay class="top" [ngClass]="{'show': show}">
     @if(!embedHelper.isEmbedded()){
     <a class="button " [routerLink]="['/']">🏠</a>
-    
+    <app-file-change />
     } @else {
         <a title="Read on Chytanka" class="button open-chtnk-link" [href]="link()" target="_blank" rel="noopener noreferrer"></a>
     }

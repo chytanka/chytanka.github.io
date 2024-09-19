@@ -7,12 +7,10 @@ main {
     padding: 1ch 0 2ch;
     max-width: 80ch;
     display: grid;
-    // grid-template-rows: auto 1fr auto;
-    // height: 100dvh;
 }
 
 .input-group {
-    box-shadow: var(--shadow-elevation-medium);
+    box-shadow: var(--flat-shadow-medium);
 }
 
 textarea {
@@ -27,12 +25,9 @@ textarea {
     width: 100%;
     transition: all var(--t) cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: .5ch;
-    border: 2px solid #16649640;
-   
-    // background-color: #00274190;
-    // @media (prefers-color-scheme: light) {
-    //     background-color: #eceff2a0;
-    // }
+    // border: 2px solid #16649640;
+    border: 0;
+    background-color: rgb(0,16,32);
 
     &:focus {
         border-color: #166496;

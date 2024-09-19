@@ -101,5 +101,15 @@
   "orientation": "any",
   "launch_handler": { "client_mode": "auto" },
   "handle_links": "preferred",
-  "edge_side_panel": { "preferred_width": 480 }
+  "edge_side_panel": { "preferred_width": 480 },
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/zip": [".zip"],
+        "application/vnd.comicbook+zip": [".cbz"],
+        "application/pdf": [".pdf"]
+      }
+    }
+  ]
 }

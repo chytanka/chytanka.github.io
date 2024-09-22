@@ -3,6 +3,9 @@ import { FileService } from '../data-access/file.service';
 import { SharedModule } from '../../shared/shared.module';
 import { Router } from '@angular/router';
 import { CompositionEpisode, CompositionImage } from '../../common/common-read';
+import { DomManipulationService } from '../../shared/data-access';
+import { ComicInfo } from '../../shared/utils/comic-info';
+import { Acbf } from '../../shared/utils/acbf';
 
 @Component({
   selector: 'app-zip',
@@ -12,13 +15,12 @@ import { CompositionEpisode, CompositionImage } from '../../common/common-read';
   styleUrl: './zip.component.scss'
 })
 export class ZipComponent implements OnInit, OnDestroy {
+  private worker!: Worker;
+  
   episode: CompositionEpisode | undefined;
 
-  progress: number = 0;
-  private worker!: Worker;
-
   router = inject(Router)
-
+  dm = inject(DomManipulationService)
   fs = inject(FileService)
 
   constructor() {
@@ -38,30 +40,50 @@ export class ZipComponent implements OnInit, OnDestroy {
       this.worker.terminate();
   }
 
+  private workerHandlers = new Map<string, Function>()
+    .set('comicinfo', this.comicinfoHandler.bind(this))
+    .set('zipopen', this.zipopenHandler.bind(this))
+    .set('file', this.fileHandler.bind(this))
+    .set('acbf', this.acbfHandler.bind(this))
+
+
+    private acbfHandler(msg: any) {
+      const acbf = new Acbf(msg.data)
+  
+    }
+
+  private comicinfoHandler(msg: any) {
+    const comicInfo = new ComicInfo(msg.data)
+
+    if (this.episode && comicInfo.title) {
+      this.episode.title = comicInfo.title
+      this.episode.volume = parseInt(comicInfo.volume ?? '')
+    }
+
+  }
+
+  private zipopenHandler(msg: any) {
+    const imgs: CompositionImage[] = [...Array(msg.data.count)].map((item: CompositionImage, index) => { return { src: `?id=${index}` } });
+
+    if (this.episode) {
+      this.episode.images = imgs
+    }
+  }
+  private fileHandler(msg: any) {
+    const { index, url } = msg;
+
+    if (this.episode)
+      this.episode.images[index].src = url
+  }
+
   initZipWorker() {
     this.terminateWorker()
-    if (typeof Worker !== 'undefined') {
 
+    if (typeof Worker !== 'undefined') {
       this.worker = new Worker(new URL('../data-access/zip.worker', import.meta.url));
       this.worker.onmessage = ({ data }) => {
-        if (data.type === 'progress') {
-          this.progress = data.progress;
-        } else if (data.type === 'file') {
-          ``
-          const { index, url } = data;
-
-          if (this.episode)
-            this.episode.images[index].src = url
-        } else if (data.type === 'complete') {
-          this.progress = data.progress;
-        }
-        else if (data.type === 'zipopen') {
-          const imgs: CompositionImage[] = [...Array(data.data.count)].map((item: CompositionImage, index) => { return { src: `?id=${index}` } });          
-
-          if (this.episode) {
-            this.episode.images = imgs
-          }
-        }
+        const fn = this.workerHandlers.get(data.type)
+        if (fn) fn(data)
       };
     } else {
       console.error('Web Workers are not supported in this environment.');
@@ -69,7 +91,6 @@ export class ZipComponent implements OnInit, OnDestroy {
   }
 
   fileChange() {
-    // this.images = []
     const file = this.fs.file();
     if (file && this.worker) {
       const reader = new FileReader();

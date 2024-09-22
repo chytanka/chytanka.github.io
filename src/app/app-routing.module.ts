@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Route, RouterModule, Routes, UrlSegment, UrlSegmentGroup } from '@angular/router';
+import { LoadChildrenCallback, Route, RouterModule, Routes, UrlSegment, UrlSegmentGroup } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route: Route) {
@@ -28,67 +28,40 @@ export const YANDERE_PATH = `yandere`;
 export const PIXIV_PATH = 'pixiv';
 export const FILE_PATH = 'file';
 
+const linkParserMod: LoadChildrenCallback = () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
+const imgurMod: LoadChildrenCallback = () => import('./imgur/imgur.module').then(m => m.ImgurModule);
+const mangadexMod: LoadChildrenCallback = () => import('./mangadex/mangadex.module').then(m => m.MangadexModule);
+const telegraphMod = () => import('./telegraph/telegraph.module').then(m => m.TelegraphModule)
+const readMod = () => import('./read/read.module').then(m => m.ReadModule);
+const redditMod = () => import('./reddit/reddit.module').then(m => m.RedditModule)
+const zenkoMod = () => import('./zenko/zenko.module').then(m => m.ZenkoModule)
+const nhentaiMod = () => import('./nhentai/nhentai.module').then(m => m.NhentaiModule)
+const comickMod = () => import('./comick/comick.module').then(m => m.ComickModule)
+const yandereMod = () => import('./yandere/yandere.module').then(m => m.YandereModule)
+const pixivMod = () => import('./pixiv/pixiv.module').then(m => m.PixivModule)
+const fileMod = () => import('./file/file.module').then(m => m.FileModule)
+
+const moduleMap = new Map<string, LoadChildrenCallback>()
+  .set(IMGUR_PATH, imgurMod)
+  .set(MANGADEX_PATH, mangadexMod)
+  .set(TELEGRAPH_PATH, telegraphMod)
+
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
-  },
-  {
-    path: LIST_PATH,
-    loadChildren: () => import('./list/list.module').then(m => m.ListModule)
-  },
-  {
-    path: IMGUR_PATH,
-    loadChildren: () => import('./imgur/imgur.module').then(m => m.ImgurModule)
-  },
-  {
-    path: MANGADEX_PATH,
-    loadChildren: () => import('./mangadex/mangadex.module').then(m => m.MangadexModule)
-  },
-  {
-    path: READ_PATH,
-    loadChildren: () => import('./read/read.module').then(m => m.ReadModule)
-  },
-  {
-    path: TELEGRAPH_PATH,
-    loadChildren: () => import('./telegraph/telegraph.module').then(m => m.TelegraphModule)
-  },
-  {
-    path: REDDIT_PATH,
-    loadChildren: () => import('./reddit/reddit.module').then(m => m.RedditModule)
-  },
-  {
-    path: ZENKO_PATH,
-    loadChildren: () => import('./zenko/zenko.module').then(m => m.ZenkoModule)
-  },
-  {
-    path: NHENTAI_PATH,
-    loadChildren: () => import('./nhentai/nhentai.module').then(m => m.NhentaiModule)
-  },
-  {
-    path: COMICK_PATH,
-    loadChildren: () => import('./comick/comick.module').then(m => m.ComickModule)
-  },
-  {
-    path: YANDERE_PATH,
-    loadChildren: () => import('./yandere/yandere.module').then(m => m.YandereModule)
-  },
-  {
-    path: PIXIV_PATH,
-    loadChildren: () => import('./pixiv/pixiv.module').then(m => m.PixivModule)
-  },
-  {
-    path: FILE_PATH,
-    loadChildren: () => import('./file/file.module').then(m => m.FileModule)
-  },
-  {
-    matcher: urlMatcher,
-    loadChildren: () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
-  },
-  {
-    path: '**',
-    component: PageNotFoundComponent
-  }
+  { path: '', loadChildren: linkParserMod },
+  { path: LIST_PATH, loadChildren: () => import('./list/list.module').then(m => m.ListModule) },
+  { path: IMGUR_PATH, loadChildren: imgurMod },
+  { path: MANGADEX_PATH, loadChildren: mangadexMod },
+  { path: READ_PATH, loadChildren: readMod },
+  { path: TELEGRAPH_PATH, loadChildren: telegraphMod },
+  { path: REDDIT_PATH, loadChildren: redditMod },
+  { path: ZENKO_PATH, loadChildren: zenkoMod },
+  { path: NHENTAI_PATH, loadChildren: nhentaiMod },
+  { path: COMICK_PATH, loadChildren: comickMod },
+  { path: YANDERE_PATH, loadChildren: yandereMod },
+  { path: PIXIV_PATH, loadChildren: pixivMod },
+  { path: FILE_PATH, loadChildren: fileMod },
+  { matcher: urlMatcher, loadChildren: linkParserMod },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

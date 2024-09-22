@@ -9,6 +9,8 @@ import { CompositionEpisode } from '../../common/common-read';
 
 GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs'
 
+const MDASH = '—';
+
 @Component({
   selector: 'app-pdf',
   standalone: true,
@@ -31,8 +33,14 @@ export class PdfComponent {
       disableFontFace: true,
     }).promise;
 
+    const meta = await pdf.getMetadata()
+    const title = (meta.info as any)['Title']
+    const author = (meta.info as any)['Author']
+
+    console.dir(meta.info)
+
     this.episode = {
-      title: this.fs.file()?.name ?? '',
+      title: title ? (author ? author + ` ${MDASH} ` : '') + title : this.fs.file()?.name ?? '',
       images: [...Array(pdf.numPages)].map((item: any, index) => { return { src: index + '' } })
     }
 
@@ -82,5 +90,5 @@ export class PdfComponent {
     }
   }
 
-  
+
 }

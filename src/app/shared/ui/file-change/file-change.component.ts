@@ -14,9 +14,9 @@ export class FileChangeComponent implements OnInit {
     this.initFileInput();
 
     if ("launchQueue" in window) {
-      console.log(`"launchQueue" in window`);
-      
       (window as any).launchQueue.setConsumer(async (launchParams: any) => {
+        console.log(launchParams);
+        
         const file: File = launchParams.files[0];
         this.fileHandler(file)
       });
@@ -51,20 +51,16 @@ export class FileChangeComponent implements OnInit {
   }
 
   getRouteType(file: File): string | undefined {
-    const fileType = file.type
-
-    if (fileType) {
-      if (fileType.search(/zip|cbz/) >= 0) return "zip"
-      else if (fileType.includes('pdf')) return "pdf"
-    } else {
-      const fileName = file.name
-      const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-
-      return ['cbz', 'zip', 'pdf'].includes(extension) ? extension : undefined
-    }
-
-    return;
+    const fileType = file.type || file.name.split('.').pop()?.toLowerCase();
+  
+    if (!fileType) return undefined;
+  
+    if (fileType.includes('pdf')) return 'pdf';
+    if (/zip|cbz/.test(fileType)) return 'zip';
+  
+    return undefined;
   }
+
   input = document.createElement('input')
 
   initFileInput() {

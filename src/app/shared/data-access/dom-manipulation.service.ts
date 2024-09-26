@@ -12,6 +12,10 @@ export class DomManipulationService {
 
   constructor() { }
 
+  getTextByTagName(doc: Document, tagName: string) {
+    return doc.getElementsByTagName(tagName)[0]?.textContent;
+  }
+
   toggleFullScreen(el: HTMLElement) {
     if (!this.document.fullscreenElement) {
       if (el.requestFullscreen) {

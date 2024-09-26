@@ -7,7 +7,12 @@ const SCALE_GAP = 128;
 
 @Component({
   selector: 'app-root',
-  template: `<router-outlet></router-outlet>`
+  template: `<div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div>`,
+  styles: [`
+    // :host {
+    //   display: flex;
+    // }
+    `]
 })
 export class AppComponent {
   constructor(public lang: LangService, private route: ActivatedRoute) {
@@ -26,7 +31,7 @@ export class AppComponent {
       }
     })
   }
-  
+
   private readonly document = inject(DOCUMENT);
 
   @HostListener('window:resize')

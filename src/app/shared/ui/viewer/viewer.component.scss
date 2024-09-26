@@ -1,10 +1,10 @@
 :host {
-	--W: 100vw;
+	// --W: 100vw;
 	--H: 100dvh;
 	display: block;
 	container-type: size;
 	container-name: view;
-	width: var(--W);
+	// width: var(--W);
 	height: var(--H);
 	transition: all var(--t) ease-in-out;
 

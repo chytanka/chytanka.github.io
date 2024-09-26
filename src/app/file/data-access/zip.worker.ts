@@ -9,28 +9,36 @@ addEventListener('message', ({ data }) => {
 
   zip.loadAsync(arrayBuffer)
     .then(async zip => {
-      const filePromises: any = [];
-      const images = filterImages(Object.keys(zip.files)).sort()
+      const filesName: string[] = Object.keys(zip.files);
 
-      postMessage({ type: 'zipopen', data: {
-        count: images.length
-      } });
+      console.dir(zip.files)
+
+      const comicInfoFile = getComicInfoFile(filesName)
+
+      if (comicInfoFile) {
+        const comicinfo = zip.files[comicInfoFile]
+        await comicinfo.async('text').then(text => { postMessage({ type: 'comicinfo', data: text }); })
+      }
+
+      const acbf = getAcbfFile(filesName)
+      if (acbf) {
+        const acbfF = zip.files[acbf]
+        await acbfF.async('text').then(text => { postMessage({ type: 'acbf', data: text }); })
+      }
+
+      const images = filterImages(filesName).sort()
+      postMessage({ type: 'zipopen', data: { count: images.length } });
 
       for (let i = 0; i < images.length; i++) {
         const filename = images[i];
 
-        const filePromise = await zip.files[filename].async('blob').then(blob => {
+        await zip.files[filename].async('blob').then(blob => {
           const url = URL.createObjectURL(blob);
           postMessage({ type: 'file', url: url, index: i });
-          postMessage({ type: 'progress', progress: [i, images.length] });
         });
-
-        filePromises.push(filePromise);
       }
 
-      Promise.all(filePromises).then(() => {
-        postMessage({ type: 'complete', progress: [images.length, images.length] });
-      });
+
     });
 });
 
@@ -41,4 +49,21 @@ function filterImages(fileList: Array<string>) {
     const extension = file.substring(file.lastIndexOf('.')).toLowerCase();
     return imageExtensions.includes(extension);
   });
+}
+
+function getComicInfoFile(fileList: Array<string>) {
+  const resultArray = fileList.filter(f => f.toLowerCase() == 'comicinfo.xml')
+
+  return resultArray.length > 0 ? resultArray[0] : false
+}
+
+function getAcbfFile(fileList: Array<string>) {
+  const imageExtensions = ['.acbf'];
+
+  const result = fileList.filter(file => {
+    const extension = file.substring(file.lastIndexOf('.')).toLowerCase();
+    return imageExtensions.includes(extension);
+  })
+
+  return result.length > 0 ? result[0] : null;
 }

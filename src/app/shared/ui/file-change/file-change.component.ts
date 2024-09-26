@@ -3,7 +3,6 @@ import { FileService } from '../../../file/data-access/file.service';
 import { Router } from '@angular/router';
 import { FILE_PATH } from '../../../app-routing.module';
 import { LangService } from '../../data-access/lang.service';
-import { DomManipulationService } from '../../data-access';
 
 @Component({
   selector: 'app-file-change',
@@ -13,8 +12,10 @@ import { DomManipulationService } from '../../data-access';
 export class FileChangeComponent implements OnInit {
   ngOnInit(): void {
     this.initFileInput();
-    
+
     if ("launchQueue" in window) {
+      console.log(`"launchQueue" in window`);
+      
       (window as any).launchQueue.setConsumer(async (launchParams: any) => {
         const file: File = launchParams.files[0];
         this.fileHandler(file)
@@ -41,7 +42,7 @@ export class FileChangeComponent implements OnInit {
     this.fs.file = file;
 
     // should be output
-    const t = this.getRouteType(file.type)
+    const t = this.getRouteType(file)
 
     if (t) {
       const url = `/${FILE_PATH}/${t}`;
@@ -49,9 +50,18 @@ export class FileChangeComponent implements OnInit {
     }
   }
 
-  getRouteType(fileType: string): string | undefined {
-    if (fileType.search(/zip|cbz/) >= 0) return "zip"
-    else if (fileType.includes('pdf')) return "pdf"
+  getRouteType(file: File): string | undefined {
+    const fileType = file.type
+
+    if (fileType) {
+      if (fileType.search(/zip|cbz/) >= 0) return "zip"
+      else if (fileType.includes('pdf')) return "pdf"
+    } else {
+      const fileName = file.name
+      const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+      return ['cbz', 'zip', 'pdf'].includes(extension) ? extension : undefined
+    }
 
     return;
   }
@@ -70,18 +80,18 @@ export class FileChangeComponent implements OnInit {
   }
 
   openFileDialog() {
-    
+
     this.input.click();
   }
-  
+
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
 
     const code = event.ctrlKey ? `Ctrl+${event.code}` : event.code
 
-    if(code == "Ctrl+KeyO") {
+    if (code == "Ctrl+KeyO") {
       event.preventDefault();
-      
+
       this.openFileDialog()
     }
   }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CompositionEpisode } from '../../common/common-read';
+import { Base64 } from '../../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,9 @@ export class RedditService {
       nsfw: post.thumbnail == "nsfw" || post.over_18,
       images: imgs.map((i: any): any => {
         const ext = (media_metadata[i.media_id]?.m).replace('image/', '');
+        const imgSrc = `https://i.redd.it/${i.media_id}.${ext ?? 'jpg'}`
         return {
-          src: `https://i.redd.it/${i.media_id}.${ext ?? 'jpg'}`,
+          src: environment.proxy + Base64.toBase64(imgSrc),
           height: (media_metadata[i.media_id]?.s).y,
           width: (media_metadata[i.media_id]?.s).x,
         }

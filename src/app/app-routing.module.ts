@@ -41,6 +41,8 @@ const yandereMod = () => import('./yandere/yandere.module').then(m => m.YandereM
 const pixivMod = () => import('./pixiv/pixiv.module').then(m => m.PixivModule)
 const fileMod = () => import('./file/file.module').then(m => m.FileModule)
 
+const COMPARE_OUTLET_NAME = 'right'
+
 const moduleMap = new Map<string, LoadChildrenCallback>()
   .set(IMGUR_PATH, imgurMod)
   .set(MANGADEX_PATH, mangadexMod)
@@ -50,17 +52,29 @@ const routes: Routes = [
   { path: '', loadChildren: linkParserMod },
   { path: LIST_PATH, loadChildren: () => import('./list/list.module').then(m => m.ListModule) },
   { path: IMGUR_PATH, loadChildren: imgurMod },
+  { outlet: COMPARE_OUTLET_NAME, path: IMGUR_PATH, loadChildren: imgurMod },
   { path: MANGADEX_PATH, loadChildren: mangadexMod },
+  { outlet: COMPARE_OUTLET_NAME, path: MANGADEX_PATH, loadChildren: mangadexMod },
   { path: READ_PATH, loadChildren: readMod },
+  { outlet: COMPARE_OUTLET_NAME, path: READ_PATH, loadChildren: readMod },
   { path: TELEGRAPH_PATH, loadChildren: telegraphMod },
+  { outlet: COMPARE_OUTLET_NAME, path: TELEGRAPH_PATH, loadChildren: telegraphMod },
   { path: REDDIT_PATH, loadChildren: redditMod },
+  { outlet: COMPARE_OUTLET_NAME, path: REDDIT_PATH, loadChildren: redditMod },
   { path: ZENKO_PATH, loadChildren: zenkoMod },
+  { outlet: COMPARE_OUTLET_NAME, path: ZENKO_PATH, loadChildren: zenkoMod },
   { path: NHENTAI_PATH, loadChildren: nhentaiMod },
+  { outlet: COMPARE_OUTLET_NAME, path: NHENTAI_PATH, loadChildren: nhentaiMod },
   { path: COMICK_PATH, loadChildren: comickMod },
+  { outlet: COMPARE_OUTLET_NAME, path: COMICK_PATH, loadChildren: comickMod },
   { path: YANDERE_PATH, loadChildren: yandereMod },
+  { outlet: COMPARE_OUTLET_NAME, path: YANDERE_PATH, loadChildren: yandereMod },
   { path: PIXIV_PATH, loadChildren: pixivMod },
+  { outlet: COMPARE_OUTLET_NAME, path: PIXIV_PATH, loadChildren: pixivMod },
   { path: FILE_PATH, loadChildren: fileMod },
+  { outlet: COMPARE_OUTLET_NAME, path: FILE_PATH, loadChildren: fileMod },
   { matcher: urlMatcher, loadChildren: linkParserMod },
+  { outlet: COMPARE_OUTLET_NAME, matcher: urlMatcher, loadChildren: linkParserMod },
   { path: '**', component: PageNotFoundComponent }
 ];
 

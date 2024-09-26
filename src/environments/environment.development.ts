@@ -1,4 +1,4 @@
-const PROXY = `http://localhost:3000/api/?url=`
+const PROXY = `https://proxy-seven-xi.vercel.app/api?url=`
 
 export const environment = {
     proxy: PROXY,

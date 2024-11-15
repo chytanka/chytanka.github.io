@@ -1,6 +1,6 @@
 import { Component, computed, EventEmitter, HostListener, inject, Input, Output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
 import { DomManipulationService, ViewerService } from '../../../../data-access';
-import { CompositionEpisode } from '../../../../../common/common-read';
+import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
 import { LangService } from '../../../../data-access/lang.service';
 import { DialogComponent } from '../../../dialog/dialog.component';

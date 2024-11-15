@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CompositionEpisode, CompositionImage } from '../../common/common-read';
+import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read'
 
 enum DownloadStatus {
   Downloading = "downloading",

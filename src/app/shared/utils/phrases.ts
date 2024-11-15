@@ -46,6 +46,12 @@ export class Phrases {
     createList = "Create list"
     openFile = "Open file"
     dropIt = "Drop it!"
+    pageNotFound = [
+        "Oh no! The page you’re looking for got lost between manga panels...",
+        "It seems this page vanished like a manga artist on a deadline.",
+        "This page went off to binge manga and forgot to return.",
+        "Looks like this page turned into the mysterious Volume 404.",
+    ]
 
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 

@@ -14,10 +14,10 @@ export class FileChangeComponent implements OnInit {
     this.initFileInput();
 
     if ("launchQueue" in window) {
-      (window as any).launchQueue.setConsumer(async (launchParams: any) => {
+      (window as any).launchQueue.setConsumer(async (launchParams: FileSystemFileHandle) => {
         console.log(launchParams);
         
-        const file: File = launchParams.files[0];
+        const file: File = await launchParams.getFile();
         this.fileHandler(file)
       });
     }

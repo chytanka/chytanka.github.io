@@ -1,6 +1,6 @@
 import { Component, EffectCleanupRegisterFn, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { LinkParserService } from '../../link-parser/data-access/link-parser.service';
-import { ImgurLinkParser, JsonLinkParser, LinkParser, MangadexLinkParser, NhentaiLinkParser, PixivLinkParser, RedditLinkParser, TelegraphLinkParser, YandereParser, ZenkoLinkParser } from '../../link-parser/utils';
+import { BlankaryLinkParser, ImgurLinkParser, JsonLinkParser, LinkParser, MangadexLinkParser, NhentaiLinkParser, PixivLinkParser, RedditLinkParser, TelegraphLinkParser, YandereParser, ZenkoLinkParser } from '../../link-parser/utils';
 import { DomManipulationService } from '../../shared/data-access';
 import { LangService } from '../../shared/data-access/lang.service';
 import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
@@ -91,6 +91,7 @@ export class ListShellComponent {
     this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new YandereParser)
     this.parser.parsers.push(new PixivLinkParser)
+    this.parser.parsers.push(new BlankaryLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 

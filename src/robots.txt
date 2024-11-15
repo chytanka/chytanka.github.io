@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Allow: /
+
+Sitemap: https://chytanka.ink/sitemap.xml

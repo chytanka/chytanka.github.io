@@ -8,3 +8,4 @@ export * from './zenko-link-parser';
 export * from './nhentai-link-parser'
 export * from './yandere-link-parser'
 export * from './pixiv-link-parser'
+export * from './blankary-link-parser'

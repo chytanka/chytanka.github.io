@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, PLATFORM_ID } from '@angular/core';
+import { LangService } from './shared/data-access/lang.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-page-not-found',
   template: `
     <app-text-embracer [text]="'4😵4'"/>
-    <h1><a [routerLink]="'/'">🏠</a></h1>
+    <h1>{{selectedMessage()}} <br> <a [routerLink]="'/'">🏠</a></h1>
   `,
   styles: `
     :host {
@@ -27,5 +29,14 @@ import { Component } from '@angular/core';
   `
 })
 export class PageNotFoundComponent {
+  platformId = inject(PLATFORM_ID)
+  lang = inject(LangService)
 
+  selectedMessage = computed(() => this.getRandomMessage())
+
+  getRandomMessage(): string {
+    const m = this.lang.ph().pageNotFound;
+    const randomIndex = Math.floor(Math.random() * m.length);
+    return m[randomIndex];
+  }
 }

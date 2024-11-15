@@ -3,7 +3,7 @@ import { DomManipulationService, ViewerService } from '../../../../data-access';
 import { LangService } from '../../../../data-access/lang.service';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
-import { CompositionEpisode } from '../../../../../common/common-read';
+import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 
 @Component({
   selector: 'app-viewer-footer',

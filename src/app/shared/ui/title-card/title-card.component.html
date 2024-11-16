@@ -1,11 +1,10 @@
 <div class="cover-wrapper">
     <img [routerLink]="['',value?.site, value?.post_id]" class="cover" [src]="value.cover" alt="">
-    <img class="site-logo" [src]="'/assets/logos/'+value?.site+'-logo.svg'" alt="">
 </div>
 
 <a class="title" [routerLink]="['',value?.site, value?.post_id]">
+    <small class="site-tag">{{value?.site}}</small>
     {{value.title ?? lang.ph().untitled}}
-
 </a>
 
 <small style="width: min-content; opacity: .8; line-height: 1;">{{value.updated | date : 'short'}}</small>

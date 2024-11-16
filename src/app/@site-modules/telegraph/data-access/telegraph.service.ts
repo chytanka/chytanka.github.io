@@ -1,14 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CompositionEpisode } from '../../@common-read';
 import { environment } from '../../../../environments/environment';
-import { Base64 } from '../../../shared/utils';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TelegraphService {
+  proxy: ProxyService = inject(ProxyService)
 
   constructor(private http: HttpClient) { }
 
@@ -27,7 +28,7 @@ export class TelegraphService {
           src: item.children.find((child: any) => child.tag === "img")?.attrs.src
         };
       })).filter((i: any) => i.src).map((img: any)=> {return {src: 
-        environment.proxy + Base64.toBase64('https://telegra.ph'+ img.src)
+        this.proxy.proxyUrl('https://telegra.ph'+ img.src)
       }})
     };
 

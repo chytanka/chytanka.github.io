@@ -106,3 +106,8 @@ span.separator {
 		overflow: hidden;
 	}
 }
+
+img {
+	pointer-events: none;
+	user-select: none;
+}

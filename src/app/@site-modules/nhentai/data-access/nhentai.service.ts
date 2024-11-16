@@ -3,16 +3,17 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CompositionEpisode } from '../../@common-read';
-import { Base64 } from '../../../shared/utils';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NhentaiService {
   http: HttpClient = inject(HttpClient)
+  proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(environment.proxy + Base64.toBase64(environment.nhentaiHost + id))
+    return this.http.get<any>(this.proxy.proxyUrl(environment.nhentaiHost + id))
       .pipe(map((data) => { return this.map(data) }))
   }
 
@@ -31,7 +32,7 @@ export class NhentaiService {
         };
       })).filter((i: any) => i.src)
         .map((img: any) => {
-          return { src: environment.proxy + Base64.toBase64(`${img.src}`) }
+          return { src: this.proxy.proxyUrl(`${img.src}`) }
         })
 
     };

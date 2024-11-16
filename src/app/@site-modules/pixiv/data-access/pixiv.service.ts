@@ -3,16 +3,17 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CompositionEpisode, CompositionPublisher } from '../../@common-read';
-import { Base64 } from '../../../shared/utils';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PixivService {
   http: HttpClient = inject(HttpClient)
+  proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(environment.proxy + Base64.toBase64(environment.pixivHost + id))
+    return this.http.get<any>(this.proxy.proxyUrl(environment.pixivHost + id))
       .pipe(map((data) => { return this.map(data.body) }))
   }
 
@@ -25,7 +26,7 @@ export class PixivService {
         id: data.author_details.user_id as string,
         site: `https://pixiv.net/en/users/` + data.author_details.user_id as string,
         name: data.author_details.user_name as string,
-        avatar: environment.proxy + Base64.toBase64(data.author_details.profile_img.main) + '&ref=https://www.pixiv.net' as string,
+        avatar: this.proxy.proxyUrl(data.author_details.profile_img.main) + '&ref=https://www.pixiv.net' as string,
         description: '',
         links: []
       } as unknown as CompositionPublisher,
@@ -46,7 +47,7 @@ export class PixivService {
 
         .filter((i: any) => i.src).map((img: any) => {
           return {
-            src: environment.proxy + Base64.toBase64(img.src) + '&ref=https://www.pixiv.net',
+            src: this.proxy.proxyUrl(img.src) + '&ref=https://www.pixiv.net',
             width: img.width,
             height: img.height
           }

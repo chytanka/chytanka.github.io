@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CompositionEpisode } from '../../@common-read';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 import { Base64 } from '../../../shared/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RedditService {
+  proxy: ProxyService = inject(ProxyService)
 
   constructor(private http: HttpClient) { }
 
@@ -32,7 +34,7 @@ export class RedditService {
         const ext = (media_metadata[i.media_id]?.m).replace('image/', '');
         const imgSrc = `https://i.redd.it/${i.media_id}.${ext ?? 'jpg'}`
         return {
-          src: environment.proxy + Base64.toBase64(imgSrc),
+          src: this.proxy.proxyUrl(imgSrc),
           height: (media_metadata[i.media_id]?.s).y,
           width: (media_metadata[i.media_id]?.s).x,
         }

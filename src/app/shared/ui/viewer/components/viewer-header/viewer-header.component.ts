@@ -62,6 +62,12 @@ export class ViewerHeaderComponent {
     this.domMan.setHotkeys(event, this.hotKeys)
   }
 
+  isFileRoute =  computed(() => {
+    const L = (isPlatformBrowser(this.platformId)) ? window.location : { pathname: '' }
+
+    return L.pathname.startsWith('/file/')
+})
+
   link: Signal<string> =
     //decodeURIComponent
     computed(() => {

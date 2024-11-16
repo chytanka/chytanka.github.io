@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'pdf',
     loadComponent: () => import('./pdf/pdf.component').then(mod => mod.PdfComponent)
   },
+  {
+    path: 'mobi',
+    loadComponent: () => import('./mobi/mobi.component').then(mod => mod.MobiComponent)
+  }
 ];
 
 @NgModule({

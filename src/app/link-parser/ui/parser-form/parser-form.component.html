@@ -2,10 +2,10 @@
   <h1 class="logo-text">@defer{ <app-text-embracer [text]="lang.ph().shortTitle" /> }</h1>
   <div style="display: flex; gap: 1ch;  align-items: center;">
     <form (submit)="onSubmit()">
-      <input name="chtnk_url" type="url" required autofocus
+      <input name="chtnk_url" type="url" required autofocus [title]="lang.ph().enterLink+supportSites().join(', ')"
         [placeholder]="lang.ph().enterLink+supportSites().join(', ')" (input)="inputLink($event)" [value]="link()">
     </form>
-    @defer { <app-file-change /> }
+    @defer { <app-file-change [accept]="supportFiles()"/> }
   </div>
 </div>
 

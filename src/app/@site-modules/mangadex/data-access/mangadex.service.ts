@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { CompositionEpisode, CompositionImage } from '../../@common-read';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 interface MdChapterImages {
   hash: string;
@@ -62,15 +63,15 @@ interface MdMangaResp {
   providedIn: 'root'
 })
 export class MangadexService {
-
-  constructor(private http: HttpClient) { }
+  http: HttpClient = inject(HttpClient)
+  proxy: ProxyService = inject(ProxyService)
 
   getChapterImages(id: string): Observable<CompositionImage[]> {
-    return this.http.get<MdChapterImagesResp>(environment.mangadexHost + id)
+    return this.http.get<MdChapterImagesResp>(this.proxy.proxyUrl(environment.mangadexHost + id))
       .pipe(
         map((data: MdChapterImagesResp) => data.chapter.dataSaver.map((item: string) => {
           return {
-            src: `${environment.proxy}${data.baseUrl}/data-saver/${data.chapter.hash}/${item}`
+            src: this.proxy.proxyUrl(`${data.baseUrl}/data-saver/${data.chapter.hash}/${item}`)
             // src: `${data.baseUrl}/data/${data.chapter.hash}/${item}`
           }
         })
@@ -80,7 +81,7 @@ export class MangadexService {
   }
 
   getChapter(id: string): Observable<CompositionEpisode> {
-    return this.http.get<MdChapterResp>(environment.mangadexChapter + id)
+    return this.http.get<MdChapterResp>(this.proxy.proxyUrl(environment.mangadexChapter + id))
       .pipe(
         map((data: MdChapterResp) => {
           return {
@@ -98,7 +99,7 @@ export class MangadexService {
 
 
   getManga(id: string): Observable<{ nsfw: boolean }> {
-    return this.http.get<MdMangaResp>(environment.mangadexManga + id).pipe(this.nsfwMap())
+    return this.http.get<MdMangaResp>(this.proxy.proxyUrl(environment.mangadexManga + id)).pipe(this.nsfwMap())
   }
 
   nsfwMap() {

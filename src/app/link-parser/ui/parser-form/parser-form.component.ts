@@ -13,7 +13,7 @@ import { ComickLinkParser } from '../../utils/comick-link-parser';
   styleUrl: './parser-form.component.scss'
 })
 export class ParserFormComponent {
- 
+
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   setts = inject(LinkParserSettingsService)
@@ -30,16 +30,18 @@ export class ParserFormComponent {
     };
   });
 
+  supportFiles = signal([".zip", ".cbz", ".pdf", ".mobi"])
+
   supportSites = signal([
-    "Imgur", 
-    "Telegra.ph", 
-    "Reddit", 
-    "MangaDex", 
-    "Zenko", 
-    "Comick", 
-    "NHentai", 
-    "Yandere Pools", 
-    "Blankary", 
+    "Imgur",
+    "Telegra.ph",
+    "Reddit",
+    "MangaDex",
+    "Zenko",
+    "Comick",
+    "NHentai",
+    "Yandere Pools",
+    "Blankary",
     "Pixiv"
   ].sort())
 
@@ -76,12 +78,12 @@ export class ParserFormComponent {
     try {
       const text = await navigator.clipboard?.readText()
       this.link.set(text ?? '')
-    } catch (error) {}
+    } catch (error) { }
 
     if (!this.linkParams()) { this.link.set('') }
   }
 
-  
+
 
   initUrl() {
 
@@ -97,7 +99,7 @@ export class ParserFormComponent {
     }
 
     const queryParamUrl: string | null = this.route.snapshot.queryParamMap.get('url');
-    
+
     if (queryParamUrl) {
       this.link.set(queryParamUrl ?? '')
     } else {

@@ -2,17 +2,19 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode, CompositionPublisher } from '../../@common-read';
+import { CompositionEpisode } from '../../@common-read';
 import { Base64 } from '../../../shared/utils';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class YandereService {
   http: HttpClient = inject(HttpClient)
+  proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(environment.yanderePoolsHost + id)
+    return this.http.get<any>(this.proxy.proxyUrl(environment.yanderePoolsHost + id))
       .pipe(map((data) => { return this.map(data) }))
   }
 
@@ -29,7 +31,7 @@ export class YandereService {
       })).filter((i: any) => i.src)
         .map((img: any) => {
           return {
-            src: environment.proxy + Base64.toBase64(img.src),
+            src: this.proxy.proxyUrl(img.src),
             width: img.width,
             height: img.height
           }

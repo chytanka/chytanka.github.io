@@ -1,7 +1,7 @@
-import { Component, HostListener, WritableSignal, inject, signal } from '@angular/core';
+import { Component, HostListener, PLATFORM_ID, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from './shared/data-access/lang.service';
 import { ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 const SCALE_GAP = 128;
 
@@ -15,9 +15,15 @@ const SCALE_GAP = 128;
     `]
 })
 export class AppComponent {
+  platformId = inject(PLATFORM_ID)
   constructor(public lang: LangService, private route: ActivatedRoute) {
     this.lang.updateManifest()
     this.lang.updateTranslate()
+
+    if (isPlatformBrowser(this.platformId) && window.console) {
+      const msg = `What are you looking for here? The plot twist is in the next volume!`
+      console.log(`%c${msg}`,  "background-color: #166496; color: #ffd60a; font-size: 4rem; font-family:  monospace; padding: 8px 16px");
+  }
   }
 
   ngOnInit() {

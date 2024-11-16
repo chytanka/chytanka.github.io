@@ -3,16 +3,17 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CompositionEpisode } from '../../@common-read';
-import { Base64 } from '../../../shared/utils';
+import { ProxyService } from '../../../shared/data-access/proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComickService {
   http: HttpClient = inject(HttpClient)
+  proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    // environment.proxy + Base64.toBase64
+    // this.proxy.proxyUrl()
     return this.http.get<any>((environment.comickHost + id))
       .pipe(map((data) => { return this.map(data) }))
   }
@@ -31,7 +32,7 @@ export class ComickService {
       })).filter((i: any) => i.src)
         // .map((img: any) => {
         //   return {
-        //     src: environment.proxy + Base64.toBase64(`${img.src}`)
+        //     src:  this.proxy.proxyUrl(`${img.src}`)
         //   }
         // })
 

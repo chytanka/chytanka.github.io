@@ -44,3 +44,12 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+.site-tag {
+    line-height: 1;
+    padding: .25ch;
+    border-radius: .25ch;
+    background-color: #166496;
+    color: white;
+    filter: grayscale(1);
+}

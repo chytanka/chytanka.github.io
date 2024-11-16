@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { Router } from '@angular/router';
 import { getDocument, GlobalWorkerOptions, PDFPageProxy } from 'pdfjs-dist';
 import { RenderParameters } from 'pdfjs-dist/types/src/display/api';
-import { CompositionEpisode } from '../../common/common-read';
+import { CompositionEpisode } from '../../@site-modules/@common-read';
 
 GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs'
 

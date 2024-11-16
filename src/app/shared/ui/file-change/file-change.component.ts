@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, input, OnInit } from '@angular/core';
 import { FileService } from '../../../file/data-access/file.service';
 import { Router } from '@angular/router';
 import { FILE_PATH } from '../../../app-routing.module';
@@ -14,17 +14,18 @@ export class FileChangeComponent implements OnInit {
     this.initFileInput();
 
     if ("launchQueue" in window) {
-      (window as any).launchQueue.setConsumer(async (launchParams: any) => {
+      (window as any).launchQueue.setConsumer(async (launchParams: FileSystemFileHandle) => {
         console.log(launchParams);
         
-        const file: File = launchParams.files[0];
+        const file: File = await launchParams.getFile();
         this.fileHandler(file)
       });
     }
   }
 
   // should be input
-  accept = [".zip", ".cbz", 'application/vnd.comicbook+zip', 'application/zip', '.pdf']
+  // accept = [".zip", ".cbz", 'application/vnd.comicbook+zip', 'application/zip', '.pdf']
+  accept = input<string[]>([])
 
   fs = inject(FileService)
   router = inject(Router)
@@ -56,6 +57,7 @@ export class FileChangeComponent implements OnInit {
     if (!fileType) return undefined;
   
     if (fileType.includes('pdf')) return 'pdf';
+    if (fileType.includes('mobi')) return 'mobi';
     if (/zip|cbz/.test(fileType)) return 'zip';
   
     return undefined;
@@ -67,7 +69,7 @@ export class FileChangeComponent implements OnInit {
     this.input = document.createElement('input')
 
     this.input.type = 'file';
-    this.input.accept = this.accept.join(', ');
+    this.input.accept = this.accept().join(', ');
 
     this.input.oninput = (e: Event) => {
       this.onFileSelected(e)

@@ -42,6 +42,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": ["jszip"],
             "outputPath": "dist/chytanka",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -53,7 +54,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/.well-known",
+              "src/robots.txt",
+              "src/sitemap.xml",
               "src/manifest.webmanifest",
               "src/manifest-uk.webmanifest",
               "src/CNAME"

@@ -10,6 +10,7 @@ import { SettingsComponent } from './ui/settings/settings.component';
 import { FooterComponent } from './ui/footer/footer.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { HistoryModule } from '../history/history.module';
+import { ParserFormComponent } from './ui/parser-form/parser-form.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { HistoryModule } from '../history/history.module';
     FaqComponent,
     SettingsComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    ParserFormComponent
   ],
   imports: [
     CommonModule,

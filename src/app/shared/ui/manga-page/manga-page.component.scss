@@ -1,18 +1,14 @@
 :host {
+    --side-gap: 2rem;
     display: grid;
     max-height: 100vh;
     aspect-ratio: 2/3;
-    --side-gap: 2rem;
-
     background-color: #fff;
     color: #000;
-
     gap: 2ch 1ch;
     position: relative;
-
     grid-template-columns: repeat(4, 1fr) var(--side-gap);
     grid-template-rows: 1fr 1.5fr 1fr var(--side-gap);
-
     counter-reset: read-order;
 }
 
@@ -24,13 +20,10 @@ section {
     display: grid;
     place-items: center;
     overflow: hidden;
-
-    
     counter-increment: read-order;
 
-
     &::after {
-        content:  counter(read-order);
+        content: counter(read-order);
         bottom: 1ch;
         right: 1ch;
         position: absolute;
@@ -57,39 +50,11 @@ section {
 
     &:nth-child(1) {
         grid-column: 1 / span 2;
-
-
-        &::before {
-            --gc: #f0f4f8;
-            --gc2: #fff;
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-
-            --c2: #fff;
-            --deg: 180deg;
-            background: repeating-linear-gradient(var(--deg), var(--c2), #222, var(--c2) 2%), repeating-linear-gradient(calc(var(--deg) - 90deg), var(--c2), #222, var(--c2) 2%), linear-gradient(var(--deg), #222, var(--c2));
-            background-blend-mode: color-dodge;
-        }
     }
 
     &:nth-child(2) {
         grid-column: 3 / span 2;
         grid-row: 1;
-
-        &::before {
-
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-
-            --c2: #fff;
-            --deg: 180deg;
-            background: repeating-linear-gradient(var(--deg), var(--c2), #222, var(--c2) 2%), repeating-linear-gradient(calc(var(--deg) - 90deg), var(--c2), #222, var(--c2) 2%), linear-gradient(var(--deg), #222, var(--c2));
-            background-blend-mode: color-dodge;
-        }
     }
 
     &:nth-child(3) {
@@ -109,38 +74,10 @@ section {
 
     &:nth-child(4) {
         grid-column: 1;
-
-        &::before {
-            --gc: #f0f4f8;
-            --gc2: #fff;
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-
-            --c2: #fff;
-            --deg: -360deg;
-            background: repeating-linear-gradient(var(--deg), var(--c2), #222, var(--c2) 2%), repeating-linear-gradient(calc(var(--deg) - 90deg), var(--c2), #222, var(--c2) 2%), linear-gradient(var(--deg), #222, var(--c2));
-            background-blend-mode: color-dodge;
-        }
     }
 
     &:nth-child(5) {
         grid-column: 2/span 3;
-
-        &::before {
-            --gc: #f0f4f8;
-            --gc2: #fff;
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-
-            --c2: #fff;
-            --deg: -360deg;
-            background: repeating-linear-gradient(var(--deg), var(--c2), #222, var(--c2) 2%), repeating-linear-gradient(calc(var(--deg) - 90deg), var(--c2), #222, var(--c2) 2%), linear-gradient(var(--deg), #222, var(--c2));
-            background-blend-mode: color-dodge;
-        }
     }
 }
 
@@ -160,10 +97,11 @@ section {
 
 :host[dir=ltr] {
     section {
-&::after {
-    right: unset;
-    left: 1ch;
-}
+        &::after {
+            right: unset;
+            left: 1ch;
+        }
+
         &:nth-child(1),
         &:nth-child(3),
         &:nth-child(4) {

@@ -2,7 +2,7 @@ import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { FileService } from '../data-access/file.service';
 import { SharedModule } from '../../shared/shared.module';
 import { Router } from '@angular/router';
-import { CompositionEpisode, CompositionImage } from '../../common/common-read';
+import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read';
 import { DomManipulationService } from '../../shared/data-access';
 import { ComicInfo } from '../../shared/utils/comic-info';
 import { Acbf } from '../../shared/utils/acbf';

@@ -14,8 +14,18 @@ const SOCIAL_LINKS: any[] = [
   },
   {
     alt: "Blue Sky",
-    link: "//bsky.app/profile/chytanka.github.io",
+    link: "//bsky.app/profile/chytanka.ink",
     logoSrc: "/assets/logos/bsky-logo.svg"
+  },
+  {
+    alt: "X",
+    link: "//x.com/chytanka_ink",
+    logoSrc: "//x.com/favicon.ico"
+  },
+  {
+    alt: "TikTok",
+    link: "//tiktok.com/@chytanka.ink",
+    logoSrc: "//tiktok.com/favicon.ico"
   }
 ];
 
@@ -25,7 +35,7 @@ const SOCIAL_LINKS: any[] = [
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  public readonly version: string = 'v2024.9.19'
+  public readonly version: string = 'v2024.11.14'
   public lang: LangService = inject(LangService);
 
   public social: any[] = SOCIAL_LINKS;

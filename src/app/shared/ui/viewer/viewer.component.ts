@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
-import { CompositionEpisode } from '../../../common/common-read';
+import { CompositionEpisode } from '../../../@site-modules/@common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';

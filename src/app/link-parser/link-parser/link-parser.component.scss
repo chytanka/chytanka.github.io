@@ -17,48 +17,12 @@
     }
 }
 
-.logo-text {
-    all: unset;
-}
-
-app-text-embracer {
-    --border-color: #166496;
-    --border-width: 2px;
-    color: #ffd60a;
-
-    @media (prefers-color-scheme: light) {
-        // --border-color: #caa902;
-        --back-color: #fff62a;
-
-        color: #166496;
-    }
-
-    justify-content: center;
-    font-family: 'Troubleside',
-    sans-serif;
-    font-size: clamp(1rem, 8vw, 5rem);
-
-    @media (max-width: 1080px) {
-        font-size: clamp(1rem, 7vw, 8rem);
-    }
-
-    @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
-        font-size: clamp(1rem, 10vw, 8rem);
-    }
-}
-
 main {
     display: grid;
     row-gap: 2ch;
     overflow: auto;
     max-height: 100%;
-    padding: 4ch 0; 
-}
-
-.wrapper {
-    display: grid;
-    row-gap: 1ch;
-    grid-template-columns: auto minmax(auto, 80ch) auto;
+    padding: 4ch 0;
 }
 
 aside {
@@ -66,101 +30,6 @@ aside {
     min-height: 0;
     padding: 4ch;
     display: grid;
-}
-
-.form-wrapper {
-    grid-column: 2;
-    display: grid;
-    gap: 2ch;
-    // overflow: hidden;
-    padding: 0px;
-}
-
-form {
-    // grid-column: 2;
-    backdrop-filter: blur(var(--blur));
-    z-index: 3;
-    border-radius: .5ch;
-    max-width: 80ch;
-    width: 100%;
-    position: relative;
-}
-
-input[type=url] {
-    display: block;
-    font: inherit;
-    padding: 1.5ch 2ch;
-    background: transparent;
-    font-family: 'Courier New', Courier, monospace;
-    color: inherit;
-    width: 100%;
-    transition: all var(--t) cubic-bezier(0.075, 0.82, 0.165, 1);
-    border-radius: .5ch;
-    border: 2px solid #166496;
-    box-shadow: var(--flat-shadow-medium);
-    // background-color: #00274190;
-    border: 0;
-    background-color: #16649680;
-    @media (prefers-color-scheme: light) {
-        // background-color: #eceff2a0;
-        color: #166496;
-    }
-    color: #ffd60a;
-
-    &:focus {
-        border-color: #166496;
-        outline: unset;
-    }
-}
-
-input[type=url]::placeholder {
-    color: #ffd60a;
-    opacity: 0.6;
-    @media (prefers-color-scheme: light) {
-        color: #166496;
-    }
-}
-
-.favicon {
-    width: 1.25rem;
-    aspect-ratio: 1;
-}
-
-.site-name {
-    text-transform: uppercase;
-    font-size: smaller;
-    padding: .25ch .5ch;
-    border-radius: .2ch;
-    background-color: rgb(255 255 255 / .2);
-}
-
-.slogan-wrapper {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    grid-column: 2;
-}
-
-.slogan-header {
-    all: unset;
-    font-family: 'EB Garamond', serif;
-    font-style: italic;
-    opacity: .72;
-    text-wrap: balance;
-}
-
-.link {
-    outline: 1px solid;
-    border-radius: .5ch;
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) var(--t);
-
-    &:hover {
-        outline-offset: .5ch;
-    }
-
-    &:active {
-        outline-offset: -.5ch;
-    }
 }
 
 lp-footer,
@@ -187,14 +56,11 @@ lp-header {
 }
 
 :host ::ng-deep app-overlay {
-
     &::after,
     &::before {
         content: unset;
     }
 }
-
-
 
 :host {
     transition: all var(--t) ease-in-out;
@@ -202,14 +68,13 @@ lp-header {
 
 :host:has(dialog[open]) {
     transform: scale(calc(1 - var(--scale-diff-x, .1)), calc(1 - var(--scale-diff-y, .1)));
-    // filter: blur(var(--blur));
     filter: blur(3px);
 }
 
 :host:has(input[type=url]:focus) {
-
     lp-footer,
-    lp-header, #createListLink {
+    lp-header,
+    #createListLink {
         opacity: 0;
         pointer-events: none;
     }

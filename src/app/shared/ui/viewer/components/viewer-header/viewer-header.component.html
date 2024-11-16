@@ -6,8 +6,10 @@
         <a title="Read on Chytanka" class="button open-chtnk-link" [href]="link()" target="_blank" rel="noopener noreferrer"></a>
     }
     <separator />
+    @if (!isFileRoute()) {
     <button class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
     <!-- <button class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
+    }
     <span class="title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />

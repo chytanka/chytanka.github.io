@@ -1,6 +1,6 @@
 <app-overlay class="show top">
-    <button title="F1" class="button tshadow" (click)="showHelp()">❔</button>
-    <button title="F2" class="button tshadow" (click)="showSettings()">⚙️</button>
+    <button [title]="lang.ph().faq+' (F1)'" class="button tshadow" (click)="showHelp()">❔</button>
+    <button [title]="lang.ph().settings+' (F2)'" class="button tshadow" (click)="showSettings()">⚙️</button>
     <separator/>
     <button [title]="lang.ph().history+ ' (Ctrl+H)'" (click)="showHistory()" class="button tshadow">📜</button>
     <!-- <button title="Downloads" disabled class="button tshadow">📥</button>

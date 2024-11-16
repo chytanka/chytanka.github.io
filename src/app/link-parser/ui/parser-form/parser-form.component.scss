@@ -1,0 +1,112 @@
+:host {
+    display: grid;
+    row-gap: 1ch;
+    grid-template-columns: auto minmax(auto, 80ch) auto;
+}
+
+.logo-text {
+    all: unset;
+}
+
+app-text-embracer {
+    --border-color: #166496;
+    --border-width: 2px;
+    color: #ffd60a;
+    font-family: 'Troubleside', sans-serif;
+    font-size: clamp(1rem, 8vw, 5rem);
+    justify-content: center;
+
+    @media (prefers-color-scheme: light) {
+        --back-color: #fff62a;
+        color: #166496;
+    }
+
+    @media (max-width: 1080px) {
+        font-size: clamp(1rem, 7vw, 8rem);
+    }
+
+    @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
+        font-size: clamp(1rem, 10vw, 8rem);
+    }
+}
+
+.form-wrapper {
+    grid-column: 2;
+    display: grid;
+    gap: 2ch;
+    padding: 0px;
+}
+
+form {
+    backdrop-filter: blur(var(--blur));
+    z-index: 3;
+    border-radius: .5ch;
+    max-width: 80ch;
+    width: 100%;
+    position: relative;
+}
+
+input[type=url],
+textarea {
+    display: block;
+    font: inherit;
+    padding: 1.5ch 2ch;
+    background: transparent;
+    font-family: 'Courier New', Courier, monospace;
+    color: inherit;
+    width: 100%;
+    transition: all var(--t) cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-radius: .5ch;
+    border: 2px solid #166496;
+    box-shadow: var(--flat-shadow-medium);
+    border: 0;
+    background-color: #16649680;
+
+    @media (prefers-color-scheme: light) {
+        color: #166496;
+    }
+
+    color: #ffd60a;
+
+    &:focus {
+        border-color: #166496;
+        outline: unset;
+    }
+}
+
+input[type=url]::placeholder {
+    color: #ffd60a;
+    opacity: 0.6;
+
+    @media (prefers-color-scheme: light) {
+        color: #166496;
+    }
+}
+
+.favicon {
+    width: 1.25rem;
+    aspect-ratio: 1;
+}
+
+.site-name {
+    text-transform: uppercase;
+    font-size: smaller;
+    padding: .25ch .5ch;
+    border-radius: .2ch;
+    background-color: rgb(255 255 255 / .2);
+}
+
+.slogan-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-column: 2;
+}
+
+.slogan-header {
+    all: unset;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    opacity: .72;
+    text-wrap: balance;
+}

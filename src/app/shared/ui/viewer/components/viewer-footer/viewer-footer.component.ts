@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, inject, Input, Output, signal, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, input, Input, InputSignal, Output, signal, ViewChild } from '@angular/core';
 import { DomManipulationService, ViewerService } from '../../../../data-access';
 import { LangService } from '../../../../data-access/lang.service';
 import { DialogComponent } from '../../../dialog/dialog.component';
@@ -19,7 +19,7 @@ export class ViewerFooterComponent {
   @Input() show: boolean = false;
   @Input() playlist: Playlist = [];
   @Input() episode: CompositionEpisode | undefined = undefined;
-  @Input() activeIndexs: number[] = []
+  activeIndexs: InputSignal<number[]> = input<number[]>([])
   @Input() currentPlaylistItem: PlaylistItem | undefined;
   @Input() playlistLink: string = "";
 

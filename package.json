@@ -28,6 +28,7 @@
     "express": "^4.18.2",
     "jszip": "^3.10.1",
     "ngx-highlightjs": "^12.0.0",
+    "pair-pagination": "^0.0.1",
     "pdfjs-dist": "^4.6.82",
     "readiverse": "^0.1.0",
     "rxjs": "~7.8.0",

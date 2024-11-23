@@ -18,6 +18,9 @@ Chytanka supports opening episodes from the following platforms:
 - [x] [Telegra.ph](https://telegra.ph) 
 - [x] [Yande.re Pool](https://yande.re/pool)
 - [x] [Zenko](https://zenko.online)
+- [ ] [Bluesky](https://bsky.app)
+- [ ] [ImageChest](https://imgchest.com/)
+<!-- - [ ] [Catbox](https://catbox.moe/) -->
   
 ### 🌐 **Custom JSON API**
 

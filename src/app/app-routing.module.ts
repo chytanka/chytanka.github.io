@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { LoadChildrenCallback, Route, RouterModule, Routes, UrlSegment, UrlSegmentGroup } from '@angular/router';
+import { NgModule, Type } from '@angular/core';
+import { DefaultExport, LoadChildrenCallback, Route, RouterModule, Routes, UrlSegment, UrlSegmentGroup } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { Observable } from 'rxjs';
 
 export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route: Route) {
 
@@ -30,41 +31,43 @@ export const BLANKARY_PATH = 'blankary';
 export const FILE_PATH = 'file';
 
 const linkParserMod: LoadChildrenCallback = () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
-const imgurMod: LoadChildrenCallback = () => import('./@site-modules/imgur/imgur.module').then(m => m.ImgurModule);
-const mangadexMod: LoadChildrenCallback = () => import('./@site-modules/mangadex/mangadex.module').then(m => m.MangadexModule);
-const telegraphMod = () => import('./@site-modules/telegraph/telegraph.module').then(m => m.TelegraphModule)
-const readMod = () => import('./@site-modules/read/read.module').then(m => m.ReadModule);
-const redditMod = () => import('./@site-modules/reddit/reddit.module').then(m => m.RedditModule)
-const zenkoMod = () => import('./@site-modules/zenko/zenko.module').then(m => m.ZenkoModule)
-const nhentaiMod = () => import('./@site-modules/nhentai/nhentai.module').then(m => m.NhentaiModule)
-const comickMod = () => import('./@site-modules/comick/comick.module').then(m => m.ComickModule)
-const yandereMod = () => import('./@site-modules/yandere/yandere.module').then(m => m.YandereModule)
-const pixivMod = () => import('./@site-modules/pixiv/pixiv.module').then(m => m.PixivModule)
-const blankaryMod = () => import('./@site-modules/blankary/blankary.module').then(m => m.BlankaryModule)
+const blankaryMod = () => import('./@site-modules/blankary/blankary-shell.component')
+const comickMod = () => import('./@site-modules/comick/comick-shell.component')
+const imgurMod = () => import('./@site-modules/imgur/imgur-shell.component')
+const mangadexMod = () => import('./@site-modules/mangadex/mangadex-shell.component')
+const nhentaiMod = () => import('./@site-modules/nhentai/nhentai-shell.component')
+const pixivMod = () => import('./@site-modules/pixiv/pixiv-shell.component')
+const readMod = () => import('./@site-modules/read/read-shell.component')
+const redditMod = () => import('./@site-modules/reddit/reddit-shell.component')
+const telegraphMod = () => import('./@site-modules/telegraph/telegraph-shell.component')
+const yandereMod = () => import('./@site-modules/yandere/yandere-shell.component')
+const zenkoMod = () => import('./@site-modules/zenko/zenko-shell.component')
 const fileMod = () => import('./file/file.module').then(m => m.FileModule)
 
 const COMPARE_OUTLET_NAME = 'right'
 
-const siteModulesMap = new Map<string, LoadChildrenCallback>()
-  .set(BLANKARY_PATH, blankaryMod)
-  .set(COMICK_PATH, comickMod)
-  .set(IMGUR_PATH, imgurMod)
-  .set(MANGADEX_PATH, mangadexMod)
-  .set(NHENTAI_PATH, nhentaiMod)
-  .set(PIXIV_PATH, pixivMod)
-  .set(REDDIT_PATH, redditMod)
-  .set(TELEGRAPH_PATH, telegraphMod)
-  .set(YANDERE_PATH, yandereMod)
-  .set(ZENKO_PATH, zenkoMod)
-  .set(READ_PATH, readMod)
+type LoadComponentType = (() => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>) | undefined;
 
-function getPairRoutesToCompare(map: Map<string, LoadChildrenCallback>) {
+const siteModulesMap = new Map<string, LoadComponentType>()
+  .set(BLANKARY_PATH + '/:id', blankaryMod)
+  .set(COMICK_PATH + '/:id', comickMod)
+  .set(IMGUR_PATH + '/:id', imgurMod)
+  .set(MANGADEX_PATH + '/:id', mangadexMod)
+  .set(NHENTAI_PATH + '/:id', nhentaiMod)
+  .set(PIXIV_PATH + '/:id', pixivMod)
+  .set(READ_PATH + '/:url', readMod)
+  .set(REDDIT_PATH + '/:id', redditMod)
+  .set(TELEGRAPH_PATH + '/:path', telegraphMod)
+  .set(YANDERE_PATH + '/:id', yandereMod)
+  .set(ZENKO_PATH + '/:id', zenkoMod)
+
+function getPairRoutesToCompare(map: Map<string, LoadComponentType>) {
   const routes: Routes = [];
 
   for (const item of map) {
     routes.push(
-      { path: item[0], loadChildren: item[1] },
-      { outlet: COMPARE_OUTLET_NAME, path: item[0], loadChildren: item[1] }
+      { path: item[0], loadComponent: item[1] },
+      { outlet: COMPARE_OUTLET_NAME, path: item[0], loadComponent: item[1] }
     )
   }
 

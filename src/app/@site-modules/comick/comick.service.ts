@@ -13,7 +13,8 @@ export class ComickService {
   proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(this.proxy.proxyUrl(environment.comickHost + id))
+    // this.proxy.proxyUrl()
+    return this.http.get<any>((environment.comickHost + id))
       .pipe(map((data) => { return this.map(data) }))
   }
 
@@ -29,11 +30,11 @@ export class ComickService {
           width: item.w
         };
       })).filter((i: any) => i.src)
-        .map((img: any) => {
-          return {
-            src:  this.proxy.proxyUrl(`${img.src}`)
-          }
-        })
+        // .map((img: any) => {
+        //   return {
+        //     src:  this.proxy.proxyUrl(`${img.src}`)
+        //   }
+        // })
 
     };
 

@@ -84,4 +84,12 @@ export class ViewerHeaderComponent {
   genId(): string {
     return Base64.toBase64(JSON.stringify(this.currentPlaylistItem))
   }
+
+  shareWith() {
+    const shareData = {
+      title: this.episode?.title,
+      url: this.link(),
+    };
+    navigator?.share(shareData)
+  }
 }

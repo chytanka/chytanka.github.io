@@ -99,7 +99,8 @@ export abstract class ReadBaseComponent {
             this.meta.setTwiter()
             this.meta.setTitle(`Читати ${t} онлайн в Читанці`)
             this.meta.setDesc(`Читати ${t} онлайн в Читанці`)
-            this.meta.setImage(v.images[0].src, t, '', copyrights)
+            if (v.images && v.images.length > 0)
+                this.meta.setImage(v.images[0].src, t, '', copyrights)
             // this.meta.setOgUrl(`https://chtnk.online/${v.id}/${MangadexHelper.getAlias(v.attributes)}`)
 
             // if (isNSFW(v.attributes)) {

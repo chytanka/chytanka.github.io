@@ -7,12 +7,13 @@ import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
 
 
 @Component({
-  selector: 'app-list-shell',
-  templateUrl: './list-shell.component.html',
-  styleUrls: [
-    './list-shell.component.scss',
-    '/src/app/shared/ui/@styles/input-group.scss'
-  ]
+    selector: 'app-list-shell',
+    templateUrl: './list-shell.component.html',
+    styleUrls: [
+        './list-shell.component.scss',
+        '../../shared/ui/@styles/input-group.scss'
+    ],
+    standalone: false
 })
 export class ListShellComponent {
   public inputValue: WritableSignal<string> = signal<string>('')

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-text-embracer',
-  templateUrl: './text-embracer.component.html',
-  styleUrl: './text-embracer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-text-embracer',
+    templateUrl: './text-embracer.component.html',
+    styleUrl: './text-embracer.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TextEmbracerComponent {
 

@@ -6,11 +6,10 @@ import { MobiFileReader } from 'readiverse';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  selector: 'app-mobi',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './mobi.component.html',
-  styleUrl: './mobi.component.scss'
+    selector: 'app-mobi',
+    imports: [SharedModule],
+    templateUrl: './mobi.component.html',
+    styleUrl: './mobi.component.scss'
 })
 export class MobiComponent {
   episode: CompositionEpisode | undefined;

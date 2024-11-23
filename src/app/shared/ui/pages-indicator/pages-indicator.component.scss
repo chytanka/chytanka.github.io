@@ -22,7 +22,7 @@ div {
     cursor: pointer;
     font-weight: bold;
     line-height: 1;
-    transition: all var(--t) ease-in-out;
+    transition: all var(--t) ease-in-out, opacity calc(var(--t) * 2) linear;
     --translate-y: 0;
     transform: translateY(var(--translate-y)) scale(var(--item-scale));
 
@@ -77,6 +77,12 @@ div {
         border-bottom-right-radius: unset;
     }
 }
+
+@starting-style {
+   div {
+    opacity: 0;
+   }
+  }
 
 // @supports (animation-timeline: view()) {
 //     div {

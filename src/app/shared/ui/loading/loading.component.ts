@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
-  selector: 'loading',
-  template: `<p><span>⏳</span> {{lang.ph().loading}}...</p>`,
-  styles: [`
+    selector: 'loading',
+    template: `<p><span>⏳</span> {{lang.ph().loading}}...</p>`,
+    styles: [`
     :host {
       position: fixed;
       inset: 0;
@@ -32,8 +32,9 @@ import { LangService } from '../../data-access/lang.service';
   to { transform:  rotate(360deg); }
 }
     `
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LoadingComponent {
   lang = inject(LangService)

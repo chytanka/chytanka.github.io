@@ -13,12 +13,13 @@ import { isPlatformBrowser } from '@angular/common';
 // const L = window.location;
 
 @Component({
-  selector: 'app-viewer-header',
-  templateUrl: './viewer-header.component.html',
-  styleUrls: [
-    './viewer-header.component.scss',
-    '/src/app/shared/ui/@styles/input-group.scss'
-  ]
+    selector: 'app-viewer-header',
+    templateUrl: './viewer-header.component.html',
+    styleUrls: [
+        './viewer-header.component.scss',
+        '../../../../../shared/ui/@styles/input-group.scss'
+    ],
+    standalone: false
 })
 export class ViewerHeaderComponent {
   viewer: ViewerService = inject(ViewerService)
@@ -82,5 +83,13 @@ export class ViewerHeaderComponent {
 
   genId(): string {
     return Base64.toBase64(JSON.stringify(this.currentPlaylistItem))
+  }
+
+  shareWith() {
+    const shareData = {
+      title: this.episode?.title,
+      url: this.link(),
+    };
+    navigator?.share(shareData)
   }
 }

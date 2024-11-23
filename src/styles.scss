@@ -67,11 +67,12 @@ input {
         background: hsl(203.44 8% 96%);
     }
 
-    transition: all var(--t);
-    text-wrap: balance;
-    -webkit-tap-highlight-color: transparent;
-
-    box-shadow: var(--flat-shadow-medium);
+    & {
+        transition: all var(--t);
+        text-wrap: balance;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow: var(--flat-shadow-medium);
+    }
 
     &.small {
         --q: 0.5
@@ -172,13 +173,15 @@ a[target="_blank"]:after {
         --shc: #74b5e8;
     }
 
-    --flat-shadow-high: 1px 1px var(--shc),
-    2px 2px var(--shc),
-    3px 3px 0 -1px var(--shc),
-    4px 4px 0 -1px var(--shc);
+    & {
+        --flat-shadow-high: 1px 1px var(--shc),
+            2px 2px var(--shc),
+            3px 3px 0 -1px var(--shc),
+            4px 4px 0 -1px var(--shc);
 
-    --flat-shadow-medium: 1px 1px var(--shc),
-    2px 2px var(--shc);
+        --flat-shadow-medium: 1px 1px var(--shc),
+            2px 2px var(--shc);
+    }
 }
 
 @supports (transition-behavior: allow-discrete) {

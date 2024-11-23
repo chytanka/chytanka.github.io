@@ -6,13 +6,14 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 const SCALE_GAP = 128;
 
 @Component({
-  selector: 'app-root',
-  template: `<div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div>`,
-  styles: [`
+    selector: 'app-root',
+    template: `<div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div>`,
+    styles: [`
     // :host {
     //   display: flex;
     // }
-    `]
+    `],
+    standalone: false
 })
 export class AppComponent {
   platformId = inject(PLATFORM_ID)

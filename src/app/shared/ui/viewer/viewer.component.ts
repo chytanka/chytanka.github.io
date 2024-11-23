@@ -16,16 +16,17 @@ const CHTNK_LIST_RESPONCE_EVENT_NAME = 'listresponse'
 const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: [
-    './viewer.component.scss',
-    './viewer.pages.component.scss',
-    './viewer.long.component.scss',
-    '/src/app/shared/ui/@styles/details.scss',
-    '/src/app/shared/ui/@styles/input-group.scss'
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-viewer',
+    templateUrl: './viewer.component.html',
+    styleUrls: [
+        './viewer.component.scss',
+        './viewer.pages.component.scss',
+        './viewer.long.component.scss',
+        '../../../shared/ui/@styles/details.scss',
+        '../../../shared/ui/@styles/input-group.scss'
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ViewerComponent implements AfterViewInit {
   readonly separator: string = '│'
@@ -44,13 +45,13 @@ export class ViewerComponent implements AfterViewInit {
 
     this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LIST_REQUEST_EVENT_NAME);
 
-    window.addEventListener('message',  ({data}) => {
-      if(data.event != CHTNK_LIST_RESPONCE_EVENT_NAME) return;
-      
+    window.addEventListener('message', ({ data }) => {
+      if (data.event != CHTNK_LIST_RESPONCE_EVENT_NAME) return;
+
       this.playlist = data.data as Playlist // !!! 
 
       this.cdr.detectChanges()
-      
+
     }, false);
   }
 
@@ -104,7 +105,7 @@ export class ViewerComponent implements AfterViewInit {
   activeIndexs: WritableSignal<number[]> = signal([])
   initActiveIndexes() {
     if (!isPlatformBrowser(this.platformId)) return
-    
+
     const isPageMode = this.viewer.viewModeOption().mode == 'pages';
 
     const viewRect: DOMRect = isPageMode
@@ -128,7 +129,13 @@ export class ViewerComponent implements AfterViewInit {
     }
 
     // this.showOverlay = false;
-    this.activeIndexs.set(activeIndxs);
+    console.log();
+    
+    // if (JSON.stringify(this.activeIndexs()) !== JSON.stringify(activeIndxs))
+      this.activeIndexs.set(activeIndxs);
+
+
+
 
     this.embedHelper.postMessage({
       total: this.episode?.images.length,

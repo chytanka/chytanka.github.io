@@ -3,12 +3,13 @@ import { LangService } from '../../shared/data-access/lang.service';
 import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 
 @Component({
-  selector: 'app-link-parser',
-  templateUrl: './link-parser.component.html',
-  styleUrls: [
-    './link-parser.component.scss',
-    './link-parser.dual-screen.component.scss'
-  ]
+    selector: 'app-link-parser',
+    templateUrl: './link-parser.component.html',
+    styleUrls: [
+        './link-parser.component.scss',
+        './link-parser.dual-screen.component.scss'
+    ],
+    standalone: false
 })
 export class LinkParserComponent {
   private meta: MetaTagsService = inject(MetaTagsService);

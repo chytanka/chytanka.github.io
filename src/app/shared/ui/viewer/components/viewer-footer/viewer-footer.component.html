@@ -5,7 +5,7 @@
     <button class="button " (click)="showPlayList()">📜</button>
     }
 
-    <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs"
+    <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
     <button class="button" (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">

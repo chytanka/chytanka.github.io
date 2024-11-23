@@ -14,10 +14,14 @@ details {
     &[open] {
         // border-color: #166496;
         background-color: #103651;
+
         @media (prefers-color-scheme: light) {
             background-color: #fff897;
         }
-        box-shadow: var(--flat-shadow-medium);
+
+        & {
+            box-shadow: var(--flat-shadow-medium);
+        }
 
         summary {
             color: #caa902;

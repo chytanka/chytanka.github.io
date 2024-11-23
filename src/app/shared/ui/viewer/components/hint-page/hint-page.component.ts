@@ -4,9 +4,10 @@ import { LangService } from '../../../../data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
 
 @Component({
-  selector: 'app-hint-page',
-  templateUrl: './hint-page.component.html',
-  styleUrl: './hint-page.component.scss'
+    selector: 'app-hint-page',
+    templateUrl: './hint-page.component.html',
+    styleUrl: './hint-page.component.scss',
+    standalone: false
 })
 export class HintPageComponent {
   viewer: ViewerService = inject(ViewerService)

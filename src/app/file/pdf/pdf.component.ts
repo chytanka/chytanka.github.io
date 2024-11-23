@@ -12,11 +12,10 @@ GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs'
 const MDASH = '—';
 
 @Component({
-  selector: 'app-pdf',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './pdf.component.html',
-  styleUrl: './pdf.component.scss'
+    selector: 'app-pdf',
+    imports: [SharedModule],
+    templateUrl: './pdf.component.html',
+    styleUrl: './pdf.component.scss'
 })
 export class PdfComponent {
   episode: CompositionEpisode | undefined;

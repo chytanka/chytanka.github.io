@@ -6,9 +6,10 @@ import { YandereService } from '../data-access/yandere.service';
 import { YANDERE_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-yandere-shell',
-  templateUrl: './yandere-shell.component.html',
-  styleUrl: './yandere-shell.component.scss'
+    selector: 'app-yandere-shell',
+    templateUrl: './yandere-shell.component.html',
+    styleUrl: './yandere-shell.component.scss',
+    standalone: false
 })
 export class YandereShellComponent  extends ReadBaseComponent implements OnDestroy {
   yandere = inject(YandereService)

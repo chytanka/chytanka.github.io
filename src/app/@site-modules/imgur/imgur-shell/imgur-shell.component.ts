@@ -6,8 +6,8 @@ import { ReadBaseComponent } from '../../@common-read';
 import { IMGUR_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-imgur-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"  [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()"><div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
+    selector: 'app-imgur-shell',
+    template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"  [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()"><div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
   place-content: center;
   justify-items: center; min-height: 50vh;">
       <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
@@ -16,7 +16,8 @@ import { IMGUR_PATH } from '../../../app-routing.module';
       <p>{{lang.ph().imagesVia}}<a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a>
           API.
           {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
-  </div></app-common-read>`
+  </div></app-common-read>`,
+    standalone: false
 })
 export class ImgurShellComponent extends ReadBaseComponent {
 

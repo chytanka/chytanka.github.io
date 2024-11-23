@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
-  selector: 'app-view-mode-bar',
-  templateUrl: './view-mode-bar.component.html',
-  styleUrl: './view-mode-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-view-mode-bar',
+    templateUrl: './view-mode-bar.component.html',
+    styleUrl: './view-mode-bar.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ViewModeBarComponent {
   @Input() options: any;

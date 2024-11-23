@@ -5,9 +5,10 @@ import { CompositionEpisode } from '../../utils';
 import { Playlist, PlaylistItem, PlaylistService } from '../../../../playlist/data-access/playlist.service';
 
 @Component({
-  selector: 'app-common-read',
-  templateUrl: './common-read.component.html',
-  styleUrl: './common-read.component.scss'
+    selector: 'app-common-read',
+    templateUrl: './common-read.component.html',
+    styleUrl: './common-read.component.scss',
+    standalone: false
 })
 export class CommonReadComponent {
   public lang: LangService = inject(LangService);

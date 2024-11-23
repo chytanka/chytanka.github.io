@@ -6,9 +6,10 @@ import { Base64 } from '../../../shared/utils';
 import { ReadBaseComponent } from '../../@common-read';
 
 @Component({
-  selector: 'app-nhentai-shell',
-  templateUrl: './nhentai-shell.component.html',
-  styleUrl: './nhentai-shell.component.scss'
+    selector: 'app-nhentai-shell',
+    templateUrl: './nhentai-shell.component.html',
+    styleUrl: './nhentai-shell.component.scss',
+    standalone: false
 })
 export class NhentaiShellComponent extends ReadBaseComponent implements OnDestroy {
   nhentai = inject(NhentaiService)

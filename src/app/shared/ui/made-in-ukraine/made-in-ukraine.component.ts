@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'made-in-ukraine',
-  template: `<span style="color: #4c95fb;">Made©in</span>
+    selector: 'made-in-ukraine',
+    template: `<span style="color: #4c95fb;">Made©in</span>
   <span class="uk">Ukraine</span>`,
-  styles: [`
+    styles: [`
     :host {
       font-weight: bold;
       font-size: x-small;
@@ -28,7 +28,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       }
     } 
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MadeInUkraineComponent {
 

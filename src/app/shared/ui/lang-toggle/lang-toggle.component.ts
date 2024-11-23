@@ -5,10 +5,11 @@ import { ViewModeOption } from '../../data-access';
 
 
 @Component({
-  selector: 'app-lang-toggle',
-  templateUrl: './lang-toggle.component.html',
-  styleUrl: './lang-toggle.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-lang-toggle',
+    templateUrl: './lang-toggle.component.html',
+    styleUrl: './lang-toggle.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LangToggleComponent {
   lang = inject(LangService)

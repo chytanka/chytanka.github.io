@@ -3,12 +3,12 @@ import { LangService } from './shared/data-access/lang.service';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'app-page-not-found',
-  template: `
+    selector: 'app-page-not-found',
+    template: `
     <app-text-embracer [text]="'4😵4'"/>
     <h1>{{selectedMessage()}} <br> <a [routerLink]="'/'">🏠</a></h1>
   `,
-  styles: `
+    styles: `
     :host {
       display: grid;
       min-height: 100dvh;
@@ -26,7 +26,8 @@ import { isPlatformBrowser } from '@angular/common';
           font-size: clamp(1rem, 10vw, 8rem);
       }
     }
-  `
+  `,
+    standalone: false
 })
 export class PageNotFoundComponent {
   platformId = inject(PLATFORM_ID)

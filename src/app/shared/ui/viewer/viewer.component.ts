@@ -16,16 +16,17 @@ const CHTNK_LIST_RESPONCE_EVENT_NAME = 'listresponse'
 const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: [
-    './viewer.component.scss',
-    './viewer.pages.component.scss',
-    './viewer.long.component.scss',
-    '/src/app/shared/ui/@styles/details.scss',
-    '/src/app/shared/ui/@styles/input-group.scss'
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-viewer',
+    templateUrl: './viewer.component.html',
+    styleUrls: [
+        './viewer.component.scss',
+        './viewer.pages.component.scss',
+        './viewer.long.component.scss',
+        '../../../shared/ui/@styles/details.scss',
+        '../../../shared/ui/@styles/input-group.scss'
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ViewerComponent implements AfterViewInit {
   readonly separator: string = '│'

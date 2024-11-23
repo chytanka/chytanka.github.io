@@ -6,9 +6,10 @@ import { Base64 } from '../../../shared/utils';
 import { ZenkoService } from '../data-access/zenko.service';
 
 @Component({
-  selector: 'app-zenko-shell',
-  templateUrl: './zenko-shell.component.html',
-  styleUrl: './zenko-shell.component.scss'
+    selector: 'app-zenko-shell',
+    templateUrl: './zenko-shell.component.html',
+    styleUrl: './zenko-shell.component.scss',
+    standalone: false
 })
 export class ZenkoShellComponent extends ReadBaseComponent implements OnDestroy {
   zenko = inject(ZenkoService)

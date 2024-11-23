@@ -3,9 +3,10 @@ import { HistoryService } from '../../data-access/history.service';
 import { LangService } from '../../../shared/data-access/lang.service';
 
 @Component({
-  selector: 'app-history-list',
-  templateUrl: './history-list.component.html',
-  styleUrl: './history-list.component.scss'
+    selector: 'app-history-list',
+    templateUrl: './history-list.component.html',
+    styleUrl: './history-list.component.scss',
+    standalone: false
 })
 export class HistoryListComponent {
   public history: HistoryService = inject(HistoryService);

@@ -6,13 +6,14 @@ import { ReadBaseComponent } from '../../@common-read';
 import { READ_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-read-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+    selector: 'app-read-shell',
+    template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
 
 <div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid; place-content: center; justify-items: center; min-height: 50vh;">
   <p>{{lang.ph().imagesVia}}<a [href]="url()?.origin" target="_blank" rel="noopener noreferrer">{{url()?.hostname}}.</a> {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
     </div>
-</app-common-read>`
+</app-common-read>`,
+    standalone: false
 })
 export class ReadShellComponent extends ReadBaseComponent {
 

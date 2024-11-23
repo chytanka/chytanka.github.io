@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-nsfw-warning',
-  templateUrl: './nsfw-warning.component.html',
-  styleUrl: './nsfw-warning.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-nsfw-warning',
+    templateUrl: './nsfw-warning.component.html',
+    styleUrl: './nsfw-warning.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class NsfwWarningComponent {
   @Input() title: string = `⚠️🔞 NSFW Content`;

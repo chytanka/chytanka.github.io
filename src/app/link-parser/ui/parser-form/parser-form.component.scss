@@ -61,12 +61,13 @@ textarea {
     box-shadow: var(--flat-shadow-medium);
     border: 0;
     background-color: #16649680;
+    color: #ffd60a;
 
     @media (prefers-color-scheme: light) {
         color: #166496;
     }
 
-    color: #ffd60a;
+   
 
     &:focus {
         border-color: #166496;

@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, effect, EventEmitter, inp
 import { pairPagination } from 'pair-pagination'
 
 @Component({
-  selector: 'app-pages-indicator',
-  templateUrl: './pages-indicator.component.html',
-  styleUrl: './pages-indicator.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-pages-indicator',
+    templateUrl: './pages-indicator.component.html',
+    styleUrl: './pages-indicator.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class PagesIndicatorComponent {
   images = input<any>([]);

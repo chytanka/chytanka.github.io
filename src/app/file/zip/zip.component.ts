@@ -8,11 +8,10 @@ import { ComicInfo } from '../../shared/utils/comic-info';
 import { Acbf } from '../../shared/utils/acbf';
 
 @Component({
-  selector: 'app-zip',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './zip.component.html',
-  styleUrl: './zip.component.scss'
+    selector: 'app-zip',
+    imports: [SharedModule],
+    templateUrl: './zip.component.html',
+    styleUrl: './zip.component.scss'
 })
 export class ZipComponent implements OnInit, OnDestroy {
   private worker!: Worker;

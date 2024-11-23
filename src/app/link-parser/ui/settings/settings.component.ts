@@ -3,9 +3,10 @@ import { LinkParserSettingsService } from '../../data-access/link-parser-setting
 import { LangService } from '../../../shared/data-access/lang.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss',
+    standalone: false
 })
 export class SettingsComponent {
   setts = inject(LinkParserSettingsService)

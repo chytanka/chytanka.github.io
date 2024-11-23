@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import { LangService } from '../../../shared/data-access/lang.service';
 
 @Component({
-  selector: 'app-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss', '/src/app/shared/ui/@styles/details.scss']
+    selector: 'app-faq',
+    templateUrl: './faq.component.html',
+    styleUrls: ['./faq.component.scss', '../../../shared/ui/@styles/details.scss'],
+    standalone: false
 })
 export class FaqComponent {
   public lang = inject(LangService)

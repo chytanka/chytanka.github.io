@@ -3,10 +3,11 @@ import { LangService } from '../../data-access/lang.service';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-dialog',
+    templateUrl: './dialog.component.html',
+    styleUrl: './dialog.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DialogComponent {
   lang = inject(LangService)

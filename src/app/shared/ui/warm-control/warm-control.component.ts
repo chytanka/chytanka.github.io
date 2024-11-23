@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
-  selector: 'app-warm-control',
-  templateUrl: './warm-control.component.html',
-  styleUrl: './warm-control.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-warm-control',
+    templateUrl: './warm-control.component.html',
+    styleUrl: './warm-control.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class WarmControlComponent {
 

@@ -4,9 +4,10 @@ import { DialogComponent } from '../../../shared/ui/dialog/dialog.component';
 import { DomManipulationService } from '../../../shared/data-access';
 
 @Component({
-  selector: 'lp-header',
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'lp-header',
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
   ngOnInit(): void {

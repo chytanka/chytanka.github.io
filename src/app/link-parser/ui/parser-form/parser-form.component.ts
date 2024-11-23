@@ -8,9 +8,10 @@ import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkPar
 import { ComickLinkParser } from '../../utils/comick-link-parser';
 
 @Component({
-  selector: 'app-parser-form',
-  templateUrl: './parser-form.component.html',
-  styleUrl: './parser-form.component.scss'
+    selector: 'app-parser-form',
+    templateUrl: './parser-form.component.html',
+    styleUrl: './parser-form.component.scss',
+    standalone: false
 })
 export class ParserFormComponent {
 

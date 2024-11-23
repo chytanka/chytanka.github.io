@@ -6,8 +6,8 @@ import { ReadBaseComponent } from '../../@common-read';
 import { MANGADEX_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-mangadex-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+    selector: 'app-mangadex-shell',
+    template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
 
 <div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
     place-content: center;
@@ -20,7 +20,8 @@ import { MANGADEX_PATH } from '../../../app-routing.module';
             Thanks!<br>Details on their site. Respect copyrights.</p>
     </div>
 
-</app-common-read>`
+</app-common-read>`,
+    standalone: false
 })
 export class MangadexShellComponent extends ReadBaseComponent {
 

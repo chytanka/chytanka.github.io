@@ -7,9 +7,10 @@ import { BlankaryService } from '../data-access/blankary.service';
 import { MetaTagsService } from '../../../shared/data-access/meta-tags.service';
 
 @Component({
-  selector: 'app-blankary-shell',
-  templateUrl: './blankary-shell.component.html',
-  styleUrl: './blankary-shell.component.scss'
+    selector: 'app-blankary-shell',
+    templateUrl: './blankary-shell.component.html',
+    styleUrl: './blankary-shell.component.scss',
+    standalone: false
 })
 export class BlankaryShellComponent extends ReadBaseComponent implements OnDestroy {
   blankary = inject(BlankaryService)

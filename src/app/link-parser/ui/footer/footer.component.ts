@@ -30,9 +30,10 @@ const SOCIAL_LINKS: any[] = [
 ];
 
 @Component({
-  selector: 'lp-footer',
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'lp-footer',
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss',
+    standalone: false
 })
 export class FooterComponent {
   public readonly version: string = 'v2024.11.14'

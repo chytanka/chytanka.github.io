@@ -5,9 +5,10 @@ import { FILE_PATH } from '../../../app-routing.module';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
-  selector: 'app-file-change',
-  templateUrl: './file-change.component.html',
-  styleUrl: './file-change.component.scss'
+    selector: 'app-file-change',
+    templateUrl: './file-change.component.html',
+    styleUrl: './file-change.component.scss',
+    standalone: false
 })
 export class FileChangeComponent implements OnInit {
   ngOnInit(): void {

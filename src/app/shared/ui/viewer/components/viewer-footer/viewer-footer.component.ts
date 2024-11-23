@@ -6,9 +6,10 @@ import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/play
 import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 
 @Component({
-  selector: 'app-viewer-footer',
-  templateUrl: './viewer-footer.component.html',
-  styleUrl: './viewer-footer.component.scss'
+    selector: 'app-viewer-footer',
+    templateUrl: './viewer-footer.component.html',
+    styleUrl: './viewer-footer.component.scss',
+    standalone: false
 })
 export class ViewerFooterComponent {
   viewer: ViewerService = inject(ViewerService)

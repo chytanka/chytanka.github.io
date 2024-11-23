@@ -6,14 +6,15 @@ import { ReadBaseComponent } from '../../@common-read';
 import { REDDIT_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-reddit-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+    selector: 'app-reddit-shell',
+    template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
 
 <p>{{lang.ph().imagesVia}}<a href="https://reddit.com" target="_blank" rel="noopener noreferrer">Reddit</a>
           API.
           {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
 
-</app-common-read>`
+</app-common-read>`,
+    standalone: false
 })
 export class RedditShellComponent extends ReadBaseComponent {
 

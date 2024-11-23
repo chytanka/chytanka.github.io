@@ -6,9 +6,10 @@ import { Base64 } from '../../../shared/utils';
 import { COMICK_PATH } from '../../../app-routing.module';
 
 @Component({
-  selector: 'app-comick-shell',
-  templateUrl: './comick-shell.component.html',
-  styleUrl: './comick-shell.component.scss'
+    selector: 'app-comick-shell',
+    templateUrl: './comick-shell.component.html',
+    styleUrl: './comick-shell.component.scss',
+    standalone: false
 })
 export class ComickShellComponent extends ReadBaseComponent implements OnDestroy {
   comick = inject(ComickService)

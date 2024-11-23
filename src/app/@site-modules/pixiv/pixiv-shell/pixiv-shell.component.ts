@@ -6,9 +6,10 @@ import { ReadBaseComponent } from '../../@common-read';
 import { Base64 } from '../../../shared/utils';
 
 @Component({
-  selector: 'app-pixiv-shell',
-  templateUrl: './pixiv-shell.component.html',
-  styleUrl: './pixiv-shell.component.scss'
+    selector: 'app-pixiv-shell',
+    templateUrl: './pixiv-shell.component.html',
+    styleUrl: './pixiv-shell.component.scss',
+    standalone: false
 })
 export class PixivShellComponent extends ReadBaseComponent implements OnDestroy {
   pixiv = inject(PixivService)

@@ -5,10 +5,14 @@
 }
 
 :root {
+    // filter: grayscale(1);
     --blur: 1ch;
     --t: 133.333334ms; //266.666667ms; //calc(1s / 60 * 16);
     --surface: hsl(203.44 8% 16%);
     --text: hsl(200 5% 80%);
+    --dot-color: #000;
+    --bg-1: var(--gl) 0px 0px / 4px 4px;
+    --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
     color-scheme: light dark;
     background-color: var(--surface);
     color: var(--text);

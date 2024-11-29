@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { LangService } from '../../../shared/data-access/lang.service';
+import { environment } from '../../../../environments/environment';
 
 const SOCIAL_LINKS: any[] = [
   {
@@ -36,7 +37,7 @@ const SOCIAL_LINKS: any[] = [
     standalone: false
 })
 export class FooterComponent {
-  public readonly version: string = 'v2024.11.14'
+  public readonly version: string = environment.version
   public lang: LangService = inject(LangService);
 
   public social: any[] = SOCIAL_LINKS;

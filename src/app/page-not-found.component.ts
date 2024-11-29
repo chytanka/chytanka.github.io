@@ -3,12 +3,12 @@ import { LangService } from './shared/data-access/lang.service';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-    selector: 'app-page-not-found',
-    template: `
+  selector: 'app-page-not-found',
+  template: `
     <app-text-embracer [text]="'4😵4'"/>
     <h1>{{selectedMessage()}} <br> <a [routerLink]="'/'">🏠</a></h1>
   `,
-    styles: `
+  styles: `
     :host {
       display: grid;
       min-height: 100dvh;
@@ -16,18 +16,40 @@ import { isPlatformBrowser } from '@angular/common';
       text-align: center;
     }
     app-text-embracer {
-      --border-color: #166496;
-      --border-width: 2px;
-      color: #ffd60a;
-      margin: auto;
-      font-family: 'Troubleside', sans-serif;
-      font-size: clamp(1rem, 8vw, 5rem);
-      @media (max-aspect-ratio: 1) or (max-width: 640px)  {
-          font-size: clamp(1rem, 10vw, 8rem);
-      }
+    --mono-color-1: #4c93c8;
+    --mono-color-2: #002741;
+    --border-color: var(--mono-color-1);
+    --border-width: 2px;
+    color: #ffd60a;
+    --shc: #166496;
+    font-family: 'Troubleside', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1rem, 16vw, 10rem);
+    justify-content: center;
+    -webkit-text-stroke: var(--mono-color-2) var(--border-width);
+    --dot-color: var(--mono-color-1);
+    paint-order: stroke fill;
+
+    @media (prefers-color-scheme: light) {
+        --mono-color-1: #166496;
+        --mono-color-2: #eceff2;
+        --shc: var(--mono-color-1);
+        color: var(--mono-color-1);
+        -webkit-text-stroke: var(--mono-color-1) var(--border-width);
+
+        color: var(--mono-color-2);
     }
+
+    @media (max-width: 1080px) {
+        font-size: clamp(1rem, 14vw, 16rem);
+    }
+
+    @media ((orientation: portrait) and (max-aspect-ratio: 1)) {
+        font-size: clamp(1rem, 20vw, 16rem);
+    }
+}
   `,
-    standalone: false
+  standalone: false
 })
 export class PageNotFoundComponent {
   platformId = inject(PLATFORM_ID)

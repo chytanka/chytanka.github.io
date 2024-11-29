@@ -1,10 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { LinkParseResult, LinkParser } from '../utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinkParserService {
+
+  supportFiles = signal([".zip", ".cbz", ".pdf", ".mobi"])
+
+  supportSites = signal([
+    "Imgur",
+    "Telegra.ph",
+    "Reddit",
+    "MangaDex",
+    "Zenko",
+    "Comick",
+    "NHentai",
+    "Yandere Pools",
+    "Blankary",
+    "Pixiv"
+  ].sort())
 
   parsers: LinkParser[] = [];
 

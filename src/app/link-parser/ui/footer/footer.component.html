@@ -1,6 +1,7 @@
 <app-overlay class="show">
-  <small>{{lang.ph().shortTitle}} <a href="//github.com/chytanka/chytanka.github.io" target="_blank" rel="noopener noreferrer">{{version}}</a><!--, &copy; 2024--></small>
-  <separator />
+  <!-- <small>{{lang.ph().shortTitle}} <a href="https://github.com/chytanka/chytanka.github.io/releases" target="_blank" rel="noopener noreferrer">v{{version}}</a>
+  </small>
+  <separator /> -->
 
   @for (item of social; track $index) {
   <a [href]="item.link" target="_blank" rel="noopener noreferrer">

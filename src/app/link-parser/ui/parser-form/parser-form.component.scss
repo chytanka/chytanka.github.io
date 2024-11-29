@@ -9,16 +9,28 @@
 }
 
 app-text-embracer {
-    --border-color: #166496;
+    --mono-color-1: #4c93c8;
+    --mono-color-2: #002741;
+    --border-color: var(--mono-color-1);
     --border-width: 2px;
     color: #ffd60a;
+    --shc: #166496;
     font-family: 'Troubleside', sans-serif;
+    font-weight: 900;
     font-size: clamp(1rem, 8vw, 5rem);
     justify-content: center;
+    -webkit-text-stroke: var(--mono-color-2) var(--border-width);
+    --dot-color: var(--mono-color-1);
+    paint-order: stroke fill;
 
     @media (prefers-color-scheme: light) {
-        --back-color: #fff62a;
-        color: #166496;
+        --mono-color-1: #166496;
+        --mono-color-2: #eceff2;
+        --shc: var(--mono-color-1);
+        color: var(--mono-color-1);
+        -webkit-text-stroke: var(--mono-color-1) var(--border-width);
+
+        color: var(--mono-color-2);
     }
 
     @media (max-width: 1080px) {
@@ -67,7 +79,7 @@ textarea {
         color: #166496;
     }
 
-   
+
 
     &:focus {
         border-color: #166496;
@@ -99,8 +111,9 @@ input[type=url]::placeholder {
 
 .slogan-wrapper {
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+    // grid-template-columns: 1fr auto;
+    place-items: center;
+    gap: 2ch;
     grid-column: 2;
 }
 
@@ -110,4 +123,38 @@ input[type=url]::placeholder {
     font-style: italic;
     opacity: .72;
     text-wrap: balance;
+}
+
+.go-btn {
+    display: flex;
+    gap: 1ch;
+    align-items: center;
+    --dot-color: #166496;
+    border: 1px solid var(--dot-color);
+    --stroke: #002741;
+    --bg-1: var(--gl) 0px 0px / 4px 4px;
+    --bg-2: var(--gl) 0px 0px / 3px 3px, var(--gl) 1.5px 1.5px / 3px 3px;
+    --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
+    background: var(--bg-1);
+
+    text-transform: uppercase;
+    font-weight: bold;
+    // -webkit-text-stroke: 0.5ch var(--stroke);
+    // paint-order: stroke fill;
+
+    box-shadow: var(--flat-shadow-high);
+
+
+    @media (prefers-color-scheme: light) {
+        --dot-color: #166496;
+        color: #166496;
+        --stroke: #eceff2;
+    }
+
+    &:hover,
+    &:focus {
+        --dot-color: #4c93c8;
+        background: var(--bg-2);
+
+    }
 }

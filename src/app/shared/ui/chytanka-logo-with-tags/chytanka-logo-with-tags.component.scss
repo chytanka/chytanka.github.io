@@ -1,0 +1,131 @@
+:host {
+    position: relative;
+    // overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    place-items: stretch;
+}
+
+#logoPath {
+
+    fill: #000118;
+
+    @media (prefers-color-scheme: light) {
+        fill: #166496;
+    }
+}
+
+.one-bit {
+    filter: url('#oneBit');
+}
+
+.filters {
+    position: fixed;
+    user-select: none;
+    pointer-events: none;
+}
+
+svg,
+img {
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+.version {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-weight: bold;
+    text-align: center;
+    opacity: .5;
+    color: #fff;
+
+    @media (prefers-color-scheme: light) {
+        color: #000;
+    }
+
+    a,
+    a:hover {
+        color: inherit;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.tag {
+    z-index: 1;
+    transition: all var(--t) linear;
+    position: absolute;
+    padding: .25ch;
+    text-align: center;
+    border-radius: .25ch;
+    font-size: small;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    --b: #ffd60a;
+    --f: black;
+    background-color: var(--b);
+    color: var(--f);
+    box-shadow: var(--flat-shadow-medium);
+
+    &:hover {
+        cursor: none;
+        scale: 1.5 !important;
+        z-index: 2;
+    }
+
+    &.reddit {
+        --b: #FF4500;
+        --f: white;
+    }
+
+    &.pixiv {
+        --b: #0091d4;
+        --f: white;
+    }
+
+    &.blankary {
+        --b: #000;
+        --f: white;
+    }
+
+    // &.comick {}
+
+    &.imgur {
+        --b: #1bb76e;
+    }
+
+    &.mangadex {
+        --b: #ff6740;
+    }
+
+    // &.nhentai {}
+
+    &.zenko {
+        --b: #078DEE;
+        --f: white;
+    }
+
+    &.zip {
+        --b: #0074D9;
+    }
+
+    &.cbz {
+        --b: rgb(216, 68, 68);
+    }
+
+    &.pdf {
+        --b: #0074D9;
+    }
+
+    &.mobi {
+        --b: #4CAF50;
+        --f: #FFC107;
+    }
+}

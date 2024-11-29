@@ -6,21 +6,28 @@
     height: 100dvh;
     background: rgb(0, 39, 65);
 
+    app-chytanka-logo-with-tags {
+        height: 80dvh;
+    }
+
     @media (max-aspect-ratio: 1) or (max-width: 640px) {
         grid-template-columns: auto;
-        grid-template-rows: 61.8fr 38.2fr;
+        // grid-template-rows: 61.8fr 38.2fr;
+        grid-template-rows: 1fr 1fr;
+        app-chytanka-logo-with-tags {
+            height: unset;
+        }
     }
 
     @media (prefers-color-scheme: light) {
         background: #eceff2;
-        background: radial-gradient(circle, #fffcf2 0%, #d4e4f2 100%);
     }
 }
 
 main {
     display: grid;
     row-gap: 2ch;
-    overflow: auto;
+    // overflow: auto;
     max-height: 100%;
     padding: 4ch 0;
 }

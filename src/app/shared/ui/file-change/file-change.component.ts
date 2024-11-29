@@ -1,36 +1,42 @@
-import { Component, HostListener, inject, input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, input, OnInit, PLATFORM_ID } from '@angular/core';
 import { FileService } from '../../../file/data-access/file.service';
 import { Router } from '@angular/router';
 import { FILE_PATH } from '../../../app-routing.module';
 import { LangService } from '../../data-access/lang.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
-    selector: 'app-file-change',
-    templateUrl: './file-change.component.html',
-    styleUrl: './file-change.component.scss',
-    standalone: false
+  selector: 'app-file-change',
+  templateUrl: './file-change.component.html',
+  styleUrl: './file-change.component.scss',
+  standalone: false
 })
 export class FileChangeComponent implements OnInit {
+  platformId = inject(PLATFORM_ID)
+  fs = inject(FileService)
+  router = inject(Router)
+  lang = inject(LangService)
+
+  accept = input<string[]>([])
+  
+  input: HTMLInputElement | undefined;
+  showDragAndDropZone: boolean = false;
+
   ngOnInit(): void {
+    if (isPlatformServer(this.platformId)) return;
+
     this.initFileInput();
 
     if ("launchQueue" in window) {
       (window as any).launchQueue.setConsumer(async (launchParams: FileSystemFileHandle) => {
-        console.log(launchParams);
-        
-        const file: File = await launchParams.getFile();
+        console.log((launchParams as any).files[0]);
+
+        // const file: File = await launchParams.getFile();
+        const file: File = (launchParams as any).files[0] as File;
         this.fileHandler(file)
       });
     }
   }
-
-  // should be input
-  // accept = [".zip", ".cbz", 'application/vnd.comicbook+zip', 'application/zip', '.pdf']
-  accept = input<string[]>([])
-
-  fs = inject(FileService)
-  router = inject(Router)
-  lang = inject(LangService)
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -54,17 +60,15 @@ export class FileChangeComponent implements OnInit {
 
   getRouteType(file: File): string | undefined {
     const fileType = file.type || file.name.split('.').pop()?.toLowerCase();
-  
+
     if (!fileType) return undefined;
-  
+
     if (fileType.includes('pdf')) return 'pdf';
     if (fileType.includes('mobi')) return 'mobi';
     if (/zip|cbz/.test(fileType)) return 'zip';
-  
+
     return undefined;
   }
-
-  input = document.createElement('input')
 
   initFileInput() {
     this.input = document.createElement('input')
@@ -75,12 +79,10 @@ export class FileChangeComponent implements OnInit {
     this.input.oninput = (e: Event) => {
       this.onFileSelected(e)
     }
-
   }
 
   openFileDialog() {
-
-    this.input.click();
+    if (this.input) this.input.click();
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -109,6 +111,4 @@ export class FileChangeComponent implements OnInit {
 
     this.fileHandler(file)
   }
-
-  showDragAndDropZone: boolean = false;
 }

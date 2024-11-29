@@ -16,7 +16,9 @@ const SCALE_GAP = 128;
     standalone: false
 })
 export class AppComponent {
+  private readonly document = inject(DOCUMENT);
   platformId = inject(PLATFORM_ID)
+  
   constructor(public lang: LangService, private route: ActivatedRoute) {
     this.lang.updateManifest()
     this.lang.updateTranslate()
@@ -38,8 +40,6 @@ export class AppComponent {
       }
     })
   }
-
-  private readonly document = inject(DOCUMENT);
 
   @HostListener('window:resize')
   initScaleDifference() {

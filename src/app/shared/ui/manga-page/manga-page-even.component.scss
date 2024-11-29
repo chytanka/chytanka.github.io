@@ -25,7 +25,7 @@ section {
     display: grid;
     place-items: center;
     overflow: hidden;
-
+    background: var(--bg-1);
     counter-increment: read-order;
 
     &:nth-child(1),

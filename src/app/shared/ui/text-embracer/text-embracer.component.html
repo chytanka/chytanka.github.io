@@ -1,3 +1,14 @@
 @for(item of letters(); track item) {
-<span>{{item}}</span>
+<span><span>{{item}}</span></span>
 }
+
+<svg style="position: fixed; user-select: none; pointer-events: none;">
+  <filter id="oneBitShadow" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+  <feFlood flood-color="#166496" x="2" y="2" width="4" height="4" result="flood"/>
+  <feComposite in="flood" in2="flood" operator="over" x="0" y="0" width="6" height="6" result="composite"/>
+  <feTile x="0" y="0" width="1000" height="1000" in="composite" result="tile"/>
+  <feOffset dx="6" dy="6"  in="SourceGraphic" result="offset"/>
+  <feComposite in="tile" in2="offset" operator="in" result="composite2"/>
+  <feComposite in="SourceGraphic" in2="composite2" operator="over" result="composite3"/>
+</filter>
+</svg>

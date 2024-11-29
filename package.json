@@ -1,13 +1,14 @@
 {
   "name": "chytanka",
-  "version": "0.14.28",
+  "version": "0.14.30",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:chytanka": "node dist/chytanka/server/server.mjs"
+    "serve:ssr:chytanka": "node dist/chytanka/server/server.mjs",
+    "upv": "node scripts/update-version.js"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +30,7 @@
     "jszip": "^3.10.1",
     "ngx-highlightjs": "^12.0.0",
     "pair-pagination": "^0.0.1",
-    "pdfjs-dist": "^4.6.82",
+    "pdfjs-dist": "4.6.82",
     "readiverse": "^0.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

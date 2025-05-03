@@ -1,12 +1,27 @@
+@let isLink = (value?.site && value?.post_id);
+
+@if (isLink) {
 <div class="cover-wrapper">
-    <img [routerLink]="['',value?.site, value?.post_id]" class="cover" [src]="value.cover" alt="">
+    <img [routerLink]="getRouteLink()" class="cover" [src]="value.cover" alt="">
 </div>
 
-<a class="title" [routerLink]="['',value?.site, value?.post_id]">
-    <small class="site-tag">{{value?.site}}</small>
+<a class="title" [routerLink]="getRouteLink()">
+    <small class="site-tag">{{getSiteTag()}}</small>&nbsp;
+    @if(value.size){ <small class="site-tag">{{value.size | filesize}} </small>&nbsp;}
+    @if(value.page && value.pages){ <small class="site-tag">{{value.page}}/{{value.pages}}</small> &nbsp;} 
+    
     {{value.title ?? lang.ph().untitled}}
-</a>
 
+</a>
+} @else {
+<div class="cover-wrapper">
+    <img class="cover" [src]="value.cover" alt="">
+</div>
+
+<div class="title">
+    {{value.title ?? lang.ph().untitled}} @if(value.page && value.pages){ {{value.page}}/{{value.pages}} }
+</div>
+}
 <small style="width: min-content; opacity: .8; line-height: 1;">{{value.updated | date : 'short'}}</small>
 
 <button class="button small empty" style="margin-right: 1ch;" (click)="onDelete(value.id)">❌</button>

@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule, isDevMode, provideZoneChangeDetection } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +30,7 @@ registerLocaleData(localeUk)
         SharedModule],
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),
-        provideClientHydration(),
+        provideClientHydration(withEventReplay()),
         provideHttpClient(withFetch())
     ]
 })

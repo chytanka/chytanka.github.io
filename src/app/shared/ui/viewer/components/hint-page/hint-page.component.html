@@ -1,7 +1,6 @@
 <manga-page [dir]="viewer.viewModeOption().dir" style="margin: auto;">
     <svg dir="ltr" frame="3" viewBox="0 0 300 200">
-
-        <text x="50%" y="42%" font-size="28">
+        <text x="50%" y="42%" font-size="28" style="font-family:'Troubleside'">
             {{lang.ph().getByKey(viewer.viewModeOption().hintPhraceKey)}}
         </text>
         <text x="50%" y="58%" font-size="24">{{viewer.viewModeOption().emoji}}</text>
@@ -24,7 +23,6 @@
         </text>
     </svg>
 
-
     <svg dir="ltr" frame="2" viewBox="0 0 320 320">
         <rect x="-20" y="85" width="360" height="150" rx="4" stroke-width="2" fill="white" stroke="black"></rect>
         <text fill="currentColor" font-size="14">
@@ -46,7 +44,5 @@
             lang.ph().untitled + ' ' + (getPrevIndex() + 1)}}</a>
         }
     </div>
-
-
 
 </manga-page>

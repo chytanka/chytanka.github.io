@@ -30,7 +30,7 @@ export class PagesIndicatorComponent {
     if(this.activeIndexs().length ==0) return []
     const totalPages = this.images().length
     const currentPage = Math.max(...this.activeIndexs().map(v => v + 1))
-    console.log(currentPage);
+    // console.log(currentPage);
 
     return pairPagination({ totalPages, currentPage }) as number[]
   })

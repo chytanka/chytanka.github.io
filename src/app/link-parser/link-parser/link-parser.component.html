@@ -3,8 +3,10 @@
 </main>
 
 <aside>
-  @defer{ <img class="logo" src="/assets/icons/icon-512x512.svg" alt="Chytanka Logo"> }
+  <app-chytanka-logo-with-tags [fileTags]="parser.supportFiles()" [siteTags]="parser.supportSites()" />
 </aside>
 
-@defer{ <lp-header /> }
-@defer{ <lp-footer /> }
+@defer (on immediate) {
+<lp-header />
+<lp-footer />
+}

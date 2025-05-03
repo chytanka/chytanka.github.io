@@ -21,6 +21,7 @@ section {
     place-items: center;
     overflow: hidden;
     counter-increment: read-order;
+    background: var(--bg-1);
 
     &::after {
         content: counter(read-order);

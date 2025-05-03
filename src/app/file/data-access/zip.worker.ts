@@ -11,7 +11,7 @@ addEventListener('message', ({ data }) => {
     .then(async zip => {
       const filesName: string[] = Object.keys(zip.files);
 
-      console.dir(zip.files)
+      // console.dir(zip.files)
 
       const comicInfoFile = getComicInfoFile(filesName)
 

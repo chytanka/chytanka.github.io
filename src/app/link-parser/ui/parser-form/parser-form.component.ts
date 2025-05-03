@@ -1,4 +1,4 @@
-import { Component, computed, inject, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { Base64 } from '../../../shared/utils';
@@ -11,16 +11,14 @@ import { ComickLinkParser } from '../../utils/comick-link-parser';
     selector: 'app-parser-form',
     templateUrl: './parser-form.component.html',
     styleUrl: './parser-form.component.scss',
-    standalone: false
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParserFormComponent {
-
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   setts = inject(LinkParserSettingsService)
   platformId = inject(PLATFORM_ID)
-
-
   link: WritableSignal<string> = signal('');
   linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
   linkParams64: Signal<any> = computed(() => {
@@ -30,21 +28,6 @@ export class ParserFormComponent {
       id: Base64.toBase64(foo.id)
     };
   });
-
-  supportFiles = signal([".zip", ".cbz", ".pdf", ".mobi"])
-
-  supportSites = signal([
-    "Imgur",
-    "Telegra.ph",
-    "Reddit",
-    "MangaDex",
-    "Zenko",
-    "Comick",
-    "NHentai",
-    "Yandere Pools",
-    "Blankary",
-    "Pixiv"
-  ].sort())
 
   constructor(public parser: LinkParserService, public lang: LangService) {
     this.initParser();
@@ -83,8 +66,6 @@ export class ParserFormComponent {
 
     if (!this.linkParams()) { this.link.set('') }
   }
-
-
 
   initUrl() {
 

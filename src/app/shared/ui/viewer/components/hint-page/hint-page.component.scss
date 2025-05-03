@@ -14,8 +14,9 @@ svg {
 
     text {
         text-anchor: middle;
-        font-family: 'Troubleside', monospace;
+        font-family:  monospace;
         direction: ltr;
+        text-transform: uppercase;
     }
 
     &.abs {
@@ -35,5 +36,6 @@ svg {
         font-style: italic;
         opacity: .8;
         font-family: 'EB Garamond';
+        text-transform: unset;
     }
 }

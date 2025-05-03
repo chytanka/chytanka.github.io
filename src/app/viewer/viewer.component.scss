@@ -1,0 +1,32 @@
+:host {
+    display: grid;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    align-content: center;
+}
+
+chtnk-page {
+    display: block;
+    width: 50%;
+    flex: 1 0 auto;
+    position: relative;
+}
+
+chtnk-page:nth-child(odd) {
+    scroll-snap-align: start;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+}
+
+.right-to-left chtnk-page:nth-child(odd) {
+    direction: ltr;
+}
+
+.left-to-right chtnk-page:nth-child(odd) {
+    direction: rtl;
+}

@@ -1,11 +1,59 @@
-<div class="wrap">
-    @for (item of historyItems() | async; track $index) {
-    <app-title-card [value]="item" (delete)="delById($event)" />
-    }
-</div>
+@let files = historyFiles() | async;
+@let sites = historyItems() | async;
 
-@if (historyItems() | async; as items) { @if (items.length > 0) {
-<button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearHistory()">
-    🧹 {{lang.ph().clearHistory}}
-</button>
-} @else {}}
+@if (sites && sites.length > 0) {
+<details>
+    <summary>
+        <span>SITES HISTORY</span>
+        @if ( sites.length > 0) {
+        <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearHistory()">
+            🧹
+        </button>
+        }
+    </summary>
+
+    <div class="wrap">
+        @for (item of sites; track $index) {
+        <app-title-card [value]="item" (delete)="delById($event)" />
+        }
+    </div>
+</details>
+}
+
+@if (files && files.length > 0) {
+<details open>
+    <summary>
+        <span>FILES HISTORY</span> |
+        <code>{{fileSize() | filesize}}</code> |
+        <code>{{fileCount()}}</code>
+        @if ( files.length > 0) {
+        <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearFileHistory()">
+            🧹
+        </button>
+        }
+    </summary>
+
+    <div class="wrap">
+        @for (item of files; track item.sha256;) {
+            @let ab = item.arrayBuffer;
+        <div>
+            <app-title-card [value]="{
+                site: (ab) ? ['file', item.format] : '',
+                post_id: (ab) ? item.sha256 : '',
+                cover: (item.cover.length>0)?item.cover : '/assets/no-image.svg',
+                title: item.title,
+                updated: item.updated,
+                id: item.id,
+                size: item.size,
+                page: item.page,
+                pages: item.pages
+            }" (delete)="delFileById($event)" />
+        </div>
+        }
+    </div>
+</details>
+}
+
+@if (files?.length ==0 && sites?.length ==0) {
+none
+}

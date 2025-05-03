@@ -73,6 +73,7 @@ img {
     background-color: var(--b);
     color: var(--f);
     box-shadow: var(--flat-shadow-medium);
+    list-style: none;
 
     &:hover {
         cursor: none;

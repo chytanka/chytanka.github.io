@@ -171,20 +171,29 @@ a[target="_blank"]:after {
 }
 
 :root {
-    --shc: #a8923e; //rgb(0, 39, 65);
+    --shc: #ffd60a; //rgb(0, 39, 65);
+    --avarage-l: 0.48;
+    --avarage-l-2: 0.36;
 
     @media (prefers-color-scheme: light) {
-        --shc: #74b5e8;
+        --shc: #166496;
     }
 
     & {
-        --flat-shadow-high: 1px 1px var(--shc),
-            2px 2px var(--shc),
-            3px 3px 0 -1px var(--shc),
-            4px 4px 0 -1px var(--shc);
+        --shadow-color: oklch(from var(--shc) var(--avarage-l-2) c h);
+        --shadow-distance: .25rem;
+        --shadow-distance-2: .5rem;
 
-        --flat-shadow-medium: 1px 1px var(--shc),
-            2px 2px var(--shc);
+        // --flat-shadow-high: 1px 1px var(--shc),
+        //     2px 2px var(--shc),
+        //     3px 3px 0 -1px var(--shc),
+        //     4px 4px 0 -1px var(--shc);
+
+        // --flat-shadow-medium: 1px 1px var(--shc),
+        //     2px 2px var(--shc);
+
+        --flat-shadow-medium: 1px 1px var(--surface), var(--shadow-distance) var(--shadow-distance) var(--shadow-color);
+        --flat-shadow-high: 1px 1px var(--surface), var(--shadow-distance-2) var(--shadow-distance-2) var(--shadow-color);
     }
 }
 

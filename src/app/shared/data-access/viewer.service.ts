@@ -26,7 +26,7 @@ export class ViewerService {
 
   public viewModeOption: WritableSignal<ViewModeOption> = signal(VIEV_MODE_OPTIONS[0]);
 
-  nightlight: WritableSignal<number> = signal(0);
+  nightlight: WritableSignal<number> = signal(6500);
 
   keyboard: boolean = (isPlatformBrowser(this.platformId)) && (navigator as any).keyboard;
 

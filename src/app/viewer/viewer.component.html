@@ -1,0 +1,20 @@
+@let pages = episode()?.images ?? [];
+
+<chtnk-pages class="right-to-left">
+    <chtnk-page ><h1>🌻📖</h1></chtnk-page>
+    @for (page of pages; track $index) {
+
+    @defer (on viewport) {
+    <chtnk-page>
+        <img [src]="page.src">
+    </chtnk-page>
+    } @placeholder {
+    <div></div>
+    }
+
+    }
+
+    <chtnk-page>🌻📚📖📕📘📗📙📓📒</chtnk-page>
+    @if (pages.length % 2 != 0) { <chtnk-page /> }
+
+</chtnk-pages>

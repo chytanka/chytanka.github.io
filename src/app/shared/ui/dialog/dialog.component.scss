@@ -33,6 +33,7 @@ dialog {
     .dialog-wrapper {
         display: grid;
         max-height: 100%;
+        width: 100%;
         grid-template: auto 1fr auto / 1fr;
         width: min(80vw, 60ch);
     }
@@ -90,7 +91,7 @@ dialog {
     }
 
     &[open] {
-        display: flex;
+        // display: flex;
         box-shadow:  var(--flat-shadow-high);
     }
 }

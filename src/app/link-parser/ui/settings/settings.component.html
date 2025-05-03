@@ -1,28 +1,117 @@
-<section>
-    <div>
-        
-        <p style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="label">🈚 {{lang.ph().language}}</span>
-            <small>{{lang.ph().getByKey(getLangValue(lang.lang()).hintPhraceKey)}}</small>
-        </p>
-        <p><small>{{lang.ph().settingLangDesc}}</small></p>
-    </div>
-    <div><app-lang-toggle /></div>
-</section>
+<fieldset>
+    <legend>🛠️ Base</legend>
 
-<section [class]="!setts.autoPasteLink()? 'inactive': ''">
-    <div>
-        <p style="display: flex; justify-content: space-between; align-items: center;">
-            <label class="label" for="autoPasteLink">📋 {{lang.ph().autoPasteLink}}</label>
-            @if(setts.autoPasteLink()) {
+    <section>
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="label">🈚 {{lang.ph().language}}</span>
+                <small>{{lang.ph().getByKey(getLangValue(lang.lang()).hintPhraceKey)}}</small>
+            </p>
+            <p><small>{{lang.ph().settingLangDesc}}</small></p>
+        </div>
+        <div><app-lang-toggle /></div>
+    </section>
+
+    @if(vibro.enabled()){
+    <section [class]="!vibro.vibrationOn()? 'inactive': ''">
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="Vibration">🫨 Vibration</label>
+                @if(vibro.vibrationOn()) {
                 <small class="on">ON</small>
-            } @else {
+                } @else {
                 <small class="off">OFF</small>
-            }
-        </p>
-        <p>
-            <small>{{lang.ph().settingAutoPasteLinkDesc}}</small>
-        </p>
-    </div>
-    <input type="checkbox" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)" id="autoPasteLink">
-</section>
+                }
+            </p>
+            <p>
+                <small>{{'Use Vibration API'}}</small>
+            </p>
+        </div>
+        <input type="checkbox" [checked]="vibro.vibrationOn()" (input)="setVibration($event)" id="Vibration">
+    </section>
+    }
+
+    <section [class]="!setts.autoPasteLink()? 'inactive': ''">
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="autoPasteLink">📋 {{lang.ph().autoPasteLink}}</label>
+                @if(setts.autoPasteLink()) {
+                <small class="on">ON</small>
+                } @else {
+                <small class="off">OFF</small>
+                }
+            </p>
+            <p>
+                <small>{{lang.ph().settingAutoPasteLinkDesc}}</small>
+            </p>
+        </div>
+        <input type="checkbox" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)" id="autoPasteLink">
+    </section>
+</fieldset>
+
+<fieldset>
+    <legend>🗐 Files</legend>
+
+    <section [class]="!fileSetts.saveFileToHistory()? 'inactive': ''">
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="saveFileToHistory">💾 Save Local Files in History</label>
+                @if(fileSetts.saveFileToHistory()) {
+                <small class="on">ON</small>
+                } @else {
+                <small class="off">OFF</small>
+                }
+            </p>
+            <p>
+                <small>{{'Automatically saves files opened locally.'}}</small>
+            </p>
+        </div>
+        <input type="checkbox" [checked]="fileSetts.saveFileToHistory()" (input)="setSaveFileToHistory($event)"
+            id="saveFileToHistory">
+    </section>
+
+    @if(fileSetts.saveFileToHistory()){
+    <section [class]="!fileSetts.copyFileToHistory()? 'inactive': ''">
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="copyFileToHistory">📄 Copy Local Files to History</label>
+                @if(fileSetts.copyFileToHistory()) {
+                <small class="on">ON</small>
+                } @else {
+                <small class="off">OFF</small>
+                }
+            </p>
+            <p>
+                <small>{{'Adds copies of local files to history.'}}</small>
+            </p>
+        </div>
+        <input type="checkbox" [checked]="fileSetts.copyFileToHistory()" (input)="setCopyFileToHistory($event)"
+            id="copyFileToHistory">
+    </section>
+
+    @if(fileSetts.copyFileToHistory()){
+    <section>
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="storageLimit">⛃ Storage Limit (Mb)</label>
+                <small>{{fileSetts.storageLimit()}}</small>
+            </p>
+            <p><small>{{'Mb'}}</small></p>
+        </div>
+        <input type="number" [value]="fileSetts.storageLimit()" (input)="setStorageLimit($event)" id="storageLimit">
+    </section>
+
+    <section>
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="retentionTime">⏱️ Retention Time</label>
+                <small>{{fileSetts.retentionTime()}}</small>
+            </p>
+            <p><small>{{'Days'}}</small></p>
+        </div>
+        <input type="number" [value]="fileSetts.retentionTime()" (input)="setRetentionTime($event)" id="retentionTime">
+    </section>
+    }
+    }
+
+</fieldset>

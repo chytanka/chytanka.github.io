@@ -5,18 +5,41 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class FileHashService {
-  public getMd5Hash(arrayBuffer: ArrayBuffer) {
-    const wordArray = this.arrayBufferToWordArray(arrayBuffer);
-    const md5Hash = CryptoJS.MD5(wordArray).toString();
-    return md5Hash;
-  }
+  // getSHA256(arrayBuffer: ArrayBuffer): string {
+  //   const wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(arrayBuffer) as any);
+  //   return CryptoJS.SHA256(wordArray).toString(CryptoJS.enc.Hex);
+  // }
 
-  private arrayBufferToWordArray(arrayBuffer: ArrayBuffer): CryptoJS.lib.WordArray {
-    const uint8Array = new Uint8Array(arrayBuffer);
-    const words: any[] = [];
-    for (let i = 0; i < uint8Array.length; i++) {
-      words[i >>> 2] |= uint8Array[i] << (24 - (i % 4) * 8);
+  async sha256(file: File): Promise<string> {
+    const sha256 = CryptoJS.algo.SHA256.create();
+    const sliceSize = 50_000_000; // 50 MiB
+    let start = 0;
+  
+    while (start < file.size) {
+      const slice: Uint8Array = await this.readSlice(file, start, sliceSize);
+      const wordArray = CryptoJS.lib.WordArray.create(slice);
+      sha256.update(wordArray);
+      start += sliceSize;
     }
-    return CryptoJS.lib.WordArray.create(words, uint8Array.length);
+  
+    return sha256.finalize().toString();
   }
+  
+  private async readSlice(file: File, start: number, size: number): Promise<Uint8Array> {
+    return new Promise<Uint8Array>((resolve, reject) => {
+      const fileReader = new FileReader();
+      const slice = file.slice(start, start + size);
+  
+      fileReader.onload = () => {
+        if (fileReader.result) {
+          resolve(new Uint8Array(fileReader.result as ArrayBuffer));
+        } else {
+          reject(new Error("FileReader returned no result."));
+        }
+      };
+      fileReader.onerror = () => reject(fileReader.error || new Error("FileReader failed."));
+      fileReader.readAsArrayBuffer(slice);
+    });
+  }
+  
 }

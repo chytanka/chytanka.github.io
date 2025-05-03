@@ -1,0 +1,20 @@
+:host.right-to-left,
+:host.left-to-right {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    user-select: none;
+    touch-action: pan-x;
+}
+
+:host.right-to-left,
+:host.vertical {
+    direction: rtl;
+}
+
+:host.left-to-right {
+    direction: ltr;
+}

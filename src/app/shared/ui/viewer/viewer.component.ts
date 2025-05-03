@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, output, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../@site-modules/@common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,21 +16,23 @@ const CHTNK_LIST_RESPONCE_EVENT_NAME = 'listresponse'
 const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
 
 @Component({
-    selector: 'app-viewer',
-    templateUrl: './viewer.component.html',
-    styleUrls: [
-        './viewer.component.scss',
-        './viewer.pages.component.scss',
-        './viewer.long.component.scss',
-        '../../../shared/ui/@styles/details.scss',
-        '../../../shared/ui/@styles/input-group.scss'
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-viewer',
+  templateUrl: './viewer.component.html',
+  styleUrls: [
+    './viewer.component.scss',
+    './viewer.pages.component.scss',
+    './viewer.long.component.scss',
+    '../../../shared/ui/@styles/details.scss',
+    '../../../shared/ui/@styles/input-group.scss'
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class ViewerComponent implements AfterViewInit {
   readonly separator: string = '│'
   showNsfw: WritableSignal<boolean> = signal(false);
+
+  pagechange = output<{ total: number, current: number[] }>()
 
   @Input() episode: CompositionEpisode | undefined = undefined;
   @Input() playlist: Playlist = [];
@@ -129,18 +131,18 @@ export class ViewerComponent implements AfterViewInit {
     }
 
     // this.showOverlay = false;
-    console.log();
-    
+    // console.log();
+
     // if (JSON.stringify(this.activeIndexs()) !== JSON.stringify(activeIndxs))
-      this.activeIndexs.set(activeIndxs);
+    this.activeIndexs.set(activeIndxs);
 
 
+    const total = this.episode?.images.length
+    const current = activeIndxs.map(i => i + 1)
 
+    this.embedHelper.postMessage({ total, current }, CHTNK_CHANGE_PAGE_EVENT_NAME);
 
-    this.embedHelper.postMessage({
-      total: this.episode?.images.length,
-      current: activeIndxs.map(i => i + 1)
-    }, CHTNK_CHANGE_PAGE_EVENT_NAME);
+    this.pagechange.emit({ total: Number(total), current })
 
   }
 

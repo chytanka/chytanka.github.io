@@ -4,6 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ViewModeOption } from './viewer.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { VibrationService } from './vibration.service';
 
 const LANG_OPTIONS: ViewModeOption[] = [
   { dir: "rtl", mode: "pages", hintPhraceKey: "english", code: "en", emoji: "🇬🇧" },
@@ -26,6 +27,8 @@ export class LangService {
   langOpt = LANG_OPTIONS
   platformId = inject(PLATFORM_ID)
   private readonly document = inject(DOCUMENT);
+  vibro = inject(VibrationService)
+
 
   lang: WritableSignal<string> = signal(
     (!isPlatformBrowser(this.platformId)) ? DEFAULT_LANG :
@@ -48,6 +51,8 @@ export class LangService {
     
     localStorage.setItem(LANG_STORAGE_NAME, lang)
     this.updateTranslate();
+
+    this.vibro.vibrateLangToggle(this.lang())
   }
 
   updateManifest() {

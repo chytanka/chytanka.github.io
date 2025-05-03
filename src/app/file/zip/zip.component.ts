@@ -1,34 +1,61 @@
-import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FileService } from '../data-access/file.service';
 import { SharedModule } from '../../shared/shared.module';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read';
 import { DomManipulationService } from '../../shared/data-access';
 import { ComicInfo } from '../../shared/utils/comic-info';
 import { Acbf } from '../../shared/utils/acbf';
+import { FileHashService } from '../data-access/file-hash.service';
+import { FileHistoryService } from '../data-access/file-history.service';
+import { FileSettingsService } from '../data-access/file-settings.service';
+import { map } from 'rxjs';
+import { ViewerComponent } from "../../viewer/viewer.component";
 
 @Component({
-    selector: 'app-zip',
-    imports: [SharedModule],
-    templateUrl: './zip.component.html',
-    styleUrl: './zip.component.scss'
+  selector: 'app-zip',
+  imports: [SharedModule, /*ViewerComponent*/],
+  templateUrl: './zip.component.html',
+  styleUrl: './zip.component.scss'
 })
 export class ZipComponent implements OnInit, OnDestroy {
   private worker!: Worker;
-  
+  fileHash = inject(FileHashService)
+  fileHistory = inject(FileHistoryService)
+  fileSetts = inject(FileSettingsService)
+
+  sha256: string | undefined;
+  arrayBuffer: ArrayBuffer | undefined
+
   episode: CompositionEpisode | undefined;
 
   router = inject(Router)
+  private activatedRoute = inject(ActivatedRoute);
   dm = inject(DomManipulationService)
   fs = inject(FileService)
+  status = signal('')
 
   constructor() {
     this.initZipWorker()
 
     effect(() => { this.fileChange(); });
   }
+  sha256Params: string = '';
+  ngOnInit() {
+    this.sha256Params = this.activatedRoute.snapshot.params['sha256']
 
-  ngOnInit() { }
+    if (this.sha256Params && this.sha256Params != '')
+      this.loadFromHistory(this.sha256Params)
+  }
+
+  async loadFromHistory(sha256: string) {
+    const { arrayBuffer, title } = await this.fileHistory.getItemBySha256(sha256)
+    if (!arrayBuffer) return;
+
+    this.sha256 = sha256
+    this.arrayBuffer = arrayBuffer
+    this.openArrayBuffer(arrayBuffer, title, sha256)
+  }
 
   ngOnDestroy() {
     this.terminateWorker()
@@ -46,10 +73,10 @@ export class ZipComponent implements OnInit, OnDestroy {
     .set('acbf', this.acbfHandler.bind(this))
 
 
-    private acbfHandler(msg: any) {
-      const acbf = new Acbf(msg.data)
-  
-    }
+  private acbfHandler(msg: any) {
+    const acbf = new Acbf(msg.data)
+
+  }
 
   private comicinfoHandler(msg: any) {
     const comicInfo = new ComicInfo(msg.data)
@@ -66,6 +93,20 @@ export class ZipComponent implements OnInit, OnDestroy {
 
     if (this.episode) {
       this.episode.images = imgs
+
+      const obj = {
+        arrayBuffer: (this.fileSetts.copyFileToHistory()) ? this.arrayBuffer : null,
+        sha256: this.sha256,
+        pages: this.episode.images.length,
+        size: this.fs.file()?.size,
+        page: 1,
+        cover: '',
+        title: this.fs.file()?.name,
+        format: 'zip'
+      }
+
+      if (this.fileSetts.saveFileToHistory()) this.fileHistory.addHistory(obj)
+
     }
   }
   private fileHandler(msg: any) {
@@ -90,20 +131,30 @@ export class ZipComponent implements OnInit, OnDestroy {
   }
 
   fileChange() {
+    this.status.set(`Opening file: ${this.fs.file()?.name}`)
     const file = this.fs.file();
     if (file && this.worker) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const arrayBuffer = reader.result as ArrayBuffer;
-        this.episode = {
-          title: file.name,
-          images: []
-        }
-        this.worker.postMessage({ arrayBuffer: arrayBuffer });
+        this.arrayBuffer = reader.result as ArrayBuffer;
+
+        this.openArrayBuffer(this.arrayBuffer, file.name)
       };
       reader.readAsArrayBuffer(file);
     } else {
-      this.router.navigateByUrl('/')
+      // this.router.navigateByUrl('/')
     }
+  }
+
+  async openArrayBuffer(ab: ArrayBuffer, filename: string, sha256: string = '') {
+    if (sha256 == '') this.sha256 = await this.fileHash.sha256(this.fs.file() as File)
+
+    this.episode = { title: filename, images: [] }
+    this.worker.postMessage({ arrayBuffer: ab });
+  }
+
+  onPageChange(e: { total: number, current: number[] }) {
+    const { current, total } = e
+    console.log(`${current}/${total}`);
   }
 }

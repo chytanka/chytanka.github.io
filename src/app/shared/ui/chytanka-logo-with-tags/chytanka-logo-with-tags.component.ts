@@ -9,7 +9,7 @@ type Coordinate = { x: number; y: number };
 
   templateUrl: './chytanka-logo-with-tags.component.html',
   styleUrl: './chytanka-logo-with-tags.component.scss',
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChytankaLogoWithTagsComponent {
   version = environment.version;

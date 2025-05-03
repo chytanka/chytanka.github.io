@@ -2,11 +2,12 @@ import { Component, HostListener, PLATFORM_ID, WritableSignal, inject, signal } 
 import { LangService } from './shared/data-access/lang.service';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { environment } from '../environments/environment';
 
 const SCALE_GAP = 128;
 
 @Component({
-    selector: 'app-root',
+    selector: 'chtnk-root',
     template: `<div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div>`,
     styles: [`
     // :host {
@@ -23,7 +24,7 @@ export class AppComponent {
     this.lang.updateManifest()
     this.lang.updateTranslate()
 
-    if (isPlatformBrowser(this.platformId) && window.console) {
+    if (isPlatformBrowser(this.platformId) && window.console && environment.prod) {
       const msg = `What are you looking for here? The plot twist is in the next volume!`
       console.log(`%c${msg}`,  "background-color: #166496; color: #ffd60a; font-size: 4rem; font-family:  monospace; padding: 8px 16px");
   }

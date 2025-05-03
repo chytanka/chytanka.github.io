@@ -1,4 +1,4 @@
-:host {
+:host, fieldset {
     display: grid;
     gap: 2ch;
 }
@@ -75,4 +75,15 @@ overflow: hidden;
             }
         }
     }
+}
+
+fieldset {
+    padding: 2ch;
+    border: 1px dashed #16649680;
+    border-radius: var(--r);
+}
+
+input[type=number] {
+    width: 8ch;
+    text-align: center;
 }

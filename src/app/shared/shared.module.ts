@@ -24,6 +24,9 @@ import { ViewerHeaderComponent } from './ui/viewer/components/viewer-header/view
 import { MangaPageEvenComponent } from './ui/manga-page/manga-page-even.component';
 import { FileChangeComponent } from './ui/file-change/file-change.component';
 import { ChytankaLogoWithTagsComponent } from './ui/chytanka-logo-with-tags/chytanka-logo-with-tags.component';
+import { FileSizePipe } from './pipes/filesize.pipe';
+import { RoughPaperComponent } from './ui/filters/rough-paper/rough-paper.component';
+import { SharpenComponent } from './ui/filters/sharpen/sharpen.component';
 
 
 
@@ -50,13 +53,16 @@ import { ChytankaLogoWithTagsComponent } from './ui/chytanka-logo-with-tags/chyt
     ViewerHeaderComponent,
     MangaPageEvenComponent,
     FileChangeComponent,
-    ChytankaLogoWithTagsComponent
+    ChytankaLogoWithTagsComponent,
+    FileSizePipe
   ],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    RoughPaperComponent,
+    SharpenComponent
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe]
 })
 export class SharedModule { }

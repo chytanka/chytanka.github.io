@@ -44,7 +44,7 @@ export class ParserFormComponent {
     this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new YandereParser)
     this.parser.parsers.push(new PixivLinkParser)
-    this.parser.parsers.push(new BlankaryLinkParser)
+    // this.parser.parsers.push(new BlankaryLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 
@@ -107,7 +107,7 @@ export class ParserFormComponent {
     comick: '//comick.io/favicon.ico',
     yandere: '//yande.re/favicon.ico',
     pixiv: '//pixiv.net/favicon.ico',
-    blankary: '//blankary.com/favicon.ico',
+    // blankary: '//blankary.com/favicon.ico',
     read: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>'
   }
 }

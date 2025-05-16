@@ -8,7 +8,7 @@
 
 Chytanka supports opening episodes from the following platforms:
 
-- [x] [Blankary](https://blankary.com)
+- [x] ~~[Blankary](https://blankary.com)~~ (image support has been discontinued)
 - [x] [Comick](https://comick.io)
 - [x] [Imgur](https://imgur.com)
 - [x] [Mangadex](https://mangadex.org)

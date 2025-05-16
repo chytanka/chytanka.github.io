@@ -17,7 +17,7 @@ export class LinkParserService {
     "Comick",
     "NHentai",
     "Yandere Pools",
-    "Blankary",
+    // "Blankary",
     "Pixiv"
   ].sort())
 

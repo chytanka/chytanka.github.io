@@ -31,7 +31,7 @@ export const BLANKARY_PATH = 'blankary';
 export const FILE_PATH = 'file';
 
 const linkParserMod: LoadChildrenCallback = () => import('./link-parser/link-parser.module').then(m => m.LinkParserModule)
-const blankaryMod = () => import('./@site-modules/blankary/blankary-shell.component')
+// const blankaryMod = () => import('./@site-modules/blankary/blankary-shell.component')
 const comickMod = () => import('./@site-modules/comick/comick-shell.component')
 const imgurMod = () => import('./@site-modules/imgur/imgur-shell.component')
 const mangadexMod = () => import('./@site-modules/mangadex/mangadex-shell.component')
@@ -49,7 +49,7 @@ const COMPARE_OUTLET_NAME = 'right'
 type LoadComponentType = (() => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>) | undefined;
 
 const siteModulesMap = new Map<string, LoadComponentType>()
-  .set(BLANKARY_PATH + '/:id', blankaryMod)
+  // .set(BLANKARY_PATH + '/:id', blankaryMod)
   .set(COMICK_PATH + '/:id', comickMod)
   .set(IMGUR_PATH + '/:id', imgurMod)
   .set(MANGADEX_PATH + '/:id', mangadexMod)

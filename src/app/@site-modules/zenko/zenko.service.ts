@@ -32,7 +32,7 @@ export class ZenkoService {
 
       images: (data.pages.map((item: any) => {
         return {
-          src: item.imgUrl
+          src: item.imgUrl || item.content
         };
       })).filter((i: any) => i.src).map((img: any) => { return { src: this.proxy.proxyUrl(`https://zenko.b-cdn.net/${img.src}?optimizer=image&width=900&quality=90&height=auto`) } })
       

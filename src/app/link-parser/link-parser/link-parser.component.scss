@@ -20,8 +20,35 @@
         }
     }
 
+    &.pride {
+        --pride-red: oklch(from #e40303 0.2624 0.064157 h);
+        --pride-ora: oklch(from #ff8c00 0.2624 0.064157 h);
+        --pride-yel: oklch(from #ffed00 0.2624 0.064157 h);
+        --pride-gre: oklch(from #008026 0.2624 0.064157 h);
+        --pride-blu: oklch(from #004dff 0.2624 0.064157 h);
+        --pride-fio: oklch(from #750787 0.2624 0.064157 h);
+        background: linear-gradient(120deg, var(--pride-red), var(--pride-ora), var(--pride-yel), var(--pride-gre), var(--pride-blu), var(--pride-fio));
+    }
+
+    &.halloween {
+        background: #222;
+    }
+
     @media (prefers-color-scheme: light) {
         background: #eceff2;
+
+        &.pride {
+            --pride-red: oklch(from #e40303 0.96 0.0128 h);
+            --pride-ora: oklch(from #ff8c00 0.96 0.0128 h);
+            --pride-yel: oklch(from #ffed00 0.96 0.0128 h);
+            --pride-gre: oklch(from #008026 0.96 0.0128 h);
+            --pride-blu: oklch(from #004dff 0.96 0.0128 h);
+            --pride-fio: oklch(from #750787 0.96 0.0128 h);
+        }
+
+        &.halloween {
+            background: #f9ece5;
+        }
     }
 }
 
@@ -81,6 +108,7 @@ lp-header {
 }
 
 :host:has(input[type=url]:focus) {
+
     lp-footer,
     lp-header,
     #createListLink {

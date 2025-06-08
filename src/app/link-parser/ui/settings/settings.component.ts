@@ -28,6 +28,12 @@ export class SettingsComponent {
 
   }
 
+  setSeasonalTheme(e: Event) {
+    this.setts.setSeasonalTheme((e.target as HTMLInputElement).checked)
+    //
+
+  }
+
   setSaveFileToHistory(e: Event) {
     this.fileSetts.setSaveFileToHistory((e.target as HTMLInputElement).checked)
 

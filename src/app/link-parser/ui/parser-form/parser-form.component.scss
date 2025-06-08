@@ -42,6 +42,105 @@ app-text-embracer {
     }
 }
 
+::ng-deep app-text-embracer.pride>span {
+    --theme-base: #166496;
+    --shc: oklch(from var(--theme-base) var(--avarage-l-2) c h);
+    --border-color: oklch(from var(--theme-base) .64 0.2 h);
+    --dot-color: oklch(from var(--theme-base) .7 0.2 h);
+    color: oklch(from var(--theme-base) .7 0.2 h);
+    -webkit-text-stroke: var(--shc) var(--border-width);
+
+    // --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
+
+    border-image: linear-gradient(90deg, #e40303, #ff8c00, #ffed00, #008026, #004dff, #750787);
+    border-image-slice: 1;
+
+    &:nth-of-type(2),
+    &:nth-of-type(1) {
+        --theme-base: #e40303;
+    }
+
+    &:nth-of-type(3) {
+        --theme-base: #ff8c00;
+    }
+
+    &:nth-of-type(4) {
+        --theme-base: #ffed00;
+    }
+
+    &:nth-of-type(5) {
+        --theme-base: #008026;
+    }
+
+    &:nth-of-type(6) {
+        --theme-base: #004dff;
+    }
+
+    &:nth-of-type(7) {
+        --theme-base: #750787;
+    }
+}
+
+::ng-deep app-text-embracer.pride:has(span:nth-of-type(8))>span {
+
+    &:nth-of-type(3),
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
+        --theme-base: #e40303;
+    }
+
+    &:nth-of-type(4) {
+        --theme-base: #ff8c00;
+    }
+
+    &:nth-of-type(5) {
+        --theme-base: #ffed00;
+    }
+
+    &:nth-of-type(6) {
+        --theme-base: #008026;
+    }
+
+    &:nth-of-type(7) {
+        --theme-base: #004dff;
+    }
+
+    &:nth-of-type(8) {
+        --theme-base: #750787;
+    }
+}
+
+@property --halloween-base {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #FF7518;
+}
+
+::ng-deep app-text-embracer.halloween>span {
+    --shc: oklch(from var(--halloween-base) var(--avarage-l-2) c h);
+    --border-color: oklch(from var(--halloween-base) .64 0.2 h);
+    --dot-color: oklch(from var(--halloween-base) .7 0.2 h);
+    color: oklch(from var(--halloween-base) .7 0.2 h);
+    -webkit-text-stroke: var(--shc) var(--border-width);
+
+    animation: halloween 5s steps(3) alternate infinite;
+}
+
+@keyframes halloween {
+    0% {
+        --halloween-base: #A0FF00;
+        
+    }
+
+    50% {
+      --halloween-base: #FF7518;
+    }
+
+    100% {
+          --halloween-base: #6C2DC7;
+    }
+}
+
 .form-wrapper {
     grid-column: 2;
     display: grid;
@@ -72,7 +171,7 @@ textarea {
     border: 2px solid #166496;
     box-shadow: var(--flat-shadow-medium);
     border: 0;
-    background-color: #16649680;
+    // background-color: #16649680;
     color: #ffd60a;
 
     @media (prefers-color-scheme: light) {
@@ -123,6 +222,22 @@ input[type=url]::placeholder {
     font-style: italic;
     opacity: .72;
     text-wrap: balance;
+}
+
+.slogan-rainbow {
+    background: linear-gradient(90deg, #ff826e, #ff9600, #d5c100, #54de68, #78b8ff, #f68dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    filter: brightness(1.25);
+
+    @media (prefers-color-scheme: light) {
+        filter: brightness(0.8);
+    }
+}
+
+.slogan-halloween {
+    color: #FF7518;
 }
 
 .go-btn {

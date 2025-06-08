@@ -1,9 +1,9 @@
 <div class="form-wrapper">
-  <h1 class="logo-text"> <app-text-embracer [text]="lang.ph().shortTitle" /> </h1>
+  <h1 class="logo-text"> <app-text-embracer [ngClass]="setts.theme()" [text]="lang.ph().shortTitle" /> </h1>
   <div style="display: flex; gap: 1ch;  align-items: center;">
     <form (submit)="onSubmit()">
-      <input name="chtnk_url" type="url" required autofocus
-        [placeholder]="lang.ph().enterLink" (input)="inputLink($event)" [value]="link()">
+      <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink"
+        (input)="inputLink($event)" [value]="link()">
     </form>
   </div>
   <div style="display: flex; gap: 1ch; align-items: center;">
@@ -13,10 +13,21 @@
 </div>
 
 <div class="slogan-wrapper">
-  <h2 class="slogan-header">{{lang.ph().slogan}}</h2>
+  <h2 class="slogan-header">
+    @if (setts.seasonalTheme != undefined && setts.seasonalTheme()) {
+    @switch (setts.theme()) {
+    @case ('pride') {<span class="slogan-rainbow"> {{lang.ph().sloganPride}}</span> 🏳️‍🌈}
+    @case ('halloween') {<span class="slogan-halloween"> {{lang.ph().sloganHalloween}}</span> 🕷️}
+    @case ('newyear') {<span class="slogan-newyear"> {{lang.ph().sloganNewYear}}</span> 🎇}
+    @case ('valentine') {<span class="slogan-valentine"> {{lang.ph().sloganValentine}}</span> ❤️📖}
+    }
+    }
+    @else {
+    {{lang.ph().slogan}}
+    }
+  </h2>
   @if (linkParams()) {
-  <a class="button primary large go-btn"
-    [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
+  <a class="button primary large go-btn" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
     <span>{{lang.ph().letsgo}} </span>
     <img class="favicon" [src]="favicons[linkParams()?.site]" [alt]="linkParams()?.site">
     <small class="site-address" [title]="linkParams()?.id">{{linkParams()?.id | truncate}}</small>

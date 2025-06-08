@@ -1,7 +1,7 @@
 const PROXY = `https://proxy.chytanka.ink/api?url=`
 
 export const environment = {
-    version: "0.14.31-2025.5.3",
+    version: "0.13.32-2025.6.8",
     prod: true,
     proxy: PROXY,
     blankaryoHost: `https://blankary.com/page/`,

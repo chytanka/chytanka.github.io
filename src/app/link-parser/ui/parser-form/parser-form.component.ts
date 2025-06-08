@@ -8,11 +8,11 @@ import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkPar
 import { ComickLinkParser } from '../../utils/comick-link-parser';
 
 @Component({
-    selector: 'app-parser-form',
-    templateUrl: './parser-form.component.html',
-    styleUrl: './parser-form.component.scss',
-    standalone: false,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-parser-form',
+  templateUrl: './parser-form.component.html',
+  styleUrl: './parser-form.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParserFormComponent {
   private router: Router = inject(Router);
@@ -85,7 +85,7 @@ export class ParserFormComponent {
     if (queryParamUrl) {
       this.link.set(queryParamUrl ?? '')
     } else {
-      if (this.setts.autoPasteLink()) this.initFromclipboard();
+      if (this.setts.autoPasteLink && this.setts.autoPasteLink()) this.initFromclipboard();
     }
   }
 

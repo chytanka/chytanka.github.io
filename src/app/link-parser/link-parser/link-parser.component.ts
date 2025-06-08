@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostBinding, inject } from '@angular/core';
 import { LangService } from '../../shared/data-access/lang.service';
 import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 import { LinkParserService } from '../data-access/link-parser.service';
+import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
 
 @Component({
   selector: 'app-link-parser',
@@ -11,12 +12,16 @@ import { LinkParserService } from '../data-access/link-parser.service';
     './link-parser.dual-screen.component.scss'
   ],
   standalone: false,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class]': 'this.setts.theme()'
+  }
 })
 export class LinkParserComponent {
   private meta: MetaTagsService = inject(MetaTagsService);
   private lang: LangService = inject(LangService)
   public parser: LinkParserService = inject(LinkParserService)
+  public setts = inject(LinkParserSettingsService)
 
   constructor() {
     this.initMeta()

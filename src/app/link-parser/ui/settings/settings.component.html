@@ -47,6 +47,23 @@
         </div>
         <input type="checkbox" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)" id="autoPasteLink">
     </section>
+
+    <section [class]="!setts.seasonalTheme()? 'inactive': ''">
+        <div>
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="label" for="seasonalTheme">🎨 {{lang.ph().seasonalTheme}}</label>
+                @if(setts.seasonalTheme()) {
+                <small class="on">ON</small>
+                } @else {
+                <small class="off">OFF</small>
+                }
+            </p>
+            <p>
+                <small>{{lang.ph().seasonalThemeDesc}}</small>
+            </p>
+        </div>
+        <input type="checkbox" [checked]="setts.seasonalTheme()" (input)="setSeasonalTheme($event)" id="seasonalTheme">
+    </section>
 </fieldset>
 
 <fieldset>

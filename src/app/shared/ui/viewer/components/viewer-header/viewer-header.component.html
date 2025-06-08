@@ -10,7 +10,7 @@
     <button class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
     <!-- <button class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
     }
-    <span class="title">{{episode?.title}}</span>
+    <span class="title" [title]="episode?.title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />
 </app-overlay>

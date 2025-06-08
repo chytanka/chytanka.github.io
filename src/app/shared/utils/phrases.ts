@@ -4,6 +4,10 @@ export class Phrases {
     enterLink: string = "Enter link to episode on the supported sites";
     orOpenFile = "or open file"
     slogan: string = "and read it easily and comfortably!";
+    sloganPride: string = "Read freely! Love boldly!";
+    sloganHalloween: string = "Read if you dare...";
+    sloganNewYear: string = "Read cozy. Dream big.";
+    sloganValentine: string = "Swipe pages, not just profiles.";
     letsgo: string = "Let's go"
     dataLoadErr: string = "Data loading error. Please try again later."
     imagesVia: string = "Images via "
@@ -15,7 +19,7 @@ export class Phrases {
     scrollDown: string = "Scroll down";
     nightlight: string = "Nightlight";
     nsfwWarnTitle: string = "⚠️🔞 NSFW Content"
-    nsfwWarnText: string = "2The following content may be <b>Not Safe For Work</b>. Viewer discretion is advised."
+    nsfwWarnText: string = "2The following content may be <b>Not Safe For Work</b>. Viewer discretion is advised." 
     nsfwLabelAgree: string = "Ready for the wild side!"
     nsfwLabelDisagree: string = "I'll pass, let's keep it safe."
     ukrainian: string = "Українська"
@@ -53,7 +57,8 @@ export class Phrases {
         "This page went off to binge manga and forgot to return.",
         "Looks like this page turned into the mysterious Volume 404.",
     ]
-
+    seasonalTheme = `SeasonalTheme`;
+    seasonalThemeDesc = `🏳️‍🌈 Pride month, 🎃 Halloween, 🎄 New Year, 💖 Valentine etc.`;
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

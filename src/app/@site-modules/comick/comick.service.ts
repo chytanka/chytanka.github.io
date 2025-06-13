@@ -13,8 +13,7 @@ export class ComickService {
   proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    // this.proxy.proxyUrl()
-    return this.http.get<any>((environment.comickHost + id))
+    return this.http.get<any>(this.proxy.proxyUrl(environment.comickHost + id))
       .pipe(map((data) => { return this.map(data) }))
   }
 

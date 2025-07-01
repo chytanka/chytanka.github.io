@@ -1,19 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CompositionEpisode, CompositionPublisher } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PixivService {
+  platformId = inject(PLATFORM_ID)
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(this.proxy.proxyUrl(environment.pixivHost + id))
+    const url = isPlatformServer(this.platformId)
+      ? environment.pixivHost + id
+      : this.proxy.proxyUrl(environment.pixivHost + id);
+
+    return this.http.get<any>(url)
       .pipe(map((data) => { return this.map(data.body) }))
   }
 

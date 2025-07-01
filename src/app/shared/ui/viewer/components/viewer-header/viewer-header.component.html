@@ -1,7 +1,7 @@
 <app-overlay class="top" [ngClass]="{'show': show}">
     @if(!embedHelper.isEmbedded()){
     <a class="button " [routerLink]="['/']">🏠</a>
-    <app-file-change />
+    <app-file-change [label]="'📃'"/>
     } @else {
         <a title="Read on Chytanka" class="button open-chtnk-link" [href]="link()" target="_blank" rel="noopener noreferrer"></a>
     }
@@ -10,7 +10,7 @@
     <button class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
     <!-- <button class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
     }
-    <span class="title" [title]="episode?.title">{{episode?.title}}</span>
+    <span class="title button" [title]="episode?.title">{{episode?.title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />
 </app-overlay>

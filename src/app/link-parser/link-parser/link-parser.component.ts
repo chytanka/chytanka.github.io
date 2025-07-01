@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, HostBinding, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LangService } from '../../shared/data-access/lang.service';
 import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-link-parser',
@@ -23,8 +24,13 @@ export class LinkParserComponent {
   public parser: LinkParserService = inject(LinkParserService)
   public setts = inject(LinkParserSettingsService)
 
-  constructor() {
-    this.initMeta()
+  constructor() { }
+
+  ngOnInit() {
+    // this.initMeta()
+    this.lang.langChanged$.pipe(take(1)).subscribe(() => {
+      this.initMeta()
+    });
   }
 
   initMeta() {

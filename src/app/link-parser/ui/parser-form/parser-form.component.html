@@ -1,15 +1,16 @@
 <div class="form-wrapper">
   <h1 class="logo-text"> <app-text-embracer [ngClass]="setts.theme()" [text]="lang.ph().shortTitle" /> </h1>
-  <div style="display: flex; gap: 1ch;  align-items: center;">
+  <!-- <div style="display: flex; gap: 1ch;  align-items: center;"> -->
     <form (submit)="onSubmit()">
-      <input name="chtnk_url" type="url" required autofocus [placeholder]="lang.ph().enterLink"
+      <input name="chtnk_url" type="url" required autofocus [placeholder]="'🔗 '+lang.ph().enterLink"
         (input)="inputLink($event)" [value]="link()">
     </form>
-  </div>
-  <div style="display: flex; gap: 1ch; align-items: center;">
+  <!-- </div> -->
+  <!-- <div style="display: flex; gap: 1ch; align-items: center;">
     <span style="font-family: 'Courier New', Courier, monospace; opacity: .8;">{{lang.ph().orOpenFile}}</span>
     <app-file-change style="margin-left: auto;" [accept]="parser.supportFiles()" />
-  </div>
+  </div> -->
+  <app-file-change [accept]="parser.supportFiles()" [label]="'📃 '+lang.ph().orOpenFile+' ('+parser.supportFiles()+')'"/>
 </div>
 
 <div class="slogan-wrapper">

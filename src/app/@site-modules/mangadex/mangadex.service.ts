@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { CompositionEpisode, CompositionImage } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { isPlatformServer } from '@angular/common';
 
 interface MdChapterImages {
   hash: string;
@@ -63,11 +64,16 @@ interface MdMangaResp {
   providedIn: 'root'
 })
 export class MangadexService {
+  platformId = inject(PLATFORM_ID)
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
   getChapterImages(id: string): Observable<CompositionImage[]> {
-    return this.http.get<MdChapterImagesResp>(this.proxy.proxyUrl(environment.mangadexHost + id))
+    const url = isPlatformServer(this.platformId)
+      ? environment.mangadexHost + id
+      : this.proxy.proxyUrl(environment.mangadexHost + id);
+
+    return this.http.get<MdChapterImagesResp>(url)
       .pipe(
         map((data: MdChapterImagesResp) => data.chapter.dataSaver.map((item: string) => {
           return {
@@ -81,7 +87,11 @@ export class MangadexService {
   }
 
   getChapter(id: string): Observable<CompositionEpisode> {
-    return this.http.get<MdChapterResp>(this.proxy.proxyUrl(environment.mangadexChapter + id))
+    const url = isPlatformServer(this.platformId)
+      ? environment.mangadexChapter + id
+      : this.proxy.proxyUrl(environment.mangadexChapter + id);
+
+    return this.http.get<MdChapterResp>(url)
       .pipe(
         map((data: MdChapterResp) => {
           return {
@@ -99,7 +109,11 @@ export class MangadexService {
 
 
   getManga(id: string): Observable<{ nsfw: boolean }> {
-    return this.http.get<MdMangaResp>(this.proxy.proxyUrl(environment.mangadexManga + id)).pipe(this.nsfwMap())
+    const url = isPlatformServer(this.platformId)
+      ? environment.mangadexManga + id
+      : this.proxy.proxyUrl(environment.mangadexManga + id);
+
+    return this.http.get<MdMangaResp>(url).pipe(this.nsfwMap())
   }
 
   nsfwMap() {

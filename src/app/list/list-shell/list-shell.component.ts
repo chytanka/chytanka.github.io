@@ -4,16 +4,17 @@ import { BlankaryLinkParser, ImgurLinkParser, JsonLinkParser, LinkParser, Mangad
 import { DomManipulationService } from '../../shared/data-access';
 import { LangService } from '../../shared/data-access/lang.service';
 import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
+import { ImgchestLinkParser } from '../../link-parser/utils/imgchest-link-parser';
 
 
 @Component({
-    selector: 'app-list-shell',
-    templateUrl: './list-shell.component.html',
-    styleUrls: [
-        './list-shell.component.scss',
-        '../../shared/ui/@styles/input-group.scss'
-    ],
-    standalone: false
+  selector: 'app-list-shell',
+  templateUrl: './list-shell.component.html',
+  styleUrls: [
+    './list-shell.component.scss',
+    '../../shared/ui/@styles/input-group.scss'
+  ],
+  standalone: false
 })
 export class ListShellComponent {
   public inputValue: WritableSignal<string> = signal<string>('')
@@ -92,6 +93,7 @@ export class ListShellComponent {
     this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new YandereParser)
     this.parser.parsers.push(new PixivLinkParser)
+    this.parser.parsers.push(new ImgchestLinkParser)
     // this.parser.parsers.push(new BlankaryLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }

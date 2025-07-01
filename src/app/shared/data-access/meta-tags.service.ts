@@ -65,7 +65,7 @@ export class MetaTagsService {
   setOg() {
     this.meta.updateTag({ property: 'og:site_name', content: 'Chytanka' })
     this.meta.updateTag({ property: 'og:locale', content: 'uk_UA' })
-    this.meta.updateTag({ property: 'og:type', content: 'object' })
+    this.meta.updateTag({ property: 'og:type', content: 'website' })
   }
 
   setOgUrl(url: string) {

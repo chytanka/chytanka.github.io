@@ -29,8 +29,9 @@
                 [labelDisagree]="lang.ph().nsfwLabelDisagree" />
             }
             <figure [class]="{nsfw:episode?.nsfw, show: episode?.nsfw && showNsfw()}">
-                <img crossorigin="anonymous" [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt" [width]="img.width ?? 1000"
-                    [height]="img.height ?? 1000" [loading]="(i==0 || preLoad(i)) ? 'eager' : 'lazy'">
+                <img crossorigin="anonymous" [id]="'page_'+(i+1)" [src]="img.src" [alt]="img.alt"
+                    [width]="img.width ?? 1000" [height]="img.height ?? 1000"
+                    [loading]="(i==0 || preLoad(i)) ? 'eager' : 'lazy'">
             </figure>
         </div>
     </div>
@@ -39,8 +40,8 @@
     }
     <div>
         <div class="page">
-            <figure>
-                <app-manga-page-even [dir]="viewer.viewModeOption().dir">
+            <figure class="last-hint-page" [class]="viewer.viewModeOption().mode">
+                <app-manga-page-even [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir">
                     <div dir="ltr" frame="1" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
                         <img style="display: block; max-width:50%;  margin: auto;"
                             src="/assets/images/heart-hand-drawn-symbol-outline-svgrepo-com.svg"
@@ -48,18 +49,13 @@
                     </div>
 
                     <div dir="ltr" frame="5" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:60%;  margin: auto;"
-                            src="/assets/images/map-hand-drawn-paper-svgrepo-com.svg" alt="map-hand-drawn-paper">
+                        <ng-content select="source-logo" />
                     </div>
 
                     <div dir="ltr" frame="2" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
                         <img style="display: block; max-width:50%;  margin: auto;"
                             src="/assets/images/web-comics-svgrepo-com.svg" alt="map-hand-drawn-paper">
                     </div>
-
-                    <!-- <img frame="2" style="display: block;  margin: auto;" src="/assets/images/smile-hand-drawn-emoticon-svgrepo-com.svg" >
-                    <img frame="2" style="display: block;  margin: auto;" src="/assets/images/web-comics-svgrepo-com.svg" >
-                    <img frame="2" style="display: block;  margin: auto;" src="/assets/images/woman-young-head-hand-drawn-outline-svgrepo-com.svg" > -->
 
                     <div dir="ltr" frame="3"
                         style="padding: 1ch; width: 100%; height: 100%; display: grid; place-items: center;">
@@ -68,8 +64,10 @@
                         <div>
                             <p style="text-align: center;">Кінець епізоду</p>
                             @if(episode?.publisher?.id) {
-                            <p>Робота від <a [href]="episode?.publisher?.site" target="_blank" rel="noopener noreferrer">{{episode?.publisher?.name}}</a></p>
-                            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1ch; font-size: x-small;">
+                            <p>Робота від <a [href]="episode?.publisher?.site" target="_blank"
+                                    rel="noopener noreferrer">{{episode?.publisher?.name}}</a></p>
+                            <div
+                                style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1ch; font-size: x-small;">
                                 @for (l of episode?.publisher?.links; track $index) {
                                 <a [href]="l.link" target="_blank" rel="noopener noreferrer">{{l.title}}</a>
                                 }
@@ -99,19 +97,6 @@
         <div class="page"></div>
     </div>
     }
-    <!-- <div class="copyright-content" [ngClass]="{'dual': (episode?.images?.length??0) % 2 > 0}">
-        <div class="page">
-            <ng-content />
-            @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
-
-            <a dir="ltr" [routerLink]="['/', next.site, next.id]"
-                [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">
-                {{next.title??
-                lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
-            }
-        </div>
-    </div> -->
-
 </div>
 
 @defer{

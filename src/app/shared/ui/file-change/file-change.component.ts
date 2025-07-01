@@ -18,6 +18,7 @@ export class FileChangeComponent implements OnInit {
   lang = inject(LangService)
 
   accept = input<string[]>([])
+  label = input<string>("Open File")
   
   input: HTMLInputElement | undefined;
   showDragAndDropZone: boolean = false;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
@@ -9,8 +9,9 @@ import { LangService } from '../../data-access/lang.service';
     standalone: false
 })
 export class WarmControlComponent {
+  active = signal(false)
 
-  @Input() value: any;
+  @Input() value: number = 6500;
 
   @Output() valueChange = new EventEmitter<any>();
 
@@ -20,4 +21,8 @@ export class WarmControlComponent {
   }
 
   constructor(public lang: LangService){}
+
+  toggleActive() {
+    this.active.update(v=>!v);
+  }
 }

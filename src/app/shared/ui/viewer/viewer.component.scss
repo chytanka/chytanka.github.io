@@ -86,16 +86,17 @@ figure {
 	}
 }
 
-span.title {
-	text-shadow: 0 0 0.25ch black;
-	font-weight: bold;
-	color: white;
-}
+// span.title {
+// 	text-shadow: 0 0 0.25ch black;
+// 	font-weight: bold;
+// 	color: white;
+// 	border: 2px dashed cyan;
+// }
 
-span.separator {
-	user-select: none;
-	opacity: .5;
-}
+// span.separator {
+// 	user-select: none;
+// 	opacity: .5;
+// }
 
 
 
@@ -110,4 +111,18 @@ span.separator {
 img {
 	pointer-events: none;
 	user-select: none;
+}
+// .last-hint-page {
+// 	// width: 100%;
+// 	border: 2px dashed red;
+// }
+// app-manga-page-even {
+// 	min-height: 0;
+// 	max-height: 100dvh;
+// 	width: 50vw;
+// }
+
+app-manga-page-even.long, .last-hint-page.long {
+	height: unset;
+	width: 100%;
 }

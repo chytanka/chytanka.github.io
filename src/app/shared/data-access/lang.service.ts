@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable, PLATFORM_ID, WritableSignal, inject, signal } from '@angular/core';
 import { Phrases } from '../utils/phrases';
-import { Observable, map, of } from 'rxjs';
+import { Observable, Subject, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ViewModeOption } from './viewer.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
@@ -24,6 +24,9 @@ export class LangService {
     ['uk', "manifest-uk.webmanifest"]
   ]);
 
+  private langChanged = new Subject<void>();
+  langChanged$ = this.langChanged.asObservable();
+
   langOpt = LANG_OPTIONS
   platformId = inject(PLATFORM_ID)
   private readonly document = inject(DOCUMENT);
@@ -32,8 +35,8 @@ export class LangService {
 
   lang: WritableSignal<string> = signal(
     (!isPlatformBrowser(this.platformId)) ? DEFAULT_LANG :
-    
-    localStorage?.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG)
+
+      localStorage?.getItem(LANG_STORAGE_NAME) ?? DEFAULT_LANG)
     ;
   linkManifestElement: WritableSignal<HTMLElement | null> = signal(this.document.querySelector('link[rel="manifest"]'))
 
@@ -46,12 +49,12 @@ export class LangService {
   setLang(lang: string) {
     this.lang.set(lang)
     this.document.documentElement.lang = lang
-
-    if(!isPlatformBrowser(this.platformId)) return;
-    
-    localStorage.setItem(LANG_STORAGE_NAME, lang)
     this.updateTranslate();
+    // this.langChanged.next();
 
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    localStorage.setItem(LANG_STORAGE_NAME, lang)
     this.vibro.vibrateLangToggle(this.lang())
   }
 
@@ -60,13 +63,16 @@ export class LangService {
   }
 
   updateTranslate() {
-    if (this.lang() == 'en') { 
-      this.ph.set(new Phrases()); 
-      return; 
+    if (this.lang() == 'en') {
+      this.ph.set(new Phrases());
+      this.langChanged.next();
+      return;
     }
 
-    this.getTranslate(this.lang()).subscribe(data =>{
+    this.getTranslate(this.lang()).subscribe(data => {
       this.ph.set(data)
+      this.langChanged.next();
+
     })
   }
 

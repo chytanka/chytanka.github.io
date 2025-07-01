@@ -2,7 +2,10 @@
 
 @if (!(loading$ | async)) {
 <app-viewer [playlist]="playlist" [playlistLink]="playlistLink" [currentPlaylistItem]="currentPlaylistItem"
-    [episode]="episode"><ng-content /></app-viewer>
+    [episode]="episode">
+    <div ngProjectAs="source-logo"><ng-content select="source-logo" /></div>
+    <ng-content />
+</app-viewer>
 }
 
 }

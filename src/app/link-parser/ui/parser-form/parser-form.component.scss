@@ -1,7 +1,8 @@
 :host {
-    display: grid;
-    row-gap: 1ch;
-    grid-template-columns: auto minmax(auto, 80ch) auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2ch;
+    // grid-template-columns: auto minmax(auto, 80ch) auto;
 }
 
 .logo-text {
@@ -129,23 +130,26 @@ app-text-embracer {
 @keyframes halloween {
     0% {
         --halloween-base: #A0FF00;
-        
+
     }
 
     50% {
-      --halloween-base: #FF7518;
+        --halloween-base: #FF7518;
     }
 
     100% {
-          --halloween-base: #6C2DC7;
+        --halloween-base: #6C2DC7;
     }
 }
 
 .form-wrapper {
-    grid-column: 2;
+    min-width: 0;
+    // grid-column: 2;
     display: grid;
     gap: 2ch;
     padding: 0px;
+
+    place-content: center;
 }
 
 form {
@@ -155,6 +159,17 @@ form {
     max-width: 80ch;
     width: 100%;
     position: relative;
+}
+
+app-file-change ::ng-deep .button {
+    padding-inline: 2ch;
+    font-family: 'Courier New', Courier, monospace;
+    // background: unset;
+
+    text-overflow: ellipsis;
+max-width: 90vw;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 input[type=url],

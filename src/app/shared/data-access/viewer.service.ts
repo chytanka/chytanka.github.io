@@ -36,22 +36,25 @@ export class ViewerService {
   }
 
   initNightlight() {
-    if(!isPlatformBrowser(this.platformId)) return;
-    
-    const n = Number(localStorage.getItem('nightlight')) ?? 0;
+    this.nightlight.set(6500);
+
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const n = Number(localStorage.getItem('nightlight') ?? 6500);
     this.nightlight.set(n);
   }
 
   setNightlight(n: number) {
-    if(!isPlatformBrowser(this.platformId)) return;
-    
     this.nightlight.set(n);
+
+    if (!isPlatformBrowser(this.platformId)) return;
+
     localStorage.setItem('nightlight', n.toString())
   }
 
   initViewModeOption() {
-    if(!isPlatformBrowser(this.platformId)) return;
-    
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const localOpt: ViewModeOption = JSON.parse(localStorage?.getItem(VIEW_MODE_OPT_NAME) ?? '{}');
     const opt: ViewModeOption = this.getViewModeOptionByCode(localOpt?.code) ?? VIEV_MODE_OPTIONS[0]
     this.setViewModeOption(opt);

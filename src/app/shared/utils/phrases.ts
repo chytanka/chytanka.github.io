@@ -1,7 +1,7 @@
 export class Phrases {
     title: string = "Chytanka — read it easily and comfortably!";
     shortTitle: string = "Chytanka";
-    enterLink: string = "Enter link to episode on the supported sites";
+    enterLink: string = "Insert link to episode on the supported sites";
     orOpenFile = "or open file"
     slogan: string = "and read it easily and comfortably!";
     sloganPride: string = "Read freely! Love boldly!";

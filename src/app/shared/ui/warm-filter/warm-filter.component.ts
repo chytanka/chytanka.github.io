@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, computed, HostBinding, input, Input
 })
 export class WarmFilterComponent {
 
-  kelvin = input<number>(5000)
+  kelvin = input<number>(6500)
 
   matrixKelvin = computed(() => {
     const { r, g, b } = this.kelvinToRgbMatrix(this.kelvin())

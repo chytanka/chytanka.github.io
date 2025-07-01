@@ -1,4 +1,4 @@
-const PROXY = `https://proxy.chytanka.ink/api?url=`
+const PROXY = `http://localhost:5000/api?url=`
 
 export const environment = {
     version: "0.13.32-2025.6.8",
@@ -6,6 +6,7 @@ export const environment = {
     proxy: PROXY,
     blankaryoHost: `https://blankary.com/page/`,
     imgurHost: 'https://api.imgur.com/3/album/',
+    imgchestHost: 'https://api.imgchest.com/v1/post/',
     mangadexHost: `https://api.mangadex.org/at-home/server/`,
     mangadexChapter: `https://api.mangadex.org/chapter/`,
     mangadexManga: `https://api.mangadex.org/manga/`,

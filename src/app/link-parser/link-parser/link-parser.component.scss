@@ -65,6 +65,11 @@ aside {
     min-height: 0;
     padding: 4ch;
     display: grid;
+
+    @media (max-aspect-ratio: 1) or (max-width: 640px) {
+        padding: 2ch;
+
+    }
 }
 
 lp-footer,
@@ -107,12 +112,12 @@ lp-header {
     // filter: blur(3px);
 }
 
-:host:has(input[type=url]:focus) {
+// :host:has(input[type=url]:focus) {
 
-    lp-footer,
-    lp-header,
-    #createListLink {
-        opacity: 0;
-        pointer-events: none;
-    }
-}
+//     lp-footer,
+//     lp-header,
+//     #createListLink {
+//         opacity: 0;
+//         pointer-events: none;
+//     }
+// }

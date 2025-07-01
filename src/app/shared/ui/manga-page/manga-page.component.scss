@@ -2,7 +2,7 @@
     --side-gap: 2rem;
     display: grid;
     max-height: 100vh;
-    aspect-ratio: 2/3;
+    aspect-ratio: 257/364;
     background-color: #fff;
     color: #000;
     gap: 2ch 1ch;
@@ -10,6 +10,16 @@
     grid-template-columns: repeat(4, 1fr) var(--side-gap);
     grid-template-rows: 1fr 1.5fr 1fr var(--side-gap);
     counter-reset: read-order;
+}
+
+svg {
+    aspect-ratio: 257/364;
+    border: 1px solid;
+    grid-area: 1/4;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
 }
 
 section {

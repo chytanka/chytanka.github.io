@@ -19,6 +19,7 @@ export function urlMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route
 export const MANGADEX_PATH = `mangadex`;
 export const TELEGRAPH_PATH = `telegraph`;
 export const IMGUR_PATH = `imgur`;
+export const IMGCHEST_PATH = `imgchest`;
 export const REDDIT_PATH = `reddit`;
 export const READ_PATH = `read`;
 export const LIST_PATH = `list`;
@@ -34,6 +35,7 @@ const linkParserMod: LoadChildrenCallback = () => import('./link-parser/link-par
 // const blankaryMod = () => import('./@site-modules/blankary/blankary-shell.component')
 const comickMod = () => import('./@site-modules/comick/comick-shell.component')
 const imgurMod = () => import('./@site-modules/imgur/imgur-shell.component')
+const imgchestMod = () => import('./@site-modules/imgchest/imgchest-shell.component')
 const mangadexMod = () => import('./@site-modules/mangadex/mangadex-shell.component')
 const nhentaiMod = () => import('./@site-modules/nhentai/nhentai-shell.component')
 const pixivMod = () => import('./@site-modules/pixiv/pixiv-shell.component')
@@ -52,6 +54,7 @@ const siteModulesMap = new Map<string, LoadComponentType>()
   // .set(BLANKARY_PATH + '/:id', blankaryMod)
   .set(COMICK_PATH + '/:id', comickMod)
   .set(IMGUR_PATH + '/:id', imgurMod)
+  .set(IMGCHEST_PATH + '/:id', imgchestMod)
   .set(MANGADEX_PATH + '/:id', mangadexMod)
   .set(NHENTAI_PATH + '/:id', nhentaiMod)
   .set(PIXIV_PATH + '/:id', pixivMod)

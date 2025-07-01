@@ -6,6 +6,7 @@ export const environment = {
     proxy: PROXY,
     blankaryoHost: `https://blankary.com/page/`,
     imgurHost: 'https://api.imgur.com/3/album/',
+    imgchestHost: 'https://api.imgchest.com/v1/post/',
     mangadexHost: `https://api.mangadex.org/at-home/server/`,
     mangadexChapter: `https://api.mangadex.org/chapter/`,
     mangadexManga: `https://api.mangadex.org/manga/`,

@@ -1,12 +1,14 @@
 .view.pages {
 	--r: 0;
 	overflow-x: auto;
+	overflow-y: hidden;
+	height: 100dvh;
 	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;
 	display: flex;
 	user-select: none;
 	touch-action: pan-x;
-	
+	scrollbar-width: none;
 	&:focus {
 		outline: 0;
 	}

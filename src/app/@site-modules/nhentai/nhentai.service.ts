@@ -1,19 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CompositionEpisode } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NhentaiService {
+  platformId = inject(PLATFORM_ID)
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(this.proxy.proxyUrl(environment.nhentaiHost + id))
+    const url = isPlatformServer(this.platformId)
+      ? environment.nhentaiHost + id
+      : this.proxy.proxyUrl(environment.nhentaiHost + id);
+
+    return this.http.get<any>(url)
       .pipe(map((data) => { return this.map(data) }))
   }
 

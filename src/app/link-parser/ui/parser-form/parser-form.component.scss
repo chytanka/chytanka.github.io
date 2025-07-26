@@ -10,29 +10,21 @@
 }
 
 app-text-embracer {
-    --mono-color-1: #4c93c8;
-    --mono-color-2: #002741;
-    --border-color: var(--mono-color-1);
-    --border-width: 2px;
-    color: #ffd60a;
-    --shc: #166496;
+    --border-width: calc(var(--border-size));
+    --frame-color: var(--border-color);
+    --dot-color: var(--border-color);
+    color: var(--accent);
+
     font-family: 'Troubleside', sans-serif;
     font-weight: 900;
     font-size: clamp(1rem, 8vw, 5rem);
     justify-content: center;
-    -webkit-text-stroke: var(--mono-color-2) var(--border-width);
-    --dot-color: var(--mono-color-1);
-    paint-order: stroke fill;
 
-    @media (prefers-color-scheme: light) {
-        --mono-color-1: #166496;
-        --mono-color-2: #eceff2;
-        --shc: var(--mono-color-1);
-        color: var(--mono-color-1);
-        -webkit-text-stroke: var(--mono-color-1) var(--border-width);
-
-        color: var(--mono-color-2);
+    ::ng-deep>span {
+        box-shadow: var(--shadow-1);
     }
+
+    @media (prefers-color-scheme: light) {}
 
     @media (max-width: 1080px) {
         font-size: clamp(1rem, 7vw, 8rem);
@@ -167,7 +159,7 @@ app-file-change ::ng-deep .button {
     // background: unset;
 
     text-overflow: ellipsis;
-max-width: 90vw;
+    max-width: 90vw;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -183,10 +175,10 @@ textarea {
     width: 100%;
     transition: all var(--t) cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: .5ch;
-    border: 2px solid #166496;
-    box-shadow: var(--flat-shadow-medium);
-    border: 0;
-    // background-color: #16649680;
+    border: var(--border-size) solid var(--border-color);
+    box-shadow: var(--shadow-1);
+    // border: 0;
+    background-color: #16649680;
     color: #ffd60a;
 
     @media (prefers-color-scheme: light) {
@@ -202,12 +194,8 @@ textarea {
 }
 
 input[type=url]::placeholder {
-    color: #ffd60a;
+    color: var(--accent);
     opacity: 0.6;
-
-    @media (prefers-color-scheme: light) {
-        color: #166496;
-    }
 }
 
 .favicon {
@@ -259,21 +247,17 @@ input[type=url]::placeholder {
     display: flex;
     gap: 1ch;
     align-items: center;
-    --dot-color: #166496;
-    border: 1px solid var(--dot-color);
+    --dot-color: var(--border-color);
+    border: var(--border-size) solid var(--dot-color);
     --stroke: #002741;
-    --bg-1: var(--gl) 0px 0px / 4px 4px;
-    --bg-2: var(--gl) 0px 0px / 3px 3px, var(--gl) 1.5px 1.5px / 3px 3px;
     --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
+    --bg-1: var(--gl) 0px 0px / 8px 8px;
+    --bg-2: var(--gl) 0px 0px / 4px 4px, var(--gl) 1.5px 1.5px / 4px 4px;
     background: var(--bg-1);
 
     text-transform: uppercase;
     font-weight: bold;
-    // -webkit-text-stroke: 0.5ch var(--stroke);
-    // paint-order: stroke fill;
-
-    box-shadow: var(--flat-shadow-high);
-
+    box-shadow: var(--shadow-2);
 
     @media (prefers-color-scheme: light) {
         --dot-color: #166496;
@@ -283,8 +267,11 @@ input[type=url]::placeholder {
 
     &:hover,
     &:focus {
-        --dot-color: #4c93c8;
         background: var(--bg-2);
+        color: var(--accent);
+    }
 
+    &:active {
+        box-shadow: 0 0 transparent;
     }
 }

@@ -1,9 +1,9 @@
 :host {
-    --border-color: currentColor;
+    --frame-color: currentColor;
     --border-width: 1px;
     --border-style: solid;
     --back-color: transparent;
-    --shc: var(--border-color);
+    --dot-color: red;
     margin: 0;
     text-transform: uppercase;
     text-align: center;
@@ -14,22 +14,18 @@
 
     &>span {
         text-box: ex alphabetic;
-        aspect-ratio: 2/3;
+        aspect-ratio: var(--ratio);
         display: grid;
-        border: var(--border-width) var(--border-style) var(--border-color);
+        border: var(--border-width) var(--border-style) var(--frame-color);
         border-radius: .1ch;
         height: 1.5lh;
         place-content: center;
         background-color: var(--back-color);
-        --bg-1: var(--gl) 0px 0px / 4px 4px;
-        --bg-2: var(--gl) 0px 0px / 3px 3px, var(--gl) 1.5px 1.5px / 3px 3px;
         --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
+        --bg-1: var(--gl) 0px 0px / 8px 8px;
+        --bg-2: var(--gl) 0px 0px / 4px 4px, var(--gl) 1.5px 1.5px / 4px 4px;
         background: var(--bg-1);
-
-        text-shadow: 0.025ch .025ch var(--shc),
-            0.05ch .05ch var(--shc),
-            0.075ch .075ch var(--shc),
-            0.1ch .1ch var(--shc);
+        text-shadow: var(--text-shadow-1);
         transition: all var(--t) ease-in-out;
 
         &:hover {

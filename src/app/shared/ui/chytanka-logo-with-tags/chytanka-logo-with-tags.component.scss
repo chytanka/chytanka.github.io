@@ -4,20 +4,28 @@
     min-height: 0;
     min-width: 0;
     display: grid;
-    place-items: stretch;
+    // place-items: stretch;
+    align-items: anchor-center;
+
 }
 
 #logoPath {
 
-    fill: #000118;
+    fill: var(--accent);
+
+    .light {
+        display: none;
+    }
 
     @media (prefers-color-scheme: light) {
-        fill: #166496;
-    }
-}
+        .light {
+            display: unset;
+        }
 
-.one-bit {
-    filter: url('#oneBit');
+        .dark {
+            display: none;
+        }
+    }
 }
 
 .filters {
@@ -36,9 +44,9 @@ img {
 }
 
 .version {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
+    // position: absolute;
+    // top: 50%; left: 50%;
+    // transform: translate(-50%,-50%);
     font-weight: bold;
     text-align: center;
     opacity: .5;
@@ -58,11 +66,22 @@ img {
     }
 }
 
+ul {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1ch;
+    align-items: anchor-center;
+    align-self: start;
+    justify-content: center;
+}
+
 .tag {
     z-index: 1;
     transition: all var(--t) linear;
-    position: absolute;
-    padding: .25ch;
+    // position: absolute;
+    padding: .5ch;
     text-align: center;
     border-radius: .25ch;
     font-size: small;
@@ -72,14 +91,15 @@ img {
     --f: black;
     background-color: var(--b);
     color: var(--f);
-    box-shadow: var(--flat-shadow-medium);
+    box-shadow: var(--shadow-1);
     list-style: none;
+    text-box: trim-both cap alphabetic;
 
-    &:hover {
-        cursor: none;
-        scale: 1.5 !important;
-        z-index: 2;
-    }
+    // &:hover {
+    //     cursor: none;
+    //     scale: 1.5 !important;
+    //     z-index: 2;
+    // }
 
     &.reddit {
         --b: #FF4500;

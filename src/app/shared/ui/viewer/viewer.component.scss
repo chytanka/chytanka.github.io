@@ -112,17 +112,3 @@ img {
 	pointer-events: none;
 	user-select: none;
 }
-// .last-hint-page {
-// 	// width: 100%;
-// 	border: 2px dashed red;
-// }
-// app-manga-page-even {
-// 	min-height: 0;
-// 	max-height: 100dvh;
-// 	width: 50vw;
-// }
-
-app-manga-page-even.long, .last-hint-page.long {
-	height: unset;
-	width: 100%;
-}

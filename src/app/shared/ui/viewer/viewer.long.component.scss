@@ -26,11 +26,15 @@
 			display: block;
 			width: 100%;
 
+			figure {
+				width: 100%;
+			}
+
 			img {
 				display: block;
 				width: auto;
 				margin: 0 auto;
-				max-width: 100%;
+				width: 100%;
 				height: auto;
 				position: relative;
 			}

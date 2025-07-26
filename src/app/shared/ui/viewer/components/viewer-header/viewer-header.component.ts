@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, HostListener, inject, Input, Output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, EventEmitter, HostListener, inject, input, Input, Output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
 import { DomManipulationService, ViewerService } from '../../../../data-access';
 import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
@@ -13,15 +13,54 @@ import { isPlatformBrowser } from '@angular/common';
 // const L = window.location;
 
 @Component({
-    selector: 'app-viewer-header',
-    templateUrl: './viewer-header.component.html',
-    styleUrls: [
-        './viewer-header.component.scss',
-        '../../../../../shared/ui/@styles/input-group.scss'
-    ],
-    standalone: false
+  selector: 'app-viewer-header',
+  templateUrl: './viewer-header.component.html',
+  styleUrls: [
+    './viewer-header.component.scss',
+    '../../../../../shared/ui/@styles/input-group.scss'
+  ],
+  standalone: false
 })
 export class ViewerHeaderComponent {
+
+  parseTagsFromTitle(title: string): Set<string> {
+    const matchedTags = title.toLowerCase().match(/\b(rtl|ltr|ver|long|scroll|nsfw|sfw|color|bw|demo|extra)\b/g) ?? [];
+    const tags = new Set(matchedTags);
+    return tags;
+  }
+
+  applyEpisodeTitleTags(tags: Set<string>): void {
+
+    const viewModeMap: Record<string, string> = {
+      'ver': '3',
+      'long': '3',
+      'scroll': '3',
+      'rtl': '1',
+      'ltr': '2',
+    };
+
+    for (const [tag, code] of Object.entries(viewModeMap)) {
+      if (tags.has(tag)) {
+        this.viewer.setViewModeOptionByCode(code);
+        break;
+      }
+    }
+
+    if (tags.has('nsfw')) {
+      this.episode().nsfw = true;
+    }
+  }
+
+
+  constructor() {
+    effect(() => {
+      const episode = this.episode();
+      if (!episode) return;
+      const tags = this.parseTagsFromTitle(episode.title);
+      this.applyEpisodeTitleTags(tags);
+    })
+  }
+
   viewer: ViewerService = inject(ViewerService)
   lang: LangService = inject(LangService)
   embedHelper = inject(EmbedHalperService);
@@ -39,7 +78,11 @@ export class ViewerHeaderComponent {
   @Input() currentPlaylistItem: PlaylistItem | undefined;
 
   // @Input() playlist: Playlist = [];
-  @Input() episode: CompositionEpisode | undefined = undefined;
+  // @Input() episode: CompositionEpisode | undefined = undefined;
+  episode = input<CompositionEpisode>({
+    title: '',
+    images: []
+  })
   @Output() onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
@@ -63,11 +106,11 @@ export class ViewerHeaderComponent {
     this.domMan.setHotkeys(event, this.hotKeys)
   }
 
-  isFileRoute =  computed(() => {
+  isFileRoute = computed(() => {
     const L = (isPlatformBrowser(this.platformId)) ? window.location : { pathname: '' }
 
     return L.pathname.startsWith('/file/')
-})
+  })
 
   link: Signal<string> =
     //decodeURIComponent
@@ -87,7 +130,7 @@ export class ViewerHeaderComponent {
 
   shareWith() {
     const shareData = {
-      title: this.episode?.title,
+      title: this.episode().title,
       url: this.link(),
     };
     navigator?.share(shareData)

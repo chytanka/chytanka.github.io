@@ -21,7 +21,6 @@ import { isPlatformBrowser } from '@angular/common';
     --border-color: var(--mono-color-1);
     --border-width: 2px;
     color: #ffd60a;
-    --shc: #166496;
     font-family: 'Troubleside', sans-serif;
     font-weight: 900;
     font-size: clamp(1rem, 16vw, 10rem);
@@ -33,7 +32,6 @@ import { isPlatformBrowser } from '@angular/common';
     @media (prefers-color-scheme: light) {
         --mono-color-1: #166496;
         --mono-color-2: #eceff2;
-        --shc: var(--mono-color-1);
         color: var(--mono-color-1);
         -webkit-text-stroke: var(--mono-color-1) var(--border-width);
 

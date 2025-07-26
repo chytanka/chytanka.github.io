@@ -3,7 +3,7 @@ details {
     border-radius: .5ch;
     // border: 2px solid rgb(0, 40, 64);
     transition: all var(--t) ease-in-out;
-    box-shadow: var(--flat-shadow-medium);
+    box-shadow: var(--shadow-1);
 
     summary {
         cursor: pointer;
@@ -20,12 +20,12 @@ details {
         }
 
         & {
-            box-shadow: var(--flat-shadow-medium);
+            box-shadow: var(--shadow-1);
         }
 
         summary {
             color: #caa902;
-            border-bottom: 2px solid var(--shc);
+            border-bottom: var(--border-size) solid var(--border-color);
             padding-bottom: 1ch;
 
             @media (prefers-color-scheme: light) {

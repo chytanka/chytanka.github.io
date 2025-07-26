@@ -1,0 +1,35 @@
+@let vm = viewer.viewModeOption();
+@let pub = episode?.publisher;
+
+<app-manga-page-even [class]="vm.mode" [dir]="vm.dir">
+    <div dir="ltr" frame="1"><img [imgMeta]="heart"></div>
+    <div dir="ltr" frame="2"><img [imgMeta]="map"></div>
+    <div dir="ltr" frame="5"><img [imgMeta]="logo" /></div>
+    <div dir="ltr" frame="4">
+        <p class="text-center">Кінець епізоду</p>
+        @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
+
+        <a dir="ltr" [routerLink]="['/', next.site, next.id]"
+            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: vm.code}">
+            {{next.title??
+            lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
+        }
+    </div>
+
+    <div dir="ltr" frame="3">
+
+
+        <div style="display: grid;place-items: center; gap: var(--gap); text-align: center;">
+            <ng-content select="source-logo" />
+            <ng-content />
+            @if(pub && pub.id) {
+            <p>Робота від <a [newTab]="pub.site">{{pub.name}}</a></p>
+            <div class="publisher-links">
+                @for (l of pub.links; track $index) {<a [newTab]="l.link">{{l.title}}</a>}
+            </div>
+            }
+        </div>
+
+
+    </div>
+</app-manga-page-even>

@@ -41,53 +41,11 @@
     <div>
         <div class="page">
             <figure class="last-hint-page" [class]="viewer.viewModeOption().mode">
-                <app-manga-page-even [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir">
-                    <div dir="ltr" frame="1" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:50%;  margin: auto;"
-                            src="/assets/images/heart-hand-drawn-symbol-outline-svgrepo-com.svg"
-                            alt="heart-hand-drawn-symbol-outline">
-                    </div>
-
-                    <div dir="ltr" frame="5" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <ng-content select="source-logo" />
-                    </div>
-
-                    <div dir="ltr" frame="2" style="padding: 1ch; width: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width:50%;  margin: auto;"
-                            src="/assets/images/web-comics-svgrepo-com.svg" alt="map-hand-drawn-paper">
-                    </div>
-
-                    <div dir="ltr" frame="3"
-                        style="padding: 1ch; width: 100%; height: 100%; display: grid; place-items: center;">
-                        <img style="display: block; max-width: 40%; margin: auto;" src="/assets/icons/icon-line.svg"
-                            alt="Chytanka logo">
-                        <div>
-                            <p style="text-align: center;">Кінець епізоду</p>
-                            @if(episode?.publisher?.id) {
-                            <p>Робота від <a [href]="episode?.publisher?.site" target="_blank"
-                                    rel="noopener noreferrer">{{episode?.publisher?.name}}</a></p>
-                            <div
-                                style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1ch; font-size: x-small;">
-                                @for (l of episode?.publisher?.links; track $index) {
-                                <a [href]="l.link" target="_blank" rel="noopener noreferrer">{{l.title}}</a>
-                                }
-                            </div>
-                            }
-                        </div>
-
-                        @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
-
-                        <a dir="ltr" [routerLink]="['/', next.site, next.id]"
-                            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">
-                            {{next.title??
-                            lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
-                        }
-                    </div>
-                    <div dir="ltr" frame="4"
-                        style="padding: 1ch; text-align: center; display: grid; place-content: center;">
-                        <ng-content />
-                    </div>
-                </app-manga-page-even>
+                <app-thanks-page [playlist]="playlist" [currentPlaylistItem]="currentPlaylistItem"
+                    [episode]="episode" [playlistLink]="playlistLink">
+                    <ng-content ngProjectAs="source-logo" select="source-logo" />
+                    <ng-content />
+                </app-thanks-page>
 
             </figure>
         </div>
@@ -100,8 +58,10 @@
 </div>
 
 @defer{
+@if (episode) {
 <app-viewer-header [show]="showOverlay" [episode]="episode" [playlistLink]="playlistLink"
     [currentPlaylistItem]="currentPlaylistItem" (onToggle)="isDialogOpen.set($event)" />
+}
 }
 
 @defer{

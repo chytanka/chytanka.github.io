@@ -1,6 +1,6 @@
 <!-- <input type="file" (input)="onFileSelected($event)" [accept]="accept.join(', ')" > -->
 
-<button class="button" (click)="openFileDialog()" [title]="lang.ph().openFile+' (Ctrl+O)'">{{label()}}</button>
+<button class="button border" (click)="openFileDialog()" [title]="lang.ph().openFile+' (Ctrl+O)'">{{label()}}</button>
 
 @if(showDragAndDropZone){
 <div class="drop-zone" (click)="showDragAndDropZone = false" (drop)="dropHandler($event)">

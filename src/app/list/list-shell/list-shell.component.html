@@ -1,7 +1,7 @@
 <main style="padding-top: 2rem;">
     <section>
         <h4>Вставте підтримувані посилання у поле нижче 🔗⬇️</h4>
-        <textarea class="input" style="width: 100%; height: 8lh; box-shadow: var(--flat-shadow-medium);"
+        <textarea class="input" style="width: 100%; height: 8lh; box-shadow: var(--shadow-1)"
             placeholder="Вставте сюди підтримувані посилання на епізод через кому пробіл, чи кожне посилання з нового рядка: 
 
 https://telegra.ph/YAk-kozaki-kulіsh-varili-06-28
@@ -14,7 +14,7 @@ https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
         <div style="display: grid; gap: 1ch">
             @for (item of outputValue(); track $index) {
             <article
-                style="box-shadow: var(--flat-shadow-medium); border: 1px solid #8884; padding: .5ch; border-radius: .5ch;">
+                style="box-shadow: var(--shadow-1); border: 1px solid #8884; padding: .5ch; border-radius: .5ch;">
                 <div class="input-group">
                     <input style="width: 100%;" placeholder="Введіть назву епізоду (не обов'язково)" type="text"
                         [(ngModel)]="item.title"> <button class="button"

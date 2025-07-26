@@ -27,6 +27,9 @@ import { ChytankaLogoWithTagsComponent } from './ui/chytanka-logo-with-tags/chyt
 import { FileSizePipe } from './pipes/filesize.pipe';
 import { RoughPaperComponent } from './ui/filters/rough-paper/rough-paper.component';
 import { SharpenComponent } from './ui/filters/sharpen/sharpen.component';
+import { ThanksPageComponent } from './ui/viewer/components/thanks-page/thanks-page.component';
+import { ImgMetaDirective } from './directives/img-meta.directive';
+import { NewTabDirective } from './directives/new-tab.directive';
 
 
 
@@ -54,7 +57,10 @@ import { SharpenComponent } from './ui/filters/sharpen/sharpen.component';
     MangaPageEvenComponent,
     FileChangeComponent,
     ChytankaLogoWithTagsComponent,
-    FileSizePipe
+    FileSizePipe,
+    ThanksPageComponent,
+    ImgMetaDirective,
+    NewTabDirective
   ],
   imports: [
     CommonModule,

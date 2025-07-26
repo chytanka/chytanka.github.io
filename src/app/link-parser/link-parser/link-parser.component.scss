@@ -35,7 +35,7 @@
     }
 
     @media (prefers-color-scheme: light) {
-        background: #eceff2;
+        background: var(--surface-avarage);
 
         &.pride {
             --pride-red: oklch(from #e40303 0.96 0.0128 h);

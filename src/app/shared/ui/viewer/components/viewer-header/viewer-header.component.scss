@@ -1,7 +1,7 @@
 progress {
     display: block;
     border-radius: var(--radius-2);
-    box-shadow: var(--flat-shadow-medium);
+    box-shadow: var(--shadow-1);
     height: 1lh;
     width: 100%;
     position: relative;
@@ -51,7 +51,7 @@ textarea {
     padding: 1ch;
     border-top-left-radius: var(--radius-2);
     border-bottom-left-radius: var(--radius-2);
-    box-shadow: var(--flat-shadow-medium);
+    box-shadow: var(--shadow-1);
 }
 
 .open-chtnk-link {

@@ -1,30 +1,44 @@
 :host {
     display: grid;
     min-height: 100dvh;
+    --c: oklch(0.553 0.2211 20.3);
 }
 
 :host:has(.error-message) {
-    background-image: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(207, 19, 82, .1) 100%);
+    background: oklch(from var(--c) l c h / .1);
 }
 
 .error-message {
+    
+    --shadow-color: oklch(from var(--c) var(--avarage-l-2) c h);
+    --shadow-2: 2px 2px var(--surface), var(--shadow-distance-2) var(--shadow-color);
+    
     display: grid;
     place-items: center;
     gap: 2ch;
     min-width: min(50vw, 50vh);
     margin: auto;
-    // aspect-ratio: 3/4;
     border-radius: 1ch;
     margin-inline: auto;
     padding: 2rem;
     text-wrap: balance;
     text-align: center;
-    border: 1px solid;
-    border-color: rgba(207, 19, 82, .4);
-    background-color: rgba(207, 19, 82, .05);
+    border: var(--border-size) solid;
+    border-color: var(--c);
+
+    --gl: radial-gradient(circle 1px at 0px 0px, var(--c) 1px, transparent 0);
+    --bg-1: var(--gl) 0px 0px / 8px 8px;
+    background: var(--bg-1);
+    box-shadow: var(--shadow-2);
+
+    h1 {
+        font-size: clamp(5.5rem, 4vw, 5rem);
+        line-height: 1;
+    }
 
     p {
         margin: 0;
+        font-family: 'Courier New', Courier, monospace;
         font-size: clamp(1rem, 1.5vw, 2rem);
     }
 

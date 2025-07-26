@@ -43,10 +43,10 @@
 			padding: 0;
 
 			&:checked~label {
-				background-color: #103651;
+				background-color: var(--surface-avarage);
 				color: var(--surface-1);
-				transform: translateY(.25ch);
-				// box-shadow: unset;
+				transform: translate(2px, 2px);
+				box-shadow: unset;
 			}
 
 			&:not(:checked):is(:focus-within, :hover)~label {

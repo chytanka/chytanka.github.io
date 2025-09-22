@@ -43,7 +43,7 @@ export class ParserFormComponent {
     this.parser.parsers.push(new RedditLinkParser)
     this.parser.parsers.push(new ZenkoLinkParser)
     this.parser.parsers.push(new NhentaiLinkParser)
-    this.parser.parsers.push(new ComickLinkParser)
+    // this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new YandereParser)
     this.parser.parsers.push(new PixivLinkParser)
     this.parser.parsers.push(new ImgchestLinkParser)
@@ -107,7 +107,7 @@ export class ParserFormComponent {
     mangadex: '//mangadex.org/favicon.ico',
     telegraph: '//telegra.ph/favicon.ico',
     nhentai: '//nhentai.net/favicon.ico',
-    comick: '//comick.io/favicon.ico',
+    // comick: '//comick.art/favicon.ico',
     yandere: '//yande.re/favicon.ico',
     pixiv: '//pixiv.net/favicon.ico',
     imgchest: '//imgchest.com/assets/img/favicons/favicon-32x32.png?v=2',

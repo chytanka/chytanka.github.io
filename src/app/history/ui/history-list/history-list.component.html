@@ -2,7 +2,7 @@
 @let sites = historyItems() | async;
 
 @if (sites && sites.length > 0) {
-<details>
+<details name="history">
     <summary>
         <span>SITES HISTORY</span>
         @if ( sites.length > 0) {
@@ -21,7 +21,7 @@
 }
 
 @if (files && files.length > 0) {
-<details open>
+<details open name="history">
     <summary>
         <span>FILES HISTORY</span> |
         <code>{{fileSize() | filesize}}</code> |
@@ -35,7 +35,7 @@
 
     <div class="wrap">
         @for (item of files; track item.sha256;) {
-            @let ab = item.arrayBuffer;
+        @let ab = item.arrayBuffer;
         <div>
             <app-title-card [value]="{
                 site: (ab) ? ['file', item.format] : '',
@@ -55,5 +55,6 @@
 }
 
 @if (files?.length ==0 && sites?.length ==0) {
-none
+<h2>{{lang.ph().historyEmpty}}</h2>
+<p>{{lang.ph().histyryEmptyDesc}}</p>
 }

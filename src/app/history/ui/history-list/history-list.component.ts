@@ -6,7 +6,7 @@ import { FileHistoryService } from '../../../file/data-access/file-history.servi
 @Component({
   selector: 'app-history-list',
   templateUrl: './history-list.component.html',
-  styleUrl: './history-list.component.scss',
+  styleUrls: ['./history-list.component.scss', '../../../shared/ui/@styles/details.scss'],
   standalone: false
 })
 export class HistoryListComponent {

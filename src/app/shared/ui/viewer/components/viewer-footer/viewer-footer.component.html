@@ -8,9 +8,11 @@
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
+    @if (domMan.fullscreenEnabled()) {
     <button class="button" (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">
         🖥️
     </button>
+    }
 </app-overlay>
 
 <app-dialog class="dialog" #playlistDialog (onToggle)="onToggle.emit($event)" [title]="'📜 '">

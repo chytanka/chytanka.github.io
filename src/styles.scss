@@ -41,6 +41,13 @@ body {
     box-sizing: border-box;
     scrollbar-width: thin;
     scrollbar-color: var(--text) var(--surface);
+    overscroll-behavior: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: unset !important;
+    }
 }
 
 input {
@@ -236,6 +243,18 @@ a[target="_blank"]:after {
         }
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+        dialog,
+        dialog::backdrop,
+        dialog[open],
+        dialog[open]::backdrop {
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            filter: none !important;
+        }
+    }
 
 ::selection {
     background: var(--accent);

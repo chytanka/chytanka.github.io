@@ -1,3 +1,7 @@
+:host:has(.view.pages) {
+	    overflow-y: hidden;
+}
+
 .view.pages {
 	--r: 0;
 	overflow-x: auto;

@@ -1,6 +1,15 @@
 /// <reference lib="webworker" />
 
+// TODO: change to https://github.com/101arrowz/fflate
+// because jszip is toooo slow
+
 import JSZip from 'jszip';
+import { filterImages, getAcbfFile, getComicInfoFile, processFile, processImagesInBatches } from '../utils';
+
+const metadataFiles = [
+  { getter: getComicInfoFile, type: 'comicinfo' },
+  { getter: getAcbfFile, type: 'acbf' },
+];
 
 addEventListener('message', ({ data }) => {
   const arrayBuffer = data.arrayBuffer;
@@ -11,59 +20,19 @@ addEventListener('message', ({ data }) => {
     .then(async zip => {
       const filesName: string[] = Object.keys(zip.files);
 
-      // console.dir(zip.files)
+      console.log(filesName);
+      
 
-      const comicInfoFile = getComicInfoFile(filesName)
-
-      if (comicInfoFile) {
-        const comicinfo = zip.files[comicInfoFile]
-        await comicinfo.async('text').then(text => { postMessage({ type: 'comicinfo', data: text }); })
+      // metadata
+      for (const { getter, type } of metadataFiles) {
+        await processFile(getter(filesName), zip, type);
       }
 
-      const acbf = getAcbfFile(filesName)
-      if (acbf) {
-        const acbfF = zip.files[acbf]
-        await acbfF.async('text').then(text => { postMessage({ type: 'acbf', data: text }); })
-      }
-
-      const images = filterImages(filesName).sort()
+      // images
+      const images = filterImages(filesName).sort();
       postMessage({ type: 'zipopen', data: { count: images.length } });
 
-      for (let i = 0; i < images.length; i++) {
-        const filename = images[i];
-
-        await zip.files[filename].async('blob').then(blob => {
-          const url = URL.createObjectURL(blob);
-          postMessage({ type: 'file', url: url, index: i });
-        });
-      }
-
+      await processImagesInBatches(zip, images, 30);
 
     });
 });
-
-function filterImages(fileList: Array<string>) {
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
-
-  return fileList.filter(file => {
-    const extension = file.substring(file.lastIndexOf('.')).toLowerCase();
-    return imageExtensions.includes(extension);
-  });
-}
-
-function getComicInfoFile(fileList: Array<string>) {
-  const resultArray = fileList.filter(f => f.toLowerCase() == 'comicinfo.xml')
-
-  return resultArray.length > 0 ? resultArray[0] : false
-}
-
-function getAcbfFile(fileList: Array<string>) {
-  const imageExtensions = ['.acbf'];
-
-  const result = fileList.filter(file => {
-    const extension = file.substring(file.lastIndexOf('.')).toLowerCase();
-    return imageExtensions.includes(extension);
-  })
-
-  return result.length > 0 ? result[0] : null;
-}

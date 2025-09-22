@@ -10,7 +10,12 @@ import { take } from 'rxjs';
   templateUrl: './link-parser.component.html',
   styleUrls: [
     './link-parser.component.scss',
-    './link-parser.dual-screen.component.scss'
+    './link-parser.dual-screen.component.scss',
+    './themes/pride.scss',
+    './themes/halloween.scss',
+    './themes/newyear.scss',
+    './themes/valentine.scss'
+
   ],
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,

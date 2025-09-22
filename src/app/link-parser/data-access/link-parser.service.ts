@@ -14,7 +14,7 @@ export class LinkParserService {
     "Reddit",
     "MangaDex",
     "Zenko",
-    "Comick",
+    // "Comick",
     "NHentai",
     "Yandere Pools",
     "Imgchest",

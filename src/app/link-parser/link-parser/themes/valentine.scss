@@ -1,0 +1,13 @@
+:host.valentine {
+    --c1: oklch(from #FFC0CB 0.2624 0.064157 h);
+    --c2: oklch(from #FF69B4 0.2624 0.064157 h);
+    --c3: oklch(from #800080 0.2624 0.064157 h);
+
+    background: radial-gradient(circle at 30.9%, var(--c1), var(--c2), var(--c3));
+
+    @media (prefers-color-scheme: light) {
+        --c1: oklch(from #FFC0CB 0.96 0.0128 h);
+        --c2: oklch(from #FF69B4 0.96 0.0128 h);
+        --c3: oklch(from #800080 0.96 0.0128 h);
+    }
+}

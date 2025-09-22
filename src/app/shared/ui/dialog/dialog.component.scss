@@ -98,3 +98,11 @@ dialog {
         box-shadow: var(--shadow-2);
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    dialog {
+        &::backdrop {
+            background: var(--surface);
+        }
+    }
+}

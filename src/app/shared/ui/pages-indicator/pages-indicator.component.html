@@ -3,5 +3,5 @@
 } -->
 
 @for(page of pagination(); track $index; let i = $index) {
-<div [ngClass]="{active: isActive(page -1 )}" (click)="onActive(page - 1)">{{page}}</div>
+<div [ngClass]="{active: isActive(page -1 )}" [vibrateHaptic]="10" (click)="onActive(page - 1)">{{page}}</div>
 }

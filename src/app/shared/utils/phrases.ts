@@ -59,6 +59,8 @@ export class Phrases {
     ]
     seasonalTheme = `SeasonalTheme`;
     seasonalThemeDesc = `🏳️‍🌈 Pride month, 🎃 Halloween, 🎄 New Year, 💖 Valentine etc.`;
+    historyEmpty = "Hmm… looks like you haven’t read anything yet 👀";
+    histyryEmptyDesc = "It’s the perfect time to open your first chapter! 📖";
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

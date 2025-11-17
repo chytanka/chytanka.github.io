@@ -1,15 +1,15 @@
-<details open>
-  <summary>🤔 {{lang.ph().whatIsChytanka}}</summary>
+<details open name="faq">
+  <summary [vibrateHaptic]="10">🤔 {{lang.ph().whatIsChytanka}}</summary>
   <p>{{lang.ph().description}}</p>
 </details>
 
-<details open>
-  <summary>📖 {{lang.ph().howToUseChytanka}}</summary>
+<details name="faq">
+  <summary [vibrateHaptic]="10">📖 {{lang.ph().howToUseChytanka}}</summary>
   <p [innerHTML]="lang.ph().howToUseChytankaAnswer"></p>
 </details>
 
-<details>
-  <summary>🌐 {{lang.ph().whatLinks}}</summary>
+<details name="faq">
+  <summary [vibrateHaptic]="10">🌐 {{lang.ph().whatLinks}}</summary>
   <dl>
     <dt><img src="//imgur.com/favicon.ico" alt="MangaDex"><a href="//imgur.com" target="_blank"
         rel="noopener noreferrer">Imgur</a></dt>
@@ -48,12 +48,12 @@
     </dd>
 
     <dt><img src="//zenko.online/favicon.ico" alt="MangaDex"><a href="//zenko.online" target="_blank"
-      rel="noopener noreferrer">Zenko</a></dt>
-  <dd>
-    <ul>
-      <li><code>zenko.online/titles/&#123;titleId&#125;/&#123;id&#125;</code></li>
-    </ul>
-  </dd>
+        rel="noopener noreferrer">Zenko</a></dt>
+    <dd>
+      <ul>
+        <li><code>zenko.online/titles/&#123;titleId&#125;/&#123;id&#125;</code></li>
+      </ul>
+    </dd>
 
   </dl>
   <p style="font-style: italic;">{{lang.ph().whereIdIs}}</p>
@@ -61,13 +61,13 @@
 </details>
 
 
-<details>
-  <summary>📄 {{lang.ph().canIPasteJsonLink}}</summary>
+<details name="faq">
+  <summary [vibrateHaptic]="10">📄 {{lang.ph().canIPasteJsonLink}}</summary>
   <p [innerHTML]="lang.getTemplate(lang.ph().yesYouCanPasteJsonLink, gistLinkHref)"></p>
 </details>
 
-<details>
-  <summary>📝 {{lang.ph().whatJsonModel}}</summary>
+<details name="faq">
+  <summary [vibrateHaptic]="10">📝 {{lang.ph().whatJsonModel}}</summary>
   <pre style="font-size: small;"><code>&#123;
 "title": "Title of the episode",
 "nsfw": false,

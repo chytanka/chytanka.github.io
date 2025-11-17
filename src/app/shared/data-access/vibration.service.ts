@@ -1,11 +1,12 @@
 import { isPlatformServer } from '@angular/common';
 import { computed, inject, Injectable, PLATFORM_ID, Signal, signal, WritableSignal } from '@angular/core';
 
-const DOT = 40; // Коротка вібрація для точки
-const DASH = 80; // Довга вібрація для тире
-const INTRA_LETTER_PAUSE = 64; // Пауза між елементами в одній букві
-const LETTER_PAUSE = 96; // Пауза між літерами
-const WORD_PAUSE = 128; // Пауза між словами
+const DOT = 24;
+const DASH = DOT * 3;
+const INTRA_LETTER_PAUSE = DOT;
+const LETTER_PAUSE = DOT * 3;
+const WORD_PAUSE = DOT * 7;
+const Q = 1;
 
 const morseCode = new Map([
   ['A', ['.', '-']],                // .-
@@ -77,12 +78,28 @@ export class VibrationService {
     localStorage.setItem('vibrationOn', n.toString())
   }
 
-  vibrate(pattern: VibratePattern = DOT) {
+  vibrateIOS(style: string = "light") {
+    const handler = (window as any).webkit?.messageHandlers?.hapticFeedback;
+    if (handler) {
+      try {
+        handler.postMessage({
+          type: 'impact',
+          style: style // light / medium / heavy
+        });
+      } catch { }
+    }
+  }
+
+  vibrate(pattern: VibratePattern = DOT * Q) {
 
     if (isPlatformServer(this._platformId) || !this.vibrationOn()) return
 
-    navigator.vibrate(0);
-    navigator.vibrate(pattern)
+    if (this.supportsVibration()) {
+      navigator.vibrate(0);
+      navigator.vibrate(pattern)
+    } else {
+      this.vibrateIOS();
+    }
   }
 
   vibrateForSettings = (isEnabled: boolean) => this.vibrate(this.getVibrationPattern(isEnabled ? "ON" : "OFF"));
@@ -97,24 +114,35 @@ export class VibrationService {
       const morse = morseCode.get(char);
       if (morse) {
         morse.forEach((signal, signalIndex) => {
-          pattern.push(signal === '.' ? DOT : DASH); // Вібрація для точки або тире
+          pattern.push(signal === '.' ? DOT * Q : DASH * Q); // Вібрація для точки або тире
           if (signalIndex < morse.length - 1) {
-            pattern.push(INTRA_LETTER_PAUSE); // Пауза між елементами букви
+            pattern.push(INTRA_LETTER_PAUSE * Q); // Пауза між елементами букви
           }
         });
 
         // Пауза між літерами
         if (index < array.length - 1) {
-          pattern.push(LETTER_PAUSE);
+          pattern.push(LETTER_PAUSE * Q);
         }
       }
 
       // Пауза між словами
       if (index < array.length - 1 && array[index + 1] === ' ') {
-        pattern.push(WORD_PAUSE);
+        pattern.push(WORD_PAUSE * Q);
       }
     });
 
     return pattern;
+  }
+
+  supportsVibration(): boolean {
+    if (!('vibrate' in navigator)) return false;
+    if (typeof navigator.vibrate !== 'function') return false;
+
+    try {
+      return navigator.vibrate(0) !== false;
+    } catch {
+      return false;
+    }
   }
 }

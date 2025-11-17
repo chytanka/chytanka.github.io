@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { copyText } from '../utils/clipboard';
 import { DOCUMENT } from '@angular/common';
 
@@ -7,6 +7,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class DomManipulationService {
   private readonly document = inject(DOCUMENT);
+
+  fullscreenEnabled = signal(this.document.fullscreenEnabled);
 
   scrollInterval: any;
 

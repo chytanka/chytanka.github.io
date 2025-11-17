@@ -1,6 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, PLATFORM_ID, WritableSignal, computed, inject, signal } from '@angular/core';
 
+export const DISPLAY_MODES = ['softmode', 'truemode'];
+const NAME_DISPLAY_MODE = 'displayMode';
+const NAME_AUTO_PASTE_LINK = 'autoPasteLink';
+const NAME_SEASONAL_THEME = 'seasonalTheme';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +17,7 @@ export class LinkParserSettingsService {
   constructor() {
     this.initAutoPasteLink()
     this.initSeasonalTheme()
+    this.initDisplayMode()
   }
 
   initAutoPasteLink() {
@@ -26,6 +32,23 @@ export class LinkParserSettingsService {
 
     this.autoPasteLink.set(n);
     localStorage.setItem('autoPasteLink', n.toString())
+  }
+
+  displayMode!: WritableSignal<string>;
+
+  initDisplayMode() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const n = localStorage.getItem(NAME_DISPLAY_MODE) === null ? 'soft' : localStorage.getItem(NAME_DISPLAY_MODE) as string;
+    this.displayMode = signal(n);
+    this.setDisplayMode(n);
+  }
+
+  setDisplayMode(n: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.displayMode.update(v => n);
+    localStorage.setItem(NAME_DISPLAY_MODE, n)
   }
 
   /**

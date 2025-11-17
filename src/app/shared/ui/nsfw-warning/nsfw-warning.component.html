@@ -1,7 +1,6 @@
-
 <header>{{title}}</header>
 <div [innerHTML]="text"></div>
 <footer>
-    <input class="agree" type="button" (click)="onAgree()" [value]="labelAgree" />
-    <input type="button" (click)="onDisagree()" [value]="labelDisagree" />
+    <input [vibrateHaptic]="10" class="agree" type="button" (click)="onAgree()" [value]="labelAgree" />
+    <input [vibrateHaptic]="10" type="button" (click)="onDisagree()" [value]="labelDisagree" />
 </footer>

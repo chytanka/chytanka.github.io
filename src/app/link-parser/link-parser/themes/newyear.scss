@@ -1,0 +1,10 @@
+:host.newyear {
+    --c1: oklch(from #0A0A2A 0.2624 0.064157 h);
+    --c2: oklch(from #2C0C4C 0.2624 0.064157 h);
+    background: linear-gradient(to bottom, var(--c1), var(--c2));
+
+    @media (prefers-color-scheme: light) {
+        --c1: oklch(from #0A0A2A 0.96 0.0128 h);
+        --c2: oklch(from #2C0C4C 0.96 0.0128 h);
+    }
+}

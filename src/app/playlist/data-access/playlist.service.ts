@@ -61,10 +61,10 @@ export class PlaylistService {
     this.parser.parsers.push(new RedditLinkParser)
     this.parser.parsers.push(new ZenkoLinkParser)
     this.parser.parsers.push(new NhentaiLinkParser)
-    this.parser.parsers.push(new ComickLinkParser)
+    // this.parser.parsers.push(new ComickLinkParser)
     this.parser.parsers.push(new YandereParser)
     this.parser.parsers.push(new PixivLinkParser)
-    this.parser.parsers.push(new BlankaryLinkParser)
+    // this.parser.parsers.push(new BlankaryLinkParser)
     this.parser.parsers.push(new JsonLinkParser)
   }
 

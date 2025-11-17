@@ -3,11 +3,11 @@
         <header>
             <h4>{{title}}</h4>
             @if (closeHeaderButton) {
-                <form method="dialog">
-                    <button class="button empty ">
-                        ❌
-                    </button>
-                </form>
+            <form method="dialog">
+                <button [vibrateHaptic]="10" class="button empty ">
+                    ❌
+                </button>
+            </form>
             }
         </header>
         <section>
@@ -16,7 +16,7 @@
         @if(footer){
         <footer>
             <form method="dialog">
-                <button class="button primary full">
+                <button [vibrateHaptic]="10" class="button primary full">
                     {{lang.ph().ok}}
                 </button>
             </form>

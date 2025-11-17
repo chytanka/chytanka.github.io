@@ -1,4 +1,4 @@
-<input [class]="{active: active()}" id="warm-range" type="range" orient="vertical" min="1000" max="6500" step="10" [value]="value"
+<input [vibrateHaptic]="5" [vibrateClick]="false" [vibrateInput]="true" [class]="{active: active()}" id="warm-range" type="range" orient="vertical" min="1000" max="6500" step="10" [value]="value"
     (input)="onChange($event)">
 
 <label (click)="toggleActive()" class="button " for="warm-range" [title]="lang.ph().nightlight">☀️</label>

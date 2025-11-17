@@ -20,10 +20,18 @@
     block-size: 100%;
     font-size: 16px;
 
+    &.truemode {
+        --surface: #000;
+    }
+
     @media (prefers-color-scheme: light) {
         --surface-avarage: oklch(from var(--avarage-color, #ffd60a) 1 0.016 h);
         --surface: #f7fcff;
         --text: #010102;
+
+        &.truemode {
+            --surface: #fff;
+        }
     }
 }
 
@@ -41,6 +49,13 @@ body {
     box-sizing: border-box;
     scrollbar-width: thin;
     scrollbar-color: var(--text) var(--surface);
+    overscroll-behavior: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: unset !important;
+    }
 }
 
 input {
@@ -128,7 +143,7 @@ input {
         }
     }
 
-    &:active {
+    &:active, &.active  {
         background-color: rgba(0, 15, 30, 1);
         box-shadow: unset;
         transform: translate(2px, 2px);
@@ -149,6 +164,14 @@ input {
             background-color: rgba(0, 15, 30, .25);
             opacity: .64;
         }
+    }
+}
+
+@supports (corner-shape: squircle) 
+{
+    .button {
+        corner-shape: squircle;
+        border-radius: 1ch;
     }
 }
 
@@ -177,7 +200,7 @@ a[target="_blank"]:after {
 :root {
     --ratio: 257/364;
     --accent: #ffd60a;
-    
+
     --avarage-l: 0.48;
     --avarage-l-2: 0.36;
 
@@ -234,6 +257,19 @@ a[target="_blank"]:after {
             transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
             filter: blur(var(--blur));
         }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    dialog,
+    dialog::backdrop,
+    dialog[open],
+    dialog[open]::backdrop {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
     }
 }
 

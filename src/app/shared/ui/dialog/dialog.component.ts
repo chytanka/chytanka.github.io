@@ -1,16 +1,19 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 import { DOCUMENT } from '@angular/common';
+import { VibrationService } from '../../data-access/vibration.service';
 
 @Component({
-    selector: 'app-dialog',
-    templateUrl: './dialog.component.html',
-    styleUrl: './dialog.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrl: './dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class DialogComponent {
   lang = inject(LangService)
+  vibration = inject(VibrationService);
+
   private readonly document = inject(DOCUMENT);
 
   @Output() onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -26,8 +29,9 @@ export class DialogComponent {
   ngAfterViewInit() {
     this.dialogElement.set(this.dialogRef.nativeElement);
 
-    this.dialogElement().onclose = () =>{
+    this.dialogElement().onclose = () => {
       this.onToggle.emit(false)
+      this.vibration.vibrate([0, 10, 20]);
     }
   }
 
@@ -40,5 +44,6 @@ export class DialogComponent {
   showDialog() {
     this.dialogElement().showModal()
     this.onToggle.emit(true)
+    this.vibration.vibrate(10);
   }
 }

@@ -1,4 +1,5 @@
-:host, fieldset {
+:host,
+fieldset {
     display: grid;
     gap: 2ch;
 }
@@ -9,7 +10,7 @@ section {
     align-items: center;
     gap: 2ch;
     border-bottom: 2px solid #16649680;
-    padding:  0 0 1.5ch;
+    padding: 0 0 1.5ch;
 
     transition: all var(--t) ease-in-out;
 
@@ -32,13 +33,13 @@ section {
     }
 
     input[type=checkbox] {
-        --q:1;
+        --q: 1;
         width: calc(5ch - 2px);
         aspect-ratio: 1;
         border-radius: .5ch;
         appearance: none;
         border: 2px solid #16649680;
-overflow: hidden;
+        overflow: hidden;
         position: relative;
         transition: all var(--t) ease-in-out;
         cursor: pointer;
@@ -65,10 +66,11 @@ overflow: hidden;
 
         &:checked {
             border-color: #166496;
+
             &::before {
                 transform: translate(0, 100%) scale(0);
             }
-    
+
             &::after {
                 transform: translate(0, 0%) scale(1);
                 filter: brightness(0) saturate(100%) invert(86%) sepia(42%) saturate(2655%) hue-rotate(350deg) brightness(106%) contrast(102%);
@@ -83,7 +85,29 @@ fieldset {
     border-radius: var(--r);
 }
 
+
+@supports (corner-shape: squircle) 
+{
+    section {
+        input[type=checkbox] {
+        corner-shape: squircle;
+        border-radius: 1ch;
+    }
+    }
+    fieldset {
+        corner-shape: squircle;
+        border-radius: calc(var(--r) * 2);
+    }
+}
+
 input[type=number] {
     width: 8ch;
     text-align: center;
+}
+
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8ch, 1fr));
+    gap: 1ch;
+    margin-top: 1ch;
 }

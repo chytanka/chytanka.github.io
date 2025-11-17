@@ -8,6 +8,7 @@ import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.s
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { VibrationService } from '../../data-access/vibration.service';
 
 const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
 const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
@@ -41,6 +42,7 @@ export class ViewerComponent implements AfterViewInit {
 
   platformId = inject(PLATFORM_ID)
   private readonly document = inject(DOCUMENT);
+  vibration = inject(VibrationService);
 
   initListFromParrentWindow() {
     if (!this.embedHelper.isEmbedded() || !isPlatformBrowser(this.platformId)) return
@@ -146,10 +148,22 @@ export class ViewerComponent implements AfterViewInit {
 
   }
 
+  isScrollStart: boolean = false;
 
   @HostListener('scroll', ['$event'])
   onScroll(event: Event) {
     this.initActiveIndexes()
+
+    if (!this.isScrollStart) {
+      this.isScrollStart = true;
+      this.vibration.vibrate(10);
+    }
+  }
+
+  @HostListener('scrollend', ['$event'])
+  onScrollEnd(event: Event) {
+    this.vibration.vibrate([5,5,10]); 
+    this.isScrollStart = false;   
   }
 
   @HostListener('window:resize', ['$event'])

@@ -35,6 +35,14 @@
     }
 }
 
+:root.truemode :host {
+    background: black;
+
+    @media (prefers-color-scheme: light) {
+        background: white;
+    }
+}
+
 main {
     display: grid;
     row-gap: 2ch;

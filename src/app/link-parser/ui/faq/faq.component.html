@@ -1,15 +1,15 @@
 <details open name="faq">
-  <summary>🤔 {{lang.ph().whatIsChytanka}}</summary>
+  <summary [vibrateHaptic]="10">🤔 {{lang.ph().whatIsChytanka}}</summary>
   <p>{{lang.ph().description}}</p>
 </details>
 
 <details name="faq">
-  <summary>📖 {{lang.ph().howToUseChytanka}}</summary>
+  <summary [vibrateHaptic]="10">📖 {{lang.ph().howToUseChytanka}}</summary>
   <p [innerHTML]="lang.ph().howToUseChytankaAnswer"></p>
 </details>
 
 <details name="faq">
-  <summary>🌐 {{lang.ph().whatLinks}}</summary>
+  <summary [vibrateHaptic]="10">🌐 {{lang.ph().whatLinks}}</summary>
   <dl>
     <dt><img src="//imgur.com/favicon.ico" alt="MangaDex"><a href="//imgur.com" target="_blank"
         rel="noopener noreferrer">Imgur</a></dt>
@@ -62,12 +62,12 @@
 
 
 <details name="faq">
-  <summary>📄 {{lang.ph().canIPasteJsonLink}}</summary>
+  <summary [vibrateHaptic]="10">📄 {{lang.ph().canIPasteJsonLink}}</summary>
   <p [innerHTML]="lang.getTemplate(lang.ph().yesYouCanPasteJsonLink, gistLinkHref)"></p>
 </details>
 
 <details name="faq">
-  <summary>📝 {{lang.ph().whatJsonModel}}</summary>
+  <summary [vibrateHaptic]="10">📝 {{lang.ph().whatJsonModel}}</summary>
   <pre style="font-size: small;"><code>&#123;
 "title": "Title of the episode",
 "nsfw": false,

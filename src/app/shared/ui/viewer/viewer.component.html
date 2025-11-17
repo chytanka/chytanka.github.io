@@ -1,4 +1,4 @@
-<div #viewRef class="view" [class]="viewer.viewModeOption().mode" (scroll)="initActiveIndexes()"
+<div #viewRef class="view" [class]="viewer.viewModeOption().mode" (scroll)="onScroll($event)" (scrollend)="onScrollEnd($event)"
     [dir]="viewer.viewModeOption().dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
     <div>

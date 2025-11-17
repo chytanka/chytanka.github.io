@@ -2,6 +2,7 @@
 
 // TODO: change to https://github.com/101arrowz/fflate
 // because jszip is toooo slow
+// https://chatgpt.com/c/68cadcf9-6c28-8329-add8-cb20abaa2f85
 
 import JSZip from 'jszip';
 import { filterImages, getAcbfFile, getComicInfoFile, processFile, processImagesInBatches } from '../utils';

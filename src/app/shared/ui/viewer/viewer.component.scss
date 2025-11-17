@@ -9,10 +9,14 @@
 	transition: all var(--t) ease-in-out;
 
 	&:fullscreen {
-		background-color: var(--surface);
+		background-color: #000000;
 
 		app-overlay.top {
 			padding-top: min(0vmin, env(safe-area-inset-top));
+		}
+
+		@media (prefers-color-scheme: light) {
+			background: #ffffff;
 		}
 	}
 

@@ -30,6 +30,7 @@ import { SharpenComponent } from './ui/filters/sharpen/sharpen.component';
 import { ThanksPageComponent } from './ui/viewer/components/thanks-page/thanks-page.component';
 import { ImgMetaDirective } from './directives/img-meta.directive';
 import { NewTabDirective } from './directives/new-tab.directive';
+import { VibrateHapticDirective } from './directives/vibrate-haptic.directive';
 
 
 
@@ -60,7 +61,8 @@ import { NewTabDirective } from './directives/new-tab.directive';
     FileSizePipe,
     ThanksPageComponent,
     ImgMetaDirective,
-    NewTabDirective
+    NewTabDirective,
+    VibrateHapticDirective
   ],
   imports: [
     CommonModule,
@@ -69,6 +71,6 @@ import { NewTabDirective } from './directives/new-tab.directive';
     RoughPaperComponent,
     SharpenComponent
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe]
+  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective]
 })
 export class SharedModule { }

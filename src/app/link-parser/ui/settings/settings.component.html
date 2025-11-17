@@ -27,7 +27,8 @@
                 <small>{{'Use Vibration API'}}</small>
             </p>
         </div>
-        <input type="checkbox" [checked]="vibro.vibrationOn()" (input)="setVibration($event)" id="Vibration">
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="vibro.vibrationOn()" (input)="setVibration($event)"
+            id="Vibration">
     </section>
     }
 
@@ -45,7 +46,27 @@
                 <small>{{lang.ph().settingAutoPasteLinkDesc}}</small>
             </p>
         </div>
-        <input type="checkbox" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)" id="autoPasteLink">
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="setts.autoPasteLink()" (input)="setAutoPasteLink($event)"
+            id="autoPasteLink">
+    </section>
+
+    <section style="display: block;">
+            <div>
+                <p style="display: flex; justify-content: space-between; align-items: center;">
+                🖥️ Display Mode
+                <small>{{setts.displayMode() | titlecase}}</small>
+            </p>
+            <div class="radio-group">
+                <button [vibrateHaptic]="10" class="button" [class.active]=" setts.displayMode() === 'true' "
+                    (click)="setts.setDisplayMode('true')">
+                    👑<br>True Mode
+                </button>
+                <button [vibrateHaptic]="10" class="button" [class.active]=" setts.displayMode() === 'soft' "
+                    (click)="setts.setDisplayMode('soft')">
+                    🧸<br> Soft Mode
+                </button>
+            </div>
+            </div>
     </section>
 
     <section [class]="!setts.seasonalTheme()? 'inactive': ''">
@@ -62,7 +83,8 @@
                 <small>{{lang.ph().seasonalThemeDesc}}</small>
             </p>
         </div>
-        <input type="checkbox" [checked]="setts.seasonalTheme()" (input)="setSeasonalTheme($event)" id="seasonalTheme">
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="setts.seasonalTheme()" (input)="setSeasonalTheme($event)"
+            id="seasonalTheme">
     </section>
 </fieldset>
 
@@ -83,8 +105,8 @@
                 <small>{{'Automatically saves files opened locally.'}}</small>
             </p>
         </div>
-        <input type="checkbox" [checked]="fileSetts.saveFileToHistory()" (input)="setSaveFileToHistory($event)"
-            id="saveFileToHistory">
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="fileSetts.saveFileToHistory()"
+            (input)="setSaveFileToHistory($event)" id="saveFileToHistory">
     </section>
 
     @if(fileSetts.saveFileToHistory()){
@@ -102,8 +124,8 @@
                 <small>{{'Adds copies of local files to history.'}}</small>
             </p>
         </div>
-        <input type="checkbox" [checked]="fileSetts.copyFileToHistory()" (input)="setCopyFileToHistory($event)"
-            id="copyFileToHistory">
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="fileSetts.copyFileToHistory()"
+            (input)="setCopyFileToHistory($event)" id="copyFileToHistory">
     </section>
 
     @if(fileSetts.copyFileToHistory()){

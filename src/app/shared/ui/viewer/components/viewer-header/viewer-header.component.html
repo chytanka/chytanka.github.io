@@ -1,16 +1,16 @@
 <app-overlay class="top" [ngClass]="{'show': show}">
     @if(!embedHelper.isEmbedded()){
-    <a class="button " [routerLink]="['/']">🏠</a>
+    <a [vibrateHaptic]="10" class="button " [routerLink]="['/']">🏠</a>
     <app-file-change [label]="'📃'"/>
     } @else {
         <a title="Read on Chytanka" class="button open-chtnk-link" [href]="link()" target="_blank" rel="noopener noreferrer"></a>
     }
     <separator />
     @if (!isFileRoute()) {
-    <button class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
-    <!-- <button class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
+    <button [vibrateHaptic]="10" class="button tshadow " [title]="lang.ph().share" (click)="showShare()">📢</button>
+    <!-- <button [vibrateHaptic]="10" class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
     }
-    <span class="title button" [title]="episode().title">{{episode().title}}</span>
+    <span [vibrateHaptic]="10" class="title button" [title]="episode().title">{{episode().title}}</span>
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />
 </app-overlay>
@@ -23,7 +23,7 @@
 
             <div style="margin-top: 1ch;" class="input-group">
                 <textarea rows="4" readonly>{{link()}}</textarea>
-                <button class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
+                <button [vibrateHaptic]="10" class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
             </div>
         </details>
 
@@ -31,11 +31,11 @@
             <summary>🔌 Embed</summary>
             <div style="margin-top: 1ch;" class="input-group">
                 <textarea rows="6" readonly>{{iframe()}}</textarea>
-                <button class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
+                <button [vibrateHaptic]="10" class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
             </div>
         </details>
 
-        <button class="button small" (click)="shareWith()">Share with...</button>
+        <button [vibrateHaptic]="10" class="button small" (click)="shareWith()">Share with...</button>
     </div>
 </app-dialog>
 

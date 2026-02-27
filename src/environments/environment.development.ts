@@ -1,4 +1,4 @@
-const PROXY = `http://192.168.10.225:5000/api?url=`
+const PROXY = `http://192.168.10.107:3003/api?url=`
 
 export const environment = {
     version: "0.13.32-2025.6.8",

@@ -12,7 +12,7 @@ export const environment = {
     mangadexManga: `https://api.mangadex.org/manga/`,
     telegraphHost: `https://api.telegra.ph/getPage/`,
     redditHost: `https://www.reddit.com/r/all/comments/`,
-    zenkoHost: `https://zenko-api.onrender.com/chapters/`,
+    zenkoHost: `https:///api.zenko.online/chapters/`,
     nhentaiHost: `https://nhentai.net/api/gallery/`,
     comickHost: `https://api.comick.fun/chapter/`,
     yanderePoolsHost: `https://yande.re/pool/show.json/`,

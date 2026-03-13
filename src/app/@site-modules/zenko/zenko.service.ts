@@ -13,7 +13,7 @@ export class ZenkoService {
   proxy: ProxyService = inject(ProxyService)
 
   getComposition(id: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(environment.zenkoHost + id)
+    return this.http.get<any>(this.proxy.proxyUrl((environment.zenkoHost + id))+'&ref=https://zenko.online')
       .pipe(map((data) => { return this.map(data) }))
   }
 
@@ -25,7 +25,7 @@ export class ZenkoService {
         id: data.publisher.id as string,
         site: `https://zenko.online/teams/`+data.publisher.id as string,
         name: data.publisher.name as string,
-        avatar: this.proxy.proxyUrl(`https://zenko.b-cdn.net/${data.publisher.avatar}?optimizer=image&width=900&quality=90&height=auto`) as string,
+        avatar: this.proxy.proxyUrl(`https://zenko.b-cdn.net/${data.publisher.avatar}?optimizer=image&width=900&quality=90&height=auto`) + '&ref=https://zenko.online' as string,
         description: data.publisher.description as string,
         links: data.publisher.links?.map((l: any) => { return { link: l.link, title: l.title }; })
       } as unknown as CompositionPublisher,
@@ -34,7 +34,7 @@ export class ZenkoService {
         return {
           src: item.imgUrl || item.content
         };
-      })).filter((i: any) => i.src).map((img: any) => { return { src: this.proxy.proxyUrl(`https://zenko.b-cdn.net/${img.src}?optimizer=image&width=900&quality=90&height=auto`) } })
+      })).filter((i: any) => i.src).map((img: any) => { return { src: this.proxy.proxyUrl(`https://zenko.b-cdn.net/${img.src}?optimizer=image&width=900&quality=90&height=auto`) + '&ref=https://zenko.online' } })
       
     };
 

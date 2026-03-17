@@ -31,6 +31,8 @@ import { ThanksPageComponent } from './ui/viewer/components/thanks-page/thanks-p
 import { ImgMetaDirective } from './directives/img-meta.directive';
 import { NewTabDirective } from './directives/new-tab.directive';
 import { VibrateHapticDirective } from './directives/vibrate-haptic.directive';
+import { GamepadCursorComponent } from './ui/gamepad-cursor/gamepad-cursor.component';
+import { SircleBlurComponent } from './ui/filters/sircle-blur/sircle-blur.component';
 
 
 
@@ -62,7 +64,9 @@ import { VibrateHapticDirective } from './directives/vibrate-haptic.directive';
     ThanksPageComponent,
     ImgMetaDirective,
     NewTabDirective,
-    VibrateHapticDirective
+    VibrateHapticDirective,
+    GamepadCursorComponent,
+    SircleBlurComponent
   ],
   imports: [
     CommonModule,
@@ -71,6 +75,6 @@ import { VibrateHapticDirective } from './directives/vibrate-haptic.directive';
     RoughPaperComponent,
     SharpenComponent
   ],
-  exports: [TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective]
+  exports: [GamepadCursorComponent,TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent]
 })
 export class SharedModule { }

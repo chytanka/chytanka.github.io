@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, output, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, effect, inject, output, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../@site-modules/@common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,8 @@ import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { VibrationService } from '../../data-access/vibration.service';
+import { GamepadService } from '../../data-access/gamepad.service';
+import { GamepadButton } from '../../models';
 
 const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
 const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
@@ -32,6 +34,7 @@ const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
 export class ViewerComponent implements AfterViewInit {
   readonly separator: string = '│'
   showNsfw: WritableSignal<boolean> = signal(false);
+  gamepad = inject(GamepadService);
 
   pagechange = output<{ total: number, current: number[] }>()
 
@@ -87,14 +90,56 @@ export class ViewerComponent implements AfterViewInit {
 
   constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) {
     this.initHotKeys()
+
+    effect(() => {
+      for (const [btn, action] of Object.entries(this.gamepadActionMap)) {
+        if (this.gamepad.buttons()[parseInt(btn)]?.pressed) action();
+      }
+    })
+
+    addEventListener("fullscreenchange", (event) => {
+      this.isFullScreen.set(document.fullscreenElement === this.el.nativeElement)
+    })
   }
 
-  toggleFullScreen = () => this.dm.toggleFullScreen(this.el.nativeElement)
+  private gamepadActionMap: Record<number, Function> = {
+    [GamepadButton.L1]: () => this.scrollLeft(),
+    [GamepadButton.R1]: () => this.scrollRight(),
+    [GamepadButton.DPadLeft]: () => this.scrollLeft(),
+    [GamepadButton.DPadRight]: () => this.scrollRight(),
+    [GamepadButton.DPadUp]: () => this.scrollUp(),
+    [GamepadButton.DPadDown]: () => this.scrollDown(),
+    [GamepadButton.Square]: () => this.toggleFullScreen(),
+    [GamepadButton.Options]: () => this.toggleOverlay(),
+    [GamepadButton.Triangle]: () => this.toggleViewModeOption(),
+  };
+  private _isViewOptToggle = false;
+  toggleViewModeOption() {
+    if (!this._isViewOptToggle) {
+      this.viewer.toggleViewModeOption();
+      this.viewer.saveViewModeOption();
+      setTimeout(() => { this._isViewOptToggle = false }, 100);
+    }
 
-  showOverlay: boolean = true;
-  toggleOverlay = () => this.showOverlay = !this.showOverlay;
+    this._isViewOptToggle = true;
+  }
 
-  // viewElement!: HTMLElement;
+  // TODO: Fix scroll position reset after exiting fullscreen in pages mode
+  toggleFullScreen = () => {
+    // const activeIndexs = this.activeIndexs();
+    // const page = (activeIndexs.length == 1) ? activeIndexs[0] : activeIndexs.filter(v => v+1 % 2 != 0)[0];
+    // console.log(activeIndexs, page);
+
+    this.dm.toggleFullScreen(this.el.nativeElement);
+
+    // if (page != undefined)
+    //   setTimeout(() => {this.onActive(page)}, 100);
+  }
+  isFullScreen = signal(document.fullscreenElement === this.el.nativeElement);
+
+  showOverlay = signal(false);
+  toggleOverlay = () => this.showOverlay.update(v => !v);
+
   viewElement: WritableSignal<HTMLElement> = signal(this.document.createElement('div'));
   imageElements: Signal<NodeListOf<Element>> = computed(() => this.viewElement().querySelectorAll('.page img[id*=page_]'));
   imgsPos: any[] = []
@@ -162,8 +207,8 @@ export class ViewerComponent implements AfterViewInit {
 
   @HostListener('scrollend', ['$event'])
   onScrollEnd(event: Event) {
-    this.vibration.vibrate([5,5,10]); 
-    this.isScrollStart = false;   
+    this.vibration.vibrate([5, 5, 10]);
+    this.isScrollStart = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -171,35 +216,37 @@ export class ViewerComponent implements AfterViewInit {
     this.initActiveIndexes()
   }
 
-  hotKeys = new Map<string, Function>()
+  private hotKeys = new Map<string, Function>()
 
-  initHotKeys() {
+  private initHotKeys() {
     this.hotKeys.set('KeyF', this.toggleFullScreen)
+    this.hotKeys.set('KeyE', this.toggleOverlay)
+    this.hotKeys.set('KeyA', () => this.scrollLeft())
+    this.hotKeys.set('KeyD', () => this.scrollRight())
+    this.hotKeys.set('KeyW', () => this.scrollUp())
+    this.hotKeys.set('KeyS', () => this.scrollDown())
   }
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     this.domMan.setHotkeys(event, this.hotKeys)
+  }
 
+  private readonly verAmount = 256;
 
-    const element: HTMLElement = this.el.nativeElement;
-    const horAmount = element.clientWidth;
-    const verAmount = 100;
+  private scrollLeft() {
+    this.dm.scrollHor(this.viewElement(), -this.el.nativeElement.clientWidth)
+  }
 
-    switch (event.code) {
-      case 'KeyA':
-        this.dm.scrollHor(this.viewElement(), -horAmount)
-        break;
-      case 'KeyD':
-        this.dm.scrollHor(this.viewElement(), horAmount)
-        break;
-      case 'KeyW':
-        this.dm.scrollVer(element, -verAmount)
-        break;
-      case 'KeyS':
-        this.dm.scrollVer(element, verAmount)
-        break;
-    }
+  private scrollRight() {
+    this.dm.scrollHor(this.viewElement(), this.el.nativeElement.clientWidth)
+  }
+
+  private scrollUp() {
+    this.dm.scrollVer(this.el.nativeElement, -this.verAmount)
+  }
+  private scrollDown() {
+    this.dm.scrollVer(this.el.nativeElement, this.verAmount)
   }
 
   isDialogOpen = signal(false);

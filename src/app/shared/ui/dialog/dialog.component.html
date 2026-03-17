@@ -1,4 +1,6 @@
 <dialog #dialog (click)="closeDialog($event)">
+    <gamepad-cursor [cursorVisible]="gamepad.cursorVisible()" [x]="gamepad.x()" [y]="gamepad.y()" />
+    
     <div class="dialog-wrapper">
         <header>
             <h4>{{title}}</h4>

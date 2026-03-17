@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Ou
 import { LangService } from '../../data-access/lang.service';
 import { DOCUMENT } from '@angular/common';
 import { VibrationService } from '../../data-access/vibration.service';
+import { GamepadService } from '../../data-access/gamepad.service';
 
 @Component({
   selector: 'app-dialog',
@@ -13,6 +14,7 @@ import { VibrationService } from '../../data-access/vibration.service';
 export class DialogComponent {
   lang = inject(LangService)
   vibration = inject(VibrationService);
+  gamepad = inject(GamepadService);
 
   private readonly document = inject(DOCUMENT);
 
@@ -33,6 +35,12 @@ export class DialogComponent {
       this.onToggle.emit(false)
       this.vibration.vibrate([0, 10, 20]);
     }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.dialogElement().close();
+      }
+    });
   }
 
   closeDialog(event: Event) {

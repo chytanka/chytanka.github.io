@@ -1,0 +1,36 @@
+:host {
+    position: absolute;
+    width: 16px;
+    height: auto;
+    aspect-ratio: 1;
+    background: oklab(from #166496 l a b/ .8);
+    border-radius: 50%;
+    pointer-events: none;
+    touch-action: none;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    overscroll-behavior: none;
+    user-select: none;
+    mix-blend-mode: difference;
+    scale: 0;
+    transition: scale var(--t) ease-in-out;
+    transform-origin: top left;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: auto;
+        aspect-ratio: 1;
+        background-color: #ffd60a;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+    &.visible {
+        scale: 1;
+    }
+}

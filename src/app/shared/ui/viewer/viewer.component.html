@@ -1,3 +1,4 @@
+<gamepad-cursor [cursorVisible]="gamepad.cursorVisible() && isFullScreen()" [x]="gamepad.x()" [y]="gamepad.y()" />
 <div #viewRef class="view" [class]="viewer.viewModeOption().mode" (scroll)="onScroll($event)" (scrollend)="onScrollEnd($event)"
     [dir]="viewer.viewModeOption().dir" (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
@@ -59,13 +60,13 @@
 
 @defer{
 @if (episode) {
-<app-viewer-header [show]="showOverlay" [episode]="episode" [playlistLink]="playlistLink"
+<app-viewer-header [show]="showOverlay()" [episode]="episode" [playlistLink]="playlistLink"
     [currentPlaylistItem]="currentPlaylistItem" (onToggle)="isDialogOpen.set($event)" />
 }
 }
 
 @defer{
-<app-viewer-footer [show]="showOverlay" [currentPlaylistItem]="currentPlaylistItem" [playlist]="playlist"
+<app-viewer-footer [show]="showOverlay()" [currentPlaylistItem]="currentPlaylistItem" [playlist]="playlist"
     [playlistLink]="playlistLink" [episode]="episode" [activeIndexs]="activeIndexs()"
     (togglefulscreen)="toggleFullScreen()" (pageactive)="onActive($event)" (onToggle)="isDialogOpen.set($event)" />
 }

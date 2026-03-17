@@ -9,6 +9,8 @@ import { DownloadService } from '../../../../data-access/download.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Base64 } from '../../../../utils';
 import { isPlatformBrowser } from '@angular/common';
+import { GamepadService } from '../../../../data-access/gamepad.service';
+import { GamepadButton } from '../../../../models';
 
 // const L = window.location;
 
@@ -22,6 +24,7 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: false
 })
 export class ViewerHeaderComponent {
+  gamepad = inject(GamepadService);
 
   parseTagsFromTitle(title: string): Set<string> {
     const matchedTags = title.toLowerCase().match(/\b(rtl|ltr|ver|long|scroll|nsfw|sfw|color|bw|demo|extra)\b/g) ?? [];
@@ -58,6 +61,8 @@ export class ViewerHeaderComponent {
       if (!episode) return;
       const tags = this.parseTagsFromTitle(episode.title);
       this.applyEpisodeTitleTags(tags);
+
+      if(this.gamepad.buttons()[GamepadButton.Share]?.pressed) this.showShare();
     })
   }
 

@@ -7,9 +7,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class DomManipulationService {
   private readonly document = inject(DOCUMENT);
-
+  private _lastHover: HTMLElement | null = null;
   fullscreenEnabled = signal(this.document.fullscreenEnabled);
-
   scrollInterval: any;
 
   constructor() { }
@@ -52,7 +51,7 @@ export class DomManipulationService {
 
   copyToClipboard = async (text: string) => {
     await copyText(text);
-    
+
   };
 
   setHotkeys(event: KeyboardEvent, hotKeys: Map<string, Function>) {
@@ -66,5 +65,38 @@ export class DomManipulationService {
       f();
       return;
     }
+  }
+
+  getScrollableParent(el: HTMLElement | null): HTMLElement | null {
+    while (el) {
+      const style = getComputedStyle(el);
+      const canScroll =
+        /(auto|scroll)/.test(style.overflowY) ||
+        /(auto|scroll)/.test(style.overflowX);
+
+      if (canScroll) return el;
+
+      el = el.parentElement;
+    }
+
+    return this.document.scrollingElement as HTMLElement;
+  }
+
+  updateHover(x: number, y: number) {
+    const el = this.document
+      .elementFromPoint(x, y)
+      ?.closest('button, a, input, [tabindex], label') as HTMLElement;
+
+    if (el === this._lastHover) return;
+
+    if (this._lastHover) {
+      this._lastHover.classList.remove('gamepad-hover');
+    }
+
+    if (el) {
+      el.classList.add('gamepad-hover');
+    }
+
+    this._lastHover = el;
   }
 }

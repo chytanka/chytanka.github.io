@@ -77,8 +77,7 @@ export class MangadexService {
       .pipe(
         map((data: MdChapterImagesResp) => data.chapter.dataSaver.map((item: string) => {
           return {
-            src: this.proxy.proxyUrl(`${data.baseUrl}/data-saver/${data.chapter.hash}/${item}`)
-            // src: `${data.baseUrl}/data/${data.chapter.hash}/${item}`
+            src: this.proxy.proxyUrl(`${data.baseUrl}/data-saver/${data.chapter.hash}/${item}`) + '&ref=https://mangadex.org' as string
           }
         })
 

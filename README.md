@@ -13,13 +13,13 @@ Chytanka supports opening episodes from the following platforms:
 - [x] [Imgur](https://imgur.com)
 - [x] [Mangadex](https://mangadex.org)
 - [x] [Nhentai](https://nhentai.net)
-- [x] [Pixiv](https://pixiv.net) 
+- [x] [Pixiv](https://pixiv.net)
 - [x] [Reddit](https://reddit.com)
-- [x] [Telegra.ph](https://telegra.ph) 
+- [x] [Telegra.ph](https://telegra.ph)
 - [x] [Yande.re Pool](https://yande.re/pool)
 - [x] [Zenko](https://zenko.online)
+- [x] [ImageChest](https://imgchest.com/)
 - [ ] [Bluesky](https://bsky.app)
-- [ ] [ImageChest](https://imgchest.com/)
 <!-- - [ ] [Catbox](https://catbox.moe/) -->
   
 ### 🌐 **Custom JSON API**
@@ -89,20 +89,50 @@ Immerse yourself in reading with a fullscreen option.
 
 ### ⌨️ **Keyboard Shortcuts**
 
-#### On the Start Page:
+#### On the Start Page
 
 - `F1` — Open FAQ
 - `F2` — Open Settings
 - `Ctrl+H` — Open History
 - `Ctrl+O` — Open File
 
-#### While Reading:
+#### While Reading
 
 - `A`, `D`, `ArrowLeft`, `ArrowRight` — Navigate pages in horizontal mode
 - `W`, `S`, `ArrowUp`, `ArrowDown` — Navigate pages in vertical mode
 - `Ctrl+O` — Open File
 - `Ctrl+E` — Share (copy link or embed code)
 - `F` — Toggle Fullscreen
+
+### 🎮 Gamepad Support
+
+Chytanka includes built-in support for gamepads (tested with PlayStation-style controllers). This allows full navigation and interaction without a mouse or keyboard.
+
+#### Navigation & Scrolling
+
+- ⬅️ L1 / D-Pad Left → Scroll left
+- ➡️ R1 / D-Pad Right → Scroll right
+- ⬆️ D-Pad Up → Scroll up
+- ⬇️ D-Pad Down → Scroll down
+
+#### Cursor & Interaction
+
+- 🕹️ Left Stick → Move cursor
+- 🕹️ Right Stick → Scroll (both X and Y axes)
+- 🔘 Cross (✕) → Click / Select
+- 🔘 Circle (○) → Escape (Cancel / Close dialog)
+
+#### Actions
+
+- 🔘 Square (□) → Toggle fullscreen
+- 🔘 Triangle (△) → Toggle View Mode
+- ☰ Options → Toggle overlay
+- 📤 Share → Share (copy link or embed code)
+
+#### Notes
+
+- *Gamepad support relies on the browser's Gamepad API.*
+- *Button mapping may vary slightly between browsers.*
 
 ### 🔞 **NSFW Content Warning**
 
@@ -111,6 +141,8 @@ If supported by the API, Chytanka warns users about NSFW content.
 ### 🖇️ **Embed Chytanka on Your Website**
 
 Embed Chytanka using an iframe and interact with it via `postMessage`. Learn more in the [Embedding Guide](https://github.com/chytanka/chytanka.github.io/wiki/Embedding-Chytanka-on-Your-Website).
+
+---
 
 ## Development server
 

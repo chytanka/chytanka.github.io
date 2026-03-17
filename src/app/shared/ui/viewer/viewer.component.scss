@@ -26,7 +26,8 @@
 
 	&:has(dialog[open]) {
 		transform: scale(calc(1 - var(--scale-diff-x, .1)), calc(1 - var(--scale-diff-y, .1)));
-		filter: blur(var(--blur));
+		// filter: blur(var(--blur));
+		filter: grayscale(.8) url(#circleBlur);
 	}
 }
 

@@ -33,6 +33,10 @@
             --surface: #fff;
         }
     }
+
+    &:has(gamepad-cursor.visible) {
+        cursor: none;
+    }
 }
 
 body {
@@ -125,6 +129,7 @@ input {
         border: var(--border-size) solid var(--border-color);
     }
 
+    &.gamepad-hover,
     &:hover {
         color: #103651;
         background-color: #ffd60a;
@@ -136,14 +141,15 @@ input {
     }
 
     &.delete {
-
+        &.gamepad-hover,
         &:hover,
         &:focus {
             background-color: #541f20;
         }
     }
 
-    &:active, &.active  {
+    &:active,
+    &.active {
         background-color: rgba(0, 15, 30, 1);
         box-shadow: unset;
         transform: translate(2px, 2px);
@@ -167,8 +173,7 @@ input {
     }
 }
 
-@supports (corner-shape: squircle) 
-{
+@supports (corner-shape: squircle) {
     .button {
         corner-shape: squircle;
         border-radius: 1ch;

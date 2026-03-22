@@ -1,0 +1,12 @@
+@let ph = lang.ph();
+<b>🏷️ Title</b><span>{{episode().title || ph.untitled}}</span>
+<b>📚 Pages</b><span>{{episode().images.length}}</span>
+<b>🔞 NSFW</b><span>{{episode().nsfw ?? false}}</span>
+@if(episode().volume){<b>📦 Volume</b><span>{{episode().volume}}</span>}
+@if(episode().chapter){<b>📖 Chapter</b><span>{{episode().chapter}}</span>}
+@if(episode().episode){<b>🎬 Episode</b><span>{{episode().episode}}</span>}
+@if(episode().part){<b>🧩 Part</b><span>{{episode().part}}</span>}
+@if(episode().extra){<b>✨ Extra</b><span>{{episode().extra}}</span>}
+@if(episode().publisher?.name){
+<b>🏢 Publisher</b><span>{{episode().publisher?.name}}</span>
+}

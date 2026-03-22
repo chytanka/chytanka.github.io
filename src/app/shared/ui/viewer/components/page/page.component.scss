@@ -1,0 +1,36 @@
+:host {
+    position: relative;
+}
+
+img {
+	pointer-events: none;
+	user-select: none;
+}
+
+app-nsfw-warning {
+	position: absolute;
+	z-index: 1;
+	max-width: 400px;
+}
+
+figure {
+	margin: 0;
+	justify-self: baseline;
+	position: relative;
+
+	&.nsfw {
+		filter: blur(4rem) brightness(.1);
+		transition: all var(--t) ease-in-out;
+	}
+
+	&.nsfw.show {
+		filter: blur(0) brightness(1);
+	}
+}
+
+loading {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	padding: 2rem;
+}

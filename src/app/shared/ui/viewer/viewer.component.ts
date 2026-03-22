@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { VibrationService } from '../../data-access/vibration.service';
 import { GamepadService } from '../../data-access/gamepad.service';
 import { GamepadButton } from '../../models';
@@ -96,9 +96,11 @@ export class ViewerComponent implements AfterViewInit {
         if (this.gamepad.buttons()[parseInt(btn)]?.pressed) action();
       }
     })
+    
+    if (isPlatformServer(this.platformId)) return;
 
     addEventListener("fullscreenchange", (event) => {
-      this.isFullScreen.set(document.fullscreenElement === this.el.nativeElement)
+      this.isFullScreen.set(this.document.fullscreenElement === this.el.nativeElement)
     })
   }
 
@@ -135,7 +137,7 @@ export class ViewerComponent implements AfterViewInit {
     // if (page != undefined)
     //   setTimeout(() => {this.onActive(page)}, 100);
   }
-  isFullScreen = signal(document.fullscreenElement === this.el.nativeElement);
+  isFullScreen = signal(this.document.fullscreenElement === this.el.nativeElement);
 
   showOverlay = signal(false);
   toggleOverlay = () => this.showOverlay.update(v => !v);
@@ -310,7 +312,12 @@ export class ViewerComponent implements AfterViewInit {
   }
 
 
-
+  longPageDetected() {
+    const longPageCode = "3";
+    if (this.viewer.viewModeOption().code != longPageCode) {
+      this.viewer.setViewModeOptionByCode(longPageCode);
+    }
+  }
 
 
   //#region Inject

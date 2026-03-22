@@ -9,9 +9,9 @@
 }
 
 input[type=range][orient=vertical] {
-    appearance: slider-vertical;
-    -webkit-appearance: none;
-    -webkit-appearance: slider-vertical;
+    // appearance: slider-vertical;
+    // -webkit-appearance: none;
+    // -webkit-appearance: slider-vertical;
     writing-mode: vertical-rl;
     writing-mode: bt-lr;
     width: 100%;

@@ -1,0 +1,18 @@
+<details open>
+    <summary>🔗 Share link</summary>
+
+    <div style="margin-top: 1ch;" class="input-group">
+        <textarea rows="4" readonly>{{link()}}</textarea>
+        <button [vibrateHaptic]="10" class="button small" (click)="domMan.copyToClipboard(link())">Copy</button>
+    </div>
+</details>
+
+<details>
+    <summary>🔌 Embed</summary>
+    <div style="margin-top: 1ch;" class="input-group">
+        <textarea rows="6" readonly>{{iframe()}}</textarea>
+        <button [vibrateHaptic]="10" class="button small" (click)="domMan.copyToClipboard(iframe())">Copy</button>
+    </div>
+</details>
+
+<button [vibrateHaptic]="10" class="button small" (click)="shareWith()">Share with...</button>

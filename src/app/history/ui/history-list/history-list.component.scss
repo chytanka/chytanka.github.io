@@ -6,6 +6,14 @@
     .wrap {
         display: grid;
         gap: 2ch;
+        margin-top: 2ch;
     }
 
+}
+
+.summary-title {
+    display: inline-flex;
+    gap: 1ch;
+    align-items: center;
+    width: calc(100% - 17px);
 }

@@ -42,7 +42,7 @@ export class HistoryService {
   }
 
   async getAllHistory() {
-    return await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray();
+    return (await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray()).map(v=>{v.site = [v.site]; return v});
   }
 
   async clearHistory() {

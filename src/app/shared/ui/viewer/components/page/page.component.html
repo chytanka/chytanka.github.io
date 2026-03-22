@@ -1,0 +1,19 @@
+@if (showLoading() && imageLoading()) {
+<loading />
+}
+
+<div class="page">
+    @if(nsfw() && !showNsfw()){
+    <app-nsfw-warning (agree)="onAgree()" (disagree)="onDisagree()" [title]="lang.ph().nsfwWarnTitle"
+        [text]="lang.ph().nsfwWarnText" [labelAgree]="lang.ph().nsfwLabelAgree"
+        [labelDisagree]="lang.ph().nsfwLabelDisagree" />
+    }
+    <figure [class]="{nsfw:nsfw(), show: nsfw() && showNsfw()}">
+        @if(src()){
+        <img crossorigin="anonymous" [id]="'page_'+(index()+1)" [src]="src()" [alt]="alt()" [width]="width()"
+            [height]="height()" [loading]="(index()==0 || preload()) ? 'eager' : 'lazy'" (load)="imageLoad($event)">
+        } @else {
+        <ng-content />
+        }
+    </figure>
+</div>

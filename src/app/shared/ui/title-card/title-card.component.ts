@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, InputSignal, output, computed, inject, input } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
+
+export interface TitleCartItem {
+  site: string[];
+  post_id: string;
+  cover: string;
+  title: string;
+  updated: string;
+  id: number;
+  size: number;
+  page: number;
+  pages: number;
+}
 
 @Component({
   selector: 'app-title-card',
@@ -9,22 +21,30 @@ import { LangService } from '../../data-access/lang.service';
   standalone: false
 })
 export class TitleCardComponent {
-  @Input() value: any = {};
+  value: InputSignal<TitleCartItem> = input<TitleCartItem>({
+    cover: '',
+    id: 0,
+    page: 0,
+    pages: 0,
+    post_id: '',
+    site: [''],
+    size: 0,
+    title: '',
+    updated: ''
+  });
 
-  @Output() delete: EventEmitter<number> = new EventEmitter();
+  routeLink = computed(() => ['', ...this.value().site, this.value().post_id])
+  siteTag = computed(() => {
+    const arr = [...this.value().site]
+    return arr.pop();
+  })
+
+  delete = output<number>();
 
   onDelete(id: number) {
+    if (!id) return;
     this.delete.emit(id);
   }
 
   lang = inject(LangService);
-
-  getRouteLink() {
-    const foo = (this.value?.site instanceof Array) ? this.value?.site : [this.value?.site]
-    return ['', ...foo, this.value?.post_id]
-  }
-
-  getSiteTag() {
-    return (this.value?.site instanceof Array) ? this.value?.site.pop() : this.value?.site
-  }
 }

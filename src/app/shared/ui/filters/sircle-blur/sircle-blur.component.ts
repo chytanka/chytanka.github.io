@@ -1,7 +1,5 @@
 import { Component, input } from '@angular/core';
 
-const SAMPLES = 30; // 31 max in Firefox ???
-
 interface Offset {
   dx: number;
   dy: number;
@@ -16,11 +14,10 @@ interface Offset {
 })
 export class SircleBlurComponent {
   radius = input(8);
-
-  readonly SAMPLES = 30;
+  samples = input(30); // 31 max in Firefox ???
 
   get offsets(): Offset[] {
-    return this.getUniqueOffsets(this.getCircleOffsets(this.SAMPLES, this.radius()));
+    return this.getUniqueOffsets(this.getCircleOffsets(this.samples(), this.radius()));
   }
 
   get gaussianBlur(): number {

@@ -1,0 +1,91 @@
+:host.pages {
+	--H: 100dvh;
+	width: 50%;
+	height: var(--H);
+	flex: 1 0 auto;
+	display: grid;
+
+	.page {
+		border-radius: 0 var(--r) var(--r) 0;
+		position: relative;
+		overflow: hidden;
+		max-width: 100%;
+		max-height: var(--H);
+		margin: auto 0;
+
+		display: grid;
+		place-items: center;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			max-height: var(--H);
+			object-fit: contain;
+		}
+	}
+
+	img {
+		object-position: left;
+	}
+
+	&:nth-child(odd) {
+		direction: rtl;
+		scroll-snap-align: start;
+
+		.page {
+			border-radius: var(--r) 0 0 var(--r);
+		}
+
+		img {
+			object-position: right;
+		}
+	}
+}
+
+:host.pages[dir="rtl"] {
+	direction: rtl;
+
+	.page {
+		border-radius: var(--r) 0 0 var(--r);
+	}
+
+	img {
+		object-position: right;
+	}
+
+	&:nth-child(odd) {
+		direction: ltr;
+
+		.page {
+			border-radius: 0 var(--r) var(--r) 0;
+		}
+
+		img {
+			object-position: left;
+		}
+	}
+
+}
+
+@container view (max-aspect-ratio: 1) {
+	:host.pages {
+		width: 100%;
+		scroll-snap-align: start;
+
+		.page {
+			border-radius: var(--r);
+			direction: inherit;
+			margin: auto;
+			width: 100%;
+		}
+
+		img {
+			object-position: center !important;
+		}
+
+		&.last-blank-page {
+			display: none;
+		}
+	}
+}

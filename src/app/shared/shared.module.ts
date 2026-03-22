@@ -33,40 +33,28 @@ import { NewTabDirective } from './directives/new-tab.directive';
 import { VibrateHapticDirective } from './directives/vibrate-haptic.directive';
 import { GamepadCursorComponent } from './ui/gamepad-cursor/gamepad-cursor.component';
 import { SircleBlurComponent } from './ui/filters/sircle-blur/sircle-blur.component';
+import { PageComponent } from './ui/viewer/components/page/page.component';
+import { EpisodeInfoTableComponent } from './ui/viewer/components/episode-info-table/episode-info-table.component';
+import { EpisodeShareFormComponent } from './ui/viewer/components/episode-share-form/episode-share-form.component';
+import { EpisodeDownloadFormComponent } from './ui/viewer/components/episode-download-form/episode-download-form.component';
 
-
+const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, PageComponent, EpisodeInfoTableComponent, EpisodeShareFormComponent, EpisodeDownloadFormComponent]
 
 @NgModule({
   declarations: [
-    TruncatePipe,
-    TextEmbracerComponent,
-    ViewerComponent,
     WarmFilterComponent,
-    OverlayComponent,
-    ViewModeBarComponent,
     WarmControlComponent,
     PagesIndicatorComponent,
     NsfwWarningComponent,
-    MadeInUkraineComponent,
-    DialogComponent,
-    LangToggleComponent,
-    TitleCardComponent,
-    LoadingComponent,
-    SeparatorComponent,
     MangaPageComponent,
     HintPageComponent,
     ViewerFooterComponent,
     ViewerHeaderComponent,
     MangaPageEvenComponent,
-    FileChangeComponent,
-    ChytankaLogoWithTagsComponent,
-    FileSizePipe,
     ThanksPageComponent,
     ImgMetaDirective,
     NewTabDirective,
-    VibrateHapticDirective,
-    GamepadCursorComponent,
-    SircleBlurComponent
+    ...components
   ],
   imports: [
     CommonModule,
@@ -75,6 +63,6 @@ import { SircleBlurComponent } from './ui/filters/sircle-blur/sircle-blur.compon
     RoughPaperComponent,
     SharpenComponent
   ],
-  exports: [GamepadCursorComponent,TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent]
+  exports: [...components]
 })
 export class SharedModule { }

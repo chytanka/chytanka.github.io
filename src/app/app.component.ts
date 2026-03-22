@@ -13,7 +13,7 @@ const SCALE_GAP = 64;
 
 @Component({
   selector: 'chtnk-root',
-  template: `<gamepad-cursor [cursorVisible]="gamepad.cursorVisible()" [x]="gamepad.x()" [y]="gamepad.y()" /><div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div><sircle-blur [radius]="8" />`,
+  template: `<gamepad-cursor [cursorVisible]="gamepad.cursorVisible()" [x]="gamepad.x()" [y]="gamepad.y()" /><div><router-outlet></router-outlet></div><div><router-outlet name="right"></router-outlet></div>@defer{<sircle-blur [radius]="8" [samples]="12" />}`,
   styles: [``],
   standalone: false
 })

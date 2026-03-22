@@ -1,0 +1,50 @@
+:host {
+    display: grid;
+    gap: .5ch;
+    padding: 1ch;
+}
+
+progress {
+    display: block;
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-1);
+    height: 1lh;
+    width: 100%;
+    position: relative;
+
+    &::after {
+        content: attr(value)"/" attr(max);
+        font-size: small;
+        position: absolute;
+        inset: 0;
+        text-align: center;
+        display: grid;
+        place-items: center;
+        z-index: 1;
+        font-weight: bold;
+        color: var(--text);
+    }
+
+    &::-webkit-progress-bar {
+        border-radius: var(--radius-2);
+        background-color: #a8923e;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: #103651;
+
+        }
+    }
+
+    &::-webkit-progress-value {
+        border-radius: var(--radius-2);
+        background-color: #f8d755;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: #166496;
+        }
+    }
+
+    &::-moz-progress-bar {
+        border-radius: var(--radius-2);
+    }
+}

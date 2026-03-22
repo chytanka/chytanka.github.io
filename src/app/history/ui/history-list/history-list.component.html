@@ -4,12 +4,15 @@
 @if (sites && sites.length > 0) {
 <details name="history">
     <summary>
-        <span>SITES HISTORY</span>
-        @if ( sites.length > 0) {
-        <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearHistory()">
-            🧹
-        </button>
-        }
+        <div class="summary-title">
+            <span>{{lang.ph().sitesHistory}}</span>
+            @if ( sites.length > 0) {
+            <button style="margin-left: auto;" [title]="lang.ph().clearHistory" class="button delete small"
+                (click)="clearHistory()">
+                🧹
+            </button>
+            }
+        </div>
     </summary>
 
     <div class="wrap">
@@ -23,14 +26,17 @@
 @if (files && files.length > 0) {
 <details open name="history">
     <summary [vibrateHaptic]="10">
-        <span>FILES HISTORY</span> |
-        <code>{{fileSize() | filesize}}</code> |
-        <code>{{fileCount()}}</code>
-        @if ( files.length > 0) {
-        <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearFileHistory()">
-            🧹
-        </button>
-        }
+        <div class="summary-title">
+            <span>{{lang.ph().filesHistory}}</span> |
+            <code>{{fileSize() | filesize}}</code> |
+            <code>{{fileCount()}}</code>
+            @if ( files.length > 0) {
+            <button style="margin-left: auto;" [title]="lang.ph().clearHistory" class="button delete small"
+                (click)="clearFileHistory()">
+                🧹
+            </button>
+            }
+        </div>
     </summary>
 
     <div class="wrap">
@@ -38,7 +44,7 @@
         @let ab = item.arrayBuffer;
         <div>
             <app-title-card [value]="{
-                site: (ab) ? ['file', item.format] : '',
+                site: (ab) ? ['file', item.format] : [''],
                 post_id: (ab) ? item.sha256 : '',
                 cover: (item.cover.length>0)?item.cover : '/assets/no-image.svg',
                 title: item.title,

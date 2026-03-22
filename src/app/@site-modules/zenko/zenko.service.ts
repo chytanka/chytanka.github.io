@@ -18,8 +18,14 @@ export class ZenkoService {
   }
 
   map(data: any): CompositionEpisode {
+    const {vol, ch, name, output} = this.titleDecode(data.name);
+    const x = parseFloat(ch);
+    const part = Math.round((x - Math.floor(x)) * 10)
     const mappedResponse = {
-      title: this.titleDecode(data.name),
+      volume: parseInt(vol),
+      chapter: Math.floor(parseFloat(ch)),
+      part: part,
+      title: name,
 
       publisher: {
         id: data.publisher.id as string,
@@ -44,12 +50,12 @@ export class ZenkoService {
   titleDecode(input: string) {
     const parts = input.split("@#%&;№%#&**#!@");
 
-    const tom = parts[0];
-    const chapter = parts[1];
+    const vol = parts[0];
+    const ch = parts[1];
     const name = parts[2] ?? 'Без назви';
 
-    const output = `Том ${tom} Розділ ${chapter}: ${name}`;
-    return output
+    const output = `Том ${vol} Розділ ${ch}: ${name}`;
+    return {vol, ch, name, output}
 
   }
 }

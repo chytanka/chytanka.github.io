@@ -1,14 +1,13 @@
-import { LOCALE_ID, NgModule, isDevMode, provideZoneChangeDetection } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { NgModule, isDevMode, provideZoneChangeDetection } from '@angular/core';
+import { BrowserModule, provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SharedModule } from './shared/shared.module';
 
-import { LocaleProvider } from './shared/data-access/locale.provider';
 import { registerLocaleData } from '@angular/common';
 import localeUk from "@angular/common/locales/uk";
 
@@ -30,7 +29,11 @@ registerLocaleData(localeUk)
         SharedModule],
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),
-        provideClientHydration(withEventReplay()),
+        provideClientHydration(withEventReplay(),
+            withHttpTransferCacheOptions({
+                includePostRequests: false,
+            })
+        ),
         provideHttpClient(withFetch())
     ]
 })

@@ -5,6 +5,11 @@ import { FILE_PATH } from '../../../app-routing.module';
 import { LangService } from '../../data-access/lang.service';
 import { isPlatformServer } from '@angular/common';
 
+type LaunchParams = {
+  files: FileSystemHandle[];
+  targetURL: string
+}
+
 @Component({
   selector: 'app-file-change',
   templateUrl: './file-change.component.html',
@@ -29,14 +34,22 @@ export class FileChangeComponent implements OnInit {
     this.initFileInput();
 
     if ("launchQueue" in window) {
-      (window as any).launchQueue.setConsumer(async (launchParams: FileSystemFileHandle) => {
-        console.log((launchParams as any).files[0]);
+      (window as any).launchQueue.setConsumer(async (launchParams: LaunchParams) => {
 
-        const file: File = await launchParams.getFile();
-        console.log("FileSystemFileHandle.getFile() ->", file)
-        console.log("FileSystemFileHandle", launchParams)
-        // const file: File = (launchParams as any).files[0] as File;
-        this.fileHandler(file)
+        if (!launchParams.files?.length) return;
+
+        for (const handle of launchParams.files) {
+
+          if (handle.kind === "file") {
+            const fileHandle = handle as FileSystemFileHandle;
+            console.log("fileHandle", fileHandle)
+            const file = await fileHandle.getFile();
+            console.log("File:", file.name);
+
+            this.fileHandler(file);
+            return;
+          }
+        }
       });
     }
   }

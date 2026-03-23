@@ -19,7 +19,7 @@ export class FileChangeComponent implements OnInit {
 
   accept = input<string[]>([])
   label = input<string>("Open File")
-  
+
   input: HTMLInputElement | undefined;
   showDragAndDropZone: boolean = false;
 
@@ -32,8 +32,10 @@ export class FileChangeComponent implements OnInit {
       (window as any).launchQueue.setConsumer(async (launchParams: FileSystemFileHandle) => {
         console.log((launchParams as any).files[0]);
 
-        // const file: File = await launchParams.getFile();
-        const file: File = (launchParams as any).files[0] as File;
+        const file: File = await launchParams.getFile();
+        console.log("FileSystemFileHandle.getFile() ->", file)
+        console.log("FileSystemFileHandle", launchParams)
+        // const file: File = (launchParams as any).files[0] as File;
         this.fileHandler(file)
       });
     }

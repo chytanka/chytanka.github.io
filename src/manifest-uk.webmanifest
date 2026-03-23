@@ -11,8 +11,8 @@
   "background_color": "#002741",
   "display_override": ["standalone", "minimal-ui"],
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

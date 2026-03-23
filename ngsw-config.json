@@ -21,10 +21,13 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
-          "/media/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "/assets/**"
         ]
       }
     }
-  ]
+  ],
+  "navigationUrls": [
+    "/**"
+  ],
+  "navigationRequestStrategy": "freshness"
 }

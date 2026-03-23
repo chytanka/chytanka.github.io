@@ -25,9 +25,5 @@
         ]
       }
     }
-  ],
-  "navigationUrls": [
-    "/**"
-  ],
-  "navigationRequestStrategy": "freshness"
+  ]  
 }

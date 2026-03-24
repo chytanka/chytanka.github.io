@@ -1,7 +1,5 @@
-import { Component, HostListener, inject, input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, computed, HostListener, inject, input, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FileService } from '../../../file/data-access/file.service';
-import { Router } from '@angular/router';
-import { FILE_PATH } from '../../../app-routing.module';
 import { LangService } from '../../data-access/lang.service';
 import { isPlatformServer } from '@angular/common';
 
@@ -17,76 +15,63 @@ type LaunchParams = {
   standalone: false
 })
 export class FileChangeComponent implements OnInit {
-  platformId = inject(PLATFORM_ID)
-  fs = inject(FileService)
-  router = inject(Router)
-  lang = inject(LangService)
+  private platformId = inject(PLATFORM_ID)
+  private fs = inject(FileService)
+  protected lang = inject(LangService)
 
   accept = input<string[]>([])
-  label = input<string>("Open File")
+  label = input<string>(this.lang.ph().openFile)
 
-  input: HTMLInputElement | undefined;
-  showDragAndDropZone: boolean = false;
+  private input: HTMLInputElement | undefined;
+  protected showDragAndDropZone = signal(false);
+
+  private readonly ctrlKey = signal('Ctrl');
+  private readonly symbolKey = signal('KeyO');
+  private readonly hotKey = computed(() => `${this.ctrlKey()}+${this.symbolKey()}`);
+  protected readonly hotKeyHint = computed(() => ` (${this.hotKey().replace('Key', '')})`);
 
   ngOnInit(): void {
     if (isPlatformServer(this.platformId)) return;
 
     this.initFileInput();
+    this.initializeFileLaunchQueue();
+  }
 
+  private fileHandler(file: File | undefined) {
+    if (!file) return;
+
+    this.fs.file = file;
+  }
+
+  //#region Launch Queue
+
+  private initializeFileLaunchQueue() {
     if ("launchQueue" in window) {
       (window as any).launchQueue.setConsumer(async (launchParams: LaunchParams) => {
+        const fileHandle = launchParams.files?.find(f => f.kind === "file") as FileSystemFileHandle | undefined;
+        if (!fileHandle) return;
 
-        if (!launchParams.files?.length) return;
-
-        for (const handle of launchParams.files) {
-
-          if (handle.kind === "file") {
-            const fileHandle = handle as FileSystemFileHandle;
-            console.log("fileHandle", fileHandle)
-            const file = await fileHandle.getFile();
-            console.log("File:", file.name);
-
-            this.fileHandler(file);
-            return;
-          }
-        }
+        const file = await fileHandle.getFile();
+        this.fileHandler(file);
       });
     }
   }
 
-  onFileSelected(event: any) {
+  //#endregion
+
+  //#region File Input
+
+  protected openFileDialog() {
+    if (this.input) this.input.click();
+  }
+
+  private onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
     this.fileHandler(file)
   }
 
-  fileHandler(file: File | undefined) {
-    if (!file) return;
-
-    this.fs.file = file;
-
-    // should be output
-    const t = this.getRouteType(file)
-
-    if (t) {
-      const url = `/${FILE_PATH}/${t}`;
-      this.router.navigateByUrl(url)
-    }
-  }
-
-  getRouteType(file: File): string | undefined {
-    const fileType = file.type || file.name.split('.').pop()?.toLowerCase();
-
-    if (!fileType) return undefined;
-
-    if (fileType.includes('pdf')) return 'pdf';
-    if (fileType.includes('mobi')) return 'mobi';
-    if (/zip|cbz/.test(fileType)) return 'zip';
-
-    return undefined;
-  }
-
-  initFileInput() {
+  private initFileInput() {
     this.input = document.createElement('input')
 
     this.input.type = 'file';
@@ -97,16 +82,15 @@ export class FileChangeComponent implements OnInit {
     }
   }
 
-  openFileDialog() {
-    if (this.input) this.input.click();
-  }
+  //#endregion
+
+  //#region Drag & Drop
 
   @HostListener('window:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
+  protected handleKeyboardEvent(event: KeyboardEvent) {
+    const code = event.ctrlKey ? `${this.ctrlKey()}+${event.code}` : event.code;
 
-    const code = event.ctrlKey ? `Ctrl+${event.code}` : event.code
-
-    if (code == "Ctrl+KeyO") {
+    if (code == this.hotKey()) {
       event.preventDefault();
 
       this.openFileDialog()
@@ -114,17 +98,35 @@ export class FileChangeComponent implements OnInit {
   }
 
   @HostListener('document:dragover', ["$event"])
-  dragOverHandler = (ev: DragEvent) => { ev.preventDefault(); this.showDragAndDropZone = true }
+  protected dragOverHandler = (ev: DragEvent) => {
+    ev.preventDefault();
+
+    const dt = ev.dataTransfer;
+    if (!dt) return;
+
+    const hasFile =
+      dt.items && Array.from(dt.items).some(i => i.kind === 'file');
+
+    const hasText =
+      dt.types?.includes('text/plain') ||
+      Array.from(dt.items || []).some(i => i.kind === 'string');
+
+    if (hasFile && !hasText) {
+      this.showDragAndDropZone.set(true);
+    }
+  }
 
   @HostListener('dragleave', ["$event"])
   @HostListener('dragend', ["$event"])
-  dragLeaveHandler = (ev: DragEvent) => { ev.preventDefault(); this.showDragAndDropZone = false }
+  protected dragLeaveHandler = (ev: DragEvent) => { ev.preventDefault(); this.showDragAndDropZone.set(false) }
 
-  dropHandler(ev: DragEvent) {
+  protected dropHandler(ev: DragEvent) {
     ev.preventDefault();
 
     const file: File | undefined = ev.dataTransfer?.files[0];
 
     this.fileHandler(file)
   }
+
+  //#endregion
 }

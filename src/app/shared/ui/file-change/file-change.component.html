@@ -1,10 +1,6 @@
-<!-- <input type="file" (input)="onFileSelected($event)" [accept]="accept.join(', ')" > -->
+<button [vibrateHaptic]="10" class="button border" (click)="openFileDialog()"
+    [title]="lang.ph().openFile+hotKeyHint()">{{label()}}</button>
 
-<button [vibrateHaptic]="10" class="button border" (click)="openFileDialog()" [title]="lang.ph().openFile+' (Ctrl+O)'">{{label()}}</button>
-
-@if(showDragAndDropZone){
-<div class="drop-zone" (click)="showDragAndDropZone = false" (drop)="dropHandler($event)">
-    <span>📃</span>
-    <p>{{lang.ph().dropIt}}</p>
-</div>
+@if(showDragAndDropZone()){
+<drop-zone (click)="showDragAndDropZone.set(false)" (drop)="dropHandler($event)" />
 }

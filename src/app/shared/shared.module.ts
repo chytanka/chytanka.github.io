@@ -37,8 +37,9 @@ import { PageComponent } from './ui/viewer/components/page/page.component';
 import { EpisodeInfoTableComponent } from './ui/viewer/components/episode-info-table/episode-info-table.component';
 import { EpisodeShareFormComponent } from './ui/viewer/components/episode-share-form/episode-share-form.component';
 import { EpisodeDownloadFormComponent } from './ui/viewer/components/episode-download-form/episode-download-form.component';
+import { DropZoneComponent } from './ui/drop-zone/drop-zone.component';
 
-const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, PageComponent, EpisodeInfoTableComponent, EpisodeShareFormComponent, EpisodeDownloadFormComponent]
+const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, PageComponent, EpisodeInfoTableComponent, EpisodeShareFormComponent, EpisodeDownloadFormComponent, DropZoneComponent]
 
 @NgModule({
   declarations: [

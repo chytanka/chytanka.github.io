@@ -2,6 +2,10 @@ app-view-mode-bar {
     margin-left: auto;
 }
 
+::ng-deep app-file-change button {
+    border: unset !important;
+}
+
 .open-chtnk-link {
     aspect-ratio: 1;
     width: 2rem;

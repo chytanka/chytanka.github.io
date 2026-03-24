@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
 import { ViewerService } from '../../../../data-access';
 import { LangService } from '../../../../data-access/lang.service';
@@ -14,17 +14,17 @@ import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 export class ThanksPageComponent {
   viewer: ViewerService = inject(ViewerService)
   lang: LangService = inject(LangService)
-  @Input() episode: CompositionEpisode | undefined = undefined;
+  episode = input<CompositionEpisode | undefined>();
 
-  @Input() playlist: Playlist = [];
-  @Input() currentPlaylistItem: PlaylistItem | undefined;
-  @Input() playlistLink: string = "";
+  playlist = input<Playlist>([]);
+  playlistLink = input("");
+  currentPlaylistItem = input<PlaylistItem | undefined>();
 
 
   getCyrrentIndex() {
     for (let i = 0; i < this.playlist.length; i++) {
-      const item = this.playlist[i];
-      if (this.currentPlaylistItem?.id == item.id && this.currentPlaylistItem?.site == item.site)
+      const item = this.playlist()[i];
+      if (this.currentPlaylistItem()?.id == item.id && this.currentPlaylistItem()?.site == item.site)
         return i;
     }
 

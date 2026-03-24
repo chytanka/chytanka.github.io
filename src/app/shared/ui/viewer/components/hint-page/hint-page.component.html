@@ -37,7 +37,7 @@
     <img frame="4" style="display: block;" src="/assets/icons/chtnk.svg" alt="Chytanka logo">
 
     <div dir="ltr" frame="5">
-        @if (getPrevIndex() >=0 && playlist[getPrevIndex()]; as prev) {
+        @if (getPrevIndex() >=0 && playlist()[getPrevIndex()]; as prev) {
         <a dir="ltr" [routerLink]="['/', prev.site, prev.id]"
             [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">⏪
             {{prev.title??

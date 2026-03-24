@@ -1,19 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
 
 @Component({
-    selector: 'app-view-mode-bar',
-    templateUrl: './view-mode-bar.component.html',
-    styleUrl: './view-mode-bar.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-view-mode-bar',
+  templateUrl: './view-mode-bar.component.html',
+  styleUrl: './view-mode-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class ViewModeBarComponent {
-  @Input() options: any;
-  @Input() value: any;
-  @Input() seed: string = 'seed';
+  options = input<any>();
+  value = input<any>();
+  seed = input<string>('seed');
 
-  @Output() valueChange = new EventEmitter<any>();
+  valueChange = output<any>();
 
   onChange(value: any) {
     this.valueChange.emit(value)

@@ -6,7 +6,7 @@
     }
 
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
-        [images]="episode?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
+        [images]="episode()?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
     @if (domMan.fullscreenEnabled()) {
     <button [vibrateHaptic]="10" class="button" (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">
@@ -17,8 +17,8 @@
 
 <app-dialog class="dialog" #playlistDialog (onToggle)="onToggle.emit($event)" [title]="'📜 '">
     <div style="display: grid; gap: .5ch;padding: 1ch;">
-        @for (item of playlist; track $index) {
-        @if(currentPlaylistItem?.id == item.id && currentPlaylistItem?.site == item.site) {
+        @for (item of playlist(); track $index) {
+        @if(currentPlaylistItem()?.id == item.id && currentPlaylistItem()?.site == item.site) {
         <span>{{item.title?? lang.ph().untitled + ' ' + ($index*1+1)}}</span>
         } @else {
         <a [vibrateHaptic]="10" [routerLink]="['/', item.site, item.id]"

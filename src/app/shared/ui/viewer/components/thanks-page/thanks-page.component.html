@@ -1,5 +1,5 @@
 @let vm = viewer.viewModeOption();
-@let pub = episode?.publisher;
+@let pub = episode()?.publisher;
 
 <app-manga-page-even [class]="vm.mode" [dir]="vm.dir">
     <div dir="ltr" frame="1"><img [imgMeta]="heart"></div>
@@ -7,7 +7,7 @@
     <div dir="ltr" frame="5"><img [imgMeta]="logo" /></div>
     <div dir="ltr" frame="4">
         <p class="text-center">Кінець епізоду</p>
-        @if (getNextIndex() >=0 && playlist[getNextIndex()]; as next) {
+        @if (getNextIndex() >=0 && playlist()[getNextIndex()]; as next) {
 
         <a dir="ltr" [routerLink]="['/', next.site, next.id]"
             [queryParams]="{lang: lang.lang(), list: playlistLink, vm: vm.code}">

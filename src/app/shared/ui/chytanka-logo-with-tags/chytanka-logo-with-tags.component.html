@@ -1,3 +1,5 @@
+@let online = net.isReallyOnline();
+
 <div style="position: relative;">
 
   <svg id='logoPath' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -9,23 +11,17 @@
 
   </svg>
 
-
-  <!--  -->
-
   <ul>
+    @if(online) {
     @for (tag of siteTags(); track $index) {
-    @let c = getRandomCoordinates();
-    <!-- @let s = getRandom(0.8, 1.28); -->
-    @let s = 1;
-    <li class="tag" [style]="{scale: s}" [ngStyle]="{top: c.y+'%',left: c.x+'%'}" [ngClass]="formatTagname(tag)">
+    <li class="tag" [ngClass]="formatTagname(tag)">
       {{formatTagname(tag)}}</li>
+    }
     }
 
     @for (tag of fileTags(); track $index) {
-    @let c = getRandomCoordinates();
-    <!-- @let s = getRandom(0.8, 1.28); -->
-    @let s = 1;
-    <li class="tag" [ngStyle]="{top: c.y+'%',left: c.x+'%', scale: s}" [ngClass]="formatTagname(tag)">
+
+    <li class="tag" [ngClass]="formatTagname(tag)">
       {{formatTagname(tag)}}</li>
     }
   </ul>

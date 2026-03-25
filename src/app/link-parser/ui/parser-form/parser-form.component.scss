@@ -159,3 +159,21 @@ input[type=url]::placeholder {
         box-shadow: 0 0 transparent;
     }
 }
+
+.offline-banner {
+    border-radius: .5ch;
+    --c: oklch(0.553 0.2211 20.3);
+    --shadow-color: oklch(from var(--c) var(--avarage-l-2) c h);
+    --shadow-2: 2px 2px var(--surface), var(--shadow-distance-2) var(--shadow-color);
+
+    font-family: 'Courier New', Courier, monospace;
+    --gl: radial-gradient(circle 1px at 0px 0px, oklch(from currentColor l c h /.5) 1px, transparent 0);
+    --bg-1: var(--gl) 0px 0px / 8px 8px;
+    background: var(--bg-1);
+    box-shadow: var(--shadow-1);
+    border: var(--border-size) solid var(--border-color);
+    display: inline-block;
+    padding: 1ch;
+    font-weight: bold;
+    text-align: center;
+}

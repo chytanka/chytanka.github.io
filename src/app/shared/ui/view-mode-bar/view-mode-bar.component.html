@@ -1,7 +1,7 @@
 @for(option of options(); track option.emoji) {
 <div>
     <input [vibrateHaptic]="10" type="radio" name="radio-{{seed()}}" id="mode-{{option.mode}}-{{option.dir}}-{{seed()}}"
-        [checked]="value == option.code" (input)="onChange(option)" />
+        [checked]="value() == option.code" (input)="onChange(option)" />
 
     <label class="button" for="mode-{{option.mode}}-{{option.dir}}-{{seed()}}"
         [title]="lang.ph().getByKey(option.hintPhraceKey)">

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { NetworkService } from '../../data-access/network.service';
 
 type Coordinate = { x: number; y: number };
 
@@ -12,6 +13,8 @@ type Coordinate = { x: number; y: number };
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChytankaLogoWithTagsComponent {
+  net = inject(NetworkService);
+
   version = environment.version;
   fileTags = input<string[]>([])
   siteTags = input<string[]>([])

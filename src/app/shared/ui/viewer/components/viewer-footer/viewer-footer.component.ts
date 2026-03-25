@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, inject, input, InputSignal, output, signal, ViewChild } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../data-access';
+import { BrowserService, DomManipulationService, ViewerService } from '../../../../data-access';
 import { LangService } from '../../../../data-access/lang.service';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
@@ -15,7 +15,7 @@ export class ViewerFooterComponent {
   viewer: ViewerService = inject(ViewerService)
   lang: LangService = inject(LangService)
   domMan = inject(DomManipulationService)
-
+  browser = inject(BrowserService);
 
   show = input(false);
   activeIndexs = input<number[]>([])

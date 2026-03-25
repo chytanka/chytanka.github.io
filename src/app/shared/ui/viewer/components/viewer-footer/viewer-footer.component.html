@@ -1,5 +1,7 @@
-<app-overlay [ngClass]="{'show': show}">
+<app-overlay [ngClass]="{'show': show()}">
+    @if(browser.brouserInfo().os !== 'iOS'){
     <app-warm-control [vibrateHaptic]="10" (valueChange)="viewer.setNightlight($event)" [value]="viewer.nightlight()" />
+    }
 
     @if (playlist.length >0) {
     <button [vibrateHaptic]="10" class="button " (click)="showPlayList()">📜</button>

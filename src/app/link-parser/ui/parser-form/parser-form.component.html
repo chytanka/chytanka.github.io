@@ -1,16 +1,23 @@
+@let online = net.online();
+@let openFileLabel = (online) ? '📃 '+lang.ph().orOpenFile: '📃 '+lang.ph().openFile;
+
 <div class="form-wrapper">
+  @if (online === false ) {
+  <div class="offline-banner">
+    🚫 No internet connection
+  </div>
+  }
   <h1 class="logo-text"> <app-text-embracer [ngClass]="setts.theme()" [text]="lang.ph().shortTitle" /> </h1>
-  <!-- <div style="display: flex; gap: 1ch;  align-items: center;"> -->
-    <form (submit)="onSubmit()">
-      <input [vibrateHaptic]="5" [vibrateClick]="false" [vibrateInput]="true" name="chtnk_url" type="url" required autofocus [placeholder]="'🔗 '+lang.ph().enterLink"
-        (input)="inputLink($event)" [value]="link()">
-    </form>
-  <!-- </div> -->
-  <!-- <div style="display: flex; gap: 1ch; align-items: center;">
-    <span style="font-family: 'Courier New', Courier, monospace; opacity: .8;">{{lang.ph().orOpenFile}}</span>
-    <app-file-change style="margin-left: auto;" [accept]="parser.supportFiles()" />
-  </div> -->
-  <app-file-change [label]="'📃 '+lang.ph().orOpenFile+' ('+parser.supportFiles()+')'"/>
+  @if (online) {
+  <form (submit)="onSubmit()">
+    <input [vibrateHaptic]="5" [vibrateClick]="false" [vibrateInput]="true" name="chtnk_url" type="url" required
+      autofocus [placeholder]="'🔗 '+lang.ph().enterLink" (input)="inputLink($event)" [value]="link()">
+  </form>
+  }
+
+  <app-file-change [accept]="osAcceptSupport()?parser.supportFiles():[]"
+    [label]="openFileLabel+' ('+parser.supportFiles()+')'" />
+
 </div>
 
 <div class="slogan-wrapper">
@@ -28,7 +35,8 @@
     }
   </h2>
   @if (linkParams()) {
-  <a [vibrateHaptic]="10" class="button primary large go-btn" [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
+  <a [vibrateHaptic]="10" class="button primary large go-btn"
+    [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
     <span>{{lang.ph().letsgo}} </span>
     <img class="favicon" [src]="favicons[linkParams()?.site]" [alt]="linkParams()?.site">
     <small class="site-address" [title]="linkParams()?.id">{{linkParams()?.id | truncate}}</small>

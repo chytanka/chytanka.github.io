@@ -1,13 +1,12 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { Base64 } from '../../../shared/utils';
 import { LinkParserSettingsService } from '../../data-access/link-parser-settings.service';
 import { LinkParserService } from '../../data-access/link-parser.service';
-import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkParser, ZenkoLinkParser, NhentaiLinkParser, YandereParser, PixivLinkParser, BlankaryLinkParser, JsonLinkParser } from '../../utils';
-import { ComickLinkParser } from '../../utils/comick-link-parser';
+import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkParser, ZenkoLinkParser, NhentaiLinkParser, YandereParser, PixivLinkParser, JsonLinkParser } from '../../utils';
 import { ImgchestLinkParser } from '../../utils/imgchest-link-parser';
-import { MetaTagsService } from '../../../shared/data-access/meta-tags.service';
+import { NetworkService, BrowserService } from '../../../shared/data-access/';
 
 @Component({
   selector: 'app-parser-form',
@@ -20,6 +19,8 @@ export class ParserFormComponent {
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   setts = inject(LinkParserSettingsService)
+  net = inject(NetworkService);
+  browser = inject(BrowserService);
   platformId = inject(PLATFORM_ID)
   link: WritableSignal<string> = signal('');
   linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
@@ -30,6 +31,8 @@ export class ParserFormComponent {
       id: Base64.toBase64(foo.id)
     };
   });
+
+  osAcceptSupport = signal(["Windows", "Android", "Linux"].includes(this.browser.brouserInfo().os));
 
   constructor(public parser: LinkParserService, public lang: LangService) {
     this.initParser();

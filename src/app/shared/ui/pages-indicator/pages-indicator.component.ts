@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, effect, EventEmitter, input, Output, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, Signal } from '@angular/core';
 import { pairPagination } from 'pair-pagination'
 
 @Component({
-    selector: 'app-pages-indicator',
-    templateUrl: './pages-indicator.component.html',
-    styleUrl: './pages-indicator.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-pages-indicator',
+  templateUrl: './pages-indicator.component.html',
+  styleUrl: './pages-indicator.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class PagesIndicatorComponent {
   images = input<any>([]);
@@ -15,7 +15,7 @@ export class PagesIndicatorComponent {
 
   constructor() { }
 
-  @Output() active: EventEmitter<number> = new EventEmitter();
+  active = output<number>();
 
   isActive(index: number) {
     return this.activeIndexs().includes(index)
@@ -27,7 +27,7 @@ export class PagesIndicatorComponent {
   }
 
   pagination: Signal<number[]> = computed(() => {
-    if(this.activeIndexs().length ==0) return []
+    if (this.activeIndexs().length == 0) return []
     const totalPages = this.images().length
     const currentPage = Math.max(...this.activeIndexs().map(v => v + 1))
     // console.log(currentPage);

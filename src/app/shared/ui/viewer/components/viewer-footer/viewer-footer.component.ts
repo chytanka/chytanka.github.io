@@ -1,32 +1,32 @@
-import { Component, EventEmitter, HostListener, inject, input, Input, InputSignal, Output, signal, ViewChild } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../data-access';
+import { Component, EventEmitter, HostListener, inject, input, InputSignal, output, signal, ViewChild } from '@angular/core';
+import { BrowserService, DomManipulationService, ViewerService } from '../../../../data-access';
 import { LangService } from '../../../../data-access/lang.service';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
 import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
 
 @Component({
-    selector: 'app-viewer-footer',
-    templateUrl: './viewer-footer.component.html',
-    styleUrl: './viewer-footer.component.scss',
-    standalone: false
+  selector: 'app-viewer-footer',
+  templateUrl: './viewer-footer.component.html',
+  styleUrl: './viewer-footer.component.scss',
+  standalone: false
 })
 export class ViewerFooterComponent {
   viewer: ViewerService = inject(ViewerService)
   lang: LangService = inject(LangService)
   domMan = inject(DomManipulationService)
+  browser = inject(BrowserService);
 
+  show = input(false);
+  activeIndexs = input<number[]>([])
+  episode = input<CompositionEpisode | undefined>();
+  playlist = input<Playlist>([]);
+  playlistLink = input("");
+  currentPlaylistItem = input<PlaylistItem | undefined>();
 
-  @Input() show: boolean = false;
-  @Input() playlist: Playlist = [];
-  @Input() episode: CompositionEpisode | undefined = undefined;
-  activeIndexs: InputSignal<number[]> = input<number[]>([])
-  @Input() currentPlaylistItem: PlaylistItem | undefined;
-  @Input() playlistLink: string = "";
-
-  @Output() togglefulscreen = new EventEmitter<void>();
-  @Output() pageactive = new EventEmitter<number>();
-  @Output() onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+  togglefulscreen = output<void>();
+  pageactive = output<number>();
+  onToggle = output<boolean>();
 
 
   isDialogOpen = signal(false);

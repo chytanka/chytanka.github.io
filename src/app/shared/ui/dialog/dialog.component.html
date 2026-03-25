@@ -3,8 +3,8 @@
     
     <div class="dialog-wrapper">
         <header>
-            <h4>{{title}}</h4>
-            @if (closeHeaderButton) {
+            <h4>{{title()}}</h4>
+            @if (closeHeaderButton()) {
             <form method="dialog">
                 <button [vibrateHaptic]="10" class="button empty ">
                     ❌
@@ -15,7 +15,7 @@
         <section>
             <ng-content />
         </section>
-        @if(footer){
+        @if(footer()){
         <footer>
             <form method="dialog">
                 <button [vibrateHaptic]="10" class="button primary full">

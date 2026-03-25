@@ -1,7 +1,7 @@
-@if(episode$ | async; as episode){
+@if(episode$() | async; as episode){
 
-@if (!(loading$ | async)) {
-<app-viewer [playlist]="playlist" [playlistLink]="playlistLink" [currentPlaylistItem]="currentPlaylistItem"
+@if (!(loading$() | async)) {
+<app-viewer [playlistInput]="playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlaylistItem()"
     [episode]="episode">
     <div ngProjectAs="source-logo"><ng-content select="source-logo" /></div>
     <ng-content />
@@ -10,20 +10,21 @@
 
 }
 
-@if(error$ | async; as error){
+@if(error$() | async; as error){
 <div style="padding: 1rem; margin: auto;">
     <div class="error-message">
         <h1>🤨</h1>
         <p>{{ error }}</p>
         <footer>
             <a class="button mediun border" [routerLink]="'/'">🏠</a>
-            <button autofocus class="button border large primary" (click)="onRefreshData()">{{lang.ph().tryAgain}}</button>
+            <button autofocus class="button border large primary"
+                (click)="onRefreshData()">{{lang.ph().tryAgain}}</button>
         </footer>
     </div>
 </div>
 }
 
-@if(loading$ | async; as loading){
+@if(loading$() | async; as loading){
 <loading />
 } @else {
 

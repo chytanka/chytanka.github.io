@@ -1,17 +1,17 @@
 @let dir = viewer.viewModeOption().dir;
 @let mode = viewer.viewModeOption().mode;
-@let nsfw = episode?.nsfw;
+@let nsfw = episode().nsfw;
 <gamepad-cursor [cursorVisible]="gamepad.cursorVisible() && isFullScreen()" [x]="gamepad.x()" [y]="gamepad.y()" />
 <div #viewRef class="view" [class]="mode" (scroll)="onScroll($event)" (scrollend)="onScrollEnd($event)" [dir]="dir"
     (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
     <chtnk-page (agree)="onAgree()" (disagree)="onDisagree()" [showNsfw]="showNsfw()" [nsfw]="nsfw" [class]="mode"
         [dir]="dir">
-        <app-hint-page [class]="mode" [currentPlaylistItem]="currentPlaylistItem" [playlist]="playlist"
-            [playlistLink]="playlistLink" />
+        <app-hint-page [class]="mode" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="playlist()"
+            [playlistLink]="playlistLink()" />
     </chtnk-page>
 
-    @for(img of episode?.images; track img.src; let i = $index) {
+    @for(img of episode().images; track img.src; let i = $index) {
     <chtnk-page (longPageDetected)="longPageDetected()" (agree)="onAgree()" (disagree)="onDisagree()"
         [showNsfw]="showNsfw()" [nsfw]="nsfw" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
         [inputHeight]="img.height ?? 1000" [preload]="preLoad(i)" [index]="i" [class]="mode" [dir]="dir"
@@ -22,28 +22,28 @@
 
     <chtnk-page class="last-hint-page" (agree)="onAgree()" (disagree)="onDisagree()" [showNsfw]="showNsfw()"
         [nsfw]="nsfw" [class]="mode" [dir]="dir">
-        <app-thanks-page [playlist]="playlist" [currentPlaylistItem]="currentPlaylistItem" [episode]="episode"
-            [playlistLink]="playlistLink">
+        <app-thanks-page [playlist]="playlist()" [currentPlaylistItem]="currentPlaylistItem()" [episode]="episode()"
+            [playlistLink]="playlistLink()">
             <ng-content ngProjectAs="source-logo" select="source-logo" />
             <ng-content />
         </app-thanks-page>
     </chtnk-page>
 
-    @if((episode?.images?.length??0) % 2 > 0) {
+    @if((episode().images.length || 0) % 2 > 0) {
     <chtnk-page class="last-blank-page" [class]="mode" [dir]="dir" />
     }
 </div>
 
 @defer{
-@if (episode) {
-<app-viewer-header [show]="showOverlay()" [episode]="episode" [playlistLink]="playlistLink"
-    [currentPlaylistItem]="currentPlaylistItem" (onToggle)="isDialogOpen.set($event)" />
+@if (episode()) {
+<app-viewer-header [show]="showOverlay()" [episode]="episode()" [playlistLink]="playlistLink()"
+    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="isDialogOpen.set($event)" />
 }
 }
 
 @defer{
-<app-viewer-footer [show]="showOverlay()" [currentPlaylistItem]="currentPlaylistItem" [playlist]="playlist"
-    [playlistLink]="playlistLink" [episode]="episode" [activeIndexs]="activeIndexs()"
+<app-viewer-footer [show]="showOverlay()" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="playlist()"
+    [playlistLink]="playlistLink()" [episode]="episode()" [activeIndexs]="activeIndexs()"
     (togglefulscreen)="toggleFullScreen()" (pageactive)="onActive($event)" (onToggle)="isDialogOpen.set($event)" />
 }
 

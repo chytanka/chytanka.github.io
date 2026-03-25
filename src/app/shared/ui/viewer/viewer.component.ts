@@ -1,10 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, effect, inject, output, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, effect, inject, output, signal } from '@angular/core';
 import { CompositionEpisode } from '../../../@site-modules/@common-read';
 import { ViewerService, DomManipulationService } from '../../data-access';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../data-access/lang.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
+import { isPlaylist, Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
 import { EmbedHalperService } from '../../data-access/embed-halper.service';
 import { DownloadService } from '../../data-access/download.service';
 import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -38,34 +38,47 @@ export class ViewerComponent implements AfterViewInit {
 
   pagechange = output<{ total: number, current: number[] }>()
 
-  @Input() episode: CompositionEpisode | undefined = undefined;
-  @Input() playlist: Playlist = [];
-  @Input() playlistLink: string = "";
-  @Input() currentPlaylistItem: PlaylistItem | undefined;
+  episode = input<CompositionEpisode>({
+    title: '',
+    images: []
+  });
+  playlistLink = input("");
+  currentPlaylistItem = input<PlaylistItem | undefined>();
 
   platformId = inject(PLATFORM_ID)
   private readonly document = inject(DOCUMENT);
   vibration = inject(VibrationService);
 
+  private _playlist = signal<Playlist>([]);
+
+  playlistInput = input<Playlist>([]);
+  playlist = computed(() => {
+    const inputList = this.playlistInput();
+    return inputList.length ? inputList : this._playlist();
+  });
+
   initListFromParrentWindow() {
     if (!this.embedHelper.isEmbedded() || !isPlatformBrowser(this.platformId)) return
 
-    this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LIST_REQUEST_EVENT_NAME);
+    this.embedHelper.postMessage(this.currentPlaylistItem(), CHTNK_LIST_REQUEST_EVENT_NAME);
 
     window.addEventListener('message', ({ data }) => {
       if (data.event != CHTNK_LIST_RESPONCE_EVENT_NAME) return;
 
-      this.playlist = data.data as Playlist // !!! 
-
-      this.cdr.detectChanges()
+      if (isPlaylist(data.data)) {
+        this._playlist.set(data.data);
+        this.cdr.detectChanges();
+      } else {
+        console.warn('Received data is not a valid Playlist', data.data);
+      }
 
     }, false);
   }
 
   getCyrrentIndex() {
     for (let i = 0; i < this.playlist.length; i++) {
-      const item = this.playlist[i];
-      if (this.currentPlaylistItem?.id == item.id && this.currentPlaylistItem?.site == item.site)
+      const item = this.playlist()[i];
+      if (this.currentPlaylistItem()?.id == item.id && this.currentPlaylistItem()?.site == item.site)
         return i;
     }
 
@@ -96,7 +109,7 @@ export class ViewerComponent implements AfterViewInit {
         if (this.gamepad.buttons()[parseInt(btn)]?.pressed) action();
       }
     })
-    
+
     if (isPlatformServer(this.platformId)) return;
 
     addEventListener("fullscreenchange", (event) => {
@@ -149,7 +162,7 @@ export class ViewerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.viewElement.set(this.viewRef.nativeElement);
     this.initActiveIndexes()
-    this.embedHelper.postMessage(this.currentPlaylistItem, CHTNK_LOAD_EVENT_NAME);
+    this.embedHelper.postMessage(this.currentPlaylistItem(), CHTNK_LOAD_EVENT_NAME);
     this.initListFromParrentWindow();
   }
 
@@ -186,7 +199,7 @@ export class ViewerComponent implements AfterViewInit {
     this.activeIndexs.set(activeIndxs);
 
 
-    const total = this.episode?.images.length
+    const total = this.episode()?.images.length
     const current = activeIndxs.map(i => i + 1)
 
     this.embedHelper.postMessage({ total, current }, CHTNK_CHANGE_PAGE_EVENT_NAME);

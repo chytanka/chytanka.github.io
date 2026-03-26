@@ -1,12 +1,19 @@
-import { effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { FILE_PATH } from '../../app-routing.module';
 import { Router } from '@angular/router';
+import { BrowserService } from '../../shared/data-access';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
   router = inject(Router);
+  browser = inject(BrowserService);
+
+  osAcceptSupport = signal(["Windows", "Android", "Linux"].includes(this.browser.brouserInfo().os));
+  supportFiles = signal([".zip", ".cbz", ".pdf", ".mobi"])
+
+  access = computed(() => this.osAcceptSupport()?this.supportFiles():[]);
 
   private _file: WritableSignal<File | null> = signal<File | null>(null);
 

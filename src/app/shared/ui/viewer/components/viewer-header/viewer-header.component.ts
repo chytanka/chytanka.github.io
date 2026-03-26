@@ -9,6 +9,7 @@ import { parseTags, resolveViewMode } from '../../../../utils';
 import { isPlatformBrowser } from '@angular/common';
 import { GamepadService } from '../../../../data-access/gamepad.service';
 import { GamepadButton } from '../../../../models';
+import { FileService } from '../../../../../file/data-access/file.service';
 
 @Component({
   selector: 'app-viewer-header',
@@ -24,6 +25,7 @@ export class ViewerHeaderComponent {
   domMan = inject(DomManipulationService)
   viewer = inject(ViewerService)
   lang = inject(LangService)
+  file = inject(FileService);
   embedHelper = inject(EmbedHalperService);
   gamepad = inject(GamepadService);
   // #endregion

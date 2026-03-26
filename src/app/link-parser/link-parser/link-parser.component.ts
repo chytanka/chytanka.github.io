@@ -16,7 +16,6 @@ import { FileService } from '../../file/data-access/file.service';
     './themes/halloween.scss',
     './themes/newyear.scss',
     './themes/valentine.scss'
-
   ],
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +33,7 @@ export class LinkParserComponent {
   constructor() { }
 
   ngOnInit() {
-    // this.initMeta()
+    this.initMeta()
     this.lang.langChanged$.pipe(take(1)).subscribe(() => {
       this.initMeta()
     });

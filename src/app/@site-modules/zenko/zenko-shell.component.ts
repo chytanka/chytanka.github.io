@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { switchMap, of } from 'rxjs';
 import { ZENKO_PATH } from '../../app-routing.module';
 import { CommonReadModule, ReadBaseComponent } from '../@common-read';
@@ -10,15 +10,15 @@ import { ZenkoService } from './zenko.service';
   imports: [CommonReadModule],
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
     [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
-
-    <p>{{lang.ph().imagesVia}}<a href="https://zenko.online" target="_blank" rel="noopener noreferrer">Zenko</a>
-        API.
-        {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
-
+  <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
 </app-common-read>`
 })
 export default class ZenkoShellComponent extends ReadBaseComponent implements OnDestroy {
   zenko = inject(ZenkoService)
+  protected readonly sourceName = signal('Zenko');
+  protected readonly sourceUrl = signal('https://zenko.online');
+  protected readonly sourceImageSrc = signal('/assets/logos/zenko-logo.svg');
 
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),

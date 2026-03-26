@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ImgchestService } from './imgchest.service';
 import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
@@ -9,18 +9,14 @@ import { IMGCHEST_PATH } from '../../app-routing.module';
   imports: [CommonReadModule],
   selector: 'app-imgchest-shell',
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"  [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
-
-  <a ngProjectAs="source-logo" href="https://imgchest.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
-          <img style="max-width: 40px;" src="/assets/logos/imgchest.png" alt="Imgchest logo">
-      </a>
-  
-  <div style="direction: ltr; user-select: text !important; text-wrap: balance; text-align: center; display: grid; place-content: center; justify-items: center;">
-      <p>{{lang.ph().imagesVia}}<a href="https://imgchest.com" target="_blank" rel="noopener noreferrer">Imgchest</a>
-          API.
-          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
-  </div></app-common-read>`
+<source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
+  </app-common-read>`
 })
 export default class ImgchestShellComponent extends ReadBaseComponent {
+  protected readonly sourceName = signal('Imgchest');
+  protected readonly sourceUrl = signal('https://imgchest.com');
+  protected readonly sourceImageSrc = signal('/assets/logos/imgchest.png');
 
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),

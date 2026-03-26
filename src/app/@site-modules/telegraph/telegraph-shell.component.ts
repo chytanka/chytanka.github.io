@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
 import { TelegraphService } from './telegraph.service';
@@ -11,15 +11,15 @@ import { CommonReadModule } from '../@common-read';
   imports: [CommonReadModule],
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
     [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
-    
-    <p>{{lang.ph().imagesVia}}<a href="https://telegra.ph" target="_blank" rel="noopener noreferrer">Telegra.ph</a>
-          API.
-          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
+    <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
     
     </app-common-read>`
 })
 export default class TelegraphShellComponent extends ReadBaseComponent implements OnDestroy {
-
+  protected readonly sourceName = signal('Telegra.ph');
+  protected readonly sourceUrl = signal('https://telegra.ph');
+  protected readonly sourceImageSrc = signal('/assets/logos/telegraph-logo.svg');
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),
       switchMap(([params]) => {

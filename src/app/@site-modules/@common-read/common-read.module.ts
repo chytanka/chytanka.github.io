@@ -16,7 +16,8 @@ import { RouterModule } from '@angular/router';
     SharedModule
   ],
   exports: [
-    CommonReadComponent
+    CommonReadComponent,
+    SharedModule
   ]
 })
 export class CommonReadModule { }

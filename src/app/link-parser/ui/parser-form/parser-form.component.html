@@ -1,6 +1,5 @@
 @let ph = lang.ph();
-@let online = net.online();
-@let openFileLabel = (online) ? '📃 '+ph.orOpenFile: '📃 '+ph.openFile;
+@let online = fileNetFacade.net.online();
 
 <div class="form-wrapper">
   @if (online === false ) {
@@ -9,37 +8,21 @@
   </div>
   }
   <h1 class="logo-text">
-    <app-text-embracer [ngClass]="setts.theme()" [text]="ph.shortTitle" />
+    <app-text-embracer [ngClass]="linkInit.setts.theme()" [text]="ph.shortTitle" />
   </h1>
   @if (online) {
-  <form (submit)="onSubmit()">
+  <form (submit)="navFacade.goToParsedLink()">
     <input [vibrateHaptic]="5" [vibrateClick]="false" [vibrateInput]="true" name="chtnk_url" type="url" required
-      autofocus [placeholder]="'🔗 '+ph.enterLink" (input)="inputLink($event)" [value]="link()">
+      autofocus [placeholder]="'🔗 '+ph.enterLink" (input)="linkFacade.inputLink($event)" [value]="linkFacade.link()">
   </form>
   }
 
-  <app-file-change [accept]="file.access()" [label]="openFileLabel+' ('+file.supportFiles()+')'" />
-
+  <app-file-change [accept]="fileNetFacade.file.access()" [label]="fileNetFacade.openFileLabel()" />
 </div>
 
 <div class="slogan-wrapper">
   <h2 class="slogan-header">
-    @if (setts.seasonalTheme != undefined && setts.seasonalTheme()) {
-    @let theme = seasonalTheme().get(setts.theme());
-    @if(theme) {
-    <span [ngClass]="theme?.class"> {{ph.getByKey(theme.phrase)}}</span> {{theme?.emoji}}
-    }
-    }
-    @else {
-    {{ph.slogan}}
-    }
+    <slogan />
   </h2>
-  @if (linkParams()) {
-  <a [vibrateHaptic]="10" class="button primary large go-btn"
-    [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
-    <span>{{ph.letsgo}} </span>
-    <img class="favicon" [src]="favicons[linkParams()?.site]" [alt]="linkParams()?.site">
-    <small class="site-address" [title]="linkParams()?.id">{{linkParams()?.id | truncate}}</small>
-  </a>
-  }
+  <app-go-button [data]="linkFacade.linkData()" [ph]="ph" />
 </div>

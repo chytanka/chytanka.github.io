@@ -98,10 +98,7 @@ input[type=url]::placeholder {
     opacity: 0.6;
 }
 
-.favicon {
-    width: 1.25rem;
-    aspect-ratio: 1;
-}
+
 
 .site-name {
     text-transform: uppercase;
@@ -127,38 +124,7 @@ input[type=url]::placeholder {
     text-wrap: balance;
 }
 
-.go-btn {
-    display: flex;
-    gap: 1ch;
-    align-items: center;
-    --dot-color: var(--border-color);
-    border: var(--border-size) solid var(--dot-color);
-    --stroke: #002741;
-    --gl: radial-gradient(circle 1px at 0px 0px, var(--dot-color) 1px, transparent 0);
-    --bg-1: var(--gl) 0px 0px / 8px 8px;
-    --bg-2: var(--gl) 0px 0px / 4px 4px, var(--gl) 1.5px 1.5px / 4px 4px;
-    background: var(--bg-1);
 
-    text-transform: uppercase;
-    font-weight: bold;
-    box-shadow: var(--shadow-2);
-
-    @media (prefers-color-scheme: light) {
-        --dot-color: #166496;
-        color: #166496;
-        --stroke: #eceff2;
-    }
-
-    &:hover,
-    &:focus {
-        background: var(--bg-2);
-        color: var(--accent);
-    }
-
-    &:active {
-        box-shadow: 0 0 transparent;
-    }
-}
 
 .offline-banner {
     border-radius: .5ch;

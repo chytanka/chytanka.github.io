@@ -40,8 +40,9 @@ import { EpisodeDownloadFormComponent } from './ui/viewer/components/episode-dow
 import { DropZoneComponent } from './ui/drop-zone/drop-zone.component';
 import { SourceCopyrightComponent } from './ui/source-copyright/source-copyright.component';
 import { SourceCopyrightLogoComponent } from './ui/source-copyright-logo/source-copyright-logo.component';
+import { SloganComponent } from './ui/slogan/slogan.component';
 
-const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, PageComponent, EpisodeInfoTableComponent, EpisodeShareFormComponent, EpisodeDownloadFormComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent]
+const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, ViewerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, PageComponent, EpisodeInfoTableComponent, EpisodeShareFormComponent, EpisodeDownloadFormComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent]
 
 @NgModule({
   declarations: [

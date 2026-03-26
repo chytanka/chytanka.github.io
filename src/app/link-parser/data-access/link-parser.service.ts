@@ -1,9 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import { Inject, Injectable, signal, Type } from '@angular/core';
 import { LinkParseResult, LinkParser } from '../utils';
+import { LINK_PARSERS } from './parser.tokens';
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class LinkParserService {
   supportSites = signal([
     "Imgur",
@@ -21,7 +23,9 @@ export class LinkParserService {
 
   parsers: LinkParser[] = [];
 
-  constructor() { }
+  constructor(@Inject(LINK_PARSERS) parserClasses: Type<LinkParser>[]) {
+    this.parsers = parserClasses.map(Parser => new Parser());
+  }
 
   parse(link: string): LinkParseResult | null {
 

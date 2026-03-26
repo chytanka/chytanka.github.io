@@ -5,6 +5,8 @@ import { ListRoutingModule } from './list-routing.module';
 import { ListShellComponent } from './list-shell/list-shell.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { LinkParserService } from '../link-parser/data-access/link-parser.service';
+import { parserProviders } from '../link-parser/data-access/parser.providers';
 
 
 @NgModule({
@@ -16,6 +18,10 @@ import { SharedModule } from '../shared/shared.module';
     ListRoutingModule,
     FormsModule,
     SharedModule
+  ],
+  providers: [
+    ...parserProviders,
+    LinkParserService
   ]
 })
 export class ListModule { }

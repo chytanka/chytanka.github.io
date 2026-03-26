@@ -28,12 +28,12 @@ registerLocaleData(localeUk)
         }),
         SharedModule],
     providers: [
-        provideZoneChangeDetection({ eventCoalescing: true }),
-        provideClientHydration(withEventReplay(),
-            withHttpTransferCacheOptions({
-                includePostRequests: false,
-            })
-        ),
+        // provideZoneChangeDetection({ eventCoalescing: true }),
+        // provideClientHydration(withEventReplay(),
+        //     withHttpTransferCacheOptions({
+        //         includePostRequests: false,
+        //     })
+        // ),
         provideHttpClient(withFetch())
     ]
 })

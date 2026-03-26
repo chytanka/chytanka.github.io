@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-text-embracer',
@@ -8,13 +8,6 @@ import { ChangeDetectionStrategy, Component, Signal, computed, input } from '@an
   standalone: false
 })
 export class TextEmbracerComponent {
-
   text = input<string>('')
-
-  public letters: Signal<string[]> = computed(() => this.split(this.text()));
-
-  split(text: string) {
-    return Array.from(text);
-  }
-
+  protected letters = computed(() => Array.from(this.text()));
 }

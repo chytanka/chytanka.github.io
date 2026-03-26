@@ -7,6 +7,7 @@ import { LinkParserService } from '../../data-access/link-parser.service';
 import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkParser, ZenkoLinkParser, NhentaiLinkParser, YandereParser, PixivLinkParser, JsonLinkParser } from '../../utils';
 import { ImgchestLinkParser } from '../../utils/imgchest-link-parser';
 import { NetworkService, BrowserService } from '../../../shared/data-access/';
+import { FileService } from '../../../file/data-access/file.service';
 
 @Component({
   selector: 'app-parser-form',
@@ -18,6 +19,7 @@ import { NetworkService, BrowserService } from '../../../shared/data-access/';
 export class ParserFormComponent {
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
+  file = inject(FileService);
   setts = inject(LinkParserSettingsService)
   net = inject(NetworkService);
   browser = inject(BrowserService);
@@ -117,4 +119,12 @@ export class ParserFormComponent {
     // blankary: '//blankary.com/favicon.ico',
     read: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>'
   }
+
+  seasonalTheme = signal(new Map<string, { class: string, phrase: string, emoji: string }>([
+    ["pride", { class: 'slogan-rainbow', phrase: "sloganPride", emoji: '🏳️‍🌈' }],
+    ["halloween", { class: 'slogan-halloween', phrase: 'sloganHalloween', emoji: '🕷️' }],
+    ["newyear", { class: 'slogan-newyear', phrase: 'sloganNewYear', emoji: '🎇' }],
+    ["valentine", { class: 'slogan-valentine', phrase: 'sloganValentine', emoji: '❤️📖' }]
+  ]));
+
 }

@@ -65,6 +65,7 @@ export class Phrases {
     ch = "Ch"
     sitesHistory = "Sites history"
     filesHistory = "Files history"
+    noInternet = "No internet connection"
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

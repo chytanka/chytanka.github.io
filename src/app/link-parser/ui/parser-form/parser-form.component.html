@@ -1,43 +1,43 @@
+@let ph = lang.ph();
 @let online = net.online();
-@let openFileLabel = (online) ? '📃 '+lang.ph().orOpenFile: '📃 '+lang.ph().openFile;
+@let openFileLabel = (online) ? '📃 '+ph.orOpenFile: '📃 '+ph.openFile;
 
 <div class="form-wrapper">
   @if (online === false ) {
   <div class="offline-banner">
-    🚫 No internet connection
+    🚫 {{ph.noInternet}}
   </div>
   }
-  <h1 class="logo-text"> <app-text-embracer [ngClass]="setts.theme()" [text]="lang.ph().shortTitle" /> </h1>
+  <h1 class="logo-text">
+    <app-text-embracer [ngClass]="setts.theme()" [text]="ph.shortTitle" />
+  </h1>
   @if (online) {
   <form (submit)="onSubmit()">
     <input [vibrateHaptic]="5" [vibrateClick]="false" [vibrateInput]="true" name="chtnk_url" type="url" required
-      autofocus [placeholder]="'🔗 '+lang.ph().enterLink" (input)="inputLink($event)" [value]="link()">
+      autofocus [placeholder]="'🔗 '+ph.enterLink" (input)="inputLink($event)" [value]="link()">
   </form>
   }
 
-  <app-file-change [accept]="osAcceptSupport()?parser.supportFiles():[]"
-    [label]="openFileLabel+' ('+parser.supportFiles()+')'" />
+  <app-file-change [accept]="file.access()" [label]="openFileLabel+' ('+file.supportFiles()+')'" />
 
 </div>
 
 <div class="slogan-wrapper">
   <h2 class="slogan-header">
     @if (setts.seasonalTheme != undefined && setts.seasonalTheme()) {
-    @switch (setts.theme()) {
-    @case ('pride') {<span class="slogan-rainbow"> {{lang.ph().sloganPride}}</span> 🏳️‍🌈}
-    @case ('halloween') {<span class="slogan-halloween"> {{lang.ph().sloganHalloween}}</span> 🕷️}
-    @case ('newyear') {<span class="slogan-newyear"> {{lang.ph().sloganNewYear}}</span> 🎇}
-    @case ('valentine') {<span class="slogan-valentine"> {{lang.ph().sloganValentine}}</span> ❤️📖}
+    @let theme = seasonalTheme().get(setts.theme());
+    @if(theme) {
+    <span [ngClass]="theme?.class"> {{ph.getByKey(theme.phrase)}}</span> {{theme?.emoji}}
     }
     }
     @else {
-    {{lang.ph().slogan}}
+    {{ph.slogan}}
     }
   </h2>
   @if (linkParams()) {
   <a [vibrateHaptic]="10" class="button primary large go-btn"
     [routerLink]="['',linkParams()?.site, linkParams64()?.id]">
-    <span>{{lang.ph().letsgo}} </span>
+    <span>{{ph.letsgo}} </span>
     <img class="favicon" [src]="favicons[linkParams()?.site]" [alt]="linkParams()?.site">
     <small class="site-address" [title]="linkParams()?.id">{{linkParams()?.id | truncate}}</small>
   </a>

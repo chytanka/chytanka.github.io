@@ -4,6 +4,7 @@ import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
 import { take } from 'rxjs';
+import { FileService } from '../../file/data-access/file.service';
 
 @Component({
   selector: 'app-link-parser',
@@ -28,6 +29,7 @@ export class LinkParserComponent {
   private lang: LangService = inject(LangService)
   public parser: LinkParserService = inject(LinkParserService)
   public setts = inject(LinkParserSettingsService)
+  public file = inject(FileService)
 
   constructor() { }
 

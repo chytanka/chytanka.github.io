@@ -5,9 +5,6 @@ import { LinkParseResult, LinkParser } from '../utils';
   providedIn: 'root'
 })
 export class LinkParserService {
-
-  supportFiles = signal([".zip", ".cbz", ".pdf", ".mobi"])
-
   supportSites = signal([
     "Imgur",
     "Telegra.ph",

@@ -1,5 +1,4 @@
 @if(episode && episode.images && episode.images.length > 0){
-<!-- <chtnk-viewer [episode]="episode" class="right-to-left"/> -->
 <app-viewer [episode]="episode" (pagechange)="onPageChange($event)" />
 } @else {
 <loading />

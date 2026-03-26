@@ -9,12 +9,10 @@ import { Acbf } from '../../shared/utils/acbf';
 import { FileHashService } from '../data-access/file-hash.service';
 import { FileHistoryService } from '../data-access/file-history.service';
 import { FileSettingsService } from '../data-access/file-settings.service';
-import { map } from 'rxjs';
-import { ViewerComponent } from "../../viewer/viewer.component";
 
 @Component({
   selector: 'app-zip',
-  imports: [SharedModule, /*ViewerComponent*/],
+  imports: [SharedModule],
   templateUrl: './zip.component.html',
   styleUrl: './zip.component.scss'
 })

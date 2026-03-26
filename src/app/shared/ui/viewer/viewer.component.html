@@ -1,7 +1,9 @@
 @let dir = viewer.viewModeOption().dir;
 @let mode = viewer.viewModeOption().mode;
 @let nsfw = episode().nsfw;
+@if (gamepad.connected()) {
 <gamepad-cursor [cursorVisible]="gamepad.cursorVisible() && isFullScreen()" [x]="gamepad.x()" [y]="gamepad.y()" />
+}
 <div #viewRef class="view" [class]="mode" (scroll)="onScroll($event)" (scrollend)="onScrollEnd($event)" [dir]="dir"
     (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 

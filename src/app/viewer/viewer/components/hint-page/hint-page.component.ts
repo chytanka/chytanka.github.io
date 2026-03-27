@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
-import { ViewerService } from '../../../../data-access';
-import { LangService } from '../../../../data-access/lang.service';
-import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
+import { ViewerService } from '../../../../shared/data-access';
+import { LangService } from '../../../../shared/data-access/lang.service';
+import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 
 @Component({
     selector: 'app-hint-page',

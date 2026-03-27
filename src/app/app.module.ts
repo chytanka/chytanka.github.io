@@ -36,7 +36,7 @@ registerLocaleData(localeUk)
         //     })
         // ),
         provideHttpClient(withFetch()),
-        // ...parserProviders
+        ...parserProviders
     ]
 })
 export class AppModule { }

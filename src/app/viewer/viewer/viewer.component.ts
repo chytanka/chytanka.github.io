@@ -1,16 +1,16 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, effect, inject, output, signal } from '@angular/core';
-import { CompositionEpisode } from '../../../@site-modules/@common-read';
-import { ViewerService, DomManipulationService } from '../../data-access';
+import { CompositionEpisode } from '../../@site-modules/@common-read';
+import { ViewerService, DomManipulationService } from '../../shared/data-access';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LangService } from '../../data-access/lang.service';
+import { LangService } from '../../shared/data-access/lang.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { isPlaylist, Playlist, PlaylistItem } from '../../../playlist/data-access/playlist.service';
-import { EmbedHalperService } from '../../data-access/embed-halper.service';
-import { DownloadService } from '../../data-access/download.service';
+import { isPlaylist, Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
+import { EmbedHalperService } from '../../shared/data-access/embed-halper.service';
+import { DownloadService } from '../../shared/data-access/download.service';
 import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { VibrationService } from '../../data-access/vibration.service';
-import { GamepadService } from '../../data-access/gamepad.service';
-import { GamepadButton } from '../../models';
+import { VibrationService } from '../../shared/data-access/vibration.service';
+import { GamepadButton } from '../../shared/models';
+import { GamepadService } from '../../shared/data-access';
 
 const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
 const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
@@ -25,8 +25,8 @@ const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
     './viewer.component.scss',
     './viewer.pages.component.scss',
     './viewer.long.component.scss',
-    '../../../shared/ui/@styles/details.scss',
-    '../../../shared/ui/@styles/input-group.scss'
+    '../../shared/ui/@styles/details.scss',
+    '../../shared/ui/@styles/input-group.scss'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false

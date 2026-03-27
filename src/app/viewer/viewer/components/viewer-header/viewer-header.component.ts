@@ -1,15 +1,15 @@
 import { Component, computed, effect, HostListener, inject, input, output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../data-access';
-import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
-import { PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
-import { LangService } from '../../../../data-access/lang.service';
-import { DialogComponent } from '../../../dialog/dialog.component';
-import { EmbedHalperService } from '../../../../data-access/embed-halper.service';
-import { parseTags, resolveViewMode } from '../../../../utils';
+import { DomManipulationService, ViewerService } from '../../../../shared/data-access';
+import { CompositionEpisode } from '../../../../@site-modules/@common-read';
+import { PlaylistItem } from '../../../../playlist/data-access/playlist.service';
+import { LangService } from '../../../../shared/data-access/lang.service';
+import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
+import { EmbedHalperService } from '../../../../shared/data-access/embed-halper.service';
+import { parseTags, resolveViewMode } from '../../../../shared/utils';
 import { isPlatformBrowser } from '@angular/common';
-import { GamepadService } from '../../../../data-access/gamepad.service';
-import { GamepadButton } from '../../../../models';
-import { FileService } from '../../../../../file/data-access/file.service';
+import { GamepadService } from '../../../../shared/data-access/gamepad.service';
+import { GamepadButton } from '../../../../shared/models';
+import { FileService } from '../../../../file/data-access/file.service';
 
 @Component({
   selector: 'app-viewer-header',

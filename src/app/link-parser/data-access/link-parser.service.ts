@@ -2,10 +2,9 @@ import { Inject, Injectable, signal, Type } from '@angular/core';
 import { LinkParseResult, LinkParser } from '../utils';
 import { LINK_PARSERS } from './parser.tokens';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LinkParserService {
   supportSites = signal([
     "Imgur",

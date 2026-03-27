@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { Playlist, PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
-import { ViewerService } from '../../../../data-access';
-import { LangService } from '../../../../data-access/lang.service';
-import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
+import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
+import { ViewerService } from '../../../../shared/data-access';
+import { LangService } from '../../../../shared/data-access/lang.service';
+import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 
 @Component({
   selector: 'app-thanks-page',

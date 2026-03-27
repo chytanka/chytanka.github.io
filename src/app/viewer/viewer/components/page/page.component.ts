@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, InputSignal, output, OutputEmitterRef, Signal, signal } from '@angular/core';
-import { LangService } from '../../../../data-access/lang.service';
+import { LangService } from '../../../../shared/data-access/lang.service';
 
 @Component({
   selector: 'chtnk-page',

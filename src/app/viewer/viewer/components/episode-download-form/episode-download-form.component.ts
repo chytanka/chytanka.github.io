@@ -1,8 +1,8 @@
 import { Component, inject, input } from '@angular/core';
-import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
-import { DownloadService } from '../../../../data-access/download.service';
-import { Base64 } from '../../../../utils';
-import { PlaylistItem } from '../../../../../playlist/data-access/playlist.service';
+import { CompositionEpisode } from '../../../../@site-modules/@common-read';
+import { DownloadService } from '../../../../shared/data-access/download.service';
+import { Base64 } from '../../../../shared/utils';
+import { PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 
 
 @Component({

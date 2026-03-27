@@ -18,10 +18,6 @@ import { parserProviders } from '../link-parser/data-access/parser.providers';
     ListRoutingModule,
     FormsModule,
     SharedModule
-  ],
-  providers: [
-    ...parserProviders,
-    LinkParserService
   ]
 })
 export class ListModule { }

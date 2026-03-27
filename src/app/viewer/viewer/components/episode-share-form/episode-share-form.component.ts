@@ -1,8 +1,8 @@
 import { Component, computed, inject, input, output, PLATFORM_ID, Signal } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../data-access';
-import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
+import { DomManipulationService, ViewerService } from '../../../../shared/data-access';
+import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { isPlatformBrowser } from '@angular/common';
-import { LangService } from '../../../../data-access/lang.service';
+import { LangService } from '../../../../shared/data-access/lang.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   standalone: false,
 
   templateUrl: './episode-share-form.component.html',
-  styleUrls: ['./episode-share-form.component.scss', '../../../../../shared/ui/@styles/input-group.scss']
+  styleUrls: ['./episode-share-form.component.scss', '../../../../shared/ui/@styles/input-group.scss']
 })
 export class EpisodeShareFormComponent {
   platformId = inject(PLATFORM_ID)

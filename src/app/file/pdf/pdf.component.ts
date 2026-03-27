@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { getDocument, GlobalWorkerOptions, PDFPageProxy } from 'pdfjs-dist';
 import { RenderParameters } from 'pdfjs-dist/types/src/display/api';
 import { CompositionEpisode } from '../../@site-modules/@common-read';
+import { ViewerModule } from '../../viewer/viewer.module';
 
 GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs'
 
@@ -13,7 +14,7 @@ const MDASH = '—';
 
 @Component({
     selector: 'app-pdf',
-    imports: [SharedModule],
+    imports: [SharedModule, ViewerModule],
     templateUrl: './pdf.component.html',
     styleUrl: './pdf.component.scss'
 })

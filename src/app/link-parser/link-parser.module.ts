@@ -41,8 +41,6 @@ const FACADES = [
     HistoryModule
   ],
   providers: [
-    ...parserProviders,
-    LinkParserService,
     ...FACADES
   ]
 })

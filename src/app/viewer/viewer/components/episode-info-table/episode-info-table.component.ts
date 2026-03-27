@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
-import { CompositionEpisode } from '../../../../../@site-modules/@common-read';
-import { LangService } from '../../../../data-access/lang.service';
+import { CompositionEpisode } from '../../../../@site-modules/@common-read';
+import { LangService } from '../../../../shared/data-access/lang.service';
 
 @Component({
   selector: 'episode-info-table',

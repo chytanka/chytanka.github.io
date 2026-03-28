@@ -47,7 +47,9 @@ export class ImgurService {
       title: data.title,
       episode: 0,
       nsfw: (data.nsfw) as unknown as boolean,
-      images: data.images.map((i): CompositionImage => {
+      images: data.images
+      .filter(i => i.type.startsWith('image/'))
+      .map((i): CompositionImage => {
         return {
           src: i.link,
           width: i.width,

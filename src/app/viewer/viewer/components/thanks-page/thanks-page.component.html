@@ -6,7 +6,7 @@
     <div dir="ltr" frame="2"><img [imgMeta]="map"></div>
     <div dir="ltr" frame="5"><img [imgMeta]="logo" /></div>
     <div dir="ltr" frame="4">
-        <p class="text-center">Кінець епізоду</p>
+        <p class="text-center">{{lang.ph().episodeEnd}}</p>
         @if (getNextIndex() >=0 && playlist()[getNextIndex()]; as next) {
 
         <a dir="ltr" [routerLink]="['/', next.site, next.id]"

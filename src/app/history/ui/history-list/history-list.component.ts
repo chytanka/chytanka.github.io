@@ -1,4 +1,4 @@
-import { Component, WritableSignal, inject, signal } from '@angular/core';
+import { Component, WritableSignal, computed, inject, signal } from '@angular/core';
 import { HistoryService } from '../../data-access/history.service';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { FileHistoryService } from '../../../file/data-access/file-history.service';
@@ -16,6 +16,25 @@ export class HistoryListComponent {
 
   historyItems: WritableSignal<any[]> = signal([]);
   historyFiles: WritableSignal<any[]> = signal([]);
+
+  historyItemsSites = computed(() => {
+    const sites = this.historyItems().map(item => item.site);
+    const unique = [...new Set(sites.flat())];
+    return unique;
+  });
+  historySitesFilter = signal('all');
+
+  setHistorySitesFilter(site: string = 'all') {
+    this.historySitesFilter.set(site);
+  }
+
+  historyItemsFiltered = computed(() => {
+    const filter = this.historySitesFilter();
+    if (filter === 'all') {
+      return this.historyItems();
+    }
+    return this.historyItems().filter(item => item.site.includes(filter));
+  });
 
   async displayHistory() {
     const history = await this.history.getAllHistory();

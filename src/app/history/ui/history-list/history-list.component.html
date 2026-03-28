@@ -1,5 +1,5 @@
 @let files = historyFiles();
-@let sites = historyItems();
+@let sites = historyItemsFiltered();
 
 @let sitesNotEmpty = sites.length > 0;
 @let filesNotEmpty = files.length > 0;
@@ -17,6 +17,18 @@
     </summary>
 
     <div class="wrap">
+
+        @if(historyItemsSites().length > 1) {
+        <ul>
+            <li role="button" [class]="{'active': historySitesFilter() === 'all'}" (click)="setHistorySitesFilter()">All
+            </li>
+            @for (tag of historyItemsSites(); track $index) {
+            <li role="button" [class]="{'active': historySitesFilter() === tag}" (click)="setHistorySitesFilter(tag)">
+                {{tag}}</li>
+            }
+        </ul>
+        }
+
         @for (item of sites; track $index) {
         <app-title-card [value]="item" (delete)="delById($event)" />
         }

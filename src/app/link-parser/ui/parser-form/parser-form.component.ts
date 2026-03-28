@@ -17,6 +17,7 @@ export class ParserFormComponent {
   protected linkInit = inject(LinkInitFacade);
 
   ngOnInit() {
+    this.linkFacade.setLink('');
     this.linkInit.init().then(source => {
       if (source === 'route') {
         this.navFacade.goToParsedLink();

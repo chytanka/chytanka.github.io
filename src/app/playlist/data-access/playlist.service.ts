@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { LinkParserService } from '../../link-parser/data-access/link-parser.service';
-import { BlankaryLinkParser, ImgurLinkParser, JsonLinkParser, MangadexLinkParser, NhentaiLinkParser, PixivLinkParser, RedditLinkParser, TelegraphLinkParser, YandereParser, ZenkoLinkParser } from '../../link-parser/utils';
-import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
 
 export interface EpisodeOptionalField {
   episode?: number;
@@ -50,22 +48,6 @@ export class PlaylistService {
   playlist: WritableSignal<Playlist> = signal([])
 
   constructor(private http: HttpClient, public parser: LinkParserService) {
-    this.initParser();
-  }
-
-  initParser() {
-    this.parser.parsers = [];
-    this.parser.parsers.push(new ImgurLinkParser)
-    this.parser.parsers.push(new MangadexLinkParser)
-    this.parser.parsers.push(new TelegraphLinkParser)
-    this.parser.parsers.push(new RedditLinkParser)
-    this.parser.parsers.push(new ZenkoLinkParser)
-    this.parser.parsers.push(new NhentaiLinkParser)
-    // this.parser.parsers.push(new ComickLinkParser)
-    this.parser.parsers.push(new YandereParser)
-    this.parser.parsers.push(new PixivLinkParser)
-    // this.parser.parsers.push(new BlankaryLinkParser)
-    this.parser.parsers.push(new JsonLinkParser)
   }
 
   getPlaylist(url: string): Observable<EpisodePlaylist> {

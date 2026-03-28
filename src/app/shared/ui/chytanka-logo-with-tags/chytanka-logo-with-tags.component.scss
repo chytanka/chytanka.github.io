@@ -1,12 +1,10 @@
 :host {
     position: relative;
-    // overflow: hidden;
     min-height: 0;
     min-width: 0;
     display: grid;
-    // place-items: stretch;
-    align-items: anchor-center;
-
+    gap: 1ch;
+    align-content: center;
 }
 
 #logoPath {
@@ -44,9 +42,6 @@ img {
 }
 
 .version {
-    // position: absolute;
-    // top: 50%; left: 50%;
-    // transform: translate(-50%,-50%);
     font-weight: bold;
     text-align: center;
     opacity: .5;
@@ -67,8 +62,6 @@ img {
 }
 
 ul {
-    position: absolute;
-    bottom: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 1ch;
@@ -98,12 +91,6 @@ ul {
     list-style: none;
     text-box: trim-both cap alphabetic;
 
-    // &:hover {
-    //     cursor: none;
-    //     scale: 1.5 !important;
-    //     z-index: 2;
-    // }
-
     &.reddit {
         --b: #FF4500;
         --f: white;
@@ -119,8 +106,6 @@ ul {
         --f: white;
     }
 
-    // &.comick {}
-
     &.imgur {
         --b: #1bb76e;
     }
@@ -129,7 +114,9 @@ ul {
         --b: #ff6740;
     }
 
-    // &.nhentai {}
+    &.nhentai {
+        --b: #ed2553;
+    }
 
     &.zenko {
         --b: #078DEE;

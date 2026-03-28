@@ -151,9 +151,4 @@ export class ZipComponent implements OnInit, OnDestroy {
     this.episode = { title: filename, images: [] }
     this.worker.postMessage({ arrayBuffer: ab });
   }
-
-  onPageChange(e: { total: number, current: number[] }) {
-    const { current, total } = e
-    console.log(`${current}/${total}`);
-  }
 }

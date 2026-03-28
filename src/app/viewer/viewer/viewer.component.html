@@ -1,31 +1,32 @@
-@let dir = viewer.viewModeOption().dir;
-@let mode = viewer.viewModeOption().mode;
-@let nsfw = episode().nsfw;
-@if (gamepad.connected()) {
-<gamepad-cursor [cursorVisible]="gamepad.cursorVisible() && isFullScreen()" [x]="gamepad.x()" [y]="gamepad.y()" />
+@let dir = viewMode.dir();
+@let mode = viewMode.mode();
+@let nsfwEpisode = episode().nsfw;
+@if (gamepad.gamepad.connected()) {
+<gamepad-cursor [cursorVisible]="gamepad.gamepad.cursorVisible() && viewerUi.isFullScreen()" [x]="gamepad.gamepad.x()"
+    [y]="gamepad.gamepad.y()" />
 }
-<div #viewRef class="view" [class]="mode" (scroll)="onScroll($event)" (scrollend)="onScrollEnd($event)" [dir]="dir"
+<div #viewRef class="view" [class]="mode" (scroll)="onScroll()" (scrollend)="onScrollEnd()" [dir]="dir"
     (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
 
-    <chtnk-page (agree)="onAgree()" (disagree)="onDisagree()" [showNsfw]="showNsfw()" [nsfw]="nsfw" [class]="mode"
-        [dir]="dir">
-        <app-hint-page [class]="mode" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="playlist()"
+    <chtnk-page (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode"
+        [class]="mode" [dir]="dir">
+        <app-hint-page [class]="mode" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="readlist.readlist()"
             [playlistLink]="playlistLink()" />
     </chtnk-page>
 
     @for(img of episode().images; track img.src; let i = $index) {
-    <chtnk-page (longPageDetected)="longPageDetected()" (agree)="onAgree()" (disagree)="onDisagree()"
-        [showNsfw]="showNsfw()" [nsfw]="nsfw" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
-        [inputHeight]="img.height ?? 1000" [preload]="preLoad(i)" [index]="i" [class]="mode" [dir]="dir"
-        [showLoading]="true" />
+    <chtnk-page (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()"
+        [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
+        [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)" [index]="i" [class]="mode"
+        [dir]="dir" [showLoading]="true" />
     } @empty {
     <chtnk-page [class]="mode" [dir]="dir">👀</chtnk-page>
     }
 
-    <chtnk-page class="last-hint-page" (agree)="onAgree()" (disagree)="onDisagree()" [showNsfw]="showNsfw()"
-        [nsfw]="nsfw" [class]="mode" [dir]="dir">
-        <app-thanks-page [playlist]="playlist()" [currentPlaylistItem]="currentPlaylistItem()" [episode]="episode()"
-            [playlistLink]="playlistLink()">
+    <chtnk-page class="last-hint-page" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()"
+        [nsfw]="nsfwEpisode" [class]="mode" [dir]="dir">
+        <app-thanks-page [playlist]="readlist.readlist()" [currentPlaylistItem]="currentPlaylistItem()"
+            [episode]="episode()" [playlistLink]="playlistLink()">
             <ng-content ngProjectAs="source-logo" select="source-logo" />
             <ng-content />
         </app-thanks-page>
@@ -38,15 +39,16 @@
 
 @defer{
 @if (episode()) {
-<app-viewer-header [show]="showOverlay()" [episode]="episode()" [playlistLink]="playlistLink()"
-    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="isDialogOpen.set($event)" />
+<app-viewer-header [show]="viewerUi.showOverlay()" [episode]="episode()" [playlistLink]="playlistLink()"
+    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="viewerUi.isDialogOpen.set($event)" />
 }
 }
 
 @defer{
-<app-viewer-footer [show]="showOverlay()" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="playlist()"
-    [playlistLink]="playlistLink()" [episode]="episode()" [activeIndexs]="activeIndexs()"
-    (togglefulscreen)="toggleFullScreen()" (pageactive)="onActive($event)" (onToggle)="isDialogOpen.set($event)" />
+<app-viewer-footer [show]="viewerUi.showOverlay()" [currentPlaylistItem]="currentPlaylistItem()"
+    [playlist]="readlist.readlist()" [playlistLink]="playlistLink()" [episode]="episode()"
+    [activeIndexs]="pageTracking.activeIndexes()" (togglefulscreen)="viewerUi.toggleFullScreen()"
+    (pageactive)="scroll.scrollToPage($event)" (onToggle)="viewerUi.isDialogOpen.set($event)" />
 }
 
-@defer{ <app-warm-filter class="filter" [kelvin]="viewer.nightlight()" /> }
+@defer{ <app-warm-filter class="filter" [kelvin]="viewMode.viewer.nightlight()" /> }

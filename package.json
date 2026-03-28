@@ -1,6 +1,6 @@
 {
   "name": "chytanka",
-  "version": "0.13.50",
+  "version": "0.13.51",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

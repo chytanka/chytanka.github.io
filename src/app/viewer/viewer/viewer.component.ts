@@ -1,22 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, effect, inject, output, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { CompositionEpisode } from '../../@site-modules/@common-read';
-import { ViewerService, DomManipulationService } from '../../shared/data-access';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LangService } from '../../shared/data-access/lang.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { isPlaylist, Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
-import { EmbedHalperService } from '../../shared/data-access/embed-halper.service';
-import { DownloadService } from '../../shared/data-access/download.service';
-import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { VibrationService } from '../../shared/data-access/vibration.service';
-import { GamepadButton } from '../../shared/models';
-import { GamepadService } from '../../shared/data-access';
-
-const CHTNK_LOAD_EVENT_NAME = 'chtnkload'
-const CHTNK_CHANGE_PAGE_EVENT_NAME = 'changepage';
-const CHTNK_NSFW_CHOICE_EVENT_NAME = 'nsfwchoice'
-const CHTNK_LIST_RESPONCE_EVENT_NAME = 'listresponse'
-const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
+import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
+import { DOCUMENT } from '@angular/common';
+import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
+import { DomManipulationService } from '../../shared/data-access';
 
 @Component({
   selector: 'app-viewer',
@@ -24,325 +12,85 @@ const CHTNK_LIST_REQUEST_EVENT_NAME = 'listrequest'
   styleUrls: [
     './viewer.component.scss',
     './viewer.pages.component.scss',
-    './viewer.long.component.scss',
-    '../../shared/ui/@styles/details.scss',
-    '../../shared/ui/@styles/input-group.scss'
+    './viewer.long.component.scss'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false
 })
 export class ViewerComponent implements AfterViewInit {
-  readonly separator: string = '│'
-  showNsfw: WritableSignal<boolean> = signal(false);
-  gamepad = inject(GamepadService);
+  nsfw = inject(NsfwFacade);
+  gamepad = inject(GamepadFacade);
+  viewerUi = inject(ViewerUiFacade);
+  viewMode = inject(ViewModeFacade);
+  pageTracking = inject(PageTrackingFacade);
+  keyboard = inject(KeyboardFacade);
+  scroll = inject(ViewerScrollFacade);
+  embedFacade = inject(EmbedFacade);
+  readlist = inject(ReadlistFacade);
 
-  pagechange = output<{ total: number, current: number[] }>()
+  private readonly dom = inject(DomManipulationService);
+  private readonly document = inject(DOCUMENT);
 
-  episode = input<CompositionEpisode>({
-    title: '',
-    images: []
-  });
+  episode = input<CompositionEpisode>({ title: '', images: [] });
   playlistLink = input("");
   currentPlaylistItem = input<PlaylistItem | undefined>();
-
-  platformId = inject(PLATFORM_ID)
-  private readonly document = inject(DOCUMENT);
-  vibration = inject(VibrationService);
-
-  private _playlist = signal<Playlist>([]);
-
   playlistInput = input<Playlist>([]);
-  playlist = computed(() => {
-    const inputList = this.playlistInput();
-    return inputList.length ? inputList : this._playlist();
-  });
-
-  initListFromParrentWindow() {
-    if (!this.embedHelper.isEmbedded() || !isPlatformBrowser(this.platformId)) return
-
-    this.embedHelper.postMessage(this.currentPlaylistItem(), CHTNK_LIST_REQUEST_EVENT_NAME);
-
-    window.addEventListener('message', ({ data }) => {
-      if (data.event != CHTNK_LIST_RESPONCE_EVENT_NAME) return;
-
-      if (isPlaylist(data.data)) {
-        this._playlist.set(data.data);
-        this.cdr.detectChanges();
-      } else {
-        console.warn('Received data is not a valid Playlist', data.data);
-      }
-
-    }, false);
-  }
-
-  getCyrrentIndex() {
-    for (let i = 0; i < this.playlist.length; i++) {
-      const item = this.playlist()[i];
-      if (this.currentPlaylistItem()?.id == item.id && this.currentPlaylistItem()?.site == item.site)
-        return i;
-    }
-
-    return -1;
-  }
-
-  getNextIndex() {
-    const index = this.getCyrrentIndex();
-    if (index < 0) return -1;
-
-    return ((index + 1) < this.playlist.length) ? index + 1 : -1;
-  }
-
-  getPrevIndex() {
-    const index = this.getCyrrentIndex();
-    if (index < 0) return -1;
-
-    return ((index - 1) >= 0) ? (index - 1) : -1;
-  }
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
-  constructor(private el: ElementRef, public viewer: ViewerService, private dm: DomManipulationService, private router: Router, public lang: LangService) {
-    this.initHotKeys()
-
-    effect(() => {
-      for (const [btn, action] of Object.entries(this.gamepadActionMap)) {
-        if (this.gamepad.buttons()[parseInt(btn)]?.pressed) action();
-      }
-    })
-
-    if (isPlatformServer(this.platformId)) return;
-
-    addEventListener("fullscreenchange", (event) => {
-      this.isFullScreen.set(this.document.fullscreenElement === this.el.nativeElement)
-    })
+  constructor(private el: ElementRef, public lang: LangService) {
+    this.nsfw.show.set(false);
+    this.pageTracking.activeIndexes.set([]);
+    this.readlist.connect(this.playlistInput, this.currentPlaylistItem);
+    this.pageTracking.connectPagesCount(this.episode);
   }
-
-  private gamepadActionMap: Record<number, Function> = {
-    [GamepadButton.L1]: () => this.scrollLeft(),
-    [GamepadButton.R1]: () => this.scrollRight(),
-    [GamepadButton.DPadLeft]: () => this.scrollLeft(),
-    [GamepadButton.DPadRight]: () => this.scrollRight(),
-    [GamepadButton.DPadUp]: () => this.scrollUp(),
-    [GamepadButton.DPadDown]: () => this.scrollDown(),
-    [GamepadButton.Square]: () => this.toggleFullScreen(),
-    [GamepadButton.Options]: () => this.toggleOverlay(),
-    [GamepadButton.Triangle]: () => this.toggleViewModeOption(),
-  };
-  private _isViewOptToggle = false;
-  toggleViewModeOption() {
-    if (!this._isViewOptToggle) {
-      this.viewer.toggleViewModeOption();
-      this.viewer.saveViewModeOption();
-      setTimeout(() => { this._isViewOptToggle = false }, 100);
-    }
-
-    this._isViewOptToggle = true;
-  }
-
-  // TODO: Fix scroll position reset after exiting fullscreen in pages mode
-  toggleFullScreen = () => {
-    // const activeIndexs = this.activeIndexs();
-    // const page = (activeIndexs.length == 1) ? activeIndexs[0] : activeIndexs.filter(v => v+1 % 2 != 0)[0];
-    // console.log(activeIndexs, page);
-
-    this.dm.toggleFullScreen(this.el.nativeElement);
-
-    // if (page != undefined)
-    //   setTimeout(() => {this.onActive(page)}, 100);
-  }
-  isFullScreen = signal(this.document.fullscreenElement === this.el.nativeElement);
-
-  showOverlay = signal(false);
-  toggleOverlay = () => this.showOverlay.update(v => !v);
 
   viewElement: WritableSignal<HTMLElement> = signal(this.document.createElement('div'));
   imageElements: Signal<NodeListOf<Element>> = computed(() => this.viewElement().querySelectorAll('.page img[id*=page_]'));
-  imgsPos: any[] = []
 
   ngAfterViewInit() {
+    this.viewerUi.initViewElement(this.el.nativeElement);
+    this.viewerUi.initFullscreenListener();
     this.viewElement.set(this.viewRef.nativeElement);
-    this.initActiveIndexes()
-    this.embedHelper.postMessage(this.currentPlaylistItem(), CHTNK_LOAD_EVENT_NAME);
-    this.initListFromParrentWindow();
+    this.pageTracking.initZone(this.viewElement(), this.el.nativeElement, this.imageElements());
+    this.pageTracking.updateActiveIndexes();
+    this.scroll.initZone(this.viewElement(), this.el.nativeElement);
+    this.embedFacade.loadCurrentPlaylistItem();
   }
 
-  activeIndexs: WritableSignal<number[]> = signal([])
-  initActiveIndexes() {
-    if (!isPlatformBrowser(this.platformId)) return
-
-    const isPageMode = this.viewer.viewModeOption().mode == 'pages';
-
-    const viewRect: DOMRect = isPageMode
-      ? this.viewElement().getBoundingClientRect()
-      : this.el.nativeElement.getBoundingClientRect();
-
-    let activeIndxs: number[] = [];
-
-    for (let i = 0; i < this.imageElements().length; i++) {
-      const img = this.imageElements()[i];
-      const rect = img.getBoundingClientRect();
-
-      const hor = rect.right > viewRect.x && rect.right < viewRect.x + viewRect.width + 1;
-
-      const ver = rect.top < viewRect.height && rect.bottom > viewRect.top
-
-      if (isPageMode ? hor : ver) {
-        activeIndxs.push(i)
-      }
-
-    }
-
-    // this.showOverlay = false;
-    // console.log();
-
-    // if (JSON.stringify(this.activeIndexs()) !== JSON.stringify(activeIndxs))
-    this.activeIndexs.set(activeIndxs);
-
-
-    const total = this.episode()?.images.length
-    const current = activeIndxs.map(i => i + 1)
-
-    this.embedHelper.postMessage({ total, current }, CHTNK_CHANGE_PAGE_EVENT_NAME);
-
-    this.pagechange.emit({ total: Number(total), current })
-
+  @HostListener('scroll')
+  onScroll() {
+    this.pageTracking.updateActiveIndexes();
+    this.scroll.scrollStartVibration();
   }
 
-  isScrollStart: boolean = false;
-
-  @HostListener('scroll', ['$event'])
-  onScroll(event: Event) {
-    this.initActiveIndexes()
-
-    if (!this.isScrollStart) {
-      this.isScrollStart = true;
-      this.vibration.vibrate(10);
-    }
+  @HostListener('scrollend')
+  onScrollEnd() {
+    this.scroll.scrollEndVibration();
   }
 
-  @HostListener('scrollend', ['$event'])
-  onScrollEnd(event: Event) {
-    this.vibration.vibrate([5, 5, 10]);
-    this.isScrollStart = false;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.initActiveIndexes()
-  }
-
-  private hotKeys = new Map<string, Function>()
-
-  private initHotKeys() {
-    this.hotKeys.set('KeyF', this.toggleFullScreen)
-    this.hotKeys.set('KeyE', this.toggleOverlay)
-    this.hotKeys.set('KeyA', () => this.scrollLeft())
-    this.hotKeys.set('KeyD', () => this.scrollRight())
-    this.hotKeys.set('KeyW', () => this.scrollUp())
-    this.hotKeys.set('KeyS', () => this.scrollDown())
+  @HostListener('window:resize')
+  onResize() {
+    this.pageTracking.updateActiveIndexes();
   }
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    this.domMan.setHotkeys(event, this.hotKeys)
+    this.keyboard.handleKeyboardEvent(event);
   }
-
-  private readonly verAmount = 256;
-
-  private scrollLeft() {
-    this.dm.scrollHor(this.viewElement(), -this.el.nativeElement.clientWidth)
-  }
-
-  private scrollRight() {
-    this.dm.scrollHor(this.viewElement(), this.el.nativeElement.clientWidth)
-  }
-
-  private scrollUp() {
-    this.dm.scrollVer(this.el.nativeElement, -this.verAmount)
-  }
-  private scrollDown() {
-    this.dm.scrollVer(this.el.nativeElement, this.verAmount)
-  }
-
-  isDialogOpen = signal(false);
 
   @HostListener('wheel', ['$event'])
   handleWheelEvent(event: WheelEvent): void {
+    if (this.viewerUi.isDialogOpen() || this.viewMode.mode() != "pages") return;
 
-    if (this.isDialogOpen()) return;
-
-    if (this.viewer.viewModeOption().mode != "pages") return;
-
-    const revers: number = this.viewer.viewModeOption().dir == "ltr" ? 1 : -1
-
-    const scrollAmountX = this.viewElement().clientWidth;
-
-    if (event.deltaY !== 0 && !event.shiftKey) {
-      this.viewElement().scrollLeft += event.deltaY * revers > 0 ? scrollAmountX : -scrollAmountX;
-      event.preventDefault();
-    }
-  }
-
-  onActive(pageIndex: number) {
-    const foo = this.viewElement().querySelector(`#page_${pageIndex + 1}`)
-    const opt: ScrollIntoViewOptions = { behavior: "smooth", block: "start", inline: "center" }
-    foo?.scrollIntoView(opt)
-  }
-
-  showNsfwToggle() {
-    this.showNsfw.set(!this.showNsfw())
+    this.scroll.scrollByWheel(event, this.viewMode.dir());
   }
 
   onViewClick(event: Event) {
-    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
-    if ((event.target as HTMLElement).nodeName === 'SUMMARY') return;
-
-    this.toggleOverlay();
+    if (!this.dom.isInteractiveElement(event.target as HTMLElement)) this.viewerUi.toggleOverlay();
   }
   onViewDblClick(event: Event) {
-    if ((event.target as HTMLElement).nodeName === 'INPUT') return;
-
-    this.toggleFullScreen();
+    if (!this.dom.isInteractiveElement(event.target as HTMLElement)) this.viewerUi.toggleFullScreen();
   }
-
-  onAgree() {
-    this.showNsfw.set(true);
-    this.embedHelper.postMessage(true, CHTNK_NSFW_CHOICE_EVENT_NAME);
-  }
-
-  onDisagree() {
-    this.showNsfw.set(false);
-    this.embedHelper.postMessage(false, CHTNK_NSFW_CHOICE_EVENT_NAME);
-
-    if (!this.embedHelper.isEmbedded())
-      this.router.navigate(['/'])
-  }
-
-  preloadIndexes: Signal<number[]> = computed(() => this.activeIndexs().map(item => item + 1));
-
-  preLoad(i: number): boolean {
-    return (this.preloadIndexes()).includes((i))
-  }
-
-
-  longPageDetected() {
-    const longPageCode = "3";
-    if (this.viewer.viewModeOption().code != longPageCode) {
-      this.viewer.setViewModeOptionByCode(longPageCode);
-    }
-  }
-
-
-  //#region Inject
-
-  route = inject(ActivatedRoute)
-  domMan = inject(DomManipulationService)
-  dl: DownloadService = inject(DownloadService);
-  sanitizer: DomSanitizer = inject(DomSanitizer);
-  embedHelper = inject(EmbedHalperService);
-  cdr = inject(ChangeDetectorRef)
-
-  //#endregion
-
 
 }

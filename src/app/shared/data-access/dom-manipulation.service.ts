@@ -99,4 +99,8 @@ export class DomManipulationService {
 
     this._lastHover = el;
   }
+
+  isInteractiveElement(el: HTMLElement) {
+    return ['INPUT', 'TEXTAREA', 'SELECT', 'SUMMARY'].includes(el.nodeName);
+  }
 }

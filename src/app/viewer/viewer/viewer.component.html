@@ -1,0 +1,54 @@
+@let dir = viewMode.dir();
+@let mode = viewMode.mode();
+@let nsfwEpisode = episode().nsfw;
+@if (gamepad.gamepad.connected()) {
+<gamepad-cursor [cursorVisible]="gamepad.gamepad.cursorVisible() && viewerUi.isFullScreen()" [x]="gamepad.gamepad.x()"
+    [y]="gamepad.gamepad.y()" />
+}
+<div #viewRef class="view" [class]="mode" (scroll)="onScroll()" (scrollend)="onScrollEnd()" [dir]="dir"
+    (dblclick)="onViewDblClick($event)" (click)="onViewClick($event)">
+
+    <chtnk-page (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode"
+        [class]="mode" [dir]="dir">
+        <app-hint-page [class]="mode" [currentPlaylistItem]="currentPlaylistItem()" [playlist]="readlist.readlist()"
+            [playlistLink]="playlistLink()" />
+    </chtnk-page>
+
+    @for(img of episode().images; track img.src; let i = $index) {
+    <chtnk-page (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()"
+        [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
+        [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)" [index]="i" [class]="mode"
+        [dir]="dir" [showLoading]="true" />
+    } @empty {
+    <chtnk-page [class]="mode" [dir]="dir">👀</chtnk-page>
+    }
+
+    <chtnk-page class="last-hint-page" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()"
+        [nsfw]="nsfwEpisode" [class]="mode" [dir]="dir">
+        <app-thanks-page [playlist]="readlist.readlist()" [currentPlaylistItem]="currentPlaylistItem()"
+            [episode]="episode()" [playlistLink]="playlistLink()">
+            <ng-content ngProjectAs="source-logo" select="source-logo" />
+            <ng-content />
+        </app-thanks-page>
+    </chtnk-page>
+
+    @if((episode().images.length || 0) % 2 > 0) {
+    <chtnk-page class="last-blank-page" [class]="mode" [dir]="dir" />
+    }
+</div>
+
+@defer{
+@if (episode()) {
+<app-viewer-header [show]="viewerUi.showOverlay()" [episode]="episode()" [playlistLink]="playlistLink()"
+    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="viewerUi.isDialogOpen.set($event)" />
+}
+}
+
+@defer{
+<app-viewer-footer [show]="viewerUi.showOverlay()" [currentPlaylistItem]="currentPlaylistItem()"
+    [playlist]="readlist.readlist()" [playlistLink]="playlistLink()" [episode]="episode()"
+    [activeIndexs]="pageTracking.activeIndexes()" (togglefulscreen)="viewerUi.toggleFullScreen()"
+    (pageactive)="scroll.scrollToPage($event)" (onToggle)="viewerUi.isDialogOpen.set($event)" />
+}
+
+@defer{ <app-warm-filter class="filter" [kelvin]="viewMode.viewer.nightlight()" /> }

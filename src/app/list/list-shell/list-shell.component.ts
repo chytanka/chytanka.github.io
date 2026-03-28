@@ -1,10 +1,8 @@
-import { Component, EffectCleanupRegisterFn, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import { Component, WritableSignal, computed, inject, signal } from '@angular/core';
 import { LinkParserService } from '../../link-parser/data-access/link-parser.service';
-import { BlankaryLinkParser, ImgurLinkParser, JsonLinkParser, LinkParser, MangadexLinkParser, NhentaiLinkParser, PixivLinkParser, RedditLinkParser, TelegraphLinkParser, YandereParser, ZenkoLinkParser } from '../../link-parser/utils';
+import { JsonLinkParser, LinkParser } from '../../link-parser/utils';
 import { DomManipulationService } from '../../shared/data-access';
 import { LangService } from '../../shared/data-access/lang.service';
-import { ComickLinkParser } from '../../link-parser/utils/comick-link-parser';
-import { ImgchestLinkParser } from '../../link-parser/utils/imgchest-link-parser';
 
 
 @Component({
@@ -75,28 +73,10 @@ export class ListShellComponent {
     }
   }
 
-  constructor() {
-    this.initParser();
-  }
+  constructor() { }
 
   firstLink = computed(() => this.listValue()[0] ?? '');
   parsedFirstLink = computed(() => this.parser.parse(this.firstLink() ?? ''))
-
-  initParser() {
-    this.parser.parsers = [];
-    this.parser.parsers.push(new ImgurLinkParser)
-    this.parser.parsers.push(new MangadexLinkParser)
-    this.parser.parsers.push(new TelegraphLinkParser)
-    this.parser.parsers.push(new RedditLinkParser)
-    this.parser.parsers.push(new ZenkoLinkParser)
-    this.parser.parsers.push(new NhentaiLinkParser)
-    this.parser.parsers.push(new ComickLinkParser)
-    this.parser.parsers.push(new YandereParser)
-    this.parser.parsers.push(new PixivLinkParser)
-    this.parser.parsers.push(new ImgchestLinkParser)
-    // this.parser.parsers.push(new BlankaryLinkParser)
-    this.parser.parsers.push(new JsonLinkParser)
-  }
 
   copy() {
     this.domMan.copyToClipboard(JSON.stringify(this.outputValue()))

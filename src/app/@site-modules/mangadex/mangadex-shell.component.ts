@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { MangadexService } from './mangadex.service';
 import { Base64 } from '../../shared/utils';
@@ -9,21 +9,14 @@ import { MANGADEX_PATH } from '../../app-routing.module';
   imports: [CommonReadModule],
   selector: 'app-mangadex-shell',
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
-
-<div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
-    place-content: center;
-    justify-items: center; min-height: 50vh;">
-        <a href="http://mangadex.org" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
-            <img src="/assets/logos/mangadex-logo.svg" alt="MangaDex logo">
-            <img src="/assets/logos/mangadex-wordmark.svg" alt="MangaDex wordmark">
-        </a>
-        <p>Images via <a href="http://mangadex.org" target="_blank" rel="noopener noreferrer">Mangadex</a> API.
-            Thanks!<br>Details on their site. Respect copyrights.</p>
-    </div>
-
+  <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
 </app-common-read>`
 })
 export default class MangadexShellComponent extends ReadBaseComponent {
+  protected readonly sourceName = signal('MangaDex');
+  protected readonly sourceUrl = signal('https://mangadex.org');
+  protected readonly sourceImageSrc = signal('/assets/logos/mangadex-logo.svg');
 
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),

@@ -1,13 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LangService } from '../../../shared/data-access/lang.service';
-import { Base64 } from '../../../shared/utils';
-import { LinkParserSettingsService } from '../../data-access/link-parser-settings.service';
-import { LinkParserService } from '../../data-access/link-parser.service';
-import { ImgurLinkParser, MangadexLinkParser, TelegraphLinkParser, RedditLinkParser, ZenkoLinkParser, NhentaiLinkParser, YandereParser, PixivLinkParser, JsonLinkParser } from '../../utils';
-import { ImgchestLinkParser } from '../../utils/imgchest-link-parser';
-import { NetworkService, BrowserService } from '../../../shared/data-access/';
-import { FileService } from '../../../file/data-access/file.service';
+import { FileNetFacade, LinkInitFacade, LinkParserFacade, NavigationFacade } from './facades';
 
 @Component({
   selector: 'app-parser-form',
@@ -17,114 +10,17 @@ import { FileService } from '../../../file/data-access/file.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParserFormComponent {
-  private router: Router = inject(Router);
-  private route: ActivatedRoute = inject(ActivatedRoute);
-  file = inject(FileService);
-  setts = inject(LinkParserSettingsService)
-  net = inject(NetworkService);
-  browser = inject(BrowserService);
-  platformId = inject(PLATFORM_ID)
-  link: WritableSignal<string> = signal('');
-  linkParams: Signal<any> = computed(() => this.parser.parse(this.link()));
-  linkParams64: Signal<any> = computed(() => {
-    const foo = this.linkParams()
-    return {
-      site: foo.site,
-      id: Base64.toBase64(foo.id)
-    };
-  });
-
-  osAcceptSupport = signal(["Windows", "Android", "Linux"].includes(this.browser.brouserInfo().os));
-
-  constructor(public parser: LinkParserService, public lang: LangService) {
-    this.initParser();
-  }
-
-  initParser() {
-    this.parser.parsers = [];
-    this.parser.parsers.push(new ImgurLinkParser)
-    this.parser.parsers.push(new MangadexLinkParser)
-    this.parser.parsers.push(new TelegraphLinkParser)
-    this.parser.parsers.push(new RedditLinkParser)
-    this.parser.parsers.push(new ZenkoLinkParser)
-    this.parser.parsers.push(new NhentaiLinkParser)
-    // this.parser.parsers.push(new ComickLinkParser)
-    this.parser.parsers.push(new YandereParser)
-    this.parser.parsers.push(new PixivLinkParser)
-    this.parser.parsers.push(new ImgchestLinkParser)
-    // this.parser.parsers.push(new BlankaryLinkParser)
-    this.parser.parsers.push(new JsonLinkParser)
-  }
-
-  inputLink(event: Event) {
-    const v: string = (event.target as HTMLInputElement).value;
-
-    this.link.set(v)
-  }
+  protected lang = inject(LangService);
+  protected linkFacade = inject(LinkParserFacade);
+  protected navFacade = inject(NavigationFacade);
+  protected fileNetFacade = inject(FileNetFacade);
+  protected linkInit = inject(LinkInitFacade);
 
   ngOnInit() {
-    this.initUrl()
+    this.linkInit.init().then(source => {
+      if (source === 'route') {
+        this.navFacade.goToParsedLink();
+      }
+    });
   }
-
-  async initFromclipboard() {
-    try {
-      const text = await navigator.clipboard?.readText()
-      this.link.set(text ?? '')
-    } catch (error) { }
-
-    if (!this.linkParams()) { this.link.set('') }
-  }
-
-  initUrl() {
-
-    const routeParamUrl: string | null = this.route.snapshot.paramMap.get('url');
-
-    if (routeParamUrl) {
-
-      this.link.set(routeParamUrl);
-
-      this.onSubmit();
-
-      return;
-    }
-
-    const queryParamUrl: string | null = this.route.snapshot.queryParamMap.get('url');
-
-    if (queryParamUrl) {
-      this.link.set(queryParamUrl ?? '')
-    } else {
-      if (this.setts.autoPasteLink && this.setts.autoPasteLink()) this.initFromclipboard();
-    }
-  }
-
-  onSubmit() {
-    if (!this.linkParams) return;
-
-    const link = `/${this.linkParams().site}/${this.linkParams64().id}`
-
-    this.router.navigateByUrl(link);
-  }
-
-  favicons: any = {
-    zenko: '//zenko.online/favicon.ico',
-    reddit: '//reddit.com/favicon.ico',
-    imgur: '//imgur.com/favicon.ico',
-    mangadex: '//mangadex.org/favicon.ico',
-    telegraph: '//telegra.ph/favicon.ico',
-    nhentai: '//nhentai.net/favicon.ico',
-    // comick: '//comick.art/favicon.ico',
-    yandere: '//yande.re/favicon.ico',
-    pixiv: '//pixiv.net/favicon.ico',
-    imgchest: '//imgchest.com/assets/img/favicons/favicon-32x32.png?v=2',
-    // blankary: '//blankary.com/favicon.ico',
-    read: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>'
-  }
-
-  seasonalTheme = signal(new Map<string, { class: string, phrase: string, emoji: string }>([
-    ["pride", { class: 'slogan-rainbow', phrase: "sloganPride", emoji: '🏳️‍🌈' }],
-    ["halloween", { class: 'slogan-halloween', phrase: 'sloganHalloween', emoji: '🕷️' }],
-    ["newyear", { class: 'slogan-newyear', phrase: 'sloganNewYear', emoji: '🎇' }],
-    ["valentine", { class: 'slogan-valentine', phrase: 'sloganValentine', emoji: '❤️📖' }]
-  ]));
-
 }

@@ -11,7 +11,17 @@ import { FooterComponent } from './ui/footer/footer.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { HistoryModule } from '../history/history.module';
 import { ParserFormComponent } from './ui/parser-form/parser-form.component';
+import { GoButtonComponent } from './ui/go-button/go-button.component';
+import { parserProviders } from './data-access/parser.providers';
+import { LinkParserService } from './data-access/link-parser.service';
+import { LinkParserFacade, LinkInitFacade, NavigationFacade, FileNetFacade } from './ui/parser-form/facades';
 
+const FACADES = [
+  LinkParserFacade,
+  LinkInitFacade,
+  NavigationFacade,
+  FileNetFacade
+];
 
 @NgModule({
   declarations: [
@@ -20,7 +30,8 @@ import { ParserFormComponent } from './ui/parser-form/parser-form.component';
     SettingsComponent,
     FooterComponent,
     HeaderComponent,
-    ParserFormComponent
+    ParserFormComponent,
+    GoButtonComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +39,9 @@ import { ParserFormComponent } from './ui/parser-form/parser-form.component';
     FormsModule,
     SharedModule,
     HistoryModule
+  ],
+  providers: [
+    ...FACADES
   ]
 })
 export class LinkParserModule { }

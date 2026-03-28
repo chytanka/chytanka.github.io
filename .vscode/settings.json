@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        ".directory": true,
+        "**/.angular": true,
+        "**/.github": true,
+        "**/.vscode": true,
+        "**/dist": true,
+        "**/node_modules": true
+    }
+}

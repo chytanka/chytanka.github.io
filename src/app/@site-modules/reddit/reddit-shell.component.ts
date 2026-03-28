@@ -9,17 +9,14 @@ import { REDDIT_PATH } from '../../app-routing.module';
   imports: [CommonReadModule],
   selector: 'app-reddit-shell',
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
- <a ngProjectAs="source-logo" href="https://reddit.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
-          <img style="max-width: 40px;" src="/assets/logos/reddit-logo.svg" alt="MangaDex logo">
-      </a>
-<p>{{lang.ph().imagesVia}}<a href="https://reddit.com" target="_blank" rel="noopener noreferrer">Reddit</a>
-          API.
-          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
-
+  <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
 </app-common-read>`
 })
 export default class RedditShellComponent extends ReadBaseComponent {
-
+  protected readonly sourceName = () => 'Reddit';
+  protected readonly sourceUrl = () => 'https://reddit.com';
+  protected readonly sourceImageSrc = () => '/assets/logos/reddit-logo.svg';
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),
       switchMap(([params]) => {

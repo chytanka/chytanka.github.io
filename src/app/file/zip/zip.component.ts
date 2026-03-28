@@ -9,12 +9,11 @@ import { Acbf } from '../../shared/utils/acbf';
 import { FileHashService } from '../data-access/file-hash.service';
 import { FileHistoryService } from '../data-access/file-history.service';
 import { FileSettingsService } from '../data-access/file-settings.service';
-import { map } from 'rxjs';
-import { ViewerComponent } from "../../viewer/viewer.component";
+import { ViewerModule } from '../../viewer/viewer.module';
 
 @Component({
   selector: 'app-zip',
-  imports: [SharedModule, /*ViewerComponent*/],
+  imports: [SharedModule, ViewerModule],
   templateUrl: './zip.component.html',
   styleUrl: './zip.component.scss'
 })
@@ -151,10 +150,5 @@ export class ZipComponent implements OnInit, OnDestroy {
 
     this.episode = { title: filename, images: [] }
     this.worker.postMessage({ arrayBuffer: ab });
-  }
-
-  onPageChange(e: { total: number, current: number[] }) {
-    const { current, total } = e
-    console.log(`${current}/${total}`);
   }
 }

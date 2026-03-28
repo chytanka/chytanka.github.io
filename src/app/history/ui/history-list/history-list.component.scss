@@ -16,4 +16,8 @@
     gap: 1ch;
     align-items: center;
     width: calc(100% - 17px);
+
+    button {
+        margin-left: auto;
+    }
 }

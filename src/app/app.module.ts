@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { registerLocaleData } from '@angular/common';
 import localeUk from "@angular/common/locales/uk";
+import { parserProviders } from './link-parser/data-access/parser.providers';
 
 registerLocaleData(localeUk)
 
@@ -34,7 +35,8 @@ registerLocaleData(localeUk)
         //         includePostRequests: false,
         //     })
         // ),
-        provideHttpClient(withFetch())
+        provideHttpClient(withFetch()),
+        ...parserProviders
     ]
 })
 export class AppModule { }

@@ -32,7 +32,7 @@ export class NhentaiService {
       nsfw: true,
       images: (data.images.pages.map((item: any, index: number) => {
         return {
-          src: `https://i7.nhentai.net/galleries/${mediaId}/${index + 1}.${this.imageType.get(item.t)}`,
+          src: `https://i1.nhentai.net/galleries/${mediaId}/${index + 1}.${this.imageType.get(item.t)}`,
           height: item.h,
           width: item.w
         };

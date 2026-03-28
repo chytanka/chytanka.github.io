@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { FileService } from '../data-access/file.service';
 import { MobiFileReader } from 'readiverse';
 import { SharedModule } from '../../shared/shared.module';
+import { ViewerModule } from '../../viewer/viewer.module';
 
 @Component({
     selector: 'app-mobi',
-    imports: [SharedModule],
+    imports: [SharedModule, ViewerModule],
     templateUrl: './mobi.component.html',
     styleUrl: './mobi.component.scss'
 })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ImgurService } from './imgur.service';
 import { Base64 } from '../../shared/utils';
 import { of, switchMap } from 'rxjs';
@@ -8,19 +8,15 @@ import { IMGUR_PATH } from '../../app-routing.module';
 @Component({
   imports: [CommonReadModule],
   selector: 'app-imgur-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"  [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()"><div style="direction: ltr; user-select: text !important; text-wrap: balance; padding: 1rem; text-align: center; display: grid;
-  place-content: center;
-  justify-items: center; min-height: 50vh;">
-      <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" style="display: flex; gap: 1ch; ">
-          <img src="/assets/logos/imgur-logo.svg" alt="Imgur logo">
-      </a>
-      <p>{{lang.ph().imagesVia}}<a href="https://imgur.com" target="_blank" rel="noopener noreferrer">Imgur</a>
-          API.
-          {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
-  </div></app-common-read>`
+  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"  [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
+    <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
+</app-common-read>`
 })
 export default class ImgurShellComponent extends ReadBaseComponent {
-
+  protected readonly sourceName = signal('Imgur');
+  protected readonly sourceUrl = signal('https://imgur.com');
+  protected readonly sourceImageSrc = signal('/assets/logos/imgur-logo.svg');
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),
       switchMap(([params]) => {

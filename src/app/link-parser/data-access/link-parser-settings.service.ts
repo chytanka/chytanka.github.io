@@ -54,20 +54,20 @@ export class LinkParserSettingsService {
   /**
    * 
    */
-  seasonalTheme!: WritableSignal<boolean>;
+  seasonalTheme: WritableSignal<boolean> = signal(false);
 
   initSeasonalTheme() {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const n = localStorage.getItem('seasonalTheme') === null ? true : Boolean(localStorage.getItem('seasonalTheme') == 'true');
-    this.seasonalTheme = signal(n);
+    this.seasonalTheme.set(n);
     this.setSeasonalTheme(n);
   }
 
   setSeasonalTheme(n: boolean) {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    this.seasonalTheme.update(v => n);
+    this.seasonalTheme.set(n);
     localStorage.setItem('seasonalTheme', n.toString())
   }
 

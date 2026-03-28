@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CommonReadComponent } from './ui/common-read/common-read.component';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { ViewerModule } from '../../viewer/viewer.module';
+import { LinkParserModule } from '../../link-parser/link-parser.module';
 
 
 
@@ -13,10 +15,13 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ViewerModule,
+    LinkParserModule
   ],
   exports: [
-    CommonReadComponent
+    CommonReadComponent,
+    SharedModule
   ]
 })
 export class CommonReadModule { }

@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { switchMap, of } from 'rxjs';
 import { CommonReadModule, ReadBaseComponent } from '../@common-read';
 import { Base64 } from '../../shared/utils';
@@ -10,15 +10,17 @@ import { YANDERE_PATH } from '../../app-routing.module';
   imports: [CommonReadModule],
   template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
     [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
-
-    <p>{{lang.ph().imagesVia}}<a href="https://yande.re" target="_blank" rel="noopener noreferrer">Yande.re</a>
-        API.
-        {{lang.ph().thanks}}<br>{{lang.ph().detalisCopy}}</p>
+<source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
+<source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
 
 </app-common-read>`
 })
 export default class YandereShellComponent extends ReadBaseComponent implements OnDestroy {
   yandere = inject(YandereService)
+  protected readonly sourceName = signal('Yande.re');
+  protected readonly sourceUrl = signal('https://yande.re');
+  protected readonly sourceImageSrc = signal('/assets/logos/yandere-logo.png');
+
 
   override episode$ = this.combineParamMapAndRefresh()
     .pipe(this.tapStartLoading(),

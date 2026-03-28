@@ -84,10 +84,7 @@ export class ViewerService {
     const currentOpt = this.viewModeOption();
     const currentIndex = this.viewModeOptions.indexOf(currentOpt);
     const nextIndex = (currentIndex + 1) % this.viewModeOptions.length;
-
-    
     const nextOpt = this.viewModeOptions[nextIndex];
-    console.log(currentIndex, this.viewModeOptions, nextOpt.hintPhraceKey);
     this.setViewModeOption(nextOpt);
   }
 }

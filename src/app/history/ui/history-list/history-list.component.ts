@@ -14,8 +14,8 @@ export class HistoryListComponent {
   public fileHistory: FileHistoryService = inject(FileHistoryService);
   lang: LangService = inject(LangService);
 
-  historyItems: WritableSignal<Promise<any[]>> = signal(this.displayHistory() ?? []);
-  historyFiles: WritableSignal<Promise<any[]>> = signal(this.displayFilesHistory() ?? []);
+  historyItems: WritableSignal<any[]> = signal([]);
+  historyFiles: WritableSignal<any[]> = signal([]);
 
   async displayHistory() {
     const history = await this.history.getAllHistory();
@@ -23,14 +23,19 @@ export class HistoryListComponent {
     return history;
   }
 
+  async ngOnInit() {
+    this.historyItems.set(await this.displayHistory());
+    this.historyFiles.set(await this.displayFilesHistory());
+  }
+
   async delById(id: number) {
     await this.history.deleteHistoryItem(id);
-    this.historyItems.update(value => this.history.getAllHistory())
+    this.historyItems.set(await this.history.getAllHistory());
   }
 
   async clearHistory() {
     await this.history.clearHistory();
-    this.historyItems.update(value => this.history.getAllHistory())
+    this.historyItems.set(await this.history.getAllHistory());
   }
 
   async displayFilesHistory() {
@@ -42,21 +47,21 @@ export class HistoryListComponent {
 
   async clearFileHistory() {
     await this.fileHistory.clearHistory();
-    this.historyFiles.update(value => this.fileHistory.getAllHistory())
+    this.historyFiles.set(await this.fileHistory.getAllHistory());
     this.getTotalSizeAndCount()
   }
 
   async delFileById(id: number) {
     await this.fileHistory.deleteHistoryItem(id);
-    this.historyFiles.update(value => this.fileHistory.getAllHistory())
+    this.historyFiles.set(await this.fileHistory.getAllHistory());
     this.getTotalSizeAndCount()
   }
 
   fileSize = signal(0);
-  fileCount= signal(0);
+  fileCount = signal(0);
 
   async getTotalSizeAndCount() {
-    const {count, size} = await this.fileHistory.getTotalSizeAndCount()
+    const { count, size } = await this.fileHistory.getTotalSizeAndCount()
 
     this.fileSize.set(size)
     this.fileCount.set(count)

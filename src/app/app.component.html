@@ -1,4 +1,7 @@
-<gamepad-cursor [cursorVisible]="gamepad.gamepad.cursorVisible()" [x]="gamepad.gamepad.x()" [y]="gamepad.gamepad.y()" />
+@if (gamepad.gamepad.connected()) {
+@defer{<gamepad-cursor [cursorVisible]="gamepad.gamepad.cursorVisible()" [x]="gamepad.gamepad.x()"
+    [y]="gamepad.gamepad.y()" />}
+}
 <div><router-outlet></router-outlet></div>
 <div><router-outlet name="right"></router-outlet></div>
 @defer{<sircle-blur [radius]="8" [samples]="12" />}

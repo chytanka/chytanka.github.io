@@ -10,8 +10,21 @@ export async function processImagesInBatches(
 
         await Promise.all(
             batch.map(async (filename, index) => {
-                const blob = await zip.files[filename].async('blob');
+                const file = zip.files[filename];
+                if (!file) return;
+
+                const svgExtensions = ['.svg', '.svgz'];
+                let blob: Blob;
+
+                if (svgExtensions.some(ext => filename.toLowerCase().endsWith(ext))) {
+                    const text = await file.async('string');
+                    blob = new Blob([text], { type: 'image/svg+xml' });
+                } else {
+                    blob = await file.async('blob');
+                }
+
                 const url = URL.createObjectURL(blob);
+
                 postMessage({
                     type: 'file',
                     url,

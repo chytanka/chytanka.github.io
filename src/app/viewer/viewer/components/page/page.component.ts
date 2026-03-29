@@ -28,6 +28,9 @@ export class PageComponent {
   width = computed(() => this.naturalWidth() ?? this.inputWidth());
   height = computed(() => this.naturalHeight() ?? this.inputHeight());
 
+  widthPx = computed(() => this.width().toString() + 'px');
+  heightPx = computed(() => this.height().toString() + 'px');
+
   index: InputSignal<number> = input(0);
 
   agree: OutputEmitterRef<void> = output();
@@ -42,11 +45,29 @@ export class PageComponent {
     this.disagree.emit();
   }
 
-  imageLoad(event: Event) {
+  async imageLoad(event: Event) {
     const img = event.target as HTMLImageElement;
     this.imageLoading.set(false)
     this.naturalWidth.set(img.naturalWidth);
     this.naturalHeight.set(img.naturalHeight);
+
+    try {
+      const response = await fetch(img.src);
+      const blob = await response.blob();
+
+      if (blob.type === 'image/svg+xml' || blob.type === 'image/svg+xml-compressed') {
+        const text = await blob.text();
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(text, 'image/svg+xml');
+        const svgElement: SVGSVGElement = svgDoc.documentElement as unknown as SVGSVGElement;
+        console.log(svgElement.viewBox.baseVal.width);
+
+        this.naturalWidth.set(svgElement.viewBox.baseVal.width);
+        this.naturalHeight.set(svgElement.viewBox.baseVal.height);
+      }
+    } catch (e) {
+      console.warn('Failed to get bitmap size, fallback to naturalWidth/naturalHeight', e);
+    }
 
     this.detectLongPage(this.naturalWidth(), this.naturalHeight())
   }

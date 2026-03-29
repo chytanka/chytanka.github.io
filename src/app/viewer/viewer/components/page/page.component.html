@@ -10,8 +10,8 @@
     }
     <figure [class]="{nsfw:nsfw(), show: nsfw() && showNsfw()}">
         @if(src()){
-        <img crossorigin="anonymous" [id]="'page_'+(index()+1)" [src]="src()" [alt]="alt()" [width]="width()"
-            [height]="height()" [loading]="(index()==0 || preload()) ? 'eager' : 'lazy'" (load)="imageLoad($event)">
+        <img crossorigin="anonymous" [id]="'page_'+(index()+1)" [src]="src()" [alt]="alt()" [attr.width]="widthPx()"
+            [attr.height]="heightPx()" [loading]="(index()==0 || preload()) ? 'eager' : 'lazy'" (load)="imageLoad($event)">
         } @else {
         <ng-content />
         }

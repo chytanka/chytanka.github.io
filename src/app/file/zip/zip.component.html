@@ -1,5 +1,6 @@
-@if(episode && episode.images && episode.images.length > 0){
-<app-viewer [episode]="episode" />
+@if(!loading()) {
+<app-viewer [episode]="episode()" (pageChange)="onPageChange($event)"/>
 } @else {
 <loading />
+<a [routerLink]="'/'">🏠</a>
 }

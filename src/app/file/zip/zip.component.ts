@@ -1,154 +1,123 @@
 import { Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FileService } from '../data-access/file.service';
 import { SharedModule } from '../../shared/shared.module';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read';
 import { DomManipulationService } from '../../shared/data-access';
 import { ComicInfo } from '../../shared/utils/comic-info';
 import { Acbf } from '../../shared/utils/acbf';
 import { FileHashService } from '../data-access/file-hash.service';
-import { FileHistoryService } from '../data-access/file-history.service';
-import { FileSettingsService } from '../data-access/file-settings.service';
 import { ViewerModule } from '../../viewer/viewer.module';
+import { ZipHistoryFacade, ZipWorkerFacade } from './facades';
+import { ZipWorkerMessageType } from '../models';
 
 @Component({
   selector: 'app-zip',
-  imports: [SharedModule, ViewerModule],
+  imports: [SharedModule, ViewerModule, RouterModule],
   templateUrl: './zip.component.html',
-  styleUrl: './zip.component.scss'
+  styleUrl: './zip.component.scss',
+  providers: [ZipWorkerFacade, ZipHistoryFacade]
 })
 export class ZipComponent implements OnInit, OnDestroy {
-  private worker!: Worker;
-  fileHash = inject(FileHashService)
-  fileHistory = inject(FileHistoryService)
-  fileSetts = inject(FileSettingsService)
+  workerFacade = inject(ZipWorkerFacade)
+  historyFacade = inject(ZipHistoryFacade)
 
-  sha256: string | undefined;
+  episode = signal<CompositionEpisode>({ title: '', images: [] });
+
+  fileHash = inject(FileHashService)
+
   arrayBuffer: ArrayBuffer | undefined
 
-  episode: CompositionEpisode | undefined;
+  loading = signal(true);
 
   router = inject(Router)
   private activatedRoute = inject(ActivatedRoute);
   dm = inject(DomManipulationService)
   fs = inject(FileService)
-  status = signal('')
 
   constructor() {
-    this.initZipWorker()
+    this.workerFacade.initZipWorker(this.workerHandlers)
 
     effect(() => { this.fileChange(); });
   }
+
   sha256Params: string = '';
   ngOnInit() {
     this.sha256Params = this.activatedRoute.snapshot.params['sha256']
 
-    if (this.sha256Params && this.sha256Params != '')
-      this.loadFromHistory(this.sha256Params)
-  }
-
-  async loadFromHistory(sha256: string) {
-    const { arrayBuffer, title } = await this.fileHistory.getItemBySha256(sha256)
-    if (!arrayBuffer) return;
-
-    this.sha256 = sha256
-    this.arrayBuffer = arrayBuffer
-    this.openArrayBuffer(arrayBuffer, title, sha256)
+    if (this.sha256Params && this.sha256Params != '') {
+      this.historyFacade.loadFromHistory(this.sha256Params, this.episode)
+      this.loading.set(true);
+    }
   }
 
   ngOnDestroy() {
-    this.terminateWorker()
-  }
-
-  terminateWorker() {
-    if (this.worker)
-      this.worker.terminate();
+    this.workerFacade.terminateWorker();
   }
 
   private workerHandlers = new Map<string, Function>()
-    .set('comicinfo', this.comicinfoHandler.bind(this))
-    .set('zipopen', this.zipopenHandler.bind(this))
-    .set('file', this.fileHandler.bind(this))
-    .set('acbf', this.acbfHandler.bind(this))
+    .set(ZipWorkerMessageType.ComicInfo, this.comicinfoHandler.bind(this))
+    .set(ZipWorkerMessageType.ZipOpen, this.zipopenHandler.bind(this))
+    .set(ZipWorkerMessageType.ImageLoad, this.imageloadHandler.bind(this))
+    .set(ZipWorkerMessageType.Acbf, this.acbfHandler.bind(this))
 
 
   private acbfHandler(msg: any) {
     const acbf = new Acbf(msg.data)
-
   }
 
   private comicinfoHandler(msg: any) {
     const comicInfo = new ComicInfo(msg.data)
 
-    if (this.episode && comicInfo.title) {
-      this.episode.title = comicInfo.title
-      this.episode.volume = parseInt(comicInfo.volume ?? '')
+    if (this.episode() && comicInfo.title) {
+      this.episode().title = comicInfo.title
+      this.episode().volume = parseInt(comicInfo.volume ?? '')
     }
 
   }
 
-  private zipopenHandler(msg: any) {
-    const imgs: CompositionImage[] = [...Array(msg.data.count)].map((item: CompositionImage, index) => { return { src: `?id=${index}` } });
+  private async zipopenHandler(msg: any) {
+    this.loading.set(false);
+    if (msg.data.count == 0) return;
+
+    const imgs: CompositionImage[] = [...Array(msg.data.count)].map((item: CompositionImage, index) => { return { src: `/assets/no-image.svg?id=${index}` } });
+
+    this.workerFacade.loadNextBatch(0);
 
     if (this.episode) {
-      this.episode.images = imgs
+      this.episode().images = imgs
 
-      const obj = {
-        arrayBuffer: (this.fileSetts.copyFileToHistory()) ? this.arrayBuffer : null,
-        sha256: this.sha256,
-        pages: this.episode.images.length,
-        size: this.fs.file()?.size,
-        page: 1,
-        cover: '',
-        title: this.fs.file()?.name,
-        format: 'zip'
-      }
-
-      if (this.fileSetts.saveFileToHistory()) this.fileHistory.addHistory(obj)
+      const sha256 = await this.fileHash.sha256(this.fs.file() as File);
+      this.historyFacade.saveToHistory(sha256, this.episode().title, this.arrayBuffer!, this.episode().images.length, this.fs.file()?.size ?? 0)
 
     }
   }
-  private fileHandler(msg: any) {
+
+  private imageloadHandler(msg: any) {
     const { index, url } = msg;
 
-    if (this.episode)
-      this.episode.images[index].src = url
-  }
-
-  initZipWorker() {
-    this.terminateWorker()
-
-    if (typeof Worker !== 'undefined') {
-      this.worker = new Worker(new URL('../data-access/zip.worker', import.meta.url));
-      this.worker.onmessage = ({ data }) => {
-        const fn = this.workerHandlers.get(data.type)
-        if (fn) fn(data)
-      };
-    } else {
-      console.error('Web Workers are not supported in this environment.');
-    }
+    if (this.episode() && this.episode().images[index])
+      this.episode().images[index].src = url
   }
 
   fileChange() {
-    this.status.set(`Opening file: ${this.fs.file()?.name}`)
     const file = this.fs.file();
-    if (file && this.worker) {
+    if (file && this.workerFacade) {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.arrayBuffer = reader.result as ArrayBuffer;
 
-        this.openArrayBuffer(this.arrayBuffer, file.name)
+        this.workerFacade.openArrayBuffer(this.arrayBuffer, file.name, '', this.episode)
+        this.loading.set(true);
       };
       reader.readAsArrayBuffer(file);
-    } else {
-      // this.router.navigateByUrl('/')
+    } else if (!this.sha256Params) {
+      this.router.navigateByUrl('/')
     }
   }
 
-  async openArrayBuffer(ab: ArrayBuffer, filename: string, sha256: string = '') {
-    if (sha256 == '') this.sha256 = await this.fileHash.sha256(this.fs.file() as File)
-
-    this.episode = { title: filename, images: [] }
-    this.worker.postMessage({ arrayBuffer: ab });
+  onPageChange(event: { total: number, current: number[] }) {
+    this.workerFacade.loadNextBatch(event.current[event.current.length - 1] - 1);
   }
+
 }

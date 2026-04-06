@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+import { ZipWorkerMessageType } from "../models";
 
 export async function processImagesInBatches(
     zip: JSZip,
@@ -25,8 +26,10 @@ export async function processImagesInBatches(
 
                 const url = URL.createObjectURL(blob);
 
+                console.log(`Processed image ${i + index}: ${filename}`);
+
                 postMessage({
-                    type: 'file',
+                    type: ZipWorkerMessageType.ImageLoad,
                     url,
                     index: i + index,
                 });

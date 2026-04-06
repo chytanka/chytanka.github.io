@@ -17,6 +17,8 @@ export class PageTrackingFacade {
     activeIndexes = signal<number[]>([]);
     pagesCount = signal(0);
 
+    pageChangeFunction: ((total: number, current: number[]) => void) | null = null;
+
     setActive(indexes: number[]) {
         this.activeIndexes.set(indexes);
     }
@@ -53,6 +55,7 @@ export class PageTrackingFacade {
     }
 
     private _update() {
+        const prewActive = this.activeIndexes();
         if (this._pagesElement() == null || this._longStripElement() == null || this._figuresElement() == null) return;
 
         const isPageMode = this.viewMode.mode() == 'pages';
@@ -79,11 +82,13 @@ export class PageTrackingFacade {
 
         this.activeIndexes.set(activeIndxs);
 
+        if (JSON.stringify(prewActive) === JSON.stringify(activeIndxs)) return;
 
         const total = this.pagesCount() || this._figuresElement()!.length;
         const current = activeIndxs.map(i => i + 1)
 
         this.embedFacade.postPageChange(total, current);
 
+        if (this.pageChangeFunction) this.pageChangeFunction(total, current);
     }
 }

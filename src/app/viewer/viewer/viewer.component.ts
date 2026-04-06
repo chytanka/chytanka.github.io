@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal, output } from '@angular/core';
 import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
@@ -36,6 +36,8 @@ export class ViewerComponent implements AfterViewInit {
   currentPlaylistItem = input<PlaylistItem | undefined>();
   playlistInput = input<Playlist>([]);
 
+  pageChange = output<{ total: number, current: number[] }>();
+
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
   constructor(private el: ElementRef, public lang: LangService) {
@@ -53,9 +55,14 @@ export class ViewerComponent implements AfterViewInit {
     this.viewerUi.initFullscreenListener();
     this.viewElement.set(this.viewRef.nativeElement);
     this.pageTracking.initZone(this.viewElement(), this.el.nativeElement, this.imageElements());
+    this.pageTracking.pageChangeFunction = this.onPageChange.bind(this);
     this.pageTracking.updateActiveIndexes();
     this.scroll.initZone(this.viewElement(), this.el.nativeElement);
     this.embedFacade.loadCurrentPlaylistItem();
+  }
+
+  onPageChange(total: number, current: number[]) {
+    this.pageChange.emit({ total, current });
   }
 
   @HostListener('scroll')

@@ -26,8 +26,6 @@ export async function processImagesInBatches(
 
                 const url = URL.createObjectURL(blob);
 
-                console.log(`Processed image ${i + index}: ${filename}`);
-
                 postMessage({
                     type: ZipWorkerMessageType.ImageLoad,
                     url,

@@ -11,10 +11,10 @@ export interface CompositionImage {
 export interface CompositionPublisher {
     id: string;
     site: string;
-    avatar: CompositionImage;
+    avatar?: CompositionImage;
     description: string
     name: string;
-    links: Array<{
+    links?: Array<{
         link: string,
         title: string
     }>

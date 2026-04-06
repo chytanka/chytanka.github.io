@@ -33,11 +33,13 @@ export default class MangadexShellComponent extends ReadBaseComponent {
           switchMap(ch => {
             const imgs$ = this.mangadex.getChapterImages(id);
             const manga$ = (ch.mangaId) ? this.mangadex.getManga(ch.mangaId) : of(null);
+            const group$ = (ch.publisher?.id !== null) ? this.mangadex.getScanlationGroup(ch.publisher?.id!) : of(null); 
 
-            return forkJoin([imgs$, manga$]).pipe(
-              map(([imgs, manga]) => {
+            return forkJoin([imgs$, manga$, group$]).pipe(
+              map(([imgs, manga, group]) => {
                 ch.images = imgs;
                 ch.nsfw = manga?.nsfw ?? undefined;
+                ch.publisher = group ?? undefined;
                 return ch;
               }),
               this.catchError()

@@ -10,6 +10,7 @@ export const environment = {
     mangadexHost: `https://api.mangadex.org/at-home/server/`,
     mangadexChapter: `https://api.mangadex.org/chapter/`,
     mangadexManga: `https://api.mangadex.org/manga/`,
+    mangadexScanlationGroup: `https://api.mangadex.org/group/`,
     telegraphHost: `https://api.telegra.ph/getPage/`,
     redditHost: `https://www.reddit.com/r/all/comments/`,
     zenkoHost: `https:///api.zenko.online/chapters/`,

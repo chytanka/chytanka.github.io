@@ -21,28 +21,28 @@ export class HistoryService {
 
     this.db = new Dexie(HISTORY_DB_NAME);
     this.db.version(1).stores({
-      history: '++id,site,post_id,title,cover,episode,created,updated'
+      history: '++id,site,post_id,title,cover,episode,pages,page,created,updated'
     });
   }
 
-  async addHistory(site: string, post_id: string, title: string, cover: string, episode: any) {
-    if(!isPlatformBrowser(this.platformId)) return;
+  async addHistory(site: string, post_id: string, title: string, cover: string, episode: any, pages: number, page: number = 1) {
+    if (!isPlatformBrowser(this.platformId)) return;
     // await this.db.table(HISTORY_TABLE_NAME).add({ site, post_id, title, cover });
     const existingEntry = await this.db.table(HISTORY_TABLE_NAME).where({ site, post_id: post_id }).first();
 
     if (existingEntry) {
       // Entry already exists, update the 'updated' field
       const now = new Date().toISOString();
-      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { updated: now });
+      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { updated: now, page });
     } else {
       // Entry doesn't exist, add a new one
       const now = new Date().toISOString();
-      await this.db.table(HISTORY_TABLE_NAME).add({ site, title, cover, episode, post_id: post_id, created: now, updated: now });
+      await this.db.table(HISTORY_TABLE_NAME).add({ site, title, cover, episode, post_id: post_id, pages, page, created: now, updated: now });
     }
   }
 
   async getAllHistory() {
-    return (await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray()).map(v=>{v.site = [v.site]; return v});
+    return (await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray()).map(v => { v.site = [v.site]; return v });
   }
 
   async clearHistory() {
@@ -51,5 +51,16 @@ export class HistoryService {
 
   async deleteHistoryItem(itemId: number) {
     await this.db.table(HISTORY_TABLE_NAME).delete(itemId);
+  }
+
+  async getItem(site: string, post_id: string) {
+    return await this.db.table(HISTORY_TABLE_NAME).where({ post_id, site }).first();
+  }
+
+  updatePage(site: string, post_id: string, page: number) {
+    this.db.table(HISTORY_TABLE_NAME).where({ post_id, site }).first().then(async item => {
+      if (!item) return;
+      await this.db.table(HISTORY_TABLE_NAME).update(item.id, { page });
+    })
   }
 }

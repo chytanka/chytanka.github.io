@@ -23,18 +23,16 @@ export class NhentaiService {
       .pipe(map((data) => { return this.map(data) }))
   }
 
-  imageType = new Map<string, string>().set('p', 'png').set('j', 'jpg').set('g', 'gif').set('w', 'webp')
-
   map(data: any): CompositionEpisode {
     const mediaId = data.media_id;
     const mappedResponse = {
       title: data.title.pretty,
       nsfw: true,
-      images: (data.images.pages.map((item: any, index: number) => {
+      images: (data.pages.map((item: any, index: number) => {
         return {
-          src: `https://i1.nhentai.net/galleries/${mediaId}/${index + 1}.${this.imageType.get(item.t)}`,
-          height: item.h,
-          width: item.w
+          src: `https://i1.nhentai.net/${item.path}`,
+          height: item.height,
+          width: item.width
         };
       })).filter((i: any) => i.src)
         .map((img: any) => {

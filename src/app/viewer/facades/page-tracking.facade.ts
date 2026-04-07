@@ -3,6 +3,7 @@ import { Injectable, signal, computed, PLATFORM_ID, inject, Signal, effect } fro
 import { ViewModeFacade } from "./view-mode.facade";
 import { EmbedFacade } from "./viewer-embed.facade";
 import { CompositionEpisode } from "../../@site-modules/@common-read";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Injectable()
 export class PageTrackingFacade {
@@ -87,8 +88,25 @@ export class PageTrackingFacade {
         const total = this.pagesCount() || this._figuresElement()!.length;
         const current = activeIndxs.map(i => i + 1)
 
+        if(!current.length) return;
+        
         this.embedFacade.postPageChange(total, current);
+
+        this.setRoutePage(current[current.length - 1] - 1);
 
         if (this.pageChangeFunction) this.pageChangeFunction(total, current);
     }
+    private router = inject(Router);
+
+    setRoutePage(index: number) {
+        if (!index || index < 0) return;
+
+        const queryParams = { page: index + 1 };
+
+        this.router.navigate([], {
+            queryParams: { ...queryParams },
+            queryParamsHandling: 'merge',
+        });
+    }
+
 }

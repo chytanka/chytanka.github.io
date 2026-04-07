@@ -55,12 +55,12 @@ export class FileHistoryService {
 
   async getItemBySha256(sha256: string) {
     return await this.db.table(HISTORY_TABLE_NAME).where('sha256').equals(sha256).first();
-}
+  }
 
 
   async getAllHistoryWithoutBufferArray() {
     const records = await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray();
-  
+
     return records.map(({ arrayBuffer, ...rest }) => rest);
   }
 

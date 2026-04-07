@@ -5,6 +5,7 @@ import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.serv
 import { DOCUMENT } from '@angular/common';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-viewer',
@@ -59,6 +60,8 @@ export class ViewerComponent implements AfterViewInit {
     this.pageTracking.updateActiveIndexes();
     this.scroll.initZone(this.viewElement(), this.el.nativeElement);
     this.embedFacade.loadCurrentPlaylistItem();
+
+    setTimeout(() => { this.scroll.toRoutePage() }, 100);
   }
 
   onPageChange(total: number, current: number[]) {

@@ -2,7 +2,7 @@ import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction
 import { CompositionEpisode } from "./composition";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { ChangeDetectorRef, OnDestroy, WritableSignal, inject, signal } from "@angular/core";
+import { ChangeDetectorRef, OnDestroy, WritableSignal, inject, output, signal } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
 import { HistoryService } from "../../../history/data-access/history.service";
 import { ViewerService } from "../../../shared/data-access";
@@ -109,21 +109,25 @@ export abstract class ReadBaseComponent {
 
         })
     }
-
+    site = '';
+    post_id = '';
     protected tapSaveToHistory(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
         return tap(async (episode: CompositionEpisode) => {
             if (episode) {
+                this.site = site;
+                this.post_id = post_id;
                 let e = structuredClone(episode);
+                const pages = e.images?.length ?? 0;
                 e.images = [];
-                await this.saveToHistory(site, post_id, episode.title, episode.images[0]?.src, e);
+                await this.saveToHistory(site, post_id, episode.title, episode.images[0]?.src, e, pages, 1);
             }
         })
     }
 
     public history: HistoryService = inject(HistoryService);
 
-    async saveToHistory(site: string, post_id: string, title: string, cover: string, episode: any) {
-        await this.history.addHistory(site, post_id, title, cover, episode);
+    async saveToHistory(site: string, post_id: string, title: string, cover: string, episode: any, pages: number = 0, page: number = 1) {
+        await this.history.addHistory(site, post_id, title, cover, episode, pages, page);
     }
 
     cdr = inject(ChangeDetectorRef)
@@ -142,5 +146,11 @@ export abstract class ReadBaseComponent {
             }
 
         })
+    }
+
+    protected onPageChange(event: { total: number, current: number[] }) {
+        const lastPageIndex = event.current[event.current.length - 1] - 1;
+        this.history.updatePage(this.site, this.post_id, lastPageIndex + 1);
+
     }
 }

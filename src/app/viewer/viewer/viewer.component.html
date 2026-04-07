@@ -15,7 +15,7 @@
     </chtnk-page>
 
     @for(img of episode().images; track img.src; let i = $index) {
-    <chtnk-page (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()"
+    <chtnk-page [attr.data-page-index]="i" (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()"
         [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
         [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)" [index]="i" [class]="mode"
         [dir]="dir" [showLoading]="true" />

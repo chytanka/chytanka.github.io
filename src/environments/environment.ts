@@ -14,7 +14,7 @@ export const environment = {
     telegraphHost: `https://api.telegra.ph/getPage/`,
     redditHost: `https://www.reddit.com/r/all/comments/`,
     zenkoHost: `https:///api.zenko.online/chapters/`,
-    nhentaiHost: `https://nhentai.net/api/gallery/`,
+    nhentaiHost: `https://nhentai.net/api/v2/galleries/`,
     comickHost: `https://api.comick.fun/chapter/`,
     yanderePoolsHost: `https://yande.re/pool/show.json/`,
     pixivHost: `https://www.pixiv.net/touch/ajax/illust/details?illust_id=`

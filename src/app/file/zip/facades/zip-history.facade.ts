@@ -37,4 +37,13 @@ export class ZipHistoryFacade {
 
         if (sfth) this.fileHistory.addHistory(obj)
     }
+
+    updateHistory(sha256: string, page: number) {
+        this.fileHistory.getItemBySha256(sha256).then(item => {
+
+            if (!item) return;
+            item.page = page;
+            this.fileHistory.addHistory(item)
+        })
+    }
 }

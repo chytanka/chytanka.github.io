@@ -33,9 +33,9 @@ export class FileHistoryService {
     const existingEntry = await this.db.table(HISTORY_TABLE_NAME).where({ sha256 }).first();
 
     if (existingEntry) {
-      // Entry already exists, update the 'updated' field
+      // Entry already exists, update the 'updated' field and other relevant fields
       const now = new Date().toISOString();
-      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { arrayBuffer, updated: now });
+      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { arrayBuffer, updated: now, page });
     } else {
       // Entry doesn't exist, add a new one
       const now = new Date().toISOString();

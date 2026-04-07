@@ -87,8 +87,12 @@ export class ZipComponent implements OnInit, OnDestroy {
     if (this.episode) {
       this.episode().images = imgs
 
-      const sha256 = await this.fileHash.sha256(this.fs.file() as File);
-      this.historyFacade.saveToHistory(sha256, this.episode().title, this.arrayBuffer!, this.episode().images.length, this.fs.file()?.size ?? 0)
+      const inputFile = this.fs.file() as File;
+
+      if (!inputFile) return;
+
+      const sha256 = await this.fileHash.sha256(inputFile);
+      this.historyFacade.saveToHistory(sha256, this.episode().title, this.arrayBuffer!, this.episode().images.length, inputFile.size)
 
     }
   }
@@ -117,7 +121,12 @@ export class ZipComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: { total: number, current: number[] }) {
-    this.workerFacade.loadNextBatch(event.current[event.current.length - 1] - 1);
+    const lastPageIndex = event.current[event.current.length - 1] - 1;
+    this.workerFacade.loadNextBatch(lastPageIndex);
+    const sha256 = this.sha256Params;
+    if (sha256) {
+      this.historyFacade.updateHistory(sha256, lastPageIndex + 1);
+    }
   }
 
 }

@@ -76,10 +76,10 @@ export class ViewerHeaderComponent {
   // #region ⚙️ Lifecycle / Effects
   constructor() {
     effect(() => {
-      const episode = this.episode();
-      if (!episode) return;
-      const tags = this.parseTagsFromTitle(episode.title);
-      this.applyEpisodeTitleTags(tags);
+      // const episode = this.episode();
+      // if (!episode) return;
+      // const tags = this.parseTagsFromTitle(episode.title);
+      // this.applyEpisodeTitleTags(tags);
 
       if (this.gamepad.buttons()[GamepadButton.Share]?.pressed) this.showShare();
     })
@@ -87,18 +87,18 @@ export class ViewerHeaderComponent {
   //#endregion
 
   // #region 🏷️ Episode Tags Logic
-  parseTagsFromTitle = (title: string): Set<string> => parseTags(title);
+  // parseTagsFromTitle = (title: string): Set<string> => parseTags(title);
 
-  applyEpisodeTitleTags(tags: Set<string>): void {
-    const code = resolveViewMode(tags);
+  // applyEpisodeTitleTags(tags: Set<string>): void {
+  //   const code = resolveViewMode(tags);
 
-    if (code)
-      this.viewer.setViewModeOptionByCode(code);
+  //   if (code)
+  //     this.viewer.setViewModeOptionByCode(code);
 
-    if (tags.has('nsfw')) {
-      this.episode().nsfw = true;
-    }
-  }
+  //   if (tags.has('nsfw')) {
+  //     this.episode().nsfw = true;
+  //   }
+  // }
   //#endregion
 
   // #region 🧭 Actions (UI)

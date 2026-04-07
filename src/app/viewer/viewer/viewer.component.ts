@@ -3,7 +3,7 @@ import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
 import { DOCUMENT } from '@angular/common';
-import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
+import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
 
 @Component({
@@ -27,6 +27,7 @@ export class ViewerComponent implements AfterViewInit {
   scroll = inject(ViewerScrollFacade);
   embedFacade = inject(EmbedFacade);
   readlist = inject(ReadlistFacade);
+  tagTitle = inject(ViewerTitleTagFacade);
 
   private readonly dom = inject(DomManipulationService);
   private readonly document = inject(DOCUMENT);
@@ -59,6 +60,7 @@ export class ViewerComponent implements AfterViewInit {
     this.pageTracking.updateActiveIndexes();
     this.scroll.initZone(this.viewElement(), this.el.nativeElement);
     this.embedFacade.loadCurrentPlaylistItem();
+    this.tagTitle.initialize(this.episode);
 
     setTimeout(() => { this.scroll.toRoutePage() }, 100);
   }

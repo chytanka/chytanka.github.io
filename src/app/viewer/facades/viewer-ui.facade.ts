@@ -3,7 +3,6 @@ import { effect, inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 import { DomManipulationService } from "../../shared/data-access";
 import { ViewerScrollFacade } from "./viewer-scroll.facade";
 import { PageTrackingFacade } from "./page-tracking.facade";
-import { ViewModeFacade } from "./view-mode.facade";
 
 @Injectable()
 export class ViewerUiFacade {

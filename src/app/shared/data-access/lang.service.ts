@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Injectable, PLATFORM_ID, WritableSignal, inject, sig
 import { Phrases } from '../utils/phrases';
 import { Observable, Subject, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ViewModeOption } from './viewer.service';
+import { ViewModeOption } from '../../viewer/services/viewer.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { VibrationService } from './vibration.service';
 

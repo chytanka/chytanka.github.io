@@ -1,11 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, Signal, ViewChild, WritableSignal, computed, inject, signal, output } from '@angular/core';
 import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
 import { DOCUMENT } from '@angular/common';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-viewer',

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { VIEWER_DECLARABLES } from './viewer.declarables';
 import { SharedModule } from '../shared/shared.module';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from './facades';
+import { ViewerService } from './services';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFac
     SharedModule
   ],
   providers: [
+    ViewerService,
     NsfwFacade,
     GamepadFacade,
     EmbedFacade,

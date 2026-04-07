@@ -1,5 +1,5 @@
 import { Component, computed, effect, HostListener, inject, input, output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../shared/data-access';
+import { DomManipulationService } from '../../../../shared/data-access';
 import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 import { LangService } from '../../../../shared/data-access/lang.service';
@@ -10,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { GamepadService } from '../../../../shared/data-access/gamepad.service';
 import { GamepadButton } from '../../../../shared/models';
 import { FileService } from '../../../../file/data-access/file.service';
+import { ViewerService } from '../../../services';
 
 @Component({
   selector: 'app-viewer-header',

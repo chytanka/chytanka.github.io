@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
-import { ViewerService } from '../../../../shared/data-access';
+import { ViewerService } from '../../../services';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 

@@ -5,9 +5,9 @@ import { Title } from "@angular/platform-browser";
 import { ChangeDetectorRef, OnDestroy, WritableSignal, inject, output, signal } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
 import { HistoryService } from "../../../history/data-access/history.service";
-import { ViewerService } from "../../../shared/data-access";
 import { PlaylistItem, PlaylistService, isPlaylist } from "../../../playlist/data-access/playlist.service";
 import { MetaTagsService } from "../../../shared/data-access/meta-tags.service";
+import { ViewerService } from "../../../viewer/services";
 
 export abstract class ReadBaseComponent {
     protected refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null);

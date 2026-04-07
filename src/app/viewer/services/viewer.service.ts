@@ -17,9 +17,7 @@ export const VIEV_MODE_OPTIONS: ViewModeOption[] = [
 
 const VIEW_MODE_OPT_NAME = `viewModeOption`;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ViewerService {
   public viewModeOptions = VIEV_MODE_OPTIONS;
   platformId = inject(PLATFORM_ID)

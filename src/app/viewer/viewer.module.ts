@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { VIEWER_DECLARABLES } from './viewer.declarables';
 import { SharedModule } from '../shared/shared.module';
-import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from './facades';
+import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from './facades';
+import { ViewerService } from './services';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFac
     SharedModule
   ],
   providers: [
+    ViewerService,
     NsfwFacade,
     GamepadFacade,
     EmbedFacade,
@@ -20,7 +22,8 @@ import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFac
     PageTrackingFacade,
     KeyboardFacade,
     ViewerScrollFacade,
-    ReadlistFacade
+    ReadlistFacade,
+    ViewerTitleTagFacade
   ],
   declarations: [...VIEWER_DECLARABLES],
   exports: [...VIEWER_DECLARABLES]

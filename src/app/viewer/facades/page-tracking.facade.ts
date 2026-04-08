@@ -3,6 +3,7 @@ import { Injectable, signal, computed, PLATFORM_ID, inject, Signal, effect } fro
 import { ViewModeFacade } from "./view-mode.facade";
 import { EmbedFacade } from "./viewer-embed.facade";
 import { CompositionEpisode } from "../../@site-modules/@common-read";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Injectable()
 export class PageTrackingFacade {
@@ -16,6 +17,8 @@ export class PageTrackingFacade {
     platformId = inject(PLATFORM_ID);
     activeIndexes = signal<number[]>([]);
     pagesCount = signal(0);
+
+    pageChangeFunction: ((total: number, current: number[]) => void) | null = null;
 
     setActive(indexes: number[]) {
         this.activeIndexes.set(indexes);
@@ -53,6 +56,7 @@ export class PageTrackingFacade {
     }
 
     private _update() {
+        const prewActive = this.activeIndexes();
         if (this._pagesElement() == null || this._longStripElement() == null || this._figuresElement() == null) return;
 
         const isPageMode = this.viewMode.mode() == 'pages';
@@ -79,11 +83,30 @@ export class PageTrackingFacade {
 
         this.activeIndexes.set(activeIndxs);
 
+        if (JSON.stringify(prewActive) === JSON.stringify(activeIndxs)) return;
 
         const total = this.pagesCount() || this._figuresElement()!.length;
         const current = activeIndxs.map(i => i + 1)
 
+        if(!current.length) return;
+        
         this.embedFacade.postPageChange(total, current);
 
+        this.setRoutePage(current[current.length - 1] - 1);
+
+        if (this.pageChangeFunction) this.pageChangeFunction(total, current);
     }
+    private router = inject(Router);
+
+    setRoutePage(index: number) {
+        if (!index || index < 0) return;
+
+        const queryParams = { page: index + 1 };
+
+        this.router.navigate([], {
+            queryParams: { ...queryParams },
+            queryParamsHandling: 'merge',
+        });
+    }
+
 }

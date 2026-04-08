@@ -1,9 +1,13 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { DomManipulationService } from "../../shared/data-access";
 import { VibrationService } from "../../shared/data-access/vibration.service";
+import { ActivatedRoute } from "@angular/router";
+import { PageTrackingFacade } from "./page-tracking.facade";
 
 @Injectable()
 export class ViewerScrollFacade {
+    pageTracking = inject(PageTrackingFacade);
+
     private _isScrollStart: boolean = false;
 
     private readonly _verAmount = 256;
@@ -55,12 +59,27 @@ export class ViewerScrollFacade {
         }
     }
 
-    scrollToPage(index: number) {
-        const el = this._pagesElement()!.querySelector(`#page_${index + 1}`);
+    scrollToPage(index: number, behavior: ScrollBehavior = 'smooth') {
+        // const el = this._pagesElement()!.querySelector(`#page_${index + 1}`);
+        const el = this._pagesElement()!.querySelector(`[data-page-index="${index}"]`);
+
         el?.scrollIntoView({
-            behavior: 'smooth',
+            behavior: behavior,
             block: 'start',
             inline: 'center'
         });
+    }
+
+    private route = inject(ActivatedRoute);
+
+    toRoutePage() {
+        const routePage = this.route.snapshot.queryParamMap.get('page');
+        if (routePage) {
+            const pageIndex = parseInt(routePage, 10) - 1;
+
+            if (!isNaN(pageIndex) && pageIndex >= 0) {
+                this.scrollToPage(pageIndex, 'instant');
+            }
+        }
     }
 }

@@ -1,9 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, PLATFORM_ID, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, Signal, ViewChild, WritableSignal, computed, inject, signal, output } from '@angular/core';
 import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
 import { DOCUMENT } from '@angular/common';
-import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
+import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
 
 @Component({
@@ -27,6 +27,7 @@ export class ViewerComponent implements AfterViewInit {
   scroll = inject(ViewerScrollFacade);
   embedFacade = inject(EmbedFacade);
   readlist = inject(ReadlistFacade);
+  tagTitle = inject(ViewerTitleTagFacade);
 
   private readonly dom = inject(DomManipulationService);
   private readonly document = inject(DOCUMENT);
@@ -35,6 +36,8 @@ export class ViewerComponent implements AfterViewInit {
   playlistLink = input("");
   currentPlaylistItem = input<PlaylistItem | undefined>();
   playlistInput = input<Playlist>([]);
+
+  pageChange = output<{ total: number, current: number[] }>();
 
   @ViewChild('viewRef', { static: true }) viewRef!: ElementRef;
 
@@ -53,9 +56,17 @@ export class ViewerComponent implements AfterViewInit {
     this.viewerUi.initFullscreenListener();
     this.viewElement.set(this.viewRef.nativeElement);
     this.pageTracking.initZone(this.viewElement(), this.el.nativeElement, this.imageElements());
+    this.pageTracking.pageChangeFunction = this.onPageChange.bind(this);
     this.pageTracking.updateActiveIndexes();
     this.scroll.initZone(this.viewElement(), this.el.nativeElement);
     this.embedFacade.loadCurrentPlaylistItem();
+    this.tagTitle.initialize(this.episode);
+
+    setTimeout(() => { this.scroll.toRoutePage() }, 100);
+  }
+
+  onPageChange(total: number, current: number[]) {
+    this.pageChange.emit({ total, current });
   }
 
   @HostListener('scroll')

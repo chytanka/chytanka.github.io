@@ -33,9 +33,9 @@ export class FileHistoryService {
     const existingEntry = await this.db.table(HISTORY_TABLE_NAME).where({ sha256 }).first();
 
     if (existingEntry) {
-      // Entry already exists, update the 'updated' field
+      // Entry already exists, update the 'updated' field and other relevant fields
       const now = new Date().toISOString();
-      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { arrayBuffer, updated: now });
+      await this.db.table(HISTORY_TABLE_NAME).update(existingEntry.id, { arrayBuffer, updated: now, page });
     } else {
       // Entry doesn't exist, add a new one
       const now = new Date().toISOString();
@@ -55,12 +55,12 @@ export class FileHistoryService {
 
   async getItemBySha256(sha256: string) {
     return await this.db.table(HISTORY_TABLE_NAME).where('sha256').equals(sha256).first();
-}
+  }
 
 
   async getAllHistoryWithoutBufferArray() {
     const records = await this.db.table(HISTORY_TABLE_NAME).orderBy('updated').reverse().toArray();
-  
+
     return records.map(({ arrayBuffer, ...rest }) => rest);
   }
 

@@ -1,7 +1,7 @@
 @if(episode$() | async; as episode){
 
 @if (!(loading$() | async)) {
-<app-viewer [playlistInput]="playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlaylistItem()"
+<app-viewer (pageChange)="pageChange.emit($event)" [playlistInput]="playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlaylistItem()"
     [episode]="episode">
     <div ngProjectAs="source-logo"><ng-content select="source-logo" /></div>
     <ng-content />

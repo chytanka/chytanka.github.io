@@ -8,7 +8,7 @@ import { CommonReadModule, ReadBaseComponent } from '../@common-read';
 @Component({
   imports: [CommonReadModule],
   selector: 'app-nhentai-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
+  template: `<app-common-read (pageChange)="onPageChange($event)" [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
     [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
 
     <p>{{lang.ph().imagesVia}}<a href="https://nhentai.net" target="_blank" rel="noopener noreferrer">Nhentai</a>

@@ -60,7 +60,6 @@ export class PageComponent {
         const parser = new DOMParser();
         const svgDoc = parser.parseFromString(text, 'image/svg+xml');
         const svgElement: SVGSVGElement = svgDoc.documentElement as unknown as SVGSVGElement;
-        console.log(svgElement.viewBox.baseVal.width);
 
         this.naturalWidth.set(svgElement.viewBox.baseVal.width);
         this.naturalHeight.set(svgElement.viewBox.baseVal.height);

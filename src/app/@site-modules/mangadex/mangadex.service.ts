@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { CompositionEpisode, CompositionImage } from '../@common-read';
+import { CompositionEpisode, CompositionImage, CompositionPublisher } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
 
@@ -60,6 +60,32 @@ interface MdMangaResp {
   response: string,
   data: MdMangaData
 }
+interface MdScanlationGroup {
+  id: string;
+  type: string;
+  attributes: {
+    name: string,
+    altNames: any[],
+    website: string,
+    ircServer: string,
+    ircChannel: string,
+    discord: string,
+    contactEmail: string,
+    description: string,
+    twitter: string,
+    mangaUpdates: string,
+    focusedLanguage: string[],
+    locked: boolean,
+    official: boolean,
+    verified: boolean,
+    inactive: boolean,
+    exLicensed: boolean,
+    publishDelay: string,
+    version: number,
+    createdAt: string,
+    updatedAt: string
+  }
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -93,8 +119,14 @@ export class MangadexService {
     return this.http.get<MdChapterResp>(url)
       .pipe(
         map((data: MdChapterResp) => {
+          const mangaId = data.data.relationships.filter(r => r.type == "manga")[0].id ?? null;
+          const publisherId = data.data.relationships.filter(r => r.type == "scanlation_group")[0].id ?? null;
+          
           return {
-            mangaId: data.data.relationships.filter(r => r.type == "manga")[0].id ?? null,
+            mangaId: mangaId,
+            publisher: {
+              id: publisherId,
+            },
             title: data.data.attributes.title,
             episode: data.data.attributes.chapter,
             volume: data.data.attributes.volume,
@@ -124,24 +156,23 @@ export class MangadexService {
     })
   }
 
+  getScanlationGroup(id: string): Observable<CompositionPublisher | undefined> {
+    const endpoint = environment.mangadexScanlationGroup + id;
+    const url = isPlatformServer(this.platformId) ? endpoint : this.proxy.proxyUrl(endpoint);
 
-}
+    return this.http.get<{ result: string, response: string, data: MdScanlationGroup }>(url)
+      .pipe(map(res => {
+        const data = res.data;
 
+        return {
+          id: data.id,
+          name: data.attributes.name,
+          description: data.attributes.description,
+          site: data.attributes.website ? data.attributes.website : `https://mangadex.org/group/${data.id}`,
+        };
+      }));
 
-/*
-
-{
-  "result": "ok",
-  "baseUrl": "https://uploads.mangadex.org",
-  "chapter": {
-    "hash": "3303dd03ac8d27452cce3f2a882e94b2",
-    "data": [
-      "1-f7a76de10d346de7ba01786762ebbedc666b412ad0d4b73baa330a2a392dbcdd.png"
-    ],
-    "dataSaver": [
-      "1-27e7476475e60ad4cc4cefdb9b2dce29d84f490e145211f6b2e14b13bdb57f33.jpg"
-    ]
   }
-}
 
-*/
+
+}

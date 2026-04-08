@@ -1,5 +1,4 @@
 export * from './dom-manipulation.service'
-export * from './viewer.service'
 export * from './gamepad.service'
 export * from './browser.service'
 export * from './lang.service'

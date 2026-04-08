@@ -1,10 +1,14 @@
 import { DOCUMENT, isPlatformServer } from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
+import { effect, inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 import { DomManipulationService } from "../../shared/data-access";
+import { ViewerScrollFacade } from "./viewer-scroll.facade";
+import { PageTrackingFacade } from "./page-tracking.facade";
 
 @Injectable()
 export class ViewerUiFacade {
     private platformId = inject(PLATFORM_ID);
+    private scroll = inject(ViewerScrollFacade);
+    private pageTracking = inject(PageTrackingFacade);
 
     private _viewElement = signal<HTMLElement | null>(null);
     private document = inject(DOCUMENT);
@@ -18,17 +22,12 @@ export class ViewerUiFacade {
         this.showOverlay.update(v => !v);
     }
 
-    // TODO: Fix scroll position reset after exiting fullscreen in pages mode
     toggleFullScreen = () => {
         if (this._viewElement() == null) return;
-        // const activeIndexs = this.activeIndexs();
-        // const page = (activeIndexs.length == 1) ? activeIndexs[0] : activeIndexs.filter(v => v+1 % 2 != 0)[0];
-        // console.log(activeIndexs, page);
 
+        const page = this.getCurentPage();
         this.dm.toggleFullScreen(this._viewElement()!);
-
-        // if (page != undefined)
-        //   setTimeout(() => {this.onActive(page)}, 100);
+        this.scrollToCurrentPage(page);
     }
 
     setDialog(open: boolean) {
@@ -45,5 +44,19 @@ export class ViewerUiFacade {
         addEventListener("fullscreenchange", () => {
             this.isFullScreen.set(this.document.fullscreenElement === this._viewElement());
         });
+    }
+
+    private getCurentPage() {
+        const activeIndexs = this.pageTracking.activeIndexes();
+        const page = (activeIndexs.length == 1) ? activeIndexs[0] : activeIndexs.filter(v => v + 1 % 2 != 0)[0];
+
+        return page;
+    }
+
+    private scrollToCurrentPage(page: number) {
+        if (page != undefined)
+            setTimeout(() => {
+                this.scroll.scrollToPage(page, 'instant');
+            }, 100);
     }
 }

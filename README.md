@@ -1,6 +1,24 @@
 # Chytanka
 
-**Chytanka** is a versatile and user-friendly PWA for reading manga, comics, and other visual stories. Whether you prefer to read from popular online platforms, your own server, or local files, Chytanka is here to enhance your reading experience.
+**Chytanka** is a lightweight, privacy-friendly PWA for reading manga, comics, and visual stories — from online sources, your own server, or local files.
+
+No accounts. No tracking. Just reading.
+
+## 🚀 Get Started
+
+👉 [https://chytanka.ink](https://chytanka.ink)
+
+## ⚡ Why Chytanka?
+
+- 🌍 Open anything — links, APIs, or local files
+- 📂 No uploads — your files stay on your device
+- 🧠 Smart behavior — auto-detect reading mode via tags
+- 🎮 Gamepad ready — full control without mouse
+- 🌓 Comfort first — night filter, fullscreen, responsive
+
+## 🖼️ Preview
+
+![Chytanka Screenshot](./src/assets/screenshots/12fps-drop-file.webp)
 
 ## Features
 
@@ -22,7 +40,7 @@ Chytanka supports opening episodes from the following platforms:
 - [ ] [Bluesky](https://bsky.app)
 <!-- - [ ] [Catbox](https://catbox.moe/) -->
   
-### 🌐 **Custom JSON API**
+#### 🌐 **Custom JSON API**
 
 Chytanka can open episodes from any custom JSON API returning the following format:
 
@@ -44,7 +62,7 @@ Chytanka can open episodes from any custom JSON API returning the following form
 }
 ```
 
-### 📚 **Create and Share Readlists**
+#### 📚 **Create and Share Readlists**
 
 Compile a readlist using [Chytanka Readlist Creator](https://chytanka.ink/list):
 
@@ -85,7 +103,7 @@ Immerse yourself in reading with a fullscreen option.
 ### 🕒 **Viewing History**
 
 - [x] Tracks history of supported links.
-- [ ] File history support is planned.
+- [x] File history support is planned.
 
 ### ⌨️ **Keyboard Shortcuts**
 
@@ -138,32 +156,137 @@ Chytanka includes built-in support for gamepads (tested with PlayStation-style c
 
 If supported by the API, Chytanka warns users about NSFW content.
 
+### 🏷️ Tags in Titles
+
+Chytanka supports special tags inside file names or episode titles to automatically control viewer behavior.
+
+Tags are parsed from the title and applied on load.
+
+#### 📌 Supported Tags
+
+You can include any of the following words in the title:
+
+```
+rtl, ltr, ver, long, scroll, nsfw, sfw, color, bw, demo, extra
+```
+
+Example:
+
+```
+My Manga Vol.1 [rtl][nsfw]
+Chapter 5 - [long][scroll]
+Demo Episode [ltr]
+```
+
+#### 🎯 What Tags Do
+
+##### 📖 View Mode
+
+These tags control how pages are displayed:
+
+| Tag         | Description             | Mode |
+| ----------- | ----------------------- | ---- |
+| `[rtl]`     | Right-to-left reading   | 1    |
+| `[ltr]`     | Left-to-right reading   | 2    |
+| `[ver]`     | Vertical / webtoon mode | 3    |
+| `[long]`    | Vertical / long strip   | 3    |
+| `[scroll]`  | Vertical scrolling      | 3    |
+
+> If multiple tags are present, the first matched tag wins.
+
+##### 🔞 Content Flags
+
+| Tag      | Effect                |
+| -------- | --------------------- |
+| `[nsfw]` | Marks episode as NSFW |
+| `[sfw]`  | (Reserved / optional) |
+
+##### 🎨 Additional Tags (for future use)
+
+These tags are parsed but may be used later:
+
+- `[color]` – colored pages
+- `[bw]` – black & white
+- `[demo]` – demo content
+- `[extra]` – bonus materials
+
+#### ⚙️ How It Works
+
+- Tags are case-insensitive
+- Tags are detected as standalone words (e.g. rtl, not ultra)
+- Parsed automatically from:
+  - file name
+  - episode title
+
+#### 💡 Example
+
+```
+Attack on Titan - Chapter 1 [rtl][nsfw].cbz
+```
+
+Result:
+
+- View mode → Right-to-left
+- NSFW flag → enabled
+
+#### 🧠 Notes
+
+- *Tags are processed on episode load*
+- *They override default viewer settings*
+- *Designed for compatibility with local files (.cbz, .zip) and remote sources*
+
 ### 🖇️ **Embed Chytanka on Your Website**
 
-Embed Chytanka using an iframe and interact with it via `postMessage`. Learn more in the [Embedding Guide](https://github.com/chytanka/chytanka.github.io/wiki/Embedding-Chytanka-on-Your-Website).
+You can embed Chytanka into your website and control it via `postMessage`.
+
+Perfect for:
+
+- manga sites
+- blogs
+- personal collections
+
+ Learn more in the [Embedding Guide](https://github.com/chytanka/chytanka.github.io/wiki/Embedding-Chytanka-on-Your-Website).
 
 ---
 
-## Development server
+## 🛠️ Development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Chytanka requires a proxy server for handling some external sources.
+Proxy repository: [https://github.com/chytanka/proxy](https://github.com/chytanka/proxy)
 
-## Code scaffolding
+> ⚠️ *Important*: Both Chytanka and the proxy must run on the *same host.*
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### ▶️ Run locally on Windows
 
-## Build
+```bash
+# Start proxy on the same host
+set NODE_ENV=dev&& set HOST=192.168.0.0 && node index.js
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+# Start Chytanka app
+ng serve --host 192.168.0.0
+```
 
-## Running unit tests
+### 💡 Notes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- *The proxy handles CORS and headers for external image sources.*
+- *Make sure both services use the same host IP (e.g., 192.168.0.0).*
+- *Adjust the host if your network requires a different local IP.*
 
-## Running end-to-end tests
+### 🧠 Why a Proxy?
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Bypasses CORS restrictions from image hosts
+- Normalizes headers
+- Ensures safe and consistent fetching of external content
 
-## Further help
+## 🔗 Other Chytanka Projects
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Chytanka is more than just a reader — it’s an ecosystem. Check out these companion projects:
+
+| Project                  | What it does                                                                       | Repository                                                             |
+| ------------------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Meta Image Generator** | Generates social preview images (meta tags) for episodes                           | [chytanka-meta-image](https://github.com/chytanka/chytanka-meta-image) |
+| **Chytanka Helper**       | Browser extension: adds a button to open supported site links directly in Chytanka | [chytanka-helper](https://github.com/chytanka/chytanka-hepler)         |
+| **Opera GX Theme**       | Custom theme for Opera GX tailored to Chytanka                                     | [chytanka-gx-mod](https://github.com/chytanka/chytanka-gx-mod)         |
+| **Chytanka Make**        | Create and edit CBZ files from images, reorder pages, add metadata                 | [chytanka-make](https://github.com/chytanka/chytanka-make)             |

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, HostListener, inject, input, InputSignal, output, signal, ViewChild } from '@angular/core';
-import { BrowserService, DomManipulationService, ViewerService } from '../../../../shared/data-access';
+import { BrowserService, DomManipulationService } from '../../../../shared/data-access';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
+import { ViewerService } from '../../../services';
 
 @Component({
   selector: 'app-viewer-footer',

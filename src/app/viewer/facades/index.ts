@@ -7,3 +7,4 @@ export * from './page-tracking.facade';
 export * from './viewer-keyboard.facade';
 export * from './viewer-scroll.facade';
 export * from './readlist.facade';
+export * from './viewer-title-tag.facade';

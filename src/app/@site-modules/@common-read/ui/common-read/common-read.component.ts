@@ -22,6 +22,7 @@ export class CommonReadComponent {
   currentPlaylistItem = input<PlaylistItem | undefined>();
 
   refreshData = output();
+  pageChange = output<{ total: number, current: number[] }>();
 
   onRefreshData() {
     this.refreshData.emit();

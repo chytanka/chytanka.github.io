@@ -8,7 +8,7 @@ import { MANGADEX_PATH } from '../../app-routing.module';
 @Component({
   imports: [CommonReadModule],
   selector: 'app-mangadex-shell',
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
+  template: `<app-common-read (pageChange)="onPageChange($event)" [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()" [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()" >
   <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
 <source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />
 </app-common-read>`
@@ -33,11 +33,13 @@ export default class MangadexShellComponent extends ReadBaseComponent {
           switchMap(ch => {
             const imgs$ = this.mangadex.getChapterImages(id);
             const manga$ = (ch.mangaId) ? this.mangadex.getManga(ch.mangaId) : of(null);
+            const group$ = (ch.publisher?.id !== null) ? this.mangadex.getScanlationGroup(ch.publisher?.id!) : of(null); 
 
-            return forkJoin([imgs$, manga$]).pipe(
-              map(([imgs, manga]) => {
+            return forkJoin([imgs$, manga$, group$]).pipe(
+              map(([imgs, manga, group]) => {
                 ch.images = imgs;
                 ch.nsfw = manga?.nsfw ?? undefined;
+                ch.publisher = group ?? undefined;
                 return ch;
               }),
               this.catchError()

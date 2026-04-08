@@ -1,17 +1,32 @@
 @let isLink = (value().site && value().post_id);
+@let nsfw = value().episode?.nsfw == true;
 
 @if (isLink) {
 <div class="cover-wrapper">
-    <img [vibrateHaptic]="10" [routerLink]="routeLink()" class="cover" [src]="value().cover" alt="">
+    <img [vibrateHaptic]="10" [class]="{'nsfw': nsfw}" [routerLink]="routeLink()" [queryParams]="queryParams()"
+        class="cover" [src]="value().cover" alt="">
 </div>
 
-<a class="title" [routerLink]="routeLink()" [vibrateHaptic]="10">
-    {{value().title || lang.ph().untitled}} <br>
-    <small class="site-tag">{{siteTag()}}</small>&nbsp;
-    @if(value().size){ <small class="site-tag">{{value().size | filesize}} </small>&nbsp;}
-    @if(value().page && value().pages){ <small class="site-tag">{{value().page}}/{{value().pages}}</small> &nbsp;}
+<div style="display: grid;gap: .5ch;">
+    <a [routerLink]="routeLink()" [queryParams]="queryParams()" [vibrateHaptic]="10">
+        <span class="title">{{value().title || lang.ph().untitled}}</span>
+    </a>
+    @if(value().page && value().pages){
+    <div style="display: flex; align-items: center; gap: .5ch;">
+        <ul class="tags">
+            <li class="site-tag"><small>{{value().page}}/{{value().pages}}</small></li>
+        </ul>
+        <progress [class]="{'done': value().page == value().pages}" [value]="value().page" [max]="value().pages"></progress>
+    </div>
+    }
+    <ul class="tags">
+        @if(nsfw){ <li class="site-tag nsfw-tag"><small>NSFW</small></li>}
+        <li class="site-tag"><small>{{siteTag()}}</small></li>
+        @if(value().size){ <li class="site-tag"><small>{{value().size | filesize}} </small></li>}
 
-</a>
+    </ul>
+</div>
+
 } @else {
 <div class="cover-wrapper">
     <img class="cover" [src]="value().cover" alt="">
@@ -21,6 +36,10 @@
     {{value().title || lang.ph().untitled}} @if(value().page && value().pages){ {{value().page}}/{{value().pages}} }
 </div>
 }
-<small style="width: min-content; opacity: .8; line-height: 1;">{{value().updated | date : 'short'}}</small>
+<small style="width: max-content; opacity: .8; line-height: 1.25; text-align: center;">
+    @let date = value().updated;
+    <span>{{date | date : 'shortDate'}}</span><br>
+    <span>{{date | date : 'shortTime'}}</span>
+</small>
 
 <button class="button small empty" style="margin-right: 1ch;" (click)="onDelete(value().id)">❌</button>

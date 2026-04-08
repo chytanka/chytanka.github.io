@@ -1,5 +1,5 @@
 import { Component, computed, effect, HostListener, inject, input, output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
-import { DomManipulationService, ViewerService } from '../../../../shared/data-access';
+import { DomManipulationService } from '../../../../shared/data-access';
 import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 import { LangService } from '../../../../shared/data-access/lang.service';
@@ -10,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { GamepadService } from '../../../../shared/data-access/gamepad.service';
 import { GamepadButton } from '../../../../shared/models';
 import { FileService } from '../../../../file/data-access/file.service';
+import { ViewerService } from '../../../services';
 
 @Component({
   selector: 'app-viewer-header',
@@ -75,10 +76,10 @@ export class ViewerHeaderComponent {
   // #region ⚙️ Lifecycle / Effects
   constructor() {
     effect(() => {
-      const episode = this.episode();
-      if (!episode) return;
-      const tags = this.parseTagsFromTitle(episode.title);
-      this.applyEpisodeTitleTags(tags);
+      // const episode = this.episode();
+      // if (!episode) return;
+      // const tags = this.parseTagsFromTitle(episode.title);
+      // this.applyEpisodeTitleTags(tags);
 
       if (this.gamepad.buttons()[GamepadButton.Share]?.pressed) this.showShare();
     })
@@ -86,18 +87,18 @@ export class ViewerHeaderComponent {
   //#endregion
 
   // #region 🏷️ Episode Tags Logic
-  parseTagsFromTitle = (title: string): Set<string> => parseTags(title);
+  // parseTagsFromTitle = (title: string): Set<string> => parseTags(title);
 
-  applyEpisodeTitleTags(tags: Set<string>): void {
-    const code = resolveViewMode(tags);
+  // applyEpisodeTitleTags(tags: Set<string>): void {
+  //   const code = resolveViewMode(tags);
 
-    if (code)
-      this.viewer.setViewModeOptionByCode(code);
+  //   if (code)
+  //     this.viewer.setViewModeOptionByCode(code);
 
-    if (tags.has('nsfw')) {
-      this.episode().nsfw = true;
-    }
-  }
+  //   if (tags.has('nsfw')) {
+  //     this.episode().nsfw = true;
+  //   }
+  // }
   //#endregion
 
   // #region 🧭 Actions (UI)

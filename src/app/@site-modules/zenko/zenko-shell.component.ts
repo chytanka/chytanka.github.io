@@ -8,7 +8,7 @@ import { ZenkoService } from './zenko.service';
 @Component({
   selector: 'app-zenko-shell',
   imports: [CommonReadModule],
-  template: `<app-common-read [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
+  template: `<app-common-read (pageChange)="onPageChange($event)" [episode$]="episode$" [error$]="error$" [loading$]="loading$" (refreshData)="refreshData()"
     [playlist]="playlistService.playlist()" [playlistLink]="playlistLink()" [currentPlaylistItem]="currentPlItem()">
   <source-copyright [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" />
 <source-copyright-logo ngProjectAs="source-logo" [sourceName]="sourceName()" [sourceUrl]="sourceUrl()" [sourceImageSrc]="sourceImageSrc()" />

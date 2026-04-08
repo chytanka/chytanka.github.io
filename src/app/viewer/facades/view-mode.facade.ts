@@ -1,5 +1,5 @@
 import { Injectable, computed, inject } from "@angular/core";
-import { ViewerService } from "../../shared/data-access";
+import { ViewerService } from "../services";
 
 @Injectable()
 export class ViewModeFacade {

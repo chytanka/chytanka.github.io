@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ViewerService } from '../../../../shared/data-access';
+import { ViewerService } from '../../../services';
 
 @Component({
     selector: 'manga-page',

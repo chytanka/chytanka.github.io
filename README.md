@@ -18,7 +18,7 @@ No accounts. No tracking. Just reading.
 
 ## 🖼️ Preview
 
-![Chytanka Screenshot](./src/assets/screenshots/Screenshot_2026-04-07_220509.png)
+![Chytanka Screenshot](./src/assets/screenshots/12fps-drop-file.webp)
 
 ## Features
 

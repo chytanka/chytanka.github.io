@@ -78,7 +78,7 @@ function getPairRoutesToCompare(map: Map<string, LoadComponentType>) {
 }
 
 const routes: Routes = [
-  { path: '', loadChildren: linkParserMod },
+  { path: '', loadChildren: linkParserMod, pathMatch: 'full' },
   { path: LIST_PATH, loadChildren: () => import('./list/list.module').then(m => m.ListModule) },
   ...getPairRoutesToCompare(siteModulesMap),
   

@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, PLATFORM_ID, WritableSignal, computed, inject, signal } from '@angular/core';
+import { ToggleBarOption } from '../../shared/ui/toggle-bar';
 
 export const DISPLAY_MODES = ['softmode', 'truemode'];
 const NAME_DISPLAY_MODE = 'displayMode';
@@ -35,6 +36,11 @@ export class LinkParserSettingsService {
   }
 
   displayMode!: WritableSignal<string>;
+
+  displayModeOptions: ToggleBarOption<string>[] = [
+    { value: 'true', emoji: '👑', label: 'trueMode' },
+    { value: 'soft', emoji: '🧸', label: 'softMode' }
+  ]
 
   initDisplayMode() {
     if (!isPlatformBrowser(this.platformId)) return;

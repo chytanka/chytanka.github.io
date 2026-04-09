@@ -30,8 +30,9 @@ import { DropZoneComponent } from './ui/drop-zone/drop-zone.component';
 import { SourceCopyrightComponent } from './ui/source-copyright/source-copyright.component';
 import { SourceCopyrightLogoComponent } from './ui/source-copyright-logo/source-copyright-logo.component';
 import { SloganComponent } from './ui/slogan/slogan.component';
+import { ToggleBarComponent } from './ui/toggle-bar/toggle-bar.component';
 
-const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent, NsfwWarningComponent, ImgMetaDirective, NewTabDirective, PagesIndicatorComponent, WarmFilterComponent, WarmControlComponent]
+const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent, NsfwWarningComponent, ImgMetaDirective, NewTabDirective, PagesIndicatorComponent, WarmFilterComponent, WarmControlComponent, ToggleBarComponent]
 
 @NgModule({
   declarations: [...components],

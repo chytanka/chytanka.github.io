@@ -1,11 +1,11 @@
 <fieldset>
-    <legend>🛠️ Base</legend>
+    <legend>🛠️ {{lang.ph().baseSettings}}</legend>
 
     <section>
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <span class="label">🈚 {{lang.ph().language}}</span>
-                <small>{{lang.ph().getByKey(getLangValue(lang.lang()).hintPhraceKey)}}</small>
+                <small>{{lang.ph().getByKey(getLangValue(lang.lang()).label)}}</small>
             </p>
             <p><small>{{lang.ph().settingLangDesc}}</small></p>
         </div>
@@ -15,7 +15,7 @@
     @if(vibro.enabled()){
     <section [class]="!vibro.vibrationOn()? 'inactive': ''">
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="Vibration">🫨 Vibration</label>
                 @if(vibro.vibrationOn()) {
                 <small class="on">ON</small>
@@ -34,7 +34,7 @@
 
     <section [class]="!setts.autoPasteLink()? 'inactive': ''">
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="autoPasteLink">📋 {{lang.ph().autoPasteLink}}</label>
                 @if(setts.autoPasteLink()) {
                 <small class="on">ON</small>
@@ -50,28 +50,23 @@
             id="autoPasteLink">
     </section>
 
-    <section style="display: block;">
-            <div>
-                <p style="display: flex; justify-content: space-between; align-items: center;">
-                🖥️ Display Mode
+    <section>
+        <div>
+            <p class="setting-title">
+                <span class="label">🖥️ {{lang.ph().displayMode}}</span>
                 <small>{{setts.displayMode() | titlecase}}</small>
             </p>
-            <div class="radio-group">
-                <button [vibrateHaptic]="10" class="button" [class.active]=" setts.displayMode() === 'true' "
-                    (click)="setts.setDisplayMode('true')">
-                    👑<br>True Mode
-                </button>
-                <button [vibrateHaptic]="10" class="button" [class.active]=" setts.displayMode() === 'soft' "
-                    (click)="setts.setDisplayMode('soft')">
-                    🧸<br> Soft Mode
-                </button>
-            </div>
-            </div>
+            <p><small>{{lang.ph().displayModeDesc}}</small></p>
+        </div>
+        <div>
+            <app-toggle-bar [options]="setts.displayModeOptions" [value]="setts.displayMode()"
+                (valueChange)="setts.setDisplayMode($event)" />
+        </div>
     </section>
 
     <section [class]="!setts.seasonalTheme()? 'inactive': ''">
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="seasonalTheme">🎨 {{lang.ph().seasonalTheme}}</label>
                 @if(setts.seasonalTheme()) {
                 <small class="on">ON</small>
@@ -89,11 +84,11 @@
 </fieldset>
 
 <fieldset>
-    <legend>🗐 Files</legend>
+    <legend>🗐 {{lang.ph().fileSettings}}</legend>
 
     <section [class]="!fileSetts.saveFileToHistory()? 'inactive': ''">
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="saveFileToHistory">💾 Save Local Files in History</label>
                 @if(fileSetts.saveFileToHistory()) {
                 <small class="on">ON</small>
@@ -112,7 +107,7 @@
     @if(fileSetts.saveFileToHistory()){
     <section [class]="!fileSetts.copyFileToHistory()? 'inactive': ''">
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="copyFileToHistory">📄 Copy Local Files to History</label>
                 @if(fileSetts.copyFileToHistory()) {
                 <small class="on">ON</small>
@@ -131,7 +126,7 @@
     @if(fileSetts.copyFileToHistory()){
     <section>
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="storageLimit">⛃ Storage Limit (Mb)</label>
                 <small>{{fileSetts.storageLimit()}}</small>
             </p>
@@ -142,7 +137,7 @@
 
     <section>
         <div>
-            <p style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="setting-title">
                 <label class="label" for="retentionTime">⏱️ Retention Time</label>
                 <small>{{fileSetts.retentionTime()}}</small>
             </p>

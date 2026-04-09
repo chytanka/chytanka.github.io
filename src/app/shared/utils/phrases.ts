@@ -19,7 +19,7 @@ export class Phrases {
     scrollDown: string = "Scroll down";
     nightlight: string = "Nightlight";
     nsfwWarnTitle: string = "⚠️🔞 NSFW Content"
-    nsfwWarnText: string = "2The following content may be <b>Not Safe For Work</b>. Viewer discretion is advised." 
+    nsfwWarnText: string = "2The following content may be <b>Not Safe For Work</b>. Viewer discretion is advised."
     nsfwLabelAgree: string = "Ready for the wild side!"
     nsfwLabelDisagree: string = "I'll pass, let's keep it safe."
     ukrainian: string = "Українська"
@@ -70,6 +70,12 @@ export class Phrases {
     noPagesFound = "No pages found"
     noPagesFoundDesc = "This episode might only have videos or text"
     episodeEnd = "End of episode"
+    displayMode = "Display Mode"
+    displayModeDesc = "True mode is good for OLED/E-ink screens. Soft mode is good for everyone else."
+    trueMode = "True mode"
+    softMode = "Soft mode"
+    baseSettings = "Base settings"
+    fileSettings = "File settings"
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

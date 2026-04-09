@@ -66,5 +66,11 @@
     "readlist": "Список для читання",
     "noPagesFound": "Сторінок не знайдено",
     "noPagesFoundDesc": "Цей епізод певно містить лише відео або текст",
-    "episodeEnd": "Кінець епізоду"
+    "episodeEnd": "Кінець епізоду",
+    "displayMode": "Режим відображення",
+    "displayModeDesc": "True mode підходить для OLED/E-ink екранів. Soft mode підходить для всіх інших.",
+    "trueMode": "True mode",
+    "softMode": "Soft mode",
+    "baseSettings": "Основні налаштування",
+    "fileSettings": "Налаштування файлів"
 }

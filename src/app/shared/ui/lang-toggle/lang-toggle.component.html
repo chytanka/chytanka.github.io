@@ -1,2 +1,2 @@
-<app-view-mode-bar [seed]="seed()" (valueChange)="lang.setLang($event.code); lang.updateManifest()" [options]="lang.langOpt"
-    [value]="optLangValue().code" />
+<app-toggle-bar [seed]="seed()" (valueChange)="onLangChange($event)" [options]="lang.options"
+    [value]="optLangValue().value" />

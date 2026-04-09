@@ -10,8 +10,8 @@ export class LinkInitFacade {
   private linkFacade = inject(LinkParserFacade);
 
   async init() {
-    const routeUrl = this.route.snapshot.paramMap.get('url');
-    const queryUrl = this.route.snapshot.queryParamMap.get('url');
+    const routeUrl = this.route.root.firstChild?.snapshot.params['url'];
+    const queryUrl = this.route.root.firstChild?.snapshot.queryParamMap.get('url');
 
     if (routeUrl) {
       this.linkFacade.setLink(routeUrl);

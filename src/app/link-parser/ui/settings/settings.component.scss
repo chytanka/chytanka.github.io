@@ -86,14 +86,14 @@ fieldset {
 }
 
 
-@supports (corner-shape: squircle) 
-{
+@supports (corner-shape: squircle) {
     section {
         input[type=checkbox] {
-        corner-shape: squircle;
-        border-radius: 1ch;
+            corner-shape: squircle;
+            border-radius: 1ch;
+        }
     }
-    }
+
     fieldset {
         corner-shape: squircle;
         border-radius: calc(var(--r) * 2);
@@ -110,4 +110,10 @@ input[type=number] {
     grid-template-columns: repeat(auto-fit, minmax(8ch, 1fr));
     gap: 1ch;
     margin-top: 1ch;
+}
+
+.setting-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

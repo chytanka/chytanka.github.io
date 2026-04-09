@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { LangService } from '../../shared/data-access/lang.service';
 import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
-import { take } from 'rxjs';
 import { FileService } from '../../file/data-access/file.service';
 
 @Component({
@@ -30,14 +29,11 @@ export class LinkParserComponent {
   public setts = inject(LinkParserSettingsService)
   public file = inject(FileService)
 
-  constructor() { }
-
-  ngOnInit() {
-    this.initMeta()
-    this.lang.langChanged$.pipe(take(1)).subscribe(() => {
+  constructor() {
+    effect(() => {
       this.initMeta()
     });
-  }
+   }
 
   initMeta() {
     this.meta.setOg()

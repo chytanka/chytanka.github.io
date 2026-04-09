@@ -1,0 +1,12 @@
+@for(option of options(); track option.emoji) {
+<div>
+    <input [vibrateHaptic]="10" type="radio" name="radio-{{seed()}}" id="toggle-bar-{{option.value}}-{{seed()}}"
+        [checked]="value() === option.value" (input)="onChange(option.value)" />
+
+    <label role="button" class="button" for="toggle-bar-{{option.value}}-{{seed()}}"
+        [title]="lang.ph().getByKey(option.label)">
+        {{option.emoji}}
+    </label>
+
+</div>
+}

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, WritableSignal, inject, signal } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
-
-
+import { ToggleBarOption } from '../toggle-bar';
 
 @Component({
   selector: 'app-lang-toggle',
@@ -15,5 +14,10 @@ export class LangToggleComponent {
 
   seed: WritableSignal<string> = signal((Math.ceil(Math.random() * 1000)).toString())
 
-  optLangValue = () => this.lang.langOpt.filter((opt: any) => opt.code == this.lang.lang())[0]
+  optLangValue = () => this.lang.options.filter((opt: ToggleBarOption<string>) => opt.value == this.lang.lang())[0]
+
+  protected onLangChange(lang: string) {
+    this.lang.setLang(lang);
+    this.lang.updateManifest()
+  }
 }

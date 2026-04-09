@@ -1,8 +1,9 @@
-import { Component, WritableSignal, effect, inject, input, signal } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { LinkParserSettingsService } from '../../data-access/link-parser-settings.service';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { FileSettingsService } from '../../../file/data-access/file-settings.service';
 import { VibrationService } from '../../../shared/data-access/vibration.service';
+import { ToggleBarOption } from '../../../shared/ui/toggle-bar';
 
 @Component({
   selector: 'app-settings',
@@ -18,20 +19,16 @@ export class SettingsComponent {
 
 
   getLangValue(lang: string) {
-    return this.lang.langOpt.filter((opt: any) => opt.code == lang)[0]
+    return this.lang.options.filter((opt: ToggleBarOption<string>) => opt.value == lang)[0]
   }
 
   setAutoPasteLink(e: Event) {
     this.setts.setAutoPasteLink((e.target as HTMLInputElement).checked)
-
     this.vibro.vibrateForSettings(this.setts.autoPasteLink())
-
   }
 
   setSeasonalTheme(e: Event) {
     this.setts.setSeasonalTheme((e.target as HTMLInputElement).checked)
-    //
-
   }
 
   setSaveFileToHistory(e: Event) {

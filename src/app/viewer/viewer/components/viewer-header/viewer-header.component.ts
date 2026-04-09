@@ -5,7 +5,6 @@ import { PlaylistItem } from '../../../../playlist/data-access/playlist.service'
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
 import { EmbedHalperService } from '../../../../shared/data-access/embed-halper.service';
-import { parseTags, resolveViewMode } from '../../../../shared/utils';
 import { isPlatformBrowser } from '@angular/common';
 import { GamepadService } from '../../../../shared/data-access/gamepad.service';
 import { GamepadButton } from '../../../../shared/models';
@@ -76,29 +75,9 @@ export class ViewerHeaderComponent {
   // #region ⚙️ Lifecycle / Effects
   constructor() {
     effect(() => {
-      // const episode = this.episode();
-      // if (!episode) return;
-      // const tags = this.parseTagsFromTitle(episode.title);
-      // this.applyEpisodeTitleTags(tags);
-
       if (this.gamepad.buttons()[GamepadButton.Share]?.pressed) this.showShare();
     })
   }
-  //#endregion
-
-  // #region 🏷️ Episode Tags Logic
-  // parseTagsFromTitle = (title: string): Set<string> => parseTags(title);
-
-  // applyEpisodeTitleTags(tags: Set<string>): void {
-  //   const code = resolveViewMode(tags);
-
-  //   if (code)
-  //     this.viewer.setViewModeOptionByCode(code);
-
-  //   if (tags.has('nsfw')) {
-  //     this.episode().nsfw = true;
-  //   }
-  // }
   //#endregion
 
   // #region 🧭 Actions (UI)

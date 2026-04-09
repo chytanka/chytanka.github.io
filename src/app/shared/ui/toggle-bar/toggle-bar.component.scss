@@ -1,0 +1,53 @@
+:host {
+    display: flex;
+    gap: 1ch;
+
+    --size-3: 1ch;
+    --size-1: 1ch;
+    --radius-2: .5ch;
+    --surface-2: hsl(203.44 8% 16%);
+    --surface-1: #ffd60a;
+    --link: #166496;
+
+    @media (prefers-color-scheme: light) {
+        --surface-2: hsl(203.44 8% 96%);
+        --link: #88a8c8
+    }
+
+    >div {
+        display: grid;
+        align-items: center;
+        grid-auto-flow: column;
+        grid-template-columns: auto 1fr;
+
+        >* {
+            grid-area: 1/1;
+        }
+
+        >label {
+            cursor: pointer;
+            text-shadow: 0 0 0.25ch #0008;
+        }
+
+        >input {
+            appearance: none;
+            background: none;
+            border: none;
+            inline-size: 100%;
+            block-size: 100%;
+            margin: 0;
+            padding: 0;
+
+            &:checked~label {
+                background-color: var(--surface-avarage);
+                color: var(--surface-1);
+                transform: translate(2px, 2px);
+                box-shadow: unset;
+            }
+
+            &:not(:checked):is(:focus-within, :hover)~label {
+                color: var(--link);
+            }
+        }
+    }
+}

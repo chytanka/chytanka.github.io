@@ -1,7 +1,7 @@
 const PROXY = `http://192.168.10.107:3003/api?url=`
 
 export const environment = {
-    version: "0.13.54-2026.4.8",
+    version: "0.13.56-2026.4.9",
     prod: false,
     proxy: PROXY,
     blankaryoHost: `https://blankary.com/page/`,

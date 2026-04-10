@@ -4,6 +4,7 @@ import { MetaTagsService } from '../../shared/data-access/meta-tags.service';
 import { LinkParserService } from '../data-access/link-parser.service';
 import { LinkParserSettingsService } from '../data-access/link-parser-settings.service';
 import { FileService } from '../../file/data-access/file.service';
+import { ThemeService } from '../../shared/data-access/theme.service';
 
 @Component({
   selector: 'app-link-parser',
@@ -19,7 +20,7 @@ import { FileService } from '../../file/data-access/file.service';
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class]': 'this.setts.theme()'
+    '[class]': 'this.theme.theme()'
   }
 })
 export class LinkParserComponent {
@@ -28,6 +29,7 @@ export class LinkParserComponent {
   public parser: LinkParserService = inject(LinkParserService)
   public setts = inject(LinkParserSettingsService)
   public file = inject(FileService)
+  protected theme = inject(ThemeService);
 
   constructor() {
     effect(() => {

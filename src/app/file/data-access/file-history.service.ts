@@ -19,7 +19,7 @@ export class FileHistoryService {
 
   private createDatabase() {
     this.db = new Dexie(HISTORY_DB_NAME);
-    this.db.version(1).stores({
+    this.db.version(2).stores({
       filehistory: '++id,sha256,pages,size,title,format,page,cover,arrayBuffer,created,updated'
     });
   }

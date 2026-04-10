@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { LinkParserSettingsService } from '../../../link-parser/data-access/link-parser-settings.service';
 import { LangService } from '../../data-access';
+import { ThemeService } from '../../data-access/theme.service';
 
 @Component({
   selector: 'slogan',
@@ -11,6 +12,7 @@ import { LangService } from '../../data-access';
 })
 export class SloganComponent {
   private setts = inject(LinkParserSettingsService)
+  private theme = inject(ThemeService)
   private lang = inject(LangService);
 
   private seasonalTheme = signal(new Map<string, { class: string, phrase: string, emoji: string }>([
@@ -27,9 +29,9 @@ export class SloganComponent {
       emoji: '🌻'
     };
 
-    if (!this.setts.seasonalTheme()) return defaultSlogan;
+    if (!this.theme.seasonalTheme()) return defaultSlogan;
 
-    const theme = this.seasonalTheme().get(this.setts.theme());
+    const theme = this.seasonalTheme().get(this.theme.theme());
 
     if (!theme) return defaultSlogan;
 

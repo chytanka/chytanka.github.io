@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LangService } from '../../../shared/data-access/lang.service';
 import { FileNetFacade, LinkInitFacade, LinkParserFacade, NavigationFacade } from './facades';
+import { ThemeService } from '../../../shared/data-access/theme.service';
 
 @Component({
   selector: 'app-parser-form',
@@ -15,6 +16,7 @@ export class ParserFormComponent {
   protected navFacade = inject(NavigationFacade);
   protected fileNetFacade = inject(FileNetFacade);
   protected linkInit = inject(LinkInitFacade);
+  protected theme = inject(ThemeService);
 
   ngOnInit() {
     this.linkFacade.setLink('');

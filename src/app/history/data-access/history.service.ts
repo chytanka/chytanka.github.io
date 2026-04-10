@@ -20,7 +20,7 @@ export class HistoryService {
   private createDatabase() {
 
     this.db = new Dexie(HISTORY_DB_NAME);
-    this.db.version(1).stores({
+    this.db.version(2).stores({
       history: '++id,site,post_id,title,cover,episode,pages,page,created,updated'
     });
   }

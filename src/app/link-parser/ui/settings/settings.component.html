@@ -54,21 +54,21 @@
         <div>
             <p class="setting-title">
                 <span class="label">🖥️ {{lang.ph().displayMode}}</span>
-                <small>{{setts.displayMode() | titlecase}}</small>
+                <small>{{theme.displayMode() | titlecase}}</small>
             </p>
             <p><small>{{lang.ph().displayModeDesc}}</small></p>
         </div>
         <div>
-            <app-toggle-bar [options]="setts.displayModeOptions" [value]="setts.displayMode()"
-                (valueChange)="setts.setDisplayMode($event)" />
+            <app-toggle-bar [options]="theme.displayModeOptions" [value]="theme.displayMode()"
+                (valueChange)="theme.setDisplayMode($event)" />
         </div>
     </section>
 
-    <section [class]="!setts.seasonalTheme()? 'inactive': ''">
+    <section [class]="!theme.seasonalTheme()? 'inactive': ''">
         <div>
             <p class="setting-title">
                 <label class="label" for="seasonalTheme">🎨 {{lang.ph().seasonalTheme}}</label>
-                @if(setts.seasonalTheme()) {
+                @if(theme.seasonalTheme()) {
                 <small class="on">ON</small>
                 } @else {
                 <small class="off">OFF</small>
@@ -78,7 +78,7 @@
                 <small>{{lang.ph().seasonalThemeDesc}}</small>
             </p>
         </div>
-        <input type="checkbox" [vibrateHaptic]="10" [checked]="setts.seasonalTheme()" (input)="setSeasonalTheme($event)"
+        <input type="checkbox" [vibrateHaptic]="10" [checked]="theme.seasonalTheme()" (input)="setSeasonalTheme($event)"
             id="seasonalTheme">
     </section>
 </fieldset>

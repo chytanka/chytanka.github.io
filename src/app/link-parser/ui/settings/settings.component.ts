@@ -4,6 +4,7 @@ import { LangService } from '../../../shared/data-access/lang.service';
 import { FileSettingsService } from '../../../file/data-access/file-settings.service';
 import { VibrationService } from '../../../shared/data-access/vibration.service';
 import { ToggleBarOption } from '../../../shared/ui/toggle-bar';
+import { ThemeService } from '../../../shared/data-access/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,6 +17,7 @@ export class SettingsComponent {
   lang = inject(LangService)
   fileSetts = inject(FileSettingsService)
   vibro = inject(VibrationService)
+  theme = inject(ThemeService)
 
 
   getLangValue(lang: string) {
@@ -28,7 +30,7 @@ export class SettingsComponent {
   }
 
   setSeasonalTheme(e: Event) {
-    this.setts.setSeasonalTheme((e.target as HTMLInputElement).checked)
+    this.theme.setSeasonalTheme((e.target as HTMLInputElement).checked)
   }
 
   setSaveFileToHistory(e: Event) {

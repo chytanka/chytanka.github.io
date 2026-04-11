@@ -8,11 +8,11 @@
     <div dir="ltr" frame="4">
         <p class="text-center">{{lang.ph().episodeEnd}}</p>
         @if (getNextIndex() >=0 && playlist()[getNextIndex()]; as next) {
+        @let label = next.title ?? lang.ph().untitled + ' ' + (getNextIndex() + 1) + '⏩';
+        @let routerLink=['/', next.site, next.id];
+        @let queryParams = {lang: lang.lang(), list: playlistLink(), vm: vm.code};
 
-        <a dir="ltr" [routerLink]="['/', next.site, next.id]"
-            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: vm.code}">
-            {{next.title??
-            lang.ph().untitled + ' ' + (getNextIndex() + 1)}} ⏩</a>
+        <svg-text-box class="bubble" dir="ltr" frame="1" [lines]="[label]" [link]="routerLink" [params]="queryParams" />
         }
     </div>
 

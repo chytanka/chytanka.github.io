@@ -15,10 +15,10 @@
     </chtnk-page>
 
     @for(img of episode().images; track img.src; let i = $index) {
-    <chtnk-page [attr.data-page-index]="i" (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()"
-        [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt" [inputWidth]="img.width ?? 1000"
-        [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)" [index]="i" [class]="mode"
-        [dir]="dir" [showLoading]="true" />
+    <chtnk-page [attr.data-page-index]="i" (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()"
+        (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt"
+        [inputWidth]="img.width ?? 1000" [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)"
+        [index]="i" [class]="mode" [dir]="dir" [showLoading]="true" />
     }
 
     <chtnk-page class="last-hint-page" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()"
@@ -29,9 +29,12 @@
             <ng-content ngProjectAs="source-logo" select="source-logo" />
             <ng-content />
             } @else {
-            <h1>😢 {{lang.ph().noPagesFound}}</h1>
-            <p>{{lang.ph().noPagesFoundDesc}}</p>
-            <a [vibrateHaptic]="10" class="button medium border" [routerLink]="['/']">🏠</a>
+            <svg-text-box dir="ltr" style="font-family:'Troubleside'" [fontSize]="32"
+                [lines]="['😢 '+lang.ph().noPagesFound ]" />
+                <svg-text-box class="bubble info" dir="ltr" style="font-family:'Troubleside'" [fontSize]="32"
+                [lines]="[lang.ph().noPagesFoundDesc ]" [padding]="32" />
+            <!-- <p>{{lang.ph().noPagesFoundDesc}}</p> -->
+            <a style="margin-top: 1ch;" [vibrateHaptic]="10" class="button medium border" [routerLink]="['/']">🏠</a>
             }
         </app-thanks-page>
     </chtnk-page>

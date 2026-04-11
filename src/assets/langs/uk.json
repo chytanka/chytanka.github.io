@@ -72,5 +72,13 @@
     "trueMode": "True mode",
     "softMode": "Soft mode",
     "baseSettings": "Основні налаштування",
-    "fileSettings": "Налаштування файлів"
+    "fileSettings": "Налаштування файлів",
+    "viewModeChangeHint": "Вгорі справа можна змінити орієнтацію читання",
+    "showHidePanelHint": "Тицьни 👆 у будь-якому місці, щоб показати/приховати панель",
+    "keyboardHorNavigationHint": "для навігації: ⬅️➡️ або AD",
+    "keyboardVerNavigationHint": "для навігації: ⬆️⬇️ або WS",
+    "keyboardFullscreenHint": "Переключити повноекранний режим: F",
+    "keyboardShareHint": "Поділитися посиланням: Ctrl+E",
+    "keyboardPlaylistHint": "Відкрити список для читання: Ctrl+P",
+    "keyboardDownloadHint": "Скачати для перегляду офлайн: Ctrl+S"
 }

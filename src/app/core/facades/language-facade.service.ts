@@ -15,6 +15,8 @@ export class LanguageFacadeService {
     route.queryParams.subscribe(q => {
       const l = q['lang'];
 
+      if (l == this.lang.lang()) return;
+
       if (l) this.lang.setLang(l);
       if (l && this.lang.manifests.has(l)) {
         this.lang.updateManifest();

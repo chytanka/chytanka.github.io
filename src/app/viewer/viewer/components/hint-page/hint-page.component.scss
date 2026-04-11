@@ -1,10 +1,19 @@
 :host {
     &.long {
         manga-page {
+            --page-ratio: 10 / 16;
             max-height: unset;
             width: 100%;
         }
     }
+}
+
+svg-text-box {
+    display: grid;
+    place-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1ch;
 }
 
 svg {
@@ -14,7 +23,7 @@ svg {
 
     text {
         text-anchor: middle;
-        font-family:  monospace;
+        font-family: monospace;
         direction: ltr;
         text-transform: uppercase;
     }

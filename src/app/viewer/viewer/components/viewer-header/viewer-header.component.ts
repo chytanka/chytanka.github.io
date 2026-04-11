@@ -10,6 +10,7 @@ import { GamepadService } from '../../../../shared/data-access/gamepad.service';
 import { GamepadButton } from '../../../../shared/models';
 import { FileService } from '../../../../file/data-access/file.service';
 import { ViewerService } from '../../../services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-viewer-header',
@@ -28,6 +29,7 @@ export class ViewerHeaderComponent {
   file = inject(FileService);
   embedHelper = inject(EmbedHalperService);
   gamepad = inject(GamepadService);
+  router = inject(Router);
   // #endregion
 
   // #region 📥 Inputs / Outputs
@@ -88,6 +90,11 @@ export class ViewerHeaderComponent {
   setViewModeOption(e: any) {
     this.viewer.setViewModeOption(e);
     this.viewer.saveViewModeOption();
+    const queryParams = { vm: e.code };
+    this.router.navigate([], {
+      queryParams: { ...queryParams },
+      queryParamsHandling: 'merge',
+    });
   }
   //#endregion
 

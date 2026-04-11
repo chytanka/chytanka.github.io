@@ -1,0 +1,30 @@
+:host {
+    font-family: monospace;
+}
+
+svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    text {
+        text-anchor: middle;
+        font-family: inherit;
+        direction: ltr;
+        text-transform: uppercase;
+    }
+}
+
+:host.bubble {
+    svg {
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 2px;
+    }
+
+    &.info {
+        svg {
+            background-color: #f0e8e0;
+        }
+    }
+}

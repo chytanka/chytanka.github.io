@@ -1,0 +1,17 @@
+<svg dir="ltr" frame="1" [attr.viewBox]="viewBox()" [style.maxWidth]="maxWidth()">
+
+  <text #textEl fill="currentColor" [attr.font-size]="fontSize()" text-anchor="middle">
+    @if(link().length > 0) {
+    <a [routerLink]="link()" [queryParams]="params()">
+      @for (line of lines(); track $index) {
+      <tspan x="50%" [attr.y]="getTspanY($index)">{{ line }}</tspan>
+      }
+    </a>
+    } @else {
+    @for (line of lines(); track $index) {
+    <tspan x="50%" [attr.y]="getTspanY($index)">{{ line }}</tspan>
+    }
+    }
+  </text>
+
+</svg>

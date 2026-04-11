@@ -22,7 +22,7 @@ export class ThanksPageComponent {
 
 
   getCyrrentIndex() {
-    for (let i = 0; i < this.playlist.length; i++) {
+    for (let i = 0; i < this.playlist().length; i++) {
       const item = this.playlist()[i];
       if (this.currentPlaylistItem()?.id == item.id && this.currentPlaylistItem()?.site == item.site)
         return i;
@@ -35,7 +35,7 @@ export class ThanksPageComponent {
     const index = this.getCyrrentIndex();
     if (index < 0) return -1;
 
-    return ((index + 1) < this.playlist.length) ? index + 1 : -1;
+    return ((index + 1) < this.playlist().length) ? index + 1 : -1;
   }
 
   readonly logo = {

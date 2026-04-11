@@ -1,48 +1,39 @@
+@let ph = lang.ph();
 <manga-page [dir]="viewer.viewModeOption().dir" style="margin: auto 0;">
-    <svg dir="ltr" frame="3" viewBox="0 0 300 200">
-        <text x="50%" y="42%" font-size="28" style="font-family:'Troubleside'">
-            {{lang.ph().getByKey(viewer.viewModeOption().hintPhraceKey)}}
-        </text>
-        <text x="50%" y="58%" font-size="24">{{viewer.viewModeOption().emoji}}</text>
-    </svg>
 
-    <svg dir="ltr" frame="1" viewBox="0 0 280 280">
-        <rect x="20" y="80" width="240" height="120" rx="4" stroke-width="2" fill="white" stroke="black" />
-        <text fill="currentColor" font-size="14">
-            <tspan x="50%" y="38%">Тицьни 👆</tspan>
-            <tspan x="50%" y="46%">у будь-якому місці,</tspan>
-            <tspan x="50%" y="54%">щоб показати/приховати</tspan>
-            <tspan x="50%" y="62%">панень</tspan>
-        </text>
-    </svg>
+    <svg-text-box dir="ltr" style="font-family:'Troubleside'" frame="3" [fontSize]="32" [lines]="[
+    ph.getByKey(viewer.viewModeOption().hintPhraceKey) + '',
+    viewer.viewModeOption().emoji
+    ]" />
 
+    @let viewModeChangeHint = splitPhrase(ph.viewModeChangeHint);
     <svg dir="ltr" frame="3" class="abs" viewBox="0 0 200 150">
         <text class="hand-text" fill="currentColor" font-size="11">
-            <tspan x="50%" y="38%">Вгорі справа можна змінити</tspan>
-            <tspan x="50%" y="48%">орієнтацію читання</tspan>
+            <tspan x="50%" y="38%">{{viewModeChangeHint[0]}}</tspan>
+            <tspan x="50%" y="48%">{{viewModeChangeHint[1]}}</tspan>
         </text>
     </svg>
 
-    <svg dir="ltr" frame="2" viewBox="0 0 320 320">
-        <rect x="-20" y="85" width="360" height="150" rx="4" stroke-width="2" fill="white" stroke="black"></rect>
-        <text fill="currentColor" font-size="14">
-            <tspan x="50%" y="34%">для навігації: ⬅➡ або ad</tspan>
-            <tspan x="50%" y="42%">Fullscreen: f</tspan>
-            <tspan x="50%" y="50%">Поділитися посиланням: Ctrl+E</tspan>
-            <tspan x="50%" y="58%">Відкрити список епізодів: Ctrl+P</tspan>
-            <tspan x="50%" y="66%">Скачати для перегляду офлайн: Ctrl+S</tspan>
-        </text>
-    </svg>
+    @let showHidePanelHint = splitPhrase(ph.showHidePanelHint, 3);
+    <svg-text-box class="bubble" dir="ltr" frame="1" [lines]="showHidePanelHint" />
+    <svg-text-box class="bubble" dir="ltr" frame="2" [lines]="[
+        viewer.viewModeOption().mode === 'pages' ? ph.keyboardHorNavigationHint : ph.keyboardVerNavigationHint,
+        ph.keyboardFullscreenHint,
+        ph.keyboardShareHint,
+        ph.keyboardPlaylistHint,
+        
+    ]" />
+    <!-- ph.keyboardDownloadHint -->
 
     <img frame="4" style="display: block;" src="/assets/icons/chtnk.svg" alt="Chytanka logo">
 
     <div dir="ltr" frame="5">
         @if (getPrevIndex() >=0 && playlist()[getPrevIndex()]; as prev) {
-        <a dir="ltr" [routerLink]="['/', prev.site, prev.id]"
-            [queryParams]="{lang: lang.lang(), list: playlistLink, vm: viewer.viewModeOption().code}">⏪
-            {{prev.title??
-            lang.ph().untitled + ' ' + (getPrevIndex() + 1)}}</a>
+        @let label = '⏪' + (prev.title ?? ph.untitled) + ' ' + (getPrevIndex() + 1);
+        @let routerLink = ['/', prev.site, prev.id];
+        @let queryParams = {lang: lang.lang(), list: playlistLink(), vm: viewer.viewModeOption().code};
+        <svg-text-box class="bubble" dir="ltr" frame="1" [lines]="[label]" [link]="routerLink" [params]="queryParams" />
         }
     </div>
 
-</manga-page>
+</manga-page>   

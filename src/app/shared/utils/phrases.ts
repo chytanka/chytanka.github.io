@@ -76,6 +76,14 @@ export class Phrases {
     softMode = "Soft mode"
     baseSettings = "Base settings"
     fileSettings = "File settings"
+    viewModeChangeHint = "You can change the reading orientation in the top right corner"
+    showHidePanelHint = "Tap 👆 anywhere to toggle the panel"
+    keyboardHorNavigationHint = "for navigation: ⬅️➡️ or AD"
+    keyboardVerNavigationHint = "for navigation: ⬆️⬇️ or WS"
+    keyboardFullscreenHint = "Toggle fullscreen: F"
+    keyboardShareHint = "Share link: Ctrl+E"
+    keyboardPlaylistHint = "Open playlist: Ctrl+P"
+    keyboardDownloadHint = "Download for offline reading: Ctrl+S"
     getByKey = (key: string) => (Object.keys(this).includes(key)) ? this[key as keyof Phrases] : null;
 
     static getTemplate(phrase: string, value: string) {

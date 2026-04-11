@@ -22,7 +22,9 @@ export abstract class ReadBaseComponent {
     constructor() {
         this.route.pathFromRoot[0].queryParams.subscribe(q => {
             const vm = q['vm'] // view mode param
-            this.viewerService.setViewModeOptionByCode(vm)
+
+            if(vm && vm !== this.viewerService.viewModeOption().code) 
+                this.viewerService.setViewModeOptionByCode(vm)
 
             const pl = q['list'] // playlist
 
@@ -32,7 +34,7 @@ export abstract class ReadBaseComponent {
             this.playlistService.resetPlaylist();
 
             this.plObserv = this.playlistService.getPlaylist(pl).subscribe(data => {
-                if (!isPlaylist) return;
+                if (!isPlaylist(data)) return;
 
                 this.playlistService.setPlaylist(data)
             })

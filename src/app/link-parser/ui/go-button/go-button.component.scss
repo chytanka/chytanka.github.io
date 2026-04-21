@@ -1,5 +1,7 @@
 .go-btn {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-content: center;
     gap: 1ch;
     align-items: center;
     --dot-color: var(--border-color);
@@ -13,6 +15,7 @@
     text-transform: uppercase;
     font-weight: bold;
     box-shadow: var(--shadow-2);
+
 
     @media (prefers-color-scheme: light) {
         --dot-color: #166496;
@@ -28,6 +31,12 @@
 
     &:active {
         box-shadow: 0 0 transparent;
+    }
+
+    .site-address {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 }
 

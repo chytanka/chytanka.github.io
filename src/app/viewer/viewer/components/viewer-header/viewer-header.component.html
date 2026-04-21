@@ -12,7 +12,7 @@
     <button [vibrateHaptic]="10" class="button tshadow " [title]="ph.share" (click)="showShare()">📢</button>
     <!-- <button [vibrateHaptic]="10" class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
     }
-    <button [vibrateHaptic]="10" class="button tshadow " [title]="titleText()"
+    <button [vibrateHaptic]="10" class="button tshadow title" [title]="titleText()"
         (click)="showInfo()">{{titleText()}}</button>
 
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"

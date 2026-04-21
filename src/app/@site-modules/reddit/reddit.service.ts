@@ -4,7 +4,6 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CompositionEpisode } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
-import { Base64 } from '../../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,8 @@ export class RedditService {
   constructor(private http: HttpClient) { }
 
   getComposition(postId: string): Observable<CompositionEpisode> {
-    return this.http.get<any>(environment.redditHost + postId + '.json')
+    const url = environment.redditHost + postId + '.json';
+    return this.http.get<any>(this.proxy.proxyUrl(url))
       .pipe(map((data: any) => { return this.map(data) }))
   }
 

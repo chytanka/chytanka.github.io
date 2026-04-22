@@ -1,0 +1,16 @@
+@let b = extension.brawser.brouserInfo();
+@let mobile = b?.isMobile || false;
+
+@let link = extension.links.get((b?.name || '').toLowerCase()) || null;
+
+@if(extension.isInstalled() === false && link && (!mobile || b.name === 'Edge')) {
+
+<a [href]="link" class="button tshadow" target="_blank" rel="noopener noreferrer" title="Get extension">🧩</a>
+
+}
+
+<!-- @if(extension.isInstalled() === true){
+<div class="ext-installed">
+    ✅ Extension installed
+</div>
+} -->

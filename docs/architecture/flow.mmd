@@ -1,0 +1,62 @@
+graph TD
+  %% Entry points
+  Start([Open Manga])
+
+  User[User Action]
+  Extension[Extension]
+  Host[Host Website]
+
+  User --> Start
+  Extension --> Start
+  Host --> Start
+
+  %% Input normalization
+  Start --> Input[Resolve Input Source]
+
+  %% Source types
+  Input -->|URL| Remote[Remote Source]
+  Input -->|File| Local[Local File]
+
+  %% --- LOCAL FLOW ---
+  Local --> Worker[File Worker]
+  Worker --> Extract[Extract Pages]
+  Extract --> Render[Render Viewer]
+
+  %% --- REMOTE FLOW ---
+  Remote --> Router[Source Router]
+
+  %% Decision
+  Router -->|Direct Allowed| Direct[Direct Fetch]
+  Router -->|CORS / Restricted| Proxy[Proxy Fetch]
+
+  %% Direct path
+  Direct --> API[External API]
+
+  %% Proxy path
+  Proxy --> ProxyService[Proxy Service]
+  ProxyService --> API
+
+  %% Response
+  API --> Decode[Decode / Normalize]
+  Decode --> Render
+
+  %% --- EMBED CONTROL ---
+  Host -.->|postMessage| Control[Embed Control Layer]
+  Control -.-> Render
+
+  %% --- EXTENSION FLOW ---
+  Extension -->|Open URL| Start
+
+  %% --- FINAL ---
+  Render --> Viewer[Viewer UI]
+
+  %% Styling (optional readability)
+  classDef core fill:#166496,color:#ffd60a;
+  classDef logic fill:#2c7da0,color:#fff;
+  classDef external fill:#444,color:#eee;
+  classDef proxy fill:#88a8c8,color:#fff;
+
+  class Start,Viewer core;
+  class Router,Input,Decode logic;
+  class API external;
+  class ProxyService proxy;

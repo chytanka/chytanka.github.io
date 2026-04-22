@@ -1,0 +1,76 @@
+C4Container
+title Chytanka - Container Architecture
+
+UpdateLayoutConfig($c4ShapeInRow="4", $c4BoundaryInRow="2")
+
+Person(user, "User")
+
+System_Ext(host, "🧱 Host Website", "3rd-party site embedding Chytanka via iframe")
+
+%% Enterprise_Boundary(b1, "Chytanka") {
+
+    Container_Boundary(pwa, "📖 Chytanka PWA") {
+
+        Container(app, "Viewer Application", "Angular", "UI, routing, rendering pages")
+        Container(embed, "Embed Bridge", "postMessage API", "Handles communication with host website")
+        Container(storage, "Local Storage", "IndexedDB / Cache API", "History, cache, metadata")
+        Container(facade, "Facade Layer", "Angular Services", "High-level API for viewer logic")
+        Container(worker, "File Worker", "Web Worker", "Reads ZIP/CBZ/PDF and extracts images")
+        Container(router, "Source Router", "TypeScript", "Decides data source (direct vs proxy)")
+        Container(api, "API Client", "HTTP", "Fetches remote resources")
+    }
+
+    Boundary(b2, "Browser Extension / Proxy") {
+        Container(extension, "🧩 Chytanka Helper", "Browser Extension", "Adds 'Read in Chytanka' and opens links")
+
+        Container(proxy, "🌐 Proxy Service", "Node.js (Express)", "Handles CORS, headers, rate limiting")
+    }
+%% }
+
+Boundary(b_sources, "External Data Sources") {
+    System_Ext(online, "🌐 Online APIs", "MangaDex, Imgur, Reddit etc.")
+    System_Ext(files, "🗂️ File System", "Local files (CBZ, PDF, etc.)")
+}
+
+Rel(user, app, "Uses UI")
+Rel(user, extension, "Clicks extension UI")
+Rel(user, host, "Visits website")
+
+Rel(extension, app, "Opens reader with URL")
+
+Rel(host, embed, "Sends/receives messages (postMessage)")
+
+Rel(app, facade, "Uses")
+Rel(facade, router, "Delegates data loading")
+
+Rel(router, api, "Direct requests")
+Rel(router, proxy, "Fallback / restricted requests")
+
+Rel(api, online, "Fetches data")
+Rel(proxy, online, "Fetches data")
+
+Rel(app, worker, "Loads local files")
+Rel(worker, files, "Reads files")
+
+Rel(app, storage, "Reads/Writes")
+
+UpdateElementStyle(app, $bgColor="#166496", $fontColor="#ffd60a", $borderColor="#166496")
+UpdateElementStyle(facade, $bgColor="#2c7da0", $fontColor="#fff")
+UpdateElementStyle(router, $bgColor="#2c7da0", $fontColor="#fff")
+UpdateElementStyle(api, $bgColor="#2c7da0", $fontColor="#fff")
+UpdateElementStyle(worker, $bgColor="#2c7da0", $fontColor="#fff")
+UpdateElementStyle(storage, $bgColor="#2c7da0", $fontColor="#fff")
+UpdateElementStyle(embed, $bgColor="#2c7da0", $fontColor="#fff")
+
+UpdateElementStyle(proxy, $bgColor="#88a8c8", $fontColor="#fff")
+UpdateElementStyle(extension, $bgColor="#88a8c8", $fontColor="#fff")
+
+UpdateElementStyle(host, $bgColor="#444", $fontColor="#eee")
+UpdateElementStyle(files, $bgColor="#444", $fontColor="#eee")
+UpdateElementStyle(online, $bgColor="#444", $fontColor="#eee")
+
+UpdateRelStyle(router, proxy, $textColor="blue", $lineColor="blue")
+UpdateRelStyle(proxy, online, $textColor="blue", $lineColor="blue")
+
+UpdateRelStyle(api, online, $textColor="green", $lineColor="green")
+UpdateRelStyle(worker, files, $textColor="green", $lineColor="green")

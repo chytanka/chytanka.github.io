@@ -249,6 +249,14 @@ Perfect for:
 
 ---
 
+## 🧠 Architecture
+
+Explore the system design:
+
+👉 docs/architecture/README.md
+
+---
+
 ## 🛠️ Development
 
 Chytanka requires a proxy server for handling some external sources.

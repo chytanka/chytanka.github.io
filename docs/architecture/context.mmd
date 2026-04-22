@@ -1,0 +1,58 @@
+C4Context
+title Chytanka - System Context
+
+Person(user, "User", "End user who reads manga and comics using Chytanka")
+
+Enterprise_Boundary(b_chytanka, "Chytanka") {
+    System(extension, "🧩 Chytanka Helper", "Browser extension")
+    System(chytanka, "📖 Chytanka", "PWA for reading manga and comics")
+    System(proxy, "🌐 Proxy Service", "Optional proxy for restricted requests")
+}
+
+System_Ext(host, "🧱 Host Website", "3rd-party site embedding Chytanka and providing UI")
+
+Boundary(b_sources, "External Data Sources") {
+    System_Ext(files, "🗂️ File System", "Local files (CBZ, PDF, etc.)")
+    System_Ext(online, "🌐 Online APIs", "MangaDex, Imgur, Reddit etc.")
+}
+
+Rel(user, chytanka, "Uses directly")
+Rel(user, extension, "Clicks extension UI")
+Rel(user, host, "Visits website")
+Rel(extension, chytanka, "Opens links")
+
+Rel(host, chytanka, "Embeds via iframe")
+Rel(host, chytanka, "Controls via postMessage")
+
+Rel(chytanka, online, "Fetches data (direct)")
+Rel(chytanka, files, "Reads local files")
+Rel(chytanka, proxy, "Optional requests")
+
+Rel(proxy, online, "Fetches data")
+
+%% Styles
+
+UpdateLayoutConfig($c4ShapeInRow="2", $c4BoundaryInRow="2")
+
+UpdateElementStyle(chytanka, $fontColor="#ffd60a", $bgColor="#166496", $borderColor="#166496")
+UpdateElementStyle(extension, $fontColor="#fff", $bgColor="#88a8c8", $borderColor="#88a8c8")
+UpdateElementStyle(proxy, $fontColor="#fff", $bgColor="#5f7f9f", $borderColor="#5f7f9f")
+
+UpdateElementStyle(host, $fontColor="#eee", $bgColor="#444")
+UpdateElementStyle(files, $fontColor="#eee", $bgColor="#444")
+UpdateElementStyle(online, $fontColor="#eee", $bgColor="#444")
+
+UpdateRelStyle(chytanka, proxy, $textColor="blue", $lineColor="blue", $offsetX="50", $offsetY="-10")
+UpdateRelStyle(proxy, online, $textColor="blue", $lineColor="blue", $offsetX="0", $offsetY="10")
+
+UpdateRelStyle(chytanka, online, $textColor="#166496", $lineColor="#166496", $offsetX="0", $offsetY="-10")
+UpdateRelStyle(chytanka, files, $textColor="#166496", $lineColor="#166496", $offsetX="-30", $offsetY="10")
+
+UpdateRelStyle(user, extension, $textColor="#88a8c8", $lineColor="#88a8c8", $offsetY="-20", $offsetX="15")
+UpdateRelStyle(user, chytanka, $textColor="#166496", $lineColor="#166496", $offsetY="-20")
+UpdateRelStyle(extension, chytanka, $textColor="#88a8c8", $lineColor="#88a8c8", $offsetX="-30", $offsetY="15")
+UpdateRelStyle(user, host, $textColor="#88a8c8", $lineColor="#88a8c8", $offsetY="-20", $offsetX="-35")
+
+UpdateRelStyle(host, chytanka, $textColor="#88a8c8", $lineColor="#88a8c8", $offsetY="-20", $offsetX="35")
+
+UpdateElementStyle(b_sources, $fontColor="#ffeeee")

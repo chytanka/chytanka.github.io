@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, computed, ElementRef, input, signal, ViewChild } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { AfterViewInit, Component, computed, ElementRef, inject, input, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'svg-text-box',
@@ -8,6 +9,7 @@ import { AfterViewInit, Component, computed, ElementRef, input, signal, ViewChil
   styleUrl: './svg-text-box.component.scss'
 })
 export class SvgTextBoxComponent implements AfterViewInit {
+  platformId = inject(PLATFORM_ID)
 
   link = input<string | any[]>("");
   params = input<any>({});
@@ -26,6 +28,8 @@ export class SvgTextBoxComponent implements AfterViewInit {
   }
 
   updateBox() {
+    if (isPlatformServer(this.platformId)) return;
+    
     const bbox = this.textEl.nativeElement.getBBox();
     this.box.set({
       x: bbox.x - this.padding(),

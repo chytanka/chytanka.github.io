@@ -1,7 +1,7 @@
 const PROXY = `https://proxy.chytanka.ink/api?url=`
 
 export const environment = {
-    version: "0.13.58-2026.4.11",
+    version: "0.13.59-2026.4.22",
     prod: true,
     proxy: PROXY,
     blankaryoHost: `https://blankary.com/page/`,
@@ -13,7 +13,10 @@ export const environment = {
     mangadexScanlationGroup: `https://api.mangadex.org/group/`,
     telegraphHost: `https://api.telegra.ph/getPage/`,
     redditHost: `https://www.reddit.com/r/all/comments/`,
-    zenkoHost: `https:///api.zenko.online/chapters/`,
+    zenkoHost: `https://zenko.online`,
+    zenkoChapters: `https:///api.zenko.online/chapters/`,
+    zenkoTeams: `https://zenko.online/teams/`,
+    zenkoCdn: `https://storage.zenko.online/`,
     nhentaiHost: `https://nhentai.net/api/v2/galleries/`,
     comickHost: `https://api.comick.fun/chapter/`,
     yanderePoolsHost: `https://yande.re/pool/show.json/`,

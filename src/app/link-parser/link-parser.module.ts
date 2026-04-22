@@ -15,6 +15,7 @@ import { GoButtonComponent } from './ui/go-button/go-button.component';
 import { parserProviders } from './data-access/parser.providers';
 import { LinkParserService } from './data-access/link-parser.service';
 import { LinkParserFacade, LinkInitFacade, NavigationFacade, FileNetFacade } from './ui/parser-form/facades';
+import { ExtensionButtonComponent } from '../shared/ui/extension-button/extension-button.component';
 
 const FACADES = [
   LinkParserFacade,
@@ -38,7 +39,8 @@ const FACADES = [
     LinkParserRoutingModule,
     FormsModule,
     SharedModule,
-    HistoryModule
+    HistoryModule,
+    ExtensionButtonComponent
   ],
   providers: [
     ...FACADES

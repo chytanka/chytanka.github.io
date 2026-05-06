@@ -32,8 +32,9 @@ import { SourceCopyrightLogoComponent } from './ui/source-copyright-logo/source-
 import { SloganComponent } from './ui/slogan/slogan.component';
 import { ToggleBarComponent } from './ui/toggle-bar/toggle-bar.component';
 import { SvgTextBoxComponent } from './ui/svg-text-box/svg-text-box.component';
+import { ViewportZoneDirective } from './directives/viewport-zone.directive';
 
-const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent, NsfwWarningComponent, ImgMetaDirective, NewTabDirective, PagesIndicatorComponent, WarmFilterComponent, WarmControlComponent, ToggleBarComponent, SvgTextBoxComponent]
+const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent, NsfwWarningComponent, ImgMetaDirective, NewTabDirective, PagesIndicatorComponent, WarmFilterComponent, WarmControlComponent, ToggleBarComponent, SvgTextBoxComponent, ViewportZoneDirective]
 
 @NgModule({
   declarations: [...components],

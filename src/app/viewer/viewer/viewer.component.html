@@ -18,7 +18,7 @@
     <chtnk-page [attr.data-page-index]="i" (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()"
         (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt"
         [inputWidth]="img.width ?? 1000" [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)"
-        [index]="i" [class]="mode" [dir]="dir" [showLoading]="true" />
+        [index]="i" [class]="mode" [dir]="dir" [showLoading]="true" [filename]="img.filename" [captions]="getCaption(img.filename)" [captionLang]="captionLang()"/>
     }
 
     <chtnk-page class="last-hint-page" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()"
@@ -47,7 +47,7 @@
 @defer{
 @if (episode()) {
 <app-viewer-header [show]="viewerUi.showOverlay()" [episode]="episode()" [playlistLink]="playlistLink()"
-    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="viewerUi.isDialogOpen.set($event)" />
+    [currentPlaylistItem]="currentPlaylistItem()" (onToggle)="viewerUi.isDialogOpen.set($event)" (episodeLangChange)="captionLang.set($event)"/>
 }
 }
 

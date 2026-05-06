@@ -1,0 +1,97 @@
+:host {
+    --fill: white;
+    --a: .1;
+    position: absolute;
+    border: 1px dashed currentColor;
+    border-radius: .25ch;
+    background-color: oklch(from var(--fill) l c h / var(--a));
+    translate: -50% -50%;
+    font-size: .72rem;
+    text-align: center;
+    padding: 1.25ch;
+    z-index: 1;
+    font-family: 'Troubleside';
+
+
+    &.commentary {
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: unset;
+    }
+
+    &.code {
+        font-family: 'Source Code Pro', monospace;
+        text-align: unset;
+    }
+}
+
+
+.note {
+    text-wrap: balance;
+    border-radius: .25ch;
+    z-index: 42;
+    color: inherit;
+    font-size: inherit;
+    position: absolute;
+    top: calc(100% + 1ch);
+    left: 0;
+    background-color: var(--surface);
+    direction: ltr !important;
+    display: none;
+    padding: 1ch;
+    opacity: 1;
+    transition: all var(--t) ease-in-out;
+
+    box-shadow: var(--shadow-1);
+
+    ::ng-deep {
+        p {
+            direction: inherit;
+            margin: 0;
+        }
+
+        span.emphasis {
+            font-weight: bold;
+            font-style: oblique;
+        }
+
+        span.strong {
+            font-weight: bold;
+        }
+
+        // span.italic {
+        //     font-style: italic;
+        // }
+
+        // span.underline {
+        //     text-decoration: underline;
+        // }
+    }
+}
+
+ @starting-style {
+    .note {
+        opacity: 0;
+    }
+ }
+
+
+:host:hover {
+    --a: .4;
+    z-index: 43;
+
+    .note {
+        display: block;
+    }
+}
+
+:host {
+
+    &.zone-bottom-left,
+    &.zone-bottom-center,
+    &.zone-bottom-right {
+        .note {
+            top: unset;
+            bottom: calc(100% + 1ch);
+        }
+    }
+}

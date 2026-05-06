@@ -5,6 +5,7 @@ import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.serv
 import { DOCUMENT } from '@angular/common';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
+import { ChtnkPage } from '../../shared/utils/acbf';
 
 @Component({
   selector: 'app-viewer',
@@ -104,4 +105,13 @@ export class ViewerComponent implements AfterViewInit {
     if (!this.dom.isInteractiveElement(event.target as HTMLElement)) this.viewerUi.toggleFullScreen();
   }
 
+  //
+  //
+  //
+
+  getCaption(filename: string | undefined): ChtnkPage | undefined {
+    return this.episode().captions?.find(caption => caption.id === filename);
+  }
+
+  captionLang = signal<string>('en');
 }

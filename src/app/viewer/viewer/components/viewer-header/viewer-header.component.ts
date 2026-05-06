@@ -39,11 +39,17 @@ export class ViewerHeaderComponent {
 
   episode = input<CompositionEpisode>({
     title: '',
-    images: []
+    images: [],
+    captions: []
   })
 
   onToggle = output<boolean>();
+  episodeLangChange = output<string>();
   //#endregion
+
+  onEpisodeLangChange($event: any) {
+    this.episodeLangChange.emit($event.target?.value);
+  }
 
   // #region 🧠 State (signals)
   isDialogOpen = signal(false);

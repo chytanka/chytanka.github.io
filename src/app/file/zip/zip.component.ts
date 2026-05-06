@@ -64,6 +64,8 @@ export class ZipComponent implements OnInit, OnDestroy {
 
   private acbfHandler(msg: any) {
     const acbf = new Acbf(msg.data)
+    console.log(acbf.pages)
+    this.episode().captions = acbf.pages
   }
 
   private comicinfoHandler(msg: any) {
@@ -98,10 +100,11 @@ export class ZipComponent implements OnInit, OnDestroy {
   }
 
   private imageloadHandler(msg: any) {
-    const { index, url } = msg;
+    const { index, url, filename } = msg;
 
     if (this.episode() && this.episode().images[index])
       this.episode().images[index].src = url
+      this.episode().images[index].filename = filename
   }
 
   fileChange() {

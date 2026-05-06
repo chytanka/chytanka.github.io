@@ -1,3 +1,5 @@
+import { ChtnkPage } from "../../../shared/utils/acbf";
+
 export interface CompositionImage {
     src: string;
     width?: number;
@@ -6,6 +8,7 @@ export interface CompositionImage {
     type?: string;
     alt?: string;
     nsfw?: string;
+    filename?: string;
 }
 
 export interface CompositionPublisher {
@@ -31,6 +34,7 @@ export interface CompositionEpisode {
     extra?: boolean;
     publisher?: CompositionPublisher, 
     images: CompositionImage[];
+    captions?: ChtnkPage[];
 }
 
 export function isCompositionEpisode(data: any): data is CompositionEpisode {

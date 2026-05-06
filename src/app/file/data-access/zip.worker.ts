@@ -85,6 +85,7 @@ addEventListener('message', async ({ data }) => {
           type: ZipWorkerMessageType.ImageLoad,
           url,
           index: start + index,
+          filename: filename,
         });
       })
     );

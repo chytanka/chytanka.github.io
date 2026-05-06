@@ -10,10 +10,36 @@
     }
     <figure [class]="{nsfw:nsfw(), show: nsfw() && showNsfw()}">
         @if(src()){
-        <img crossorigin="anonymous" [id]="'page_'+(index()+1)" [src]="src()" [alt]="alt()" [attr.width]="widthPx()"
-            [attr.height]="heightPx()" [loading]="(index()==0 || preload()) ? 'eager' : 'lazy'" (load)="imageLoad($event)">
+        <img [attr.data-filename]="filename()" crossorigin="anonymous" [id]="'page_'+(index()+1)" [src]="src()"
+            [alt]="alt()" [attr.width]="widthPx()" [attr.height]="heightPx()"
+            [loading]="(index()==0 || preload()) ? 'eager' : 'lazy'" (load)="imageLoad($event)">
         } @else {
         <ng-content />
         }
+        @if(captions()) {
+        <svg class="captions" [attr.width]="width()" [attr.height]="height()" [attr.viewBox]="viewBox()"
+            xmlns="http://www.w3.org/2000/svg">
+            <g class="frames">
+                @for (f of captions()?.frames; track $index) {
+                <polygon [attr.points]="f.points" />
+                }
+            </g>
+            <g class="captions" style="display: none;">
+                @for (ct of captionText()?.captions; track $index) {
+                <polygon [attr.points]="ct.points" [attr.fill]="ct.fill ?? 'white'" [title]="ct.text" />
+                }
+            </g>
+        </svg>
+        }
+        <div class="text-layer" [style.width.px]="imageWidth()" [style.height.px]="imageHeight()">
+            @for (ct of captionText()?.captions; track $index) {
+            @let c = getCenter(ct.points);
+            <chtnk-text viewportZone class="caption-text" [classList]="ct.type" [style.width.px]="c.w * scale()"
+                [style.height.px]="c.h * scale()" [style.left.px]="c.x * scale()" [style.top.px]="c.y * scale()"
+                [attr.fill]="ct.fill ?? 'white'">
+                <div [innerHtml]="xmlToHtml(ct.text)"></div>
+            </chtnk-text>
+            }
+        </div>
     </figure>
 </div>

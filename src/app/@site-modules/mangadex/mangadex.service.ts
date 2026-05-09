@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { CompositionEpisode, CompositionImage, CompositionPublisher } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
+import { ChtnkEpisode, ChtnkImage, ChtnkPublisher } from '../../shared/models/chtnk-composition';
 
 interface MdChapterImages {
   hash: string;
@@ -94,7 +94,7 @@ export class MangadexService {
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
-  getChapterImages(id: string): Observable<CompositionImage[]> {
+  getChapterImages(id: string): Observable<ChtnkImage[]> {
     const url = isPlatformServer(this.platformId)
       ? environment.mangadexHost + id
       : this.proxy.proxyUrl(environment.mangadexHost + id);
@@ -111,7 +111,7 @@ export class MangadexService {
       )
   }
 
-  getChapter(id: string): Observable<CompositionEpisode> {
+  getChapter(id: string): Observable<ChtnkEpisode> {
     const url = isPlatformServer(this.platformId)
       ? environment.mangadexChapter + id
       : this.proxy.proxyUrl(environment.mangadexChapter + id);
@@ -132,7 +132,7 @@ export class MangadexService {
             volume: data.data.attributes.volume,
             chapter: data.data.attributes.chapter,
             images: []
-          } as unknown as CompositionEpisode
+          } as unknown as ChtnkEpisode
         }),
         catchError(error => throwError(() => error))
       )
@@ -156,7 +156,7 @@ export class MangadexService {
     })
   }
 
-  getScanlationGroup(id: string): Observable<CompositionPublisher | undefined> {
+  getScanlationGroup(id: string): Observable<ChtnkPublisher | undefined> {
     const endpoint = environment.mangadexScanlationGroup + id;
     const url = isPlatformServer(this.platformId) ? endpoint : this.proxy.proxyUrl(endpoint);
 

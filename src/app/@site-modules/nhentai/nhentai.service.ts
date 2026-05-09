@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CompositionEpisode } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class NhentaiService {
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const url = isPlatformServer(this.platformId)
       ? environment.nhentaiHost + id
       : this.proxy.proxyUrl(environment.nhentaiHost + id);
@@ -23,7 +23,7 @@ export class NhentaiService {
       .pipe(map((data) => { return this.map(data) }))
   }
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
     const mediaId = data.media_id;
     const mappedResponse = {
       title: data.title.pretty,

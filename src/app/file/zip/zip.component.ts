@@ -2,7 +2,6 @@ import { Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/c
 import { FileService } from '../data-access/file.service';
 import { SharedModule } from '../../shared/shared.module';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read';
 import { DomManipulationService } from '../../shared/data-access';
 import { ComicInfo } from '../../shared/utils/comic-info';
 import { Acbf } from '../../shared/utils/acbf';
@@ -10,6 +9,7 @@ import { FileHashService } from '../data-access/file-hash.service';
 import { ViewerModule } from '../../viewer/viewer.module';
 import { ZipHistoryFacade, ZipWorkerFacade } from './facades';
 import { ZipWorkerMessageType } from '../models';
+import { ChtnkEpisode, ChtnkImage } from '../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-zip',
@@ -22,7 +22,7 @@ export class ZipComponent implements OnInit, OnDestroy {
   workerFacade = inject(ZipWorkerFacade)
   historyFacade = inject(ZipHistoryFacade)
 
-  episode = signal<CompositionEpisode>({ title: '', images: [] });
+  episode = signal<ChtnkEpisode>({ title: '', images: [] });
 
   fileHash = inject(FileHashService)
 
@@ -64,8 +64,9 @@ export class ZipComponent implements OnInit, OnDestroy {
 
   private acbfHandler(msg: any) {
     const acbf = new Acbf(msg.data)
-    console.log(acbf.pages)
-    this.episode().captions = acbf.pages
+    console.log(acbf.scene)
+    this.episode().captions = acbf.scene.captions
+    this.episode().frames = acbf.scene.frames
   }
 
   private comicinfoHandler(msg: any) {
@@ -82,7 +83,7 @@ export class ZipComponent implements OnInit, OnDestroy {
     this.loading.set(false);
     if (msg.data.count == 0) return;
 
-    const imgs: CompositionImage[] = [...Array(msg.data.count)].map((item: CompositionImage, index) => { return { src: `/assets/no-image.svg?id=${index}` } });
+    const imgs: ChtnkImage[] = [...Array(msg.data.count)].map((item: ChtnkImage, index) => { return { src: `/assets/no-image.svg?id=${index}` } });
 
     this.workerFacade.loadNextBatch(0);
 
@@ -104,7 +105,7 @@ export class ZipComponent implements OnInit, OnDestroy {
 
     if (this.episode() && this.episode().images[index])
       this.episode().images[index].src = url
-      this.episode().images[index].filename = filename
+      this.episode().images[index].id = filename
   }
 
   fileChange() {

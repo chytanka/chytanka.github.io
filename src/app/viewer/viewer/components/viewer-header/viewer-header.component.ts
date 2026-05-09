@@ -1,6 +1,5 @@
-import { Component, computed, effect, HostListener, inject, input, output, PLATFORM_ID, Signal, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, HostListener, inject, input, output, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { DomManipulationService } from '../../../../shared/data-access';
-import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
@@ -11,6 +10,7 @@ import { GamepadButton } from '../../../../shared/models';
 import { FileService } from '../../../../file/data-access/file.service';
 import { ViewerService } from '../../../services';
 import { Router } from '@angular/router';
+import { ChtnkEpisode } from '../../../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-viewer-header',
@@ -37,7 +37,7 @@ export class ViewerHeaderComponent {
   playlistLink = input("");
   currentPlaylistItem = input<PlaylistItem | undefined>();
 
-  episode = input<CompositionEpisode>({
+  episode = input<ChtnkEpisode>({
     title: '',
     images: [],
     captions: []
@@ -121,4 +121,13 @@ export class ViewerHeaderComponent {
     this.domMan.setHotkeys(event, this.hotKeys)
   }
   //#endregion
+
+  getCaptionLangs() {
+    const langs = [...new Set(
+      this.episode().captions?.
+        map(c => c.lang)
+        .filter(Boolean) ?? []
+    )];
+    return langs;
+  }
 }

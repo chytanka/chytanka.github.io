@@ -14,11 +14,11 @@
     }
     <button [vibrateHaptic]="10" class="button tshadow title" [title]="titleText()"
         (click)="showInfo()">{{titleText()}}</button>
-    @let episodeLangs = (episode().captions?.[0]?.texts) || [];
+    @let episodeLangs = getCaptionLangs();
     @if(episodeLangs.length > 0){
     <select name="select-episode-lang" id="episode-lang" class="button" (input)="onEpisodeLangChange($event)">
         @for(lang of episodeLangs; track $index) {
-        <option [value]="lang.lang">{{lang.lang}}</option>}
+        <option [value]="lang">{{lang}}</option>}
     </select>}
     <app-view-mode-bar (valueChange)="setViewModeOption($event)" [options]="viewer.viewModeOptions"
         [value]="viewer.viewModeOption().code" />

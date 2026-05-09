@@ -2,10 +2,9 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode } from '../@common-read';
-import { Base64 } from '../../shared/utils';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class YandereService {
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const url = isPlatformServer(this.platformId)
       ? environment.yanderePoolsHost + id
       : this.proxy.proxyUrl(environment.yanderePoolsHost + id);
@@ -24,7 +23,7 @@ export class YandereService {
       .pipe(map((data) => { return this.map(data) }))
   }
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
     const mappedResponse = {
       title: data.name,
 

@@ -2,8 +2,8 @@ import { isPlatformServer } from "@angular/common";
 import { Injectable, signal, computed, PLATFORM_ID, inject, Signal, effect } from "@angular/core";
 import { ViewModeFacade } from "./view-mode.facade";
 import { EmbedFacade } from "./viewer-embed.facade";
-import { CompositionEpisode } from "../../@site-modules/@common-read";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
+import { ChtnkEpisode } from "../../shared/models/chtnk-composition";
 
 @Injectable()
 export class PageTrackingFacade {
@@ -51,7 +51,7 @@ export class PageTrackingFacade {
         });
     }
 
-    connectPagesCount(episode: Signal<CompositionEpisode>) {
+    connectPagesCount(episode: Signal<ChtnkEpisode>) {
         effect(() => this.pagesCount.set(episode().images.length));
     }
 

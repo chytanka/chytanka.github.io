@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode } from '../@common-read';
 import { environment } from '../../../environments/environment';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +13,14 @@ export class TelegraphService {
 
   constructor(private http: HttpClient) { }
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const params = new HttpParams().set('return_content', 'true');
     return this.http.get<any>(environment.telegraphHost + id , { params: params })
       .pipe(map((data) => { return this.map(data) }))
   }
 
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
     const mappedResponse = {
       title: data.result.title,
       images: (data.result.content.map((item: any) => {

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CompositionEpisode } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +13,13 @@ export class RedditService {
 
   constructor(private http: HttpClient) { }
 
-  getComposition(postId: string): Observable<CompositionEpisode> {
+  getComposition(postId: string): Observable<ChtnkEpisode> {
     const url = environment.redditHost + postId + '.json';
     return this.http.get<any>(this.proxy.proxyUrl(url))
       .pipe(map((data: any) => { return this.map(data) }))
   }
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
 
     const media_metadata = data[0].data.children[0].data.media_metadata
 
@@ -27,7 +27,7 @@ export class RedditService {
       ?? Object.keys(media_metadata).map(i => { return { media_id: i } });
 
     const post = data[0].data.children[0].data;
-    const res: CompositionEpisode = {
+    const res: ChtnkEpisode = {
       title: post.title,
       nsfw: post.thumbnail == "nsfw" || post.over_18,
       images: imgs.map((i: any): any => {

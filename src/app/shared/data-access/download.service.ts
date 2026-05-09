@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CompositionEpisode, CompositionImage } from '../../@site-modules/@common-read'
+import { ChtnkEpisode, ChtnkImage } from '../models/chtnk-composition';
 
 enum DownloadStatus {
   Downloading = "downloading",
@@ -17,11 +17,11 @@ type DownloadQueue<T> = {
   dateDownloaded: Date | undefined;
 }
 
-interface DownloadCompositionImage extends CompositionImage {
+interface DownloadCompositionImage extends ChtnkImage {
   image: number[]
   status: DownloadStatus;
 }
-interface DowloadCompositionEpisode extends CompositionEpisode {
+interface DowloadCompositionEpisode extends ChtnkEpisode {
   images: DownloadCompositionImage[]
 }
 
@@ -37,11 +37,11 @@ export class DownloadService {
    * -[ ] 
    */
 
-  queue: DownloadQueue<CompositionEpisode>[] = []
+  queue: DownloadQueue<ChtnkEpisode>[] = []
 
   constructor() { }
 
-  map(ep: CompositionEpisode): DowloadCompositionEpisode {
+  map(ep: ChtnkEpisode): DowloadCompositionEpisode {
     return {
       title: ep.title,
       chapter: ep.chapter,
@@ -68,7 +68,7 @@ export class DownloadService {
     }
   }
 
-  addToQueue(episode: CompositionEpisode, id: string) {
+  addToQueue(episode: ChtnkEpisode, id: string) {
     const qi = this.getFromQueue(id)
     if (qi) return;
     this.queue.push(

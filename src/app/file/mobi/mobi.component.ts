@@ -1,10 +1,10 @@
 import { Component, effect, inject } from '@angular/core';
-import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { Router } from '@angular/router';
 import { FileService } from '../data-access/file.service';
 import { MobiFileReader } from 'readiverse';
 import { SharedModule } from '../../shared/shared.module';
 import { ViewerModule } from '../../viewer/viewer.module';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 @Component({
     selector: 'app-mobi',
@@ -13,7 +13,7 @@ import { ViewerModule } from '../../viewer/viewer.module';
     styleUrl: './mobi.component.scss'
 })
 export class MobiComponent {
-  episode: CompositionEpisode | undefined;
+  episode: ChtnkEpisode | undefined;
   router = inject(Router)
   fs = inject(FileService)
 

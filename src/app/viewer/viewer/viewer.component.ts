@@ -1,11 +1,10 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, input, Signal, ViewChild, WritableSignal, computed, inject, signal, output } from '@angular/core';
-import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { LangService } from '../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../playlist/data-access/playlist.service';
 import { DOCUMENT } from '@angular/common';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from '../facades';
 import { DomManipulationService } from '../../shared/data-access';
-import { ChtnkPage } from '../../shared/utils/acbf';
+import { ChtnkCaption, ChtnkEpisode, ChtnkFrame } from '../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-viewer',
@@ -33,7 +32,7 @@ export class ViewerComponent implements AfterViewInit {
   private readonly dom = inject(DomManipulationService);
   private readonly document = inject(DOCUMENT);
 
-  episode = input<CompositionEpisode>({ title: '', images: [] });
+  episode = input<ChtnkEpisode>({ title: '', images: [] });
   playlistLink = input("");
   currentPlaylistItem = input<PlaylistItem | undefined>();
   playlistInput = input<Playlist>([]);
@@ -109,8 +108,12 @@ export class ViewerComponent implements AfterViewInit {
   //
   //
 
-  getCaption(filename: string | undefined): ChtnkPage | undefined {
-    return this.episode().captions?.find(caption => caption.id === filename);
+  getCaption(filename: string | undefined): ChtnkCaption[] {
+    return this.episode().captions?.filter(caption => caption.id === filename) || [];
+  }
+
+  getFrame(filename: string | undefined): ChtnkFrame[] {
+    return this.episode().frames?.filter(frame => frame.id === filename) || [];
   }
 
   captionLang = signal<string>('en');

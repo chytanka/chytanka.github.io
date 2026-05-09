@@ -1,10 +1,10 @@
 import { Component, computed, inject, input, output, PLATFORM_ID, Signal } from '@angular/core';
 import { DomManipulationService } from '../../../../shared/data-access';
-import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { isPlatformBrowser } from '@angular/common';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ViewerService } from '../../../services';
+import { ChtnkEpisode } from '../../../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'episode-share-form',
@@ -21,7 +21,7 @@ export class EpisodeShareFormComponent {
   viewer = inject(ViewerService)
 
 
-  episode = input<CompositionEpisode>({
+  episode = input<ChtnkEpisode>({
     title: '',
     images: []
   })

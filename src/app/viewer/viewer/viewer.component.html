@@ -18,7 +18,7 @@
     <chtnk-page [attr.data-page-index]="i" (longPageDetected)="viewMode.setLongStripMode()" (agree)="nsfw.agree()"
         (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()" [nsfw]="nsfwEpisode" [src]="img.src" [alt]="img.alt"
         [inputWidth]="img.width ?? 1000" [inputHeight]="img.height ?? 1000" [preload]="pageTracking.shouldPreload(i)"
-        [index]="i" [class]="mode" [dir]="dir" [showLoading]="true" [filename]="img.filename" [captions]="getCaption(img.filename)" [captionLang]="captionLang()"/>
+        [index]="i" [class]="mode" [dir]="dir" [showLoading]="true" [filename]="img.id" [captions]="getCaption(img.id)" [captionLang]="captionLang()" [frames]="getFrame(img.id)"/>
     }
 
     <chtnk-page class="last-hint-page" (agree)="nsfw.agree()" (disagree)="nsfw.disagree()" [showNsfw]="nsfw.show()"

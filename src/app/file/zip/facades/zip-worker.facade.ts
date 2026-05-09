@@ -1,6 +1,6 @@
 import { Injectable, WritableSignal } from "@angular/core";
-import { CompositionEpisode } from "../../../@site-modules/@common-read";
 import { ZipWorkerCommandType } from "../../models";
+import { ChtnkEpisode } from "../../../shared/models/chtnk-composition";
 
 @Injectable()
 export class ZipWorkerFacade {
@@ -27,7 +27,7 @@ export class ZipWorkerFacade {
     }
 
     // worker
-    async openArrayBuffer(ab: ArrayBuffer, filename: string, sha256: string = '', episode: WritableSignal<CompositionEpisode | undefined>) {
+    async openArrayBuffer(ab: ArrayBuffer, filename: string, sha256: string = '', episode: WritableSignal<ChtnkEpisode | undefined>) {
         // if (sha256 == '') this.sha256 = await this.fileHash.sha256(this.fs.file() as File)
 
         episode.set({ title: filename, images: [] });

@@ -1,7 +1,7 @@
 import { inject, Injectable, Signal } from "@angular/core";
 import { parseTags, resolveViewMode } from "../../shared/utils";
 import { ViewModeFacade } from "./view-mode.facade";
-import { CompositionEpisode } from "../../@site-modules/@common-read";
+import { ChtnkEpisode } from "../../shared/models/chtnk-composition";
 
 /**
  * Facade for the viewer title tag. 
@@ -13,9 +13,9 @@ import { CompositionEpisode } from "../../@site-modules/@common-read";
 export class ViewerTitleTagFacade {
     viewMode = inject(ViewModeFacade);
 
-    private _episode!: Signal<CompositionEpisode>;
+    private _episode!: Signal<ChtnkEpisode>;
 
-    initialize(ep: Signal<CompositionEpisode>) {
+    initialize(ep: Signal<ChtnkEpisode>) {
         this._episode = ep;
 
         const tags = parseTags(this._episode().title);

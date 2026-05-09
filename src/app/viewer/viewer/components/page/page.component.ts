@@ -1,6 +1,6 @@
 import { Component, computed, Host, HostListener, inject, input, InputSignal, output, OutputEmitterRef, Signal, signal } from '@angular/core';
 import { LangService } from '../../../../shared/data-access/lang.service';
-import { ChtnkPage } from '../../../../shared/utils/acbf';
+import { ChtnkCaption, ChtnkFrame } from '../../../../shared/models/chtnk-composition';
 
 type TSpanChunk = {
   text: string;
@@ -25,11 +25,12 @@ export class PageComponent {
   src: InputSignal<string> = input('');
   alt: InputSignal<string | undefined> = input();
   filename: InputSignal<string | undefined> = input();
-  captions: InputSignal<ChtnkPage | undefined> = input();
+  captions: InputSignal<ChtnkCaption[]> = input([] as ChtnkCaption[]);
+  frames: InputSignal<ChtnkFrame[]> = input([] as ChtnkFrame[]);
   captionLang: InputSignal<string> = input('en');
 
-  captionText = computed(() => {
-    return this.captions()?.texts?.find(f => f.lang == this.captionLang())
+  captionByLang = computed(() => {
+    return this.captions()?.filter(f => f.lang == this.captionLang())
   });
 
   inputWidth = input(1000);

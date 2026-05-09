@@ -33,6 +33,7 @@ import { SloganComponent } from './ui/slogan/slogan.component';
 import { ToggleBarComponent } from './ui/toggle-bar/toggle-bar.component';
 import { SvgTextBoxComponent } from './ui/svg-text-box/svg-text-box.component';
 import { ViewportZoneDirective } from './directives/viewport-zone.directive';
+import { ChButtonComponent } from './ui/ch-button/ch-button.component';
 
 const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent, OverlayComponent, ViewModeBarComponent, MadeInUkraineComponent, DialogComponent, LangToggleComponent, TitleCardComponent, LoadingComponent, SeparatorComponent, FileChangeComponent, ChytankaLogoWithTagsComponent, FileSizePipe, VibrateHapticDirective, SircleBlurComponent, DropZoneComponent, SourceCopyrightComponent, SourceCopyrightLogoComponent, SloganComponent, NsfwWarningComponent, ImgMetaDirective, NewTabDirective, PagesIndicatorComponent, WarmFilterComponent, WarmControlComponent, ToggleBarComponent, SvgTextBoxComponent, ViewportZoneDirective]
 
@@ -43,7 +44,8 @@ const components = [GamepadCursorComponent, TruncatePipe, TextEmbracerComponent,
     FormsModule,
     RouterModule,
     RoughPaperComponent,
-    SharpenComponent
+    SharpenComponent,
+    ChButtonComponent
   ],
   exports: [...components]
 })

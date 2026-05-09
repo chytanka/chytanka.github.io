@@ -1,10 +1,13 @@
 <app-overlay class="show top">
-    <button [vibrateHaptic]="10" [title]="lang.ph().faq+' (F1)'" class="button tshadow" (click)="showHelp()">❔</button>
-    <button [vibrateHaptic]="10" [title]="lang.ph().settings+' (F2)'" class="button tshadow" (click)="showSettings()">⚙️</button>
-    <separator/>
-    <button [vibrateHaptic]="10" [title]="lang.ph().history+ ' (Ctrl+H)'" (click)="showHistory()" class="button tshadow">📜</button>
-    <!-- <button title="Downloads" disabled class="button tshadow">📥</button>
-    <button title="Library" disabled class="button tshadow">📚</button> -->
+    <button [vibrateHaptic]="10" [title]="lang.ph().faq+' (F1)'" ch-button class="tshadow"
+        (click)="showHelp()">❔</button>
+    <button [vibrateHaptic]="10" [title]="lang.ph().settings+' (F2)'" ch-button class="tshadow"
+        (click)="showSettings()">⚙️</button>
+    <separator />
+    <button [vibrateHaptic]="10" [title]="lang.ph().history+ ' (Ctrl+H)'" ch-button class="tshadow"
+        (click)="showHistory()">📜</button>
+    <!-- <button title="Downloads" disabled ch-button class=" tshadow">📥</button>
+    <button title="Library" disabled ch-button class=" tshadow">📚</button> -->
     <app-extension-button style="margin-left: auto;" />
     <app-lang-toggle />
 </app-overlay>
@@ -19,4 +22,4 @@
 
 <app-dialog #historyDialog [title]="'📜 ' + lang.ph().history">
     @defer{ <app-history-list /> }
-  </app-dialog>
+</app-dialog>

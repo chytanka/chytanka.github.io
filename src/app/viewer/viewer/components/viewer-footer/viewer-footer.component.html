@@ -4,14 +4,14 @@
     }
 
     @if (playlist().length >0) {
-    <button [vibrateHaptic]="10" class="button " (click)="showPlayList()" [title]="lang.ph().readlist">📚</button>
+    <button [vibrateHaptic]="10" ch-button (click)="showPlayList()" [title]="lang.ph().readlist">📚</button>
     }
 
     <app-pages-indicator style="margin: auto; overflow-x: auto; scrollbar-width: none;" [activeIndexs]="activeIndexs()"
         [images]="episode()?.images" [class]="viewer.viewModeOption().mode" [dir]="viewer.viewModeOption().dir"
         (active)="onActive($event)" />
     @if (domMan.fullscreenEnabled()) {
-    <button [vibrateHaptic]="10" class="button" (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">
+    <button [vibrateHaptic]="10" ch-button (click)="onToggleFullScreen()" [title]="lang.ph().fullscreen">
         🖥️
     </button>
     }

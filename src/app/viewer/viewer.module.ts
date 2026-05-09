@@ -6,12 +6,14 @@ import { SharedModule } from '../shared/shared.module';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from './facades';
 import { ViewerService } from './services';
 import { TextComponent } from './viewer/components/text/text.component';
+import { ChButtonComponent } from '../shared/ui/ch-button/ch-button.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ChButtonComponent
   ],
   providers: [
     ViewerService,

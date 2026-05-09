@@ -1,22 +1,22 @@
 @let ph = lang.ph();
 <app-overlay class="top" [ngClass]="{'show': show()}">
     @if(!embedHelper.isEmbedded()){
-    <a [vibrateHaptic]="10" class="button " [routerLink]="['/']">🏠</a>
+    <a [vibrateHaptic]="10" ch-button [routerLink]="['/']">🏠</a>
     <app-file-change [accept]="file.access()" [label]="'📃'" />
     } @else {
-    <a title="Read on Chytanka" class="button open-chtnk-link" [href]="link()" target="_blank"
+    <a title="Read on Chytanka" ch-button class="open-chtnk-link" [href]="link()" target="_blank"
         rel="noopener noreferrer"></a>
     }
     <separator />
     @if (!isFileRoute()) {
-    <button [vibrateHaptic]="10" class="button tshadow " [title]="ph.share" (click)="showShare()">📢</button>
-    <!-- <button [vibrateHaptic]="10" class="button tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
+    <button [vibrateHaptic]="10" ch-button class="tshadow" [title]="ph.share" (click)="showShare()">📢</button>
+    <!-- <button [vibrateHaptic]="10" ch-button class="tshadow" [title]="'Download'" (click)="showDownload()">📥</button> -->
     }
-    <button [vibrateHaptic]="10" class="button tshadow title" [title]="titleText()"
+    <button [vibrateHaptic]="10" ch-button class="tshadow title" [title]="titleText()"
         (click)="showInfo()">{{titleText()}}</button>
     @let episodeLangs = getCaptionLangs();
     @if(episodeLangs.length > 0){
-    <select name="select-episode-lang" id="episode-lang" class="button" (input)="onEpisodeLangChange($event)">
+    <select name="select-episode-lang" id="episode-lang" ch-button (input)="onEpisodeLangChange($event)">
         @for(lang of episodeLangs; track $index) {
         <option [value]="lang">{{lang}}</option>}
     </select>}

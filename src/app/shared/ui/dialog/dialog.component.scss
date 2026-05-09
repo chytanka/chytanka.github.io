@@ -23,10 +23,6 @@ dialog {
         --dots: radial-gradient(var(--surface) 4px, transparent 0px);
         --size: 10px;
         background-color: transparent;
-        // background-image: var(--dots);
-        // background-repeat: repeat;
-        // background-size: var(--size) var(--size);
-        // background-position: center;
         --brightness: .6;
         backdrop-filter:  grayscale(.8) url(#circleBlur);
     }
@@ -34,10 +30,7 @@ dialog {
     .dialog-wrapper {
         color: inherit;
         display: grid;
-        // max-height: 100%;
-        // width: 100%;
         grid-template: auto 1fr auto / 1fr;
-        // width: min(90vw, 60ch);
         margin: 4ch auto;
         max-width: min(calc(100vw - 4ch), 60ch);
         max-height: calc(100dvh - 8ch);
@@ -129,5 +122,49 @@ dialog {
     dialog .dialog-wrapper {
         corner-shape: squircle;
         border-radius: calc(var(--r) * 3);
+    }
+}
+
+
+@supports (transition-behavior: allow-discrete) {
+
+    dialog,
+    dialog::backdrop {
+        transition-property: opacity, transform, overlay, display, filter;
+        transition-duration: var(--t);
+        transition-behavior: allow-discrete;
+        opacity: 0;
+        transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
+        filter: blur(var(--blur));
+    }
+
+    dialog[open],
+    dialog[open]::backdrop {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+
+    @starting-style {
+
+        dialog[open],
+        dialog[open]::backdrop {
+            opacity: 0;
+            transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
+            filter: blur(var(--blur));
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    dialog,
+    dialog::backdrop,
+    dialog[open],
+    dialog[open]::backdrop {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
     }
 }

@@ -17,7 +17,7 @@ https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
                 style="box-shadow: var(--shadow-1); border: 1px solid #8884; padding: .5ch; border-radius: .5ch;">
                 <div class="input-group">
                     <input style="width: 100%;" placeholder="Введіть назву епізоду (не обов'язково)" type="text"
-                        [(ngModel)]="item.title"> <button class="button"
+                        [(ngModel)]="item.title"> <button ch-button class=""
                         (click)=" (setAutoTitle(item.link, item))">🤖🏷️</button>
                 </div> <br>
 
@@ -36,7 +36,7 @@ https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
                 rel="noopener noreferrer">Gist</a> 📋💻🌐</h4>
         <div class="input-group">
             <textarea style="width: 100%; height: 8lh; resize: unset;" readonly>{{outputValue() | json}}</textarea>
-            <button class="button small" (click)="copy()">Copy</button>
+            <button ch-button class="small" (click)="copy()">Copy</button>
         </div>
     </section>
 
@@ -44,7 +44,7 @@ https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
         <h4>Вставте посилання на RAW JSON-файл 🔗📄</h4>
         <div class="input-group" style="gap: 1ch">
             <input type="text" [ngModel]="rawJsonLink()" (ngModelChange)="rawJsonLink.set($event);">
-            @if(rawJsonLink()){<a style="text-align: center;" class="button large primary" target="__blank"
+            @if(rawJsonLink()){<a style="text-align: center;" ch-button class="large primary" target="__blank"
                 [routerLink]="['/', parsedFirstLink()?.site, parsedFirstLink()?.id]"
                 [queryParams]="{lang: lang.lang(), list: rawJsonLink()}">
                 {{getItem(firstLink())?.title != ''? getItem(firstLink())?.title :
@@ -54,6 +54,6 @@ https://telegra.ph/YAk-kozaki-kulіsh-varili-ch2-07-03" [ngModel]="inputValue()"
 </main>
 
 <app-overlay class="show top">
-    <a class="button " [routerLink]="['/']">🏠</a>
+    <a ch-button class=" " [routerLink]="['/']">🏠</a>
 </app-overlay>
 

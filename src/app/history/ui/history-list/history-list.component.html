@@ -10,7 +10,7 @@
     <summary>
         <div class="summary-title">
             <span>{{lang.ph().sitesHistory}}</span>
-            <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearHistory()">
+            <button ch-button [title]="lang.ph().clearHistory" class="delete small" (click)="clearHistory()">
                 🧹
             </button>
         </div>
@@ -43,7 +43,7 @@
             <span>{{lang.ph().filesHistory}}</span> |
             <code>{{fileSize() | filesize}}</code> |
             <code>{{fileCount()}}</code>
-            <button [title]="lang.ph().clearHistory" class="button delete small" (click)="clearFileHistory()">
+            <button ch-button [title]="lang.ph().clearHistory" class=" delete small" (click)="clearFileHistory()">
                 🧹
             </button>
         </div>

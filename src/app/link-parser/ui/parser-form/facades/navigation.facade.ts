@@ -11,4 +11,10 @@ export class NavigationFacade {
         if (!data) return;
         this.router.navigateByUrl(`/${data.site}/${data.id64}`);
     }
+
+    goByRedirectParams() {
+        const data = this.linkFacade.redirectParams();
+        if (!data) return;
+        this.router.navigateByUrl(`/${data.site}/${data.id}`);
+    }
 }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
 import { ViewerService } from '../../../services';
 import { LangService } from '../../../../shared/data-access/lang.service';
-import { CompositionEpisode } from '../../../../@site-modules/@common-read';
+import { ChtnkEpisode } from '../../../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-thanks-page',
@@ -14,7 +14,7 @@ import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 export class ThanksPageComponent {
   viewer: ViewerService = inject(ViewerService)
   lang: LangService = inject(LangService)
-  episode = input<CompositionEpisode | undefined>();
+  episode = input<ChtnkEpisode | undefined>();
 
   playlist = input<Playlist>([]);
   playlistLink = input("");

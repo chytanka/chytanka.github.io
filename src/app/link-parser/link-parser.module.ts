@@ -16,6 +16,7 @@ import { parserProviders } from './data-access/parser.providers';
 import { LinkParserService } from './data-access/link-parser.service';
 import { LinkParserFacade, LinkInitFacade, NavigationFacade, FileNetFacade } from './ui/parser-form/facades';
 import { ExtensionButtonComponent } from '../shared/ui/extension-button/extension-button.component';
+import { ChButtonComponent } from '../shared/ui/ch-button/ch-button.component';
 
 const FACADES = [
   LinkParserFacade,
@@ -40,7 +41,8 @@ const FACADES = [
     FormsModule,
     SharedModule,
     HistoryModule,
-    ExtensionButtonComponent
+    ExtensionButtonComponent,
+    ChButtonComponent
   ],
   providers: [
     ...FACADES

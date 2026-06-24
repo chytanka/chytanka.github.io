@@ -1,5 +1,11 @@
-import { Component, computed, inject, input, InputSignal, output, OutputEmitterRef, Signal, signal } from '@angular/core';
+import { Component, computed, Host, HostListener, inject, input, InputSignal, output, OutputEmitterRef, Signal, signal } from '@angular/core';
 import { LangService } from '../../../../shared/data-access/lang.service';
+import { ChtnkCaption, ChtnkFrame } from '../../../../shared/models/chtnk-composition';
+
+type TSpanChunk = {
+  text: string;
+  attrs: Record<string, string>;
+};
 
 @Component({
   selector: 'chtnk-page',
@@ -18,6 +24,14 @@ export class PageComponent {
   showNsfw: InputSignal<boolean> = input(false);
   src: InputSignal<string> = input('');
   alt: InputSignal<string | undefined> = input();
+  filename: InputSignal<string | undefined> = input();
+  captions: InputSignal<ChtnkCaption[]> = input([] as ChtnkCaption[]);
+  frames: InputSignal<ChtnkFrame[]> = input([] as ChtnkFrame[]);
+  captionLang: InputSignal<string> = input('en');
+
+  captionByLang = computed(() => {
+    return this.captions()?.filter(f => f.lang == this.captionLang())
+  });
 
   inputWidth = input(1000);
   inputHeight = input(1000);
@@ -27,6 +41,8 @@ export class PageComponent {
 
   width = computed(() => this.naturalWidth() ?? this.inputWidth());
   height = computed(() => this.naturalHeight() ?? this.inputHeight());
+
+  viewBox = computed(() => `0 0 ${this.width()} ${this.height()}`);
 
   widthPx = computed(() => this.width().toString() + 'px');
   heightPx = computed(() => this.height().toString() + 'px');
@@ -47,6 +63,7 @@ export class PageComponent {
 
   async imageLoad(event: Event) {
     const img = event.target as HTMLImageElement;
+    this.image = img;
     this.imageLoading.set(false)
     this.naturalWidth.set(img.naturalWidth);
     this.naturalHeight.set(img.naturalHeight);
@@ -68,6 +85,7 @@ export class PageComponent {
       console.warn('Failed to get bitmap size, fallback to naturalWidth/naturalHeight', e);
     }
 
+    this.calcScale();
     this.detectLongPage(this.naturalWidth(), this.naturalHeight())
   }
 
@@ -86,4 +104,46 @@ export class PageComponent {
   }
 
   //#endregion
+
+  ///// 
+
+  image: HTMLImageElement | null = null;
+
+  imageWidth = signal(0);
+  imageHeight = signal(0);
+  scale = signal(1);
+
+  @HostListener('window:resize')
+  calcScale() {
+    if (!this.image) return;
+
+    this.imageWidth.set(this.image.width);
+    this.imageHeight.set(this.image.height);
+
+    this.scale.set( this.image.width / this.naturalWidth());
+
+  }
+
+
+  getCenter(pointsStr: string) {
+    const pts = pointsStr.split(' ').map(p => p.split(',').map(Number));
+    const xs = pts.map(p => p[0]);
+    const ys = pts.map(p => p[1]);
+
+    return {
+      x: (Math.min(...xs) + Math.max(...xs)) / 2,
+      y: (Math.min(...ys) + Math.max(...ys)) / 2,
+      w: Math.max(...xs) - Math.min(...xs),
+      h: Math.max(...ys) - Math.min(...ys),
+    };
+  }
+
+  ///
+
+  xmlToHtml(xml: string): string {
+    const result = xml
+      .replace('<emphasis>','<span class="emphasis">').replace('</emphasis>','</span>')
+      .replace('<strong>','<span class="strong">').replace('</strong>','</span>');
+    return result;
+  }
 }

@@ -5,12 +5,15 @@ import { VIEWER_DECLARABLES } from './viewer.declarables';
 import { SharedModule } from '../shared/shared.module';
 import { EmbedFacade, GamepadFacade, KeyboardFacade, NsfwFacade, PageTrackingFacade, ReadlistFacade, ViewerScrollFacade, ViewerTitleTagFacade, ViewerUiFacade, ViewModeFacade } from './facades';
 import { ViewerService } from './services';
+import { TextComponent } from './viewer/components/text/text.component';
+import { ChButtonComponent } from '../shared/ui/ch-button/ch-button.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ChButtonComponent
   ],
   providers: [
     ViewerService,
@@ -25,7 +28,7 @@ import { ViewerService } from './services';
     ReadlistFacade,
     ViewerTitleTagFacade
   ],
-  declarations: [...VIEWER_DECLARABLES],
+  declarations: [...VIEWER_DECLARABLES, TextComponent],
   exports: [...VIEWER_DECLARABLES]
 })
 export class ViewerModule { }

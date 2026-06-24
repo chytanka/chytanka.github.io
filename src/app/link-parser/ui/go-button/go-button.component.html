@@ -1,5 +1,5 @@
 @if (data()) {
-<a class="button primary large go-btn" [routerLink]="['', data().site, data().id64]">
+<a ch-button class=" primary large go-btn" [routerLink]="['', data().site, data().id64]">
     <span>{{ ph().letsgo }}</span>
     <img class="favicon" [src]="data().favicon" [alt]="data().site">
     <small class="site-address" [title]="data().id">

@@ -1,5 +1,5 @@
 // link-parser.facade.ts
-import { Injectable, computed, signal, Signal } from '@angular/core';
+import { Injectable, computed, signal, Signal, WritableSignal } from '@angular/core';
 import { LinkParserService } from '../../../data-access/link-parser.service';
 import { Base64 } from '../../../../shared/utils';
 import { LinkParseResult } from '../../../utils';
@@ -17,11 +17,19 @@ const FAVICONS: Map<string, string> = new Map([
   ['read', 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗯️</text></svg>']
 ]);
 
+interface RedirectParams {
+  site: string;
+  id: string;
+  queryParams?: string;
+}
+
 @Injectable()
 export class LinkParserFacade {
   constructor(private parser: LinkParserService) { }
 
   readonly link = signal('');
+
+  readonly redirectParams: WritableSignal<RedirectParams | undefined> = signal(undefined);
 
   readonly linkParams: Signal<LinkParseResult | null> = computed(() =>
     this.parser.parse(this.link())
@@ -38,6 +46,10 @@ export class LinkParserFacade {
       favicon: FAVICONS.get(params.site)
     };
   });
+
+  setRedirectParams(redirectParams: RedirectParams) {
+    this.redirectParams.set(redirectParams)
+  }
 
   setLink(value: string) {
     this.link.set(value);

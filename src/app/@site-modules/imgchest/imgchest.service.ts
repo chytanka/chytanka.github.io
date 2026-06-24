@@ -2,9 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode, CompositionImage } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
+import { ChtnkEpisode, ChtnkImage } from '../../shared/models/chtnk-composition';
+
 interface ImgchestRespCompImage {
   id: string;
   description: string;
@@ -40,7 +41,7 @@ export class ImgchestService {
 
   constructor() { }
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.clientId}`
     });
@@ -54,12 +55,12 @@ export class ImgchestService {
   }
 
 
-  map(data: ImgchestRespComp): CompositionEpisode {
-    const res: CompositionEpisode = {
+  map(data: ImgchestRespComp): ChtnkEpisode {
+    const res: ChtnkEpisode = {
       title: data.title,
       episode: 0,
       nsfw: (data.nsfw) as unknown as boolean,
-      images: data.images.map((i): CompositionImage => {
+      images: data.images.map((i): ChtnkImage => {
         return {
           src: this.proxy.proxyUrl(i.link),
           alt: i.description,

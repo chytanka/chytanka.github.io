@@ -1,5 +1,5 @@
 :host {
-    position: relative;
+	position: relative;
 }
 
 img {
@@ -33,4 +33,37 @@ loading {
 	z-index: 0;
 	width: 100%;
 	padding: 2rem;
+}
+
+svg.captions {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	// pointer-events: none;
+	max-width: 100%;
+	max-height: 100%;
+
+	.frames {
+		polygon {
+			cursor: pointer;
+			fill: rgba(255, 255, 0, 0);
+			stroke: transparent;
+			stroke-width: 2px;
+
+			&:hover {
+				stroke: #166496;
+
+			}
+		}
+	}
+}
+
+.text-layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	max-width: 100%;
+	max-height: 100%;
 }

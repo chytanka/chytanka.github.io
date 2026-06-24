@@ -24,6 +24,9 @@ export class ParserFormComponent {
       if (source === 'route') {
         this.navFacade.goToParsedLink();
       }
+      if (source === 'tgWebAppStartParam') {
+        this.navFacade.goByRedirectParams();
+      }
     });
   }
 }

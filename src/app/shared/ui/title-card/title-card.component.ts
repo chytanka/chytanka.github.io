@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, InputSignal, output, computed, inject, input } from '@angular/core';
 import { LangService } from '../../data-access/lang.service';
-import { CompositionEpisode } from '../../../@site-modules/@common-read';
+import { ChtnkEpisode } from '../../models/chtnk-composition';
 
 export interface TitleCartItem {
   site: string[];
@@ -8,7 +8,7 @@ export interface TitleCartItem {
   cover: string;
   title: string;
   updated: string;
-  episode?: CompositionEpisode;
+  episode?: ChtnkEpisode;
   id: number;
   size: number;
   page: number;

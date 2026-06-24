@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, map } from 'rxjs';
-import { CompositionEpisode, CompositionImage } from '../@common-read';
+import { ChtnkEpisode, ChtnkImage } from '../../shared/models/chtnk-composition';
+
+
 interface ImgurRespCompImage {
   link: string;
   width: number;
@@ -32,7 +34,7 @@ export class ImgurService {
 
   constructor(private http: HttpClient) { }
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const headers = new HttpHeaders({
       'Authorization': `Client-ID ${this.clientId}`
     });
@@ -42,14 +44,14 @@ export class ImgurService {
   }
 
 
-  map(data: ImgurRespComp): CompositionEpisode {
-    const res: CompositionEpisode = {
+  map(data: ImgurRespComp): ChtnkEpisode {
+    const res: ChtnkEpisode = {
       title: data.title,
       episode: 0,
       nsfw: (data.nsfw) as unknown as boolean,
       images: data.images
       .filter(i => i.type.startsWith('image/'))
-      .map((i): CompositionImage => {
+      .map((i): ChtnkImage => {
         return {
           src: i.link,
           width: i.width,

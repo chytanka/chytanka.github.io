@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CompositionEpisode, CompositionPublisher } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
 import { isPlatformServer } from '@angular/common';
+import { ChtnkEpisode, ChtnkPublisher } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PixivService {
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     const url = isPlatformServer(this.platformId)
       ? environment.pixivHost + id
       : this.proxy.proxyUrl(environment.pixivHost + id);
@@ -23,7 +23,7 @@ export class PixivService {
       .pipe(map((data) => { return this.map(data.body) }))
   }
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
 
     const mappedResponse = {
       title: data.illust_details.title,
@@ -35,7 +35,7 @@ export class PixivService {
         avatar: this.proxy.proxyUrl(data.author_details.profile_img.main) + '&ref=https://www.pixiv.net' as string,
         description: '',
         links: []
-      } as unknown as CompositionPublisher,
+      } as unknown as ChtnkPublisher,
 
       images: (data.illust_details.manga_a ? data.illust_details.manga_a.map((item: any, index: number) => {
         return {

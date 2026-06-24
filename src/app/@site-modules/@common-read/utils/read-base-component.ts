@@ -1,19 +1,18 @@
 import { BehaviorSubject, MonoTypeOperatorFunction, Observable, OperatorFunction, Subscription, catchError, combineLatest, finalize, of, tap } from "rxjs";
-import { CompositionEpisode } from "./composition";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { Title } from "@angular/platform-browser";
-import { ChangeDetectorRef, OnDestroy, WritableSignal, inject, output, signal } from "@angular/core";
+import { ChangeDetectorRef, WritableSignal, inject, signal } from "@angular/core";
 import { LangService } from "../../../shared/data-access/lang.service";
 import { HistoryService } from "../../../history/data-access/history.service";
 import { PlaylistItem, PlaylistService, isPlaylist } from "../../../playlist/data-access/playlist.service";
 import { MetaTagsService } from "../../../shared/data-access/meta-tags.service";
 import { ViewerService } from "../../../viewer/services";
+import { ChtnkEpisode } from "../../../shared/models/chtnk-composition";
 
 export abstract class ReadBaseComponent {
     protected refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null);
     error$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    episode$: Observable<CompositionEpisode | null> = of(null);
+    episode$: Observable<ChtnkEpisode | null> = of(null);
 
     plObserv: Subscription | undefined;
     playlistLink = signal('')
@@ -23,7 +22,7 @@ export abstract class ReadBaseComponent {
         this.route.pathFromRoot[0].queryParams.subscribe(q => {
             const vm = q['vm'] // view mode param
 
-            if(vm && vm !== this.viewerService.viewModeOption().code) 
+            if (vm && vm !== this.viewerService.viewModeOption().code)
                 this.viewerService.setViewModeOptionByCode(vm)
 
             const pl = q['list'] // playlist
@@ -113,8 +112,8 @@ export abstract class ReadBaseComponent {
     }
     site = '';
     post_id = '';
-    protected tapSaveToHistory(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
-        return tap(async (episode: CompositionEpisode) => {
+    protected tapSaveToHistory(site: string, post_id: string): MonoTypeOperatorFunction<ChtnkEpisode> {
+        return tap(async (episode: ChtnkEpisode) => {
             if (episode) {
                 this.site = site;
                 this.post_id = post_id;
@@ -135,8 +134,8 @@ export abstract class ReadBaseComponent {
     cdr = inject(ChangeDetectorRef)
 
 
-    protected tapSaveToCurrentPlaylistItem(site: string, post_id: string): MonoTypeOperatorFunction<CompositionEpisode> {
-        return tap(async (episode: CompositionEpisode) => {
+    protected tapSaveToCurrentPlaylistItem(site: string, post_id: string): MonoTypeOperatorFunction<ChtnkEpisode> {
+        return tap(async (episode: ChtnkEpisode) => {
 
             if (episode) {
 

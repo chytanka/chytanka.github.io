@@ -7,7 +7,7 @@
             <h4>{{title()}}</h4>
             @if (closeHeaderButton()) {
             <form method="dialog">
-                <button [vibrateHaptic]="10" class="button empty ">
+                <button [vibrateHaptic]="10" ch-button class="empty ">
                     ❌
                 </button>
             </form>
@@ -19,7 +19,7 @@
         @if(footer()){
         <footer>
             <form method="dialog">
-                <button [vibrateHaptic]="10" class="button primary full">
+                <button [vibrateHaptic]="10" ch-button class="primary full">
                     {{lang.ph().ok}}
                 </button>
             </form>

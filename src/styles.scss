@@ -74,112 +74,6 @@ input {
     border-radius: .5ch;
 }
 
-.button {
-    --q: 1;
-
-    user-select: none;
-    border: 0;
-    // border: 1px solid #5299ce;
-    font: inherit;
-    color: inherit;
-    padding-inline: calc(var(--q) * 1ch);
-    padding-block: calc(var(--q) * 1ch);
-    border-radius: .5ch;
-    cursor: pointer;
-    background: hsl(203.44 8% 16%);
-
-    @media (prefers-color-scheme: light) {
-        background: hsl(203.44 8% 96%);
-    }
-
-    & {
-        transition: all var(--t);
-        text-wrap: balance;
-        -webkit-tap-highlight-color: transparent;
-        box-shadow: var(--shadow-1);
-    }
-
-    &.small {
-        --q: 0.5
-    }
-
-    &.mediun {
-        --q: 1.5
-    }
-
-    &.large {
-        --q: 2
-    }
-
-    &.tshadow {
-        text-shadow: 0 0 0.25ch #000a;
-    }
-
-    &.empty {
-        background: transparent;
-        box-shadow: unset;
-    }
-
-    &.primary {
-        background: #166496;
-        color: white;
-    }
-
-    &.border {
-        border: var(--border-size) solid var(--border-color);
-    }
-
-    &.gamepad-hover,
-    &:hover {
-        color: #103651;
-        background-color: #ffd60a;
-
-        @media (prefers-color-scheme: light) {
-            color: #f8d755;
-            background-color: #166496;
-        }
-    }
-
-    &.delete {
-        &.gamepad-hover,
-        &:hover,
-        &:focus {
-            background-color: #541f20;
-        }
-    }
-
-    &:active,
-    &.active {
-        background-color: rgba(0, 15, 30, 1);
-        box-shadow: unset;
-        transform: translate(2px, 2px);
-    }
-
-    &.full {
-        width: 100%;
-    }
-
-    &:disabled {
-        cursor: not-allowed;
-        // pointer-events: none;
-        filter: grayscale(.64);
-        box-shadow: unset;
-        background-color: rgba(0, 15, 30, .5);
-
-        @media (prefers-color-scheme: light) {
-            background-color: rgba(0, 15, 30, .25);
-            opacity: .64;
-        }
-    }
-}
-
-@supports (corner-shape: squircle) {
-    .button {
-        corner-shape: squircle;
-        border-radius: 1ch;
-    }
-}
-
 a {
     color: #4081b1;
     text-decoration: none;
@@ -206,8 +100,8 @@ a[target="_blank"]:after {
     --ratio: 257/364;
     --accent: #ffd60a;
 
-    --avarage-l: 0.48;
-    --avarage-l-2: 0.36;
+    --avarage-l: 0.64;
+    --avarage-l-2: 0.48;
 
     @media (prefers-color-scheme: light) {
         --accent: #166496;
@@ -235,48 +129,6 @@ a[target="_blank"]:after {
     }
 }
 
-@supports (transition-behavior: allow-discrete) {
-
-    dialog,
-    dialog::backdrop {
-        transition-property: opacity, transform, overlay, display, filter;
-        transition-duration: var(--t);
-        transition-behavior: allow-discrete;
-        opacity: 0;
-        transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
-        filter: blur(var(--blur));
-    }
-
-    dialog[open],
-    dialog[open]::backdrop {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-    }
-
-    @starting-style {
-
-        dialog[open],
-        dialog[open]::backdrop {
-            opacity: 0;
-            transform: scale(calc(1 + var(--scale-diff-x, .1)), calc(1 + var(--scale-diff-y, .1)));
-            filter: blur(var(--blur));
-        }
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    dialog,
-    dialog::backdrop,
-    dialog[open],
-    dialog[open]::backdrop {
-        transition: none !important;
-        transform: none !important;
-        opacity: 1 !important;
-        filter: none !important;
-    }
-}
 
 ::selection {
     background: var(--accent);

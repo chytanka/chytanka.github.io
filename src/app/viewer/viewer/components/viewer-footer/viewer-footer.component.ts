@@ -1,10 +1,10 @@
-import { Component, EventEmitter, HostListener, inject, input, InputSignal, output, signal, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, input, output, signal, ViewChild } from '@angular/core';
 import { BrowserService, DomManipulationService } from '../../../../shared/data-access';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
-import { CompositionEpisode } from '../../../../@site-modules/@common-read';
 import { DialogComponent } from '../../../../shared/ui/dialog/dialog.component';
 import { ViewerService } from '../../../services';
+import { ChtnkEpisode } from '../../../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-viewer-footer',
@@ -20,7 +20,7 @@ export class ViewerFooterComponent {
 
   show = input(false);
   activeIndexs = input<number[]>([])
-  episode = input<CompositionEpisode | undefined>();
+  episode = input<ChtnkEpisode | undefined>();
   playlist = input<Playlist>([]);
   playlistLink = input("");
   currentPlaylistItem = input<PlaylistItem | undefined>();

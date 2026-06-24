@@ -1,8 +1,8 @@
 import { Component, output, inject, input } from '@angular/core';
 import { LangService } from '../../../../shared/data-access/lang.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { CompositionEpisode } from '../../utils';
 import { Playlist, PlaylistItem } from '../../../../playlist/data-access/playlist.service';
+import { ChtnkEpisode } from '../../../../shared/models/chtnk-composition';
 
 @Component({
   selector: 'app-common-read',
@@ -15,7 +15,7 @@ export class CommonReadComponent {
 
   error$ = input.required<BehaviorSubject<string | null>>();
   loading$ = input.required<BehaviorSubject<boolean>>();
-  episode$ = input.required<Observable<CompositionEpisode | null>>();
+  episode$ = input.required<Observable<ChtnkEpisode | null>>();
 
   playlist = input<Playlist>([]);
   playlistLink = input("");

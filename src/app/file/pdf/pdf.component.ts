@@ -5,8 +5,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { Router } from '@angular/router';
 import { getDocument, GlobalWorkerOptions, PDFPageProxy } from 'pdfjs-dist';
 import { RenderParameters } from 'pdfjs-dist/types/src/display/api';
-import { CompositionEpisode } from '../../@site-modules/@common-read';
 import { ViewerModule } from '../../viewer/viewer.module';
+import { ChtnkEpisode } from '../../shared/models/chtnk-composition';
 
 GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs'
 
@@ -19,7 +19,7 @@ const MDASH = '—';
     styleUrl: './pdf.component.scss'
 })
 export class PdfComponent {
-  episode: CompositionEpisode | undefined;
+  episode: ChtnkEpisode | undefined;
   router = inject(Router)
   fs = inject(FileService)
 

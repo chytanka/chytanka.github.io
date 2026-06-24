@@ -2,7 +2,7 @@ import { inject, Injectable, WritableSignal } from "@angular/core";
 import { FileSettingsService } from "../../data-access/file-settings.service";
 import { FileHistoryService } from "../../data-access/file-history.service";
 import { ZipWorkerFacade } from "./zip-worker.facade";
-import { CompositionEpisode } from "../../../@site-modules/@common-read";
+import { ChtnkEpisode } from "../../../shared/models/chtnk-composition";
 
 @Injectable()
 export class ZipHistoryFacade {
@@ -11,7 +11,7 @@ export class ZipHistoryFacade {
     fileSetts = inject(FileSettingsService)
 
 
-    async loadFromHistory(sha256: string, episode: WritableSignal<CompositionEpisode>) {
+    async loadFromHistory(sha256: string, episode: WritableSignal<ChtnkEpisode>) {
         const { arrayBuffer, title } = await this.fileHistory.getItemBySha256(sha256)
         if (!arrayBuffer) return;
 

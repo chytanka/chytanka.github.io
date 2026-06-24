@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CompositionEpisode, CompositionPublisher } from '../@common-read';
 import { ProxyService } from '../../shared/data-access/proxy.service';
+import { ChtnkEpisode, ChtnkPublisher } from '../../shared/models/chtnk-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,12 @@ export class ZenkoService {
   http: HttpClient = inject(HttpClient)
   proxy: ProxyService = inject(ProxyService)
 
-  getComposition(id: string): Observable<CompositionEpisode> {
+  getComposition(id: string): Observable<ChtnkEpisode> {
     return this.http.get<any>(this.proxy.proxyUrl((environment.zenkoChapters + id)) + `&ref=${environment.zenkoHost}`)
       .pipe(map((data) => { return this.map(data) }))
   }
 
-  map(data: any): CompositionEpisode {
+  map(data: any): ChtnkEpisode {
     const imgParams = `?optimizer=image&width=900&quality=90&height=auto`;
     const { vol, ch, name, output } = this.titleDecode(data.name);
     const x = parseFloat(ch);
@@ -35,7 +35,7 @@ export class ZenkoService {
         avatar: this.proxy.proxyUrl(environment.zenkoCdn + data.publisher.avatar + imgParams) + `&ref=${environment.zenkoHost}` as string,
         description: data.publisher.description as string,
         links: data.publisher.links?.map((l: any) => { return { link: l.link, title: l.title }; })
-      } as unknown as CompositionPublisher,
+      } as unknown as ChtnkPublisher,
 
       images: (data.pages.map((item: any) => {
         return {

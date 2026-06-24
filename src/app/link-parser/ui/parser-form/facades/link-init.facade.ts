@@ -13,6 +13,20 @@ export class LinkInitFacade {
     const routeUrl = this.route.root.firstChild?.snapshot.params['url'];
     const queryUrl = this.route.root.firstChild?.snapshot.queryParamMap.get('url');
 
+    const tgWebAppStartParam = new URLSearchParams(location.search).get('tgWebAppStartParam');
+
+    if (tgWebAppStartParam) {
+      const rp = tgWebAppStartParam.split('-');
+
+      if (rp[0] && rp[1]) {
+        this.linkFacade.setRedirectParams({
+          site: rp[0],
+          id: rp[1]
+        })
+        return 'tgWebAppStartParam';
+      }
+    }
+
     if (routeUrl) {
       this.linkFacade.setLink(routeUrl);
       return 'route';
